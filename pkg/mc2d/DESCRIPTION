@@ -1,0 +1,11 @@
+Package: mc2d
+Type: Package
+Title: Tools for 2D Monte-Carlo Simulations
+Version: 0.1-4
+Date: 2008-12-01
+Author: Regis Pouillot <rpouillot@yahoo.fr>, Marie Laure Delignette-Muller <ml.delignette@vet-lyon.fr> and Jean-Baptiste 
+	Denis <jbdenis@jouy.inra.fr>
+Maintainer: Regis Pouillot <rpouillot@yahoo.fr>
+Depends: MASS, mvtnorm
+Description: Various distributions and utilities to ease the use of R to build and study 2 Dimensionnal Monte-Carlo simulations
+License: GPL (>= 2)

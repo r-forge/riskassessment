@@ -1,0 +1,46 @@
+\name{lhs}
+\alias{lhs}
+\title{
+Random Latin Hypercube Sampling
+}
+\description{
+Creates a Latin Hypercube Sample (LHS) of the specified distribution.
+}
+\usage{
+lhs(distr=runif, nsv, nsu, nvariates=1, ...)
+}
+\examples{
+ceiling(lhs(runif, nsu=10, nsv=10)*10)
+}
+\arguments{
+\item{distr}{The function for generating random sample or its name.
+If \code{distr} is "rdist", the function "qdist" must be the quantile
+function of this distribution with argument \code{p} as a vector of
+probabilities, as all univariates distributions of the \code{stat}
+library.}
+\item{nsv}{The number of raws of the final matrix.}
+\item{nsu}{The number of columns of the final matrix}
+\item{nvariates}{The number of variates}
+\item{\dots}{All arguments to be passed to \code{distr} except the
+size of the sample.}
+}
+\value{
+A \code{nsv x nsu} matrix of random variates.
+}
+\author{
+adapted from a code of Rob Carnell (library \code{lhs})
+}
+\seealso{
+\code{\link{mcstoc}}
+}
+\note{
+The lhs is in fact a latin hypersquare sampling: the lhs is assured
+only in the first 2 dimensions.
+
+ It is not possible to send truncated distribution with
+\code{\link{rtrunc}}. Use \code{\link{mcstoc}} for this purpose, with
+\code{lhs=TRUE} and \code{rtrunc=TRUE}.
+
+ The \dots arguments will be recycled.
+}
+\keyword{design}
