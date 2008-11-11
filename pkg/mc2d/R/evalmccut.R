@@ -190,7 +190,7 @@ RESULTAT <- try({                                                               
   # Prepare the loop
   ndunc(1)                                                                       # nsu = 1
   if(progress.bar){
-    X11(width = 3, height = 0.7)
+    windows(width = 3, height = 0.7)
     par(mar = c(0.5, 0.5, 2, 0.5))
     plot(c(0,nsu),c(0,1),xlim=c(0,nsu),ylim=c(0,1),type="n",main="Uncertainty",
 		axes=FALSE,xlab="",ylab="",frame.plot=TRUE,xaxs = "i", yaxs = "i", xaxt = "n",
