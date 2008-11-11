@@ -1,0 +1,1 @@
+echo library(tools) ; Sweave(%1) ; assign("x",%1); assign("y",readLines(sub(".nw$",".tex",x))) ; assign("y",gsub("usepackage{.*?Sweave}","usepackage{Sweave}",y,perl=TRUE)) ; writeLines(x, x) | R --no-save --no-restore
