@@ -1,0 +1,7787 @@
+#LyX 1.5.6 created this file. For more info see http://www.lyx.org/
+\lyxformat 276
+\begin_document
+\begin_header
+\textclass literate-article
+\begin_preamble
+
+\end_preamble
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\paperfontsize 10
+\spacing single
+\papersize letterpaper
+\use_geometry true
+\use_amsmath 1
+\use_esint 0
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 2.5cm
+\topmargin 2.5cm
+\rightmargin 2.5cm
+\bottommargin 2.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+The 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+mc2d
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ package.
+ 
+\end_layout
+
+\begin_layout Author
+Régis POUILLOT, Marie-Laure DELIGNETTE-MULLER & Jean-Baptiste DENIS
+\end_layout
+
+\begin_layout Standard
+\begin_inset LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset VSpace vfill
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This documentation is intended for readers with:
+\end_layout
+
+\begin_layout Itemize
+A medium level in R.
+ Please refer to the Manual 
+\begin_inset Quotes eld
+\end_inset
+
+An Introduction to R
+\begin_inset Quotes erd
+\end_inset
+
+ available with R distribution if needed;
+\end_layout
+
+\begin_layout Itemize
+Some knowledge about Monte-Carlo simulations (its basic principles and its
+ utility) and about Quantitative Risk Assessment (QRA).
+ 
+\end_layout
+
+\begin_layout Standard
+This documentation will not described all arguments of the functions.
+ The reference remains the documentation attached to the package.
+ 
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Subsection
+What is 
+\family typewriter
+mc2d
+\family default
+?
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+mc2d
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ means Two-Dimensional Monte-Carlo (
+\emph on
+
+\begin_inset Quotes eld
+\end_inset
+
+Monte-Carlo à Deux Dimensions
+\begin_inset Quotes erd
+\end_inset
+
+
+\emph default
+).
+ This package :
+\end_layout
+
+\begin_layout Itemize
+provides additional distributions;
+\end_layout
+
+\begin_layout Itemize
+provides tools to build One-Dimensional and Two-Dimensional Monte-Carlo
+ Simulations;
+\end_layout
+
+\begin_layout Itemize
+provides tools to study One-Dimensional and Two-Dimensional Monte-Carlo
+ Simulations.
+\end_layout
+
+\begin_layout Standard
+In a previous version, some tools to fit parametric distributions to data
+ were included.
+ These functions being useful for other purposes, they have been placed
+ in a specific package called 
+\family typewriter
+specdist
+\family default
+.
+ These packages are available at the URL 
+\begin_inset LatexCommand htmlurl
+target "http://w3.jouy.inra.fr/unites/miaj/public/matrisq/jbdenis/outils/welcome.html"
+
+\end_inset
+
+, and soon on the CRAN: 
+\begin_inset LatexCommand htmlurl
+target "http://lib.stat.cmu.edu/R/CRAN/"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+mc2d
+\family default
+ was built for QRA in the Food Safety domain but it might be used for other
+ domains.
+ 
+\end_layout
+
+\begin_layout Subsection
+What is Two-Dimensional Monte-Carlo Simulation (briefly)?
+\end_layout
+
+\begin_layout Standard
+The following text and Figure 
+\begin_inset LatexCommand ref
+reference "fig:Mc2d"
+
+\end_inset
+
+ are adapted from 
+\begin_inset LatexCommand cite
+key "POUILLOT-2004"
+
+\end_inset
+
+ and 
+\begin_inset LatexCommand cite
+key "POUILLOT-2007"
+
+\end_inset
+
+ where this method was used.
+ The major reference for Two-Dimensional Monte-Carlo simulations remains
+ 
+\begin_inset LatexCommand cite
+key "CULLEN-FREY-1999"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+According to international recommendations, a QRA should reflect the 
+\begin_inset Quotes eld
+\end_inset
+
+variability
+\begin_inset Quotes erd
+\end_inset
+
+ of the risk and estimate the 
+\begin_inset Quotes eld
+\end_inset
+
+uncertainty
+\begin_inset Quotes erd
+\end_inset
+
+ of the risk estimate.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+variability
+\begin_inset Quotes erd
+\end_inset
+
+ represents the temporal, geographical and/or individual heterogeneity of
+ the risk for a given population.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+uncertainty
+\begin_inset Quotes erd
+\end_inset
+
+ is understood as the lack of perfect knowledge of the QRA model structure
+ and parameters.
+\end_layout
+
+\begin_layout Standard
+In order to estimate the natural 
+\begin_inset Quotes eld
+\end_inset
+
+variability
+\begin_inset Quotes erd
+\end_inset
+
+ of the risk, a Monte-Carlo simulation approach may be useful: the empirical
+ distribution of the risk within the population may be estimated from the
+ mathematical combination of distributions reflecting the variability of
+ parameters in the population.
+\end_layout
+
+\begin_layout Standard
+In order to estimate the 
+\begin_inset Quotes eld
+\end_inset
+
+uncertainty
+\begin_inset Quotes erd
+\end_inset
+
+ of the risk estimates issued from data uncertainty, a two-dimensional (or
+ second-order) Monte-Carlo simulation was proposed 
+\begin_inset LatexCommand cite
+key "CULLEN-FREY-1999"
+
+\end_inset
+
+.
+ A two-dimensional Monte-Carlo simulation is a Monte-Carlo simulation where
+ the alea reflectiong "variability" and the alea reflecting "uncertainty"
+ are transfered separately in the simulation, so that "variability"and "uncertai
+nty" of the output may be estinated separately.
+ It may be described as following (see Figure 
+\begin_inset LatexCommand ref
+reference "fig:Mc2d"
+
+\end_inset
+
+): 
+\end_layout
+
+\begin_layout Enumerate
+The parameters of the model should be divided in three categories: the parameter
+s whose alea reflects 
+\begin_inset Quotes eld
+\end_inset
+
+variability only
+\begin_inset Quotes erd
+\end_inset
+
+, hereinafter denoted as 
+\begin_inset Quotes eld
+\end_inset
+
+variable parameters
+\begin_inset Quotes erd
+\end_inset
+
+, the parameters whose alea reflects 
+\begin_inset Quotes eld
+\end_inset
+
+uncertainty only
+\begin_inset Quotes erd
+\end_inset
+
+, denoted as 
+\begin_inset Quotes eld
+\end_inset
+
+uncertain parameters
+\begin_inset Quotes erd
+\end_inset
+
+ and the parameters whose alea reflects uncertainty and variability.
+ For this latter category, a hierarchical structure, using 
+\begin_inset Quotes eld
+\end_inset
+
+hyper-parameters
+\begin_inset Quotes erd
+\end_inset
+
+, should be specified: if a parameter is uncertain and variable, one should
+ be able to specify an empirical or parametric distribution reflecting variabili
+ty only conditionally on other parameters known with uncertainty.
+ As an example, one should be able to set a structure as 
+\begin_inset Formula $X\left|a,b\right.\sim N\left(a,b\right)$
+\end_inset
+
+, this normal distribution reflecting variability of 
+\begin_inset Formula $x$
+\end_inset
+
+ conditionally to 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+, with, e.g., 
+\begin_inset Formula $a\sim Unif\left(l_{a},u_{a}\right)$
+\end_inset
+
+and 
+\begin_inset Formula $b\sim Unif\left(l_{b},u_{b}\right)$
+\end_inset
+
+, these distributions reflecting the uncertainty around the parameters 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+A set of uncertain parameters are randomly sampled from their respective
+ distributions; 
+\end_layout
+
+\begin_layout Enumerate
+The QRA is performed using a classical (one-dimensional) Monte-Carlo simulation
+ of size 
+\begin_inset Formula $N_{v}$
+\end_inset
+
+, conditionally to these uncertain parameters considered as fixed.
+ This QRA takes into account the variability of all variable parameters,
+ and leads to an empirical density function reflecting the variability of
+ exposure/risk among the population conditionally to the uncertain parameters.
+ Various statistics (
+\emph on
+e.g.
+
+\emph default
+ the mean, the standard deviation, some percentiles) of the resulting empirical
+ density are evaluated and stored; 
+\end_layout
+
+\begin_layout Enumerate
+Steps 2) and 3) are performed a large number of time (
+\begin_inset Formula $N_{u}$
+\end_inset
+
+ times), leading to 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+
+\begin_inset Formula $N_{u}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\noun default
+\color inherit
+ set of statistics; 
+\end_layout
+
+\begin_layout Enumerate
+As output, the 
+\begin_inset Formula $50^{\text{th}}$
+\end_inset
+
+ percentile (median) of each statistic is used to establish an estimate
+ of this statistic; the 
+\begin_inset Formula $2.5^{\text{th}}$
+\end_inset
+
+ and 
+\begin_inset Formula $97.5^{\text{th}}$
+\end_inset
+
+ percentiles of each statistic are used to establish a 95% credible interval
+ (CI95) of this statistic.
+ The median of the 
+\begin_inset Formula $N_{u}$
+\end_inset
+
+ estimated values for each of the 101 estimated percentiles allows us to
+ represent a 
+\begin_inset Quotes eld
+\end_inset
+
+variability cumulative distribution
+\begin_inset Quotes erd
+\end_inset
+
+ using a graph.
+ This curve is surrounded by the 2.5th and 97.5th percentiles obtained from
+ the 
+\begin_inset Formula $N_{u}$
+\end_inset
+
+ estimates of each of the 101 percentiles.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Graphics
+	filename mc2dSaumon.bmp
+	lyxscale 50
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+
+\lang french
+\begin_inset LatexCommand label
+name "fig:Mc2d"
+
+\end_inset
+
+Shematic Representation of a Two-Dimensional Monte-Carlo Simulation.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+"
+\family typewriter
+mc2d
+\family default
+" is a set of R functions that will help to develop such two-dimensional
+ Monte-Carlo simulations.
+ The main difference with the procedure described above is that 
+\family typewriter
+mc2d
+\family default
+ will use arrays of (at least) two dimensions to derive the results: the
+ first dimension will reflect variability, the second will reflect uncertainty.
+ This document will not develop further the method, but the practical use
+ of 
+\family typewriter
+mc2d
+\family default
+, based on a fictive example.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset LatexCommand label
+name "sec:Exemple1"
+
+\end_inset
+
+A basic example
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Quantitative Risk Assessment:
+\series default
+ 
+\series bold
+\emph on
+Escherichia coli
+\series default
+\emph default
+ 
+\series bold
+O157:H7 infection linked to the consumption of frozen ground beef in <3
+ year old children.
+\end_layout
+
+\begin_layout Itemize
+We assume that, in a given batch of ground beef, 
+\emph on
+E.
+ coli
+\emph default
+ O157:H7 are randomly distributed with a mean concentration of 
+\begin_inset Formula $c=10$
+\end_inset
+
+ bacteria (cfu) per gram of product;
+\end_layout
+
+\begin_layout Itemize
+We assume that no bacterial growth occurs, since the product is kept frozen
+ until cooked, just before consumption;
+\end_layout
+
+\begin_layout Itemize
+2.7% of consumers cook their beef 
+\begin_inset Quotes eld
+\end_inset
+
+rare
+\begin_inset Quotes erd
+\end_inset
+
+, 37.3% 
+\begin_inset Quotes eld
+\end_inset
+
+medium
+\begin_inset Quotes erd
+\end_inset
+
+ and 60.0% 
+\begin_inset Quotes eld
+\end_inset
+
+well cooked
+\begin_inset Quotes erd
+\end_inset
+
+; 
+\end_layout
+
+\begin_layout Itemize
+The following inactivation 
+\begin_inset Formula $i$
+\end_inset
+
+ is associated to these cooking practices: 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+No inactivation for 
+\begin_inset Quotes eld
+\end_inset
+
+rare
+\begin_inset Quotes erd
+\end_inset
+
+ cooking;
+\end_layout
+
+\begin_layout Itemize
+1/5 surviving bacteria for a 
+\begin_inset Quotes eld
+\end_inset
+
+medium
+\begin_inset Quotes erd
+\end_inset
+
+ cooking;
+\end_layout
+
+\begin_layout Itemize
+1/50 surviving bacteria for a 
+\begin_inset Quotes eld
+\end_inset
+
+well done
+\begin_inset Quotes erd
+\end_inset
+
+ cooking.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+The variability distribution of steak serving sizes 
+\begin_inset Formula $s$
+\end_inset
+
+ for <3 year children was estimated in a consumption survey.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+best fit
+\begin_inset Quotes erd
+\end_inset
+
+ was obtained using a gamma distribution with parameters: 
+\begin_inset Formula $shape=3.93,\: rate=0.0806$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The dose-response relationship, describing the probability of illness 
+\begin_inset Formula $P$
+\end_inset
+
+ according to the dose is a one hit model.
+ The probability of illness per hit 
+\begin_inset Formula $r$
+\end_inset
+
+ is assumed to be constant and 
+\begin_inset Formula $r=0.001$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The question is: 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+What is the distribution of the risk of illness in the population that consumed
+ the contaminated lot?
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This distribution will be estimated using Monte-Carlo simulations performed
+ using R with the 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+mc2d
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ package.
+ First, the model will be developed in a one dimensional framework.
+ Then, including some uncertainties in the model, it will be derived in
+ a two dimensional framework.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+One Dimensional Monte-Carlo Simulation
+\end_layout
+
+\begin_layout Standard
+In a first step, we assume that no uncertainty exists in our model.
+ All distributions reflects variability.
+ The model may be written as:
+\begin_inset Formula \begin{eqnarray*}
+c & = & 10.\\
+i & \sim & emp\left(\left\{ 1,1/5,1/50\right\} ,\left\{ 0.027,0.373,0.600\right\} \right)\\
+s & \sim & gamma\left(3.93,0.0806\right)\\
+n & \sim & Poisson\left(c\times i\times s\right)\\
+P & = & 1-\left(1-0.001\right)^{n}\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $emp\left(\boldsymbol{X},\boldsymbol{P}\right)$
+\end_inset
+
+ is the empirical distribution where each value 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+ is associated to the probability 
+\begin_inset Formula $P_{i}$
+\end_inset
+
+.We will use a "classical" one dimensional Monte-Carlo simulation, with 1000
+ iterations.
+ Using the 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+mc2d
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ package, the model may be written as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh0, echo=false>>=
+\end_layout
+
+\begin_layout Standard
+
+set.seed(666)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh1, echo=true>>=
+\end_layout
+
+\begin_layout Standard
+
+library(mc2d)
+\end_layout
+
+\begin_layout Standard
+
+ndvar(1000)
+\end_layout
+
+\begin_layout Standard
+
+conc <- 10
+\end_layout
+
+\begin_layout Standard
+
+cook <- mcstoc(rempiricalD, values=c(1,1/5,1/50), prob=c(0.027,0.373,0.600))
+\end_layout
+
+\begin_layout Standard
+
+serving <- mcstoc(rgamma,shape=3.93,rate=0.0806)
+\end_layout
+
+\begin_layout Standard
+
+expo <- conc * cook * serving
+\end_layout
+
+\begin_layout Standard
+
+dose <- mcstoc(rpois,lambda=expo)
+\end_layout
+
+\begin_layout Standard
+
+r <- 0.001
+\end_layout
+
+\begin_layout Standard
+
+risk <- 1-(1-r)^dose
+\end_layout
+
+\begin_layout Standard
+
+EC1 <- mc(cook,serving,expo,dose,risk)
+\end_layout
+
+\begin_layout Standard
+
+print(EC1)
+\end_layout
+
+\begin_layout Standard
+
+summary(EC1)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This One-Dimensional Monte-Carlo simulation provides an estimates of the
+ mean risk (around 5%), as well as some quantiles of the risk (2.5% of the
+ population has a risk of illness greater than 20.3%).
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Two dimensional Monte-Carlo Simulation
+\end_layout
+
+\begin_layout Standard
+Assume now that:
+\end_layout
+
+\begin_layout Itemize
+The mean concentration of bacteria in the batch is not known with certainty.
+ It was an estimate.
+ Microbiologists think that the uncertainty around this estimate might be
+ reflected through a normal distribution with parameters 
+\begin_inset Formula $\mu=10$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma=2$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+Epidemiological studies suggest that the 
+\begin_inset Formula $r$
+\end_inset
+
+ parameter is known with uncertainty.
+ The uncertainty around the mean value 0.001 may be reflected through a uniform
+ distribution bounded within 0.0005 and 0.0015.
+ 
+\end_layout
+
+\begin_layout Standard
+The model could then be written as:
+\begin_inset Formula \begin{eqnarray*}
+c & \sim & N\left(10,2\right)\\
+i & \sim & emp\left(\left\{ 1,1/5,1/50\right\} ,\left\{ 0.027,0.373,0.600\right\} \right)\\
+s & \sim & gamma\left(3.93,0.0806\right)\\
+n & \sim & Poisson\left(c\times i\times s\right)\\
+r & \sim & Unif\left(0.0005,0.0015\right)\\
+P & = & 1-\left(1-r\right)^{n}\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Nevertheless, the distributions of 
+\begin_inset Formula $r$
+\end_inset
+
+ and 
+\begin_inset Formula $c$
+\end_inset
+
+ do not reflect the same kind of alea then do the distributions of 
+\begin_inset Formula $i$
+\end_inset
+
+ and 
+\begin_inset Formula $s$
+\end_inset
+
+.
+ 
+\begin_inset Formula $r$
+\end_inset
+
+ and 
+\begin_inset Formula $c$
+\end_inset
+
+ are uncertain, while 
+\begin_inset Formula $i$
+\end_inset
+
+ and 
+\begin_inset Formula $s$
+\end_inset
+
+ are variable.
+ 
+\begin_inset Formula $n$
+\end_inset
+
+, as a function of 
+\begin_inset Formula $c$
+\end_inset
+
+, 
+\begin_inset Formula $i$
+\end_inset
+
+ and 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+
+\begin_inset Formula $s$
+\end_inset
+
+ will be variable 
+\family default
+\series default
+\shape default
+\size default
+\emph on
+\bar default
+\noun default
+\color inherit
+and
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+ uncertain.
+\end_layout
+
+\begin_layout Standard
+We will use a two dimensional Monte-Carlo simulation, with 1000 iterations
+ in the variability dimension and 100 iterations in the uncertainty dimension.
+ Using the 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+mc2d
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ package, the model may be written as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh2, echo=true>>=
+\end_layout
+
+\begin_layout Standard
+
+ndunc(100)
+\end_layout
+
+\begin_layout Standard
+
+conc <- mcstoc(rnorm,type="U",mean=10,sd=2)
+\end_layout
+
+\begin_layout Standard
+
+cook <- mcstoc(rempiricalD, type="V",values=c(1,1/5,1/50), prob=c(0.027,0.373,0.600
+))
+\end_layout
+
+\begin_layout Standard
+
+serving <- mcstoc(rgamma,type="V",shape=3.93,rate=0.0806)
+\end_layout
+
+\begin_layout Standard
+
+expo <- conc * cook * serving
+\end_layout
+
+\begin_layout Standard
+
+dose <- mcstoc(rpois,type="VU",lambda=expo)
+\end_layout
+
+\begin_layout Standard
+
+r <- mcstoc(runif,type="U",min=0.0005,max=0.0015)
+\end_layout
+
+\begin_layout Standard
+
+risk <- 1-(1-r)^dose
+\end_layout
+
+\begin_layout Standard
+
+EC2 <- mc(conc,cook,serving,expo,dose,r,risk)
+\end_layout
+
+\begin_layout Standard
+
+EC2
+\end_layout
+
+\begin_layout Standard
+
+summary(EC2)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that the syntax is similar.
+ Nevertheless, for each distribution, a 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+type
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ argument is provided, indicating if the parameter distribution reflects
+ uncertainty (
+\family typewriter
+type
+\family default
+="
+\family typewriter
+U
+\family default
+"), variability (
+\family typewriter
+type
+\family default
+="V"), or both (
+\family typewriter
+type
+\family default
+="
+\family typewriter
+VU
+\family default
+").
+\end_layout
+
+\begin_layout Standard
+The summary now provides estimates of the variability distribution (in row)
+ but with a measure of their uncertainty, linked to the uncertainty around
+ 
+\family typewriter
+conc
+\family default
+ and 
+\family typewriter
+r
+\family default
+.
+ The estimate of the mean risk is now known with uncertainty.
+ The median of the 100 simulations lead to a "best estimate"of 0.0445, with
+ a "credible interval" of [0.191, 0.0730].
+\end_layout
+
+\begin_layout Section
+Basic Principles and Functions
+\end_layout
+
+\begin_layout Standard
+A classical session of R using 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+mc2d
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ is as following:
+\end_layout
+
+\begin_layout Itemize
+From data, expert knowledge, 
+\emph on
+etc.
+
+\emph default
+ empirical or parametric distributions are chosen for each 
+\begin_inset Quotes eld
+\end_inset
+
+parents
+\begin_inset Quotes erd
+\end_inset
+
+ parameters.
+ For data fitting, the 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+specdist
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ package is recommended;
+\end_layout
+
+\begin_layout Itemize
+For each parameter, an 
+\family typewriter
+mcnode
+\family default
+ object is built (key functions: 
+\family typewriter
+mcdata, mcstoc
+\family default
+); 
+\end_layout
+
+\begin_layout Itemize
+Various 
+\family typewriter
+mcnode
+\family default
+ objects are grouped in a 
+\family typewriter
+mc
+\family default
+ object (key function: 
+\family typewriter
+mc
+\family default
+).
+\end_layout
+
+\begin_layout Itemize
+The 
+\family typewriter
+mc
+\family default
+ object is studied through summaries, graphs, sensitivity analysis (key
+ functions: 
+\family typewriter
+summary.mc
+\family default
+, 
+\family typewriter
+plot.mc
+\family default
+, 
+\family typewriter
+tornado
+\family default
+, 
+\family typewriter
+tornadounc
+\family default
+).
+\end_layout
+
+\begin_layout Subsection
+Before All
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+mc2d
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ library should be loaded during your R session ("
+\family typewriter
+library(mc2d)
+\family default
+").
+\end_layout
+
+\begin_layout Standard
+The default size of the Monte-Carlo Simulation should be defined using the
+ 
+\family typewriter
+ndvar()
+\family default
+ function (dimension of variability) and the 
+\family typewriter
+ndunc()
+\family default
+ function (dimension of uncertainty).
+\end_layout
+
+\begin_layout Subsection
+The 
+\family typewriter
+mcnode
+\family default
+ Object as an Elementary Object.
+\end_layout
+
+\begin_layout Subsubsection
+
+\family typewriter
+mcnode
+\family default
+ Object Structure
+\end_layout
+
+\begin_layout Standard
+An 
+\family typewriter
+mcnode
+\family default
+ object is the basic element of an 
+\family typewriter
+mc
+\family default
+ object.
+ It is an array of dimension 
+\begin_inset Formula $\left(nsv\times nsu\times nvariates\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $nsv$
+\end_inset
+
+ is the dimension of variability, 
+\begin_inset Formula $nsu$
+\end_inset
+
+ is the dimension of uncertainty and 
+\begin_inset Formula $nvariates$
+\end_inset
+
+ is the number of variates of the 
+\family typewriter
+mcnode
+\family default
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Standard
+In this section, we will only consider 
+\family typewriter
+mcnode
+\family default
+ with 
+\begin_inset Formula $nvariates=1$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+.
+ Four types of 
+\family typewriter
+mcnode
+\family default
+ exist: 
+\end_layout
+
+\begin_layout Itemize
+"
+\family typewriter
+V
+\family default
+" 
+\family typewriter
+mcnode
+\family default
+, for "
+\emph on
+Variability
+\emph default
+", are arrays of dimension 
+\begin_inset Formula $\left(nsv\times1\times nvariates\right)$
+\end_inset
+
+.
+ The alea in the data reflects variability of the parameter; 
+\end_layout
+
+\begin_layout Itemize
+"
+\family typewriter
+U
+\family default
+" 
+\family typewriter
+mcnode
+\family default
+, for "
+\emph on
+Uncertainty
+\emph default
+", are arrays of dimension 
+\begin_inset Formula $\left(1\times nsu\times nvariates\right)$
+\end_inset
+
+.
+ The alea in the data reflects uncertainty of the parameter.
+ 
+\end_layout
+
+\begin_layout Itemize
+"
+\family typewriter
+VU
+\family default
+" 
+\family typewriter
+mcnode
+\family default
+, for "
+\emph on
+Variability and Uncertainty
+\emph default
+", are arrays of dimension 
+\begin_inset Formula $\left(nsv\times nsu\times nvariates\right)$
+\end_inset
+
+.
+ The alea in the data reflects separated variability (in the first dimension)
+ and uncertainty (in the second dimension) of the parameter.
+ 
+\end_layout
+
+\begin_layout Itemize
+Additionally, "
+\family typewriter
+0
+\family default
+" 
+\family typewriter
+mcnode
+\family default
+ are defined for some use.
+ "
+\family typewriter
+0
+\family default
+" stand for "Neither Variability or Uncertainty".
+ They are arrays of dimension 
+\begin_inset Formula $\left(1\times1\times nvariates\right)$
+\end_inset
+
+.
+ No alea is considered for these nodes.
+ "
+\family typewriter
+0
+\family default
+" 
+\family typewriter
+mcnode
+\family default
+ are not necessary in the univariate context (use scalar instead) but are
+ useful to build multivariate nodes (See section 
+\begin_inset LatexCommand ref
+reference "sec:Multivar"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Graphics
+	filename Illustration.bmp
+	lyxscale 40
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+
+\lang french
+\begin_inset LatexCommand label
+name "fig:Structure"
+
+\end_inset
+
+Structure of the various 
+\family typewriter
+mcnode
+\family default
+ objects.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There are 5 ways to build a 
+\family typewriter
+mcnode
+\family default
+ object:
+\end_layout
+
+\begin_layout Enumerate
+The 
+\family typewriter
+mcstoc
+\family default
+ function builds 
+\family typewriter
+mcnode
+\family default
+ from random generating functions;
+\end_layout
+
+\begin_layout Enumerate
+The 
+\family typewriter
+mcdata
+\family default
+ function fills 
+\family typewriter
+mcnode
+\family default
+ from data sets; 
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+mcnode
+\family default
+ are built directly from operations on 
+\family typewriter
+mcnode
+\family default
+ objects;
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+mcprobtree
+\family default
+ is a special function that builds an 
+\family typewriter
+mcnode
+\family default
+ from various 
+\family typewriter
+mcnode
+\family default
+ using a probability tree;
+\end_layout
+
+\begin_layout Enumerate
+Some functions, as 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+==
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+>
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ , 
+\family typewriter
+is.na
+\family default
+, 
+\family typewriter
+is.finite
+\family default
+ build an 
+\family typewriter
+mcnode
+\family default
+ when applied to an 
+\family typewriter
+mcnode
+\family default
+.
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset LatexCommand label
+name "sub:mcstoc"
+
+\end_inset
+
+The 
+\family typewriter
+\series medium
+mcstoc
+\family default
+\series default
+ function
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+\series medium
+mcstoc
+\family default
+\series default
+ function is written as
+\begin_inset Foot
+status open
+
+\begin_layout Standard
+as classically in R, most of arguments have logical default values and will
+ be infrequently modified.
+\end_layout
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\paragraph_spacing single
+\noindent
+\align left
+
+\family typewriter
+mcstoc(func=runif, type=c("V", "U", "VU", "0"), ..., nsv=ndvar(), nsu=ndunc(),
+ nvariates=1, outm="each", nsample="n", seed=NULL, rtrunc=FALSE, linf=-Inf,
+ lsup=Inf, lhs=FALSE)
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+func
+\family default
+ is a function providing random data or its name as character.
+ The table 
+\begin_inset LatexCommand ref
+reference "tab:Distributions"
+
+\end_inset
+
+ provides available distributions from the 
+\family typewriter
+stats
+\family default
+ and the 
+\family typewriter
+mc2d
+\family default
+ libraries that can be used in 
+\family typewriter
+mcstoc
+\family default
+; 
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+type
+\family default
+ is the type of requested 
+\family typewriter
+mcnode
+\family default
+.
+ By default, 
+\family typewriter
+mcstoc
+\family default
+ builds a 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+V
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\family typewriter
+mcnode
+\family default
+;
+\end_layout
+
+\begin_layout Itemize
+\SpecialChar \ldots{}
+ are the arguments to be passed to the function 
+\family typewriter
+func
+\family default
+, with the exception of the argument providing the size of the sample.
+ This latter is calculated by the function according to 
+\family typewriter
+func
+\family default
+, 
+\family typewriter
+type
+\family default
+, 
+\family typewriter
+nsv,
+\family default
+ 
+\family typewriter
+nsu
+\family default
+ and 
+\family typewriter
+nvariates
+\family default
+.
+ If the name of the argument specifying the size of the sample is not 
+\family typewriter
+n
+\family default
+ (
+\emph on
+e.g.
+
+\emph default
+ functions 
+\family typewriter
+rhyper
+\family default
+ and 
+\family typewriter
+rwilcox
+\family default
+, see table 
+\begin_inset LatexCommand ref
+reference "tab:Distributions"
+
+\end_inset
+
+), the name of this parameter should be provided in the 
+\family typewriter
+nsample
+\family default
+ argument.
+ 
+\emph on
+Note that all following arguments should be named
+\emph default
+;
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+nsv
+\family default
+ and 
+\family typewriter
+nsu
+\family default
+ are the number of values needed in the variability and the uncertainty
+ dimension, respectively.
+ By default, these values are the one provided by 
+\family typewriter
+ndvar()
+\family default
+ and 
+\family typewriter
+ndunc()
+\family default
+, respectively;
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+nvariates
+\family default
+ is the desired number of variates in the 
+\family typewriter
+mcnode
+\family default
+;
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+outm
+\family default
+ is the default output for multivariate nodes;
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+seed
+\family default
+ optionally specify a seed for the random generator;
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+rtrunc
+\family default
+ allows to truncate the distribution between 
+\family typewriter
+linf
+\family default
+ and 
+\family typewriter
+lsup
+\family default
+.
+ This function is not valid for all distributions (see table 
+\begin_inset LatexCommand ref
+reference "tab:Distributions"
+
+\end_inset
+
+).
+ See the 
+\family typewriter
+rtrunc
+\family default
+ function help for further details;
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+lhs
+\family default
+ allows to sample the node in a Latin Hypercube Sampling framework.
+ This function is not valid for all distributions (see table 
+\begin_inset LatexCommand ref
+reference "tab:Distributions"
+
+\end_inset
+
+).
+ See the 
+\family typewriter
+lhs
+\family default
+ function help for further details.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+
+\lang french
+\begin_inset LatexCommand label
+name "tab:Distributions"
+
+\end_inset
+
+Available distributions
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="27" columns="7">
+<features firstHeadTopDL="true" firstHeadBottomDL="true">
+<column alignment="center" valignment="top" leftline="true" width="0">
+<column alignment="center" valignment="top" leftline="true" width="0">
+<column alignment="center" valignment="top" leftline="true" width="0">
+<column alignment="center" valignment="top" leftline="true" width="0">
+<column alignment="center" valignment="top" leftline="true" rightline="true" width="0">
+<column alignment="center" valignment="top" rightline="true" width="0">
+<column alignment="center" valignment="top" rightline="true" width="0">
+<row topline="true" bottomline="true" endfirsthead="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Package
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Distribution
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+function
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Parameter 
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Other Parameters
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+trunc
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+lhs
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+stats
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+beta
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rbeta
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+shape1, shape2, ncp
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+binomial
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rbinom
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+size, prob
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Cauchy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rcauchy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+location, scale
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+chi-squared
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rchisq
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+df, ncp
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+exponential
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rexp
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rate
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+F
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rf
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+df1, df2, ncp
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+gamma
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rgamma
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+shape, rate (or scale)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+geometric
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rgeom
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+prob
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+hypergeometric
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rhyper
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+nn
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+m, n, k
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+lognormal
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rlnorm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+meanlog, sdlog
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+logistic
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rlogis
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+location, scale
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+negative binomial
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rnbinom
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+size, prob (or mu)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+normal
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rnorm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+mean, sd
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Poisson
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rpois
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+lambda
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Student's t
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rt
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+df, ncp
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+uniform
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+runif
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+min, max
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Weibull
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rweibull
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+shape, scale
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Wilcoxon
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rwilcox
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+nn
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+m,n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+mc2d
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Bernoulli
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rbern
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+prob
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+empirical discrete
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rempiricalD
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+values, prob
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+PERT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rpert
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+min, mode, max, shape
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+triangular
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rtriang
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+min, mode, max
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+generalised beta
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rbetagen
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+shape1,shape2,min,max,ncp
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Y
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+multinomial
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rmultinomial
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n, size, prob
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+N
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+N
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Dirichlet
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rdirichlet
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+alpha
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+N
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+N
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+multinormal
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+rmultinormal
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+n
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\family typewriter
+mean, sigma
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+N
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+N
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In our basic example, 
+\family typewriter
+mcstoc
+\family default
+ was used to specify 
+\family typewriter
+conc
+\family default
+ (a normal distribution), 
+\family typewriter
+cook
+\family default
+ (an empirical discrete distribution), 
+\family typewriter
+serving
+\family default
+ (a gamma distribution), and 
+\family typewriter
+dose
+\family default
+ (a Poisson distribution).
+ Note that the argument 
+\family typewriter
+lambda
+\family default
+ of the Poisson distribution (node 
+\family typewriter
+dose
+\family default
+) is an 
+\family typewriter
+mcnode
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+<<sh3, echo=true, eval=FALSE>>=
+\end_layout
+
+\begin_layout Standard
+
+conc <- mcstoc(rnorm,type="U",mean=10,sd=2)
+\end_layout
+
+\begin_layout Standard
+
+cook <- mcstoc(rempiricalD, type="V",values=c(1,1/5,1/50), prob=c(0.027,0.373,0.600
+))
+\end_layout
+
+\begin_layout Standard
+
+serving <- mcstoc(rgamma,type="V",shape=3.93,rate=0.0806)
+\end_layout
+
+\begin_layout Standard
+
+...
+\end_layout
+
+\begin_layout Standard
+
+dose <- mcstoc(rpois,type="VU",lambda=expo)
+\end_layout
+
+\begin_layout Standard
+
+r <- mcstoc(runif,type="U",min=0.0005,max=0.0015)
+\end_layout
+
+\begin_layout Standard
+
+...
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A normal distribution with parameters 
+\begin_inset Formula $mean=2$
+\end_inset
+
+, 
+\begin_inset Formula $sd=3$
+\end_inset
+
+, truncated on [1.5, 2] with a Latin Hypercube Sampling could be written
+\begin_inset Foot
+status collapsed
+
+\begin_layout Standard
+Note that the mean and the standard deviation of the Gaussian distribution
+ are not kept due to the truncation.
+\end_layout
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh3bis, echo=true, eval=true>>=
+\end_layout
+
+\begin_layout Standard
+
+x <- mcstoc(rnorm, mean=2, sd=3, rtrunc=TRUE, linf=1.5, lsup=2, lhs=TRUE)
+\end_layout
+
+\begin_layout Standard
+
+summary(x)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For your use in 
+\family typewriter
+mcstoc
+\family default
+, additionnal distributions have been implemented: the Bernoulli distribution
+ (
+\family typewriter
+rbern
+\family default
+), the empirical discrete distribution (
+\family typewriter
+rempiricalD
+\family default
+), the PERT distribution (
+\family typewriter
+rpert
+\family default
+)
+\begin_inset LatexCommand cite
+key "VOSE-2000"
+
+\end_inset
+
+, the triangular distribution (
+\family typewriter
+rtriang
+\family default
+), the Dirichlet distribution (
+\family typewriter
+rdirichlet
+\family default
+) and the multinormal distribution (
+\family typewriter
+rmultinormal
+\family default
+).
+ The multinomial distribution has been adapted (vectorized): 
+\family typewriter
+rmultinomial
+\family default
+ (library 
+\family typewriter
+mc2d
+\family default
+) should be used in place of 
+\family typewriter
+rmultinom
+\family default
+ (library 
+\family typewriter
+stats
+\family default
+).
+ The empirical discrete (
+\emph on
+e.g.
+
+\emph default
+ for bootstrap), the Dirichlet, the multinomial and the multinormal may
+ be used with uncertain and/or variable parameters using multivariate nodes.
+ See section 
+\begin_inset LatexCommand ref
+reference "sec:Multivar"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset LatexCommand label
+name "sub:mcnode"
+
+\end_inset
+
+The 
+\family typewriter
+\series medium
+mcdata
+\family default
+\series default
+ function
+\end_layout
+
+\begin_layout Standard
+Another way to build 
+\family typewriter
+mcnode
+\family default
+ object is 
+\emph on
+via
+\emph default
+ the 
+\family typewriter
+mcdata
+\family default
+ function, when the data are available.
+\end_layout
+
+\begin_layout Standard
+\paragraph_spacing single
+\noindent
+\align left
+
+\family typewriter
+mcdata(data, type=c("V", "U", "VU", "0"), nsv=ndvar(), nsu=ndunc(), nvariates=1,
+ outm="each")
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align left
+See the documentation associated to this function to see the size/mode of
+ data that can be used to specify an 
+\family typewriter
+mcnode
+\family default
+.
+ The following example place a 
+\family typewriter
+TRUE
+\family default
+ value in a "
+\family typewriter
+U
+\family default
+" node in half of the simulations:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh3, echo=true>>=
+\end_layout
+
+\begin_layout Standard
+
+nu <- ndunc()
+\end_layout
+
+\begin_layout Standard
+
+tmp <- (1:nu) > (nu/2)
+\end_layout
+
+\begin_layout Standard
+
+mcdata(tmp,type="U")
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Operations on 
+\family typewriter
+mcnode
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+mcnode
+\family default
+s are automatically built using operations on 
+\family typewriter
+mcnode
+\family default
+.
+ Rules are built to transfer coherently uncertainty and variability within
+ the model.
+ Logically, the rules are as following (illustrated here with a 
+\begin_inset Quotes eld
+\end_inset
+
++
+\begin_inset Quotes erd
+\end_inset
+
+)
+\begin_inset Foot
+status collapsed
+
+\begin_layout Standard
+These rules are not classical R rules of recycling.
+\end_layout
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Itemize
+"
+\family typewriter
+0
+\family default
+" + "
+\family typewriter
+0
+\family default
+" = "
+\family typewriter
+0
+\family default
+";
+\end_layout
+
+\begin_layout Itemize
+"
+\family typewriter
+0
+\family default
+" + "
+\family typewriter
+V
+\family default
+" = "
+\family typewriter
+V
+\family default
+"
+\end_layout
+
+\begin_layout Itemize
+"
+\family typewriter
+0
+\family default
+" + "
+\family typewriter
+U
+\family default
+" = "
+\family typewriter
+U
+\family default
+";
+\end_layout
+
+\begin_layout Itemize
+"
+\family typewriter
+0
+\family default
+" + "
+\family typewriter
+VU
+\family default
+" = "
+\family typewriter
+VU
+\family default
+";
+\end_layout
+
+\begin_layout Itemize
+"
+\family typewriter
+V
+\family default
+" + "
+\family typewriter
+V
+\family default
+" = "
+\family typewriter
+V
+\family default
+";
+\end_layout
+
+\begin_layout Itemize
+"
+\family typewriter
+V
+\family default
+" + "
+\family typewriter
+U
+\family default
+" = "
+\family typewriter
+VU
+\family default
+": the 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+U
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ mcnode is recycled by row, the "
+\family typewriter
+V
+\family default
+" mcnode is recycled classically by column;
+\end_layout
+
+\begin_layout Itemize
+"
+\family typewriter
+V
+\family default
+" + "
+\family typewriter
+VU
+\family default
+" = "
+\family typewriter
+VU
+\family default
+": the 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+V
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ mcnode is recycled classically by column;
+\end_layout
+
+\begin_layout Itemize
+"
+\family typewriter
+U
+\family default
+" + "
+\family typewriter
+U
+\family default
+" = "
+\family typewriter
+U
+\family default
+";
+\end_layout
+
+\begin_layout Itemize
+"
+\family typewriter
+U
+\family default
+" + "
+\family typewriter
+VU
+\family default
+" = "
+\family typewriter
+VU
+\family default
+": the 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+U
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ mcnode is recycled by row;
+\end_layout
+
+\begin_layout Itemize
+"
+\family typewriter
+VU
+\family default
+" + "
+\family typewriter
+VU
+\family default
+" = "
+\family typewriter
+VU
+\family default
+"
+\end_layout
+
+\begin_layout Standard
+Thus, in our example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh4, echo=true, eval=false>>=
+\end_layout
+
+\begin_layout Standard
+
+...
+\end_layout
+
+\begin_layout Standard
+
+expo <- conc * cook * serving
+\end_layout
+
+\begin_layout Standard
+
+...
+\end_layout
+
+\begin_layout Standard
+
+risk <- 1-(1-r)^dose
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+expo
+\family default
+ is function of a 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+U
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ and two 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+V
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\family typewriter
+mcnode
+\family default
+: it is a 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+VU
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\family typewriter
+mcnode
+\family default
+ with the variability dimension in row and the uncertainty dimension in
+ column.
+ 
+\family typewriter
+risk
+\family default
+ is a function of a 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+U
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ and a 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+VU
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ node: it is a 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+VU
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ node.
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset LatexCommand label
+name "sub:The-mcprobtree-function"
+
+\end_inset
+
+The 
+\family typewriter
+\series medium
+mcprobtree
+\family default
+\series default
+ function
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+mcprobtree
+\family default
+ function should be used if a 
+\begin_inset Quotes eld
+\end_inset
+
+probability tree
+\begin_inset Quotes erd
+\end_inset
+
+ is needed to build an 
+\family typewriter
+mcnode
+\family default
+.
+ Assume that the distribution reflecting the uncertainty on 
+\family typewriter
+conc
+\family default
+ was not sure, and that the microbiologists suggest that they are 75% confident
+ that 
+\begin_inset Formula $conc\sim N\left(10,2\right)$
+\end_inset
+
+ but that they are 25% confident that 
+\begin_inset Formula $conc\sim U\left(8,12\right)$
+\end_inset
+
+.
+ This could be written using 
+\family typewriter
+mcprobtree
+\family default
+ as
+\begin_inset Foot
+status collapsed
+
+\begin_layout Standard
+an alternative for 
+\family typewriter
+whichdist
+\family default
+ could be 
+\family typewriter
+whichdist <- mcstoc(rempiricalD, type="U", values=c(0,1), prob=c(75,25))
+\end_layout
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh4, echo=true, eval=true>>=
+\end_layout
+
+\begin_layout Standard
+
+conc1 <- mcstoc(rnorm,type="U",mean=10,sd=2)
+\end_layout
+
+\begin_layout Standard
+
+conc2 <- mcstoc(runif,type="U",min=8,max=12)
+\end_layout
+
+\begin_layout Standard
+
+whichdist <- mcstoc(rbern,type="U",prob=0.25)
+\end_layout
+
+\begin_layout Standard
+
+concbis <- mcprobtree(whichdist,list("0"=conc1,"1"=conc2),type="U")
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+mcprobtree
+\family default
+ could also be used to provide a mixture distribution in the variability
+ dimension.
+\end_layout
+
+\begin_layout Subsubsection
+Other functions to build 
+\family typewriter
+mcnode
+\end_layout
+
+\begin_layout Standard
+The functions 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+==
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes erd
+\end_inset
+
+
+\family typewriter
+<
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes erd
+\end_inset
+
+
+\family typewriter
+<
+\family default
+=
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes erd
+\end_inset
+
+
+\family typewriter
+>=
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+>
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+, provides an 
+\family typewriter
+mcnode
+\family default
+ when applied on a 
+\family typewriter
+mcnode
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+Special functions 
+\family typewriter
+is.na(x)
+\family default
+, 
+\family typewriter
+is.nan(x)
+\family default
+, 
+\family typewriter
+is.finite(x)
+\family default
+, 
+\family typewriter
+is.infinite(x)
+\family default
+ are implemented to test if any values are 
+\family typewriter
+NA
+\family default
+ (missing data), 
+\family typewriter
+NaN
+\family default
+ (
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+Not A Number
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+), finite or not.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh5, echo=true, eval=true>>=
+\end_layout
+
+\begin_layout Standard
+
+cook < 1
+\end_layout
+
+\begin_layout Standard
+
+tmp <- log(mcstoc(runif,min=-1,max=1))
+\end_layout
+
+\begin_layout Standard
+
+tmp
+\end_layout
+
+\begin_layout Standard
+
+is.na(tmp)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Building correlation between 
+\family typewriter
+mcnode
+\end_layout
+
+\begin_layout Standard
+Structural links between set of parameters may be very important in QRA.
+ In 
+\family typewriter
+mc2d
+\family default
+, a correlation structure (in the sense of Spearman) implying 2 or more
+ nodes may be built with the 
+\family typewriter
+cornode
+\family default
+ function.
+ This function use the Iman & Conover method 
+\begin_inset LatexCommand cite
+key "IMAN-CONOVER-1982"
+
+\end_inset
+
+.
+ Assume that a study suggests that people that eat their ground beef "rare"
+ eat bigger serving sizes.
+ We could build this relation using:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh5bis, echo=true, eval=true>>=
+\end_layout
+
+\begin_layout Standard
+
+cornode(cook,serving,target=0.5,result=TRUE) 
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that the resulting correlation (around 0.4) is obviously an approximation
+ in this case, where a discrete distribution (
+\family typewriter
+cook
+\family default
+: 3 categories) is correlated to a continuous distribution (
+\family typewriter
+serving
+\family default
+).
+ 
+\end_layout
+
+\begin_layout Standard
+It is possible to create such correlation between 
+\begin_inset Quotes eld
+\end_inset
+
+V
+\begin_inset Quotes erd
+\end_inset
+
+ nodes, between 
+\begin_inset Quotes eld
+\end_inset
+
+ U
+\begin_inset Quotes erd
+\end_inset
+
+ nodes, between 
+\begin_inset Quotes eld
+\end_inset
+
+VU
+\begin_inset Quotes erd
+\end_inset
+
+ nodes or between one 
+\begin_inset Quotes eld
+\end_inset
+
+V
+\begin_inset Quotes erd
+\end_inset
+
+ node and some 
+\begin_inset Quotes eld
+\end_inset
+
+VU
+\begin_inset Quotes erd
+\end_inset
+
+ nodes.
+\end_layout
+
+\begin_layout Standard
+The use of a multinormal distribution (
+\family typewriter
+rmultinormal
+\family default
+) is another way to create such relationship between nodes.
+\end_layout
+
+\begin_layout Subsection
+The 
+\family typewriter
+mc
+\family default
+ Object
+\end_layout
+
+\begin_layout Standard
+Once your 
+\family typewriter
+mcnode
+\family default
+ objects are built, one should group them in a single object to study the
+ Monte-Carlo results.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+mc
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ object is a list of 
+\family typewriter
+mcnode
+\family default
+.
+ There are three ways to build a 
+\family typewriter
+mc
+\family default
+ object: using the 
+\family typewriter
+mc
+\family default
+ function, the 
+\family typewriter
+evalmcmod
+\family default
+ function or within the 
+\family typewriter
+evalmccut
+\family default
+ function.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+The 
+\family typewriter
+mc
+\family default
+ Function
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\family typewriter
+mc(..., name=NULL, devname=FALSE)
+\end_layout
+
+\begin_layout Standard
+\SpecialChar \ldots{}
+ are 
+\family typewriter
+mcnode
+\family default
+ or 
+\family typewriter
+mc
+\family default
+ objects to be gathered in a 
+\family typewriter
+mc
+\family default
+ object.
+ 
+\family typewriter
+mc
+\family default
+ value is an 
+\family typewriter
+mc
+\family default
+ object with specific methods, e.g.
+ 
+\family typewriter
+print
+\family default
+ or 
+\family typewriter
+summary
+\family default
+.
+ In our example, we used:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh6, echo=true, eval=false>>=
+\end_layout
+
+\begin_layout Standard
+
+...
+\end_layout
+
+\begin_layout Standard
+
+EC2 <- mc(conc,cook,serving,expo,dose,r,risk)
+\end_layout
+
+\begin_layout Standard
+
+print(EC2)
+\end_layout
+
+\begin_layout Standard
+
+summary(EC2)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+The 
+\family typewriter
+mcmodel
+\family default
+ and the 
+\family typewriter
+evalmcmod
+\family default
+ Functions
+\end_layout
+
+\begin_layout Standard
+A model may be written in one step using 
+\family typewriter
+mcmodel
+\family default
+ (just a wrap of your model in a function), and then evaluated using 
+\family typewriter
+evalmcmod
+\family default
+.
+ These functions may be used once your model is correct and tested using
+ a small number of iterations.
+ For our example: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh10, echo=true, eval=true>>=
+\end_layout
+
+\begin_layout Standard
+
+modelEC3 <- mcmodel({
+\end_layout
+
+\begin_layout Standard
+
+  conc <- mcstoc(rnorm,type="U",mean=10,sd=2)
+\end_layout
+
+\begin_layout Standard
+
+  cook <- mcstoc(rempiricalD, type="V",values=c(1,1/5,1/50),
+\end_layout
+
+\begin_layout Standard
+
+    prob=c(0.027,0.373,0.600))
+\end_layout
+
+\begin_layout Standard
+
+  serving <- mcstoc(rgamma,type="V",shape=3.93,rate=0.0806)
+\end_layout
+
+\begin_layout Standard
+
+  r <- mcstoc(runif,type="U",min=0.0005,max=0.0015)
+\end_layout
+
+\begin_layout Standard
+
+  expo <- conc * cook * serving
+\end_layout
+
+\begin_layout Standard
+
+  dose <- mcstoc(rpois,type="VU",lambda=expo)
+\end_layout
+
+\begin_layout Standard
+
+  risk <- 1-(1-r)^dose
+\end_layout
+
+\begin_layout Standard
+
+  mc(conc,cook,serving,expo,dose,r,risk)
+\end_layout
+
+\begin_layout Standard
+
+})
+\end_layout
+
+\begin_layout Standard
+
+modelEC3
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that:
+\end_layout
+
+\begin_layout Itemize
+the model is wrapped between 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+{
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+}
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+any (valid) R code may be placed in the model
+\begin_inset Foot
+status collapsed
+
+\begin_layout Standard
+If needed, it is possible to make reference to the simulation dimensions
+ using 
+\family typewriter
+ndvar()
+\family default
+ and/or 
+\family typewriter
+ndunc()
+\family default
+.
+\end_layout
+
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+The model should end by an 
+\family typewriter
+mc()
+\family default
+ function
+\family typewriter
+.
+\end_layout
+
+\begin_layout Standard
+The model is then evaluated using the 
+\family typewriter
+evalmcmod
+\family default
+ function: 
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align left
+
+\family typewriter
+evalmcmod(expr, nsv=ndvar(), nsu=ndunc(), seed=NULL)
+\end_layout
+
+\begin_layout Standard
+The interest lay in the possibility to re-run the model with various dimensions
+ or random seeds in one line.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh11, echo=true, eval=false>>=
+\end_layout
+
+\begin_layout Standard
+
+EC3 <- evalmcmod(modelEC3,nsv=100,nsu=10,seed=666)
+\end_layout
+
+\begin_layout Standard
+
+EC4 <- evalmcmod(modelEC3,nsv=100,nsu=1000,seed=666)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+The 
+\family typewriter
+mcmodelcut
+\family default
+ and the 
+\family typewriter
+evalmccut
+\family default
+ Functions
+\end_layout
+
+\begin_layout Standard
+If you want to evaluate a high dimension model, R may reach its memory limit.
+ 
+\family typewriter
+evalmccut
+\family default
+ evaluates a 2-dimensional Monte-Carlo model (written with the 
+\family typewriter
+mcmodelcut
+\family default
+ function) using a loop, calculates and stores statistics in the uncertainty
+ dimension for further analysis.
+ Readers should refer to the corresponding documentation for further details.
+ Our example would be written as: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+<<sh12, echo=true, eval=FALSE>>=
+\end_layout
+
+\begin_layout Standard
+
+modEC4 <- mcmodelcut({
+\end_layout
+
+\begin_layout Standard
+
+{cook <- mcstoc(rempiricalD, type = "V", values = c(0, 1/5, 1/50), 
+\end_layout
+
+\begin_layout Standard
+
+                prob = c(0.027, 0.373, 0.6))
+\end_layout
+
+\begin_layout Standard
+
+ serving <- mcstoc(rgamma, type = "V", shape = 3.93, rate = 0.0806)      
+ 
+\end_layout
+
+\begin_layout Standard
+
+ conc <- mcstoc(rnorm, type = "U", mean = 10, sd = 2)       
+\end_layout
+
+\begin_layout Standard
+
+ r <- mcstoc(runif, type = "U", min = 5e-04, max = 0.0015)     
+\end_layout
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\begin_layout Standard
+
+## Second block 
+\end_layout
+
+\begin_layout Standard
+
+{expo <- conc * cook * serving       
+\end_layout
+
+\begin_layout Standard
+
+ dose <- mcstoc(rpois, type = "VU", lambda = expo)
+\end_layout
+
+\begin_layout Standard
+
+ risk <- 1 - (1 - r)^dose
+\end_layout
+
+\begin_layout Standard
+
+ res <- mc(zero,conc, cook, serving, expo, dose, r, risk)     }
+\end_layout
+
+\begin_layout Standard
+
+## Third block 
+\end_layout
+
+\begin_layout Standard
+
+{list(
+\end_layout
+
+\begin_layout Standard
+
+  sum = summary(res),
+\end_layout
+
+\begin_layout Standard
+
+  plot = plot(res, draw=FALSE),
+\end_layout
+
+\begin_layout Standard
+
+  minmax = lapply(res,range),
+\end_layout
+
+\begin_layout Standard
+
+  tor=tornado(res),
+\end_layout
+
+\begin_layout Standard
+
+  et =  sapply(res,sd))
+\end_layout
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\begin_layout Standard
+
+})
+\end_layout
+
+\begin_layout Standard
+
+evalmccut(modEC4, nsv = 10001, nsu = 101, seed = 666,  progress.bar=TRUE)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that the use of a 
+\family typewriter
+tornado
+\family default
+ function in the model should be avoided since it slows considerably the
+ 
+\family typewriter
+evalmccut
+\family default
+ function.
+ The 
+\family typewriter
+tornado
+\family default
+ function will be rewritten in the near future.
+ 
+\end_layout
+
+\begin_layout Subsection
+Studying an 
+\family typewriter
+mc
+\family default
+ Object
+\end_layout
+
+\begin_layout Standard
+As a reminder, the 
+\family typewriter
+print
+\family default
+ function provides a very basic summary of the 
+\family typewriter
+mc
+\family default
+ object.
+ It has a 
+\family typewriter
+digits
+\family default
+ argument (default: 3).
+ Obviously, other more informative functions are provided in the 
+\family typewriter
+mc2d
+\family default
+ package.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+The 
+\family typewriter
+summary
+\family default
+ Function
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+summary
+\family default
+ function provide statistics on the 
+\family typewriter
+mc
+\family default
+ object: 
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align left
+
+\family typewriter
+summary(object, probs=c(0,0.025,0.25,0.5,0.75,0.975,1), lim=c(0.025,0.975), ...)
+\end_layout
+
+\begin_layout Standard
+The mean, the standard deviation and the quantiles provided in the 
+\family typewriter
+probs
+\family default
+ arguments are evaluated on the variability dimension.
+ Then, the median and the quantiles provided in the 
+\family typewriter
+lim
+\family default
+ argument are evaluated on these statistics.
+ Of course, these arguments should be changed if other quantiles are needed.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh14, echo=true, eval=true>>=
+\end_layout
+
+\begin_layout Standard
+
+tmp <- summary(EC2,probs=c(0.995,0.999),digits=12)
+\end_layout
+
+\begin_layout Standard
+
+tmp$risk
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+The 
+\family typewriter
+hist
+\family default
+ Function
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+hist
+\family default
+ provides an histogram of the different 
+\family typewriter
+mcnode
+\family default
+ of the 
+\family typewriter
+mc
+\family default
+ object (cf.
+ Figure 
+\begin_inset LatexCommand ref
+reference "fig:Function-hist"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align left
+
+\family typewriter
+hist (x, griddim = NULL, xlab = names(x), ylab = "Frequency", main = "",
+ ...)
+\end_layout
+
+\begin_layout Standard
+In the current version, uncertainty and variability distributions are collapsed.
+ The histogram might be meaningless.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh15, echo=true, eval=false, fig=false>>=
+\end_layout
+
+\begin_layout Standard
+
+hist(EC2)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+
+\lang french
+\begin_inset LatexCommand label
+name "fig:Function-hist"
+
+\end_inset
+
+Function 
+\family typewriter
+hist
+\family default
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+<<sh16, echo=false, eval=true, fig=true>>=
+\end_layout
+
+\begin_layout Standard
+
+hist(EC2)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+The 
+\family typewriter
+plot
+\family default
+ function
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+plot
+\family default
+ function provides a graph of the empirical distribution function of the
+ estimate (mean or median) of the quantiles.
+ 
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align left
+
+\family typewriter
+plot (x, prec = 0.01, stat = c("median", "mean"), lim = c(0.025,0.975), na.rm
+ = TRUE, griddim = NULL, xlab = NULL, ylab = "Fn(x)", main = "", draw =
+ TRUE, ...)
+\end_layout
+
+\begin_layout Standard
+For our example, see the Figure 
+\begin_inset LatexCommand ref
+reference "fig:Function-plot"
+
+\end_inset
+
+ as a default graph.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh17, echo=true, eval=false, fig=false>>=
+\end_layout
+
+\begin_layout Standard
+
+plot(EC2)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+
+\lang french
+\begin_inset LatexCommand label
+name "fig:Function-plot"
+
+\end_inset
+
+
+\family typewriter
+plot
+\family default
+ Function .
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+<<sh18, echo=false, eval=true, fig=true>>=
+\end_layout
+
+\begin_layout Standard
+
+plot(EC2)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that 
+\family typewriter
+mcnode
+\family default
+ objects have the same methods 
+\family typewriter
+print
+\family default
+, 
+\family typewriter
+summary
+\family default
+, 
+\family typewriter
+plot
+\family default
+, and 
+\family typewriter
+hist
+\family default
+.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+The 
+\family typewriter
+tornado
+\family default
+ function
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+tornado
+\family default
+ function builds the Spearman (default) rank correlation between nodes of
+ the 
+\family typewriter
+mc
+\family default
+ object.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align left
+
+\family typewriter
+tornado(x, output=length(x), use="all.obs", method=c("spearman", "kendall","pears
+on"), lim=c(0.025, 0.975))
+\end_layout
+
+\begin_layout Standard
+where 
+\family typewriter
+output
+\family default
+ is the 
+\family typewriter
+mcnode
+\family default
+ (name or rank) of the output (default: the last 
+\family typewriter
+mcnode
+\family default
+).
+ Missing data are treated using the 
+\family typewriter
+use
+\family default
+ arguments (see the reference documentation).
+ 
+\family typewriter
+tornado
+\family default
+ creates a 
+\family typewriter
+tornado
+\family default
+ object with a 
+\family typewriter
+plot
+\family default
+ method (
+\emph on
+cf.
+
+\emph default
+ Figure 
+\begin_inset LatexCommand ref
+reference "fig:Function-plottor"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh19, echo=true, eval=true, fig=false>>=
+\end_layout
+
+\begin_layout Standard
+
+torEC2 <- tornado(EC2)
+\end_layout
+
+\begin_layout Standard
+
+plot(torEC2)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+
+\lang french
+\begin_inset LatexCommand label
+name "fig:Function-plottor"
+
+\end_inset
+
+
+\family typewriter
+plot
+\family default
+.
+\family typewriter
+tornado
+\family default
+ Function .
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh19b, echo=false, eval=true, fig=true>>=
+\end_layout
+
+\begin_layout Standard
+
+plot(torEC2)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+The 
+\family typewriter
+tornadounc
+\family default
+ function
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+tornadounc
+\family default
+ explore the impact of the uncertainty on the uncertainty of an output.
+ It builds the Spearman (default) rank correlation between statistics of
+ the 
+\family typewriter
+mc
+\family default
+ object calculated in the variability dimension.
+ 
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align left
+
+\family typewriter
+tornadounc(mc,output = length(mc), quant=c(0.5,0.75,0.975), use = "all.obs",
+ method=c("spearman","kendall","pearson"), ...)
+\end_layout
+
+\begin_layout Standard
+The 
+\family typewriter
+quant
+\family default
+ argument indicates which quantiles should be used in the variability dimension.
+ 
+\family typewriter
+tornadounc
+\family default
+ creates a 
+\family typewriter
+tornadounc
+\family default
+ object with a 
+\family typewriter
+plot
+\family default
+ method
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh19c, echo=true, eval=true, fig=false>>=
+\end_layout
+
+\begin_layout Standard
+
+tornadounc(EC2, output="risk", quant=.99)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The output shows the impact of the uncertain nodes (type "U" nodes) and
+ some statistics (mean, median and, here, the 
+\begin_inset Formula $99^{\text{th}}$
+\end_inset
+
+percentile) calculated on the variability dimension (type "V" and type "VU"
+ nodes) on some statistics of the output.
+\end_layout
+
+\begin_layout Subsection
+Other Functions and 
+\family typewriter
+mc
+\family default
+ Objects
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+mc
+\family default
+ objects are simply lists of three dimensional arrays; within each arrays,
+ values in a given columns represent variability of the parameter.
+\end_layout
+
+\begin_layout Standard
+Knowing the structure of the 
+\family typewriter
+mc
+\family default
+ and the structure of the 
+\family typewriter
+mcnode
+\family default
+ objects, it is direct to apply any R function to these objects.
+ The "
+\family typewriter
+$
+\family default
+" function is helpful to extract an 
+\family typewriter
+mcnode
+\family default
+ from an 
+\family typewriter
+mc
+\family default
+ object, the 
+\family typewriter
+unmc
+\family default
+ function removes all attributes, classes, and dimension equal to one, providing
+ a list of vectors, matrices and/or arrays.
+\end_layout
+
+\begin_layout Standard
+Here is a (silly) example building a linear model (in fact 
+\family typewriter
+ndunc()
+\family default
+ linear models) between the 
+\family typewriter
+risk
+\family default
+ and the 
+\family typewriter
+dose
+\family default
+ within each uncertainty dimension and studying some statistics on the coefficie
+nts.
+ This example is here only to show you that the whole power of R is available
+ for your analysis.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh19ter, echo=true, eval=true>>=
+\end_layout
+
+\begin_layout Standard
+
+tmp <- unmc(EC2, drop=TRUE)
+\end_layout
+
+\begin_layout Standard
+
+dimu <- ncol(tmp$risk)
+\end_layout
+
+\begin_layout Standard
+
+coef <- sapply(1:dimu, function(x) lm(tmp$risk[,x] ~ tmp$dose[,x])$coef)
+ 
+\end_layout
+
+\begin_layout Standard
+
+apply(coef,1,summary)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+\begin_inset LatexCommand label
+name "sec:Multivar"
+
+\end_inset
+
+Multivariate Nodes
+\end_layout
+
+\begin_layout Standard
+The dimension 
+\family typewriter
+nvariates
+\family default
+ is the third dimension of the 
+\family typewriter
+mcnode
+\family default
+.
+ One can use 
+\family typewriter
+mc2d
+\family default
+ ignoring it.
+ Nevertheless, its use is mandatory to deal with some multivariate distributions
+, and it may be useful in some circonstances.
+ Building multivariate nodes is direct.
+ We just have to say that the following code:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh19ter, echo=true, eval=false>>=
+\end_layout
+
+\begin_layout Standard
+
+mcstoc(runif, nvariates=3, min=c(1,2,3),max=4)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+will logically not provide a nodes with 3 variates, each having a different
+ limit.
+ The recycling rule tells you that 
+\family typewriter
+c(1, 2, 3)
+\family default
+ will be used in the first dimension, i.e.
+ the variability dimension.
+ Use instead:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh19quatr, echo=true, eval=true>>=
+\end_layout
+
+\begin_layout Standard
+
+lim <- mcdata(c(1,2,3), type="0", nvariates=3)
+\end_layout
+
+\begin_layout Standard
+
+mcstoc(runif, nvariates=3, min=lim,max=4)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Multivariate Nodes for Multivariate Distributions
+\end_layout
+
+\begin_layout Standard
+The basic usage of multivariate nodes (and the reason why it has been implemente
+d) is for multivariate distributions such as the dirichlet distribution,
+ the multinomial distribution, the multinormal distribution and, possibly,
+ the empirical distribution 
+\end_layout
+
+\begin_layout Standard
+As an example, assume that 3-member families buy 500 g of ground beef.
+ The proportion of steak eaten by the baby, his older brother and his mom
+ follow a Dirichlet (uncertainty) distribution of parameter 
+\begin_inset Formula $\alpha=(2,3,5)$
+\end_inset
+
+.
+ You want to derive the distribution (variability) of steak eaten by 500
+ babies issued from these 500 families.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh20, echo=true, eval=true>>=
+\end_layout
+
+\begin_layout Standard
+
+(p <- mcstoc(rdirichlet, type="U", nsu=100, nvariates=3, alpha=c(2,3,5)))
+\end_layout
+
+\begin_layout Standard
+
+s <- mcstoc(rmultinomial,type="VU", nsv=500, nsu=100, nvariates=3,size=500,
+ prob=p)
+\end_layout
+
+\begin_layout Standard
+
+summary(s)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Assume that each member of these families eat a 
+\begin_inset Quotes eld
+\end_inset
+
+normal
+\begin_inset Quotes erd
+\end_inset
+
+ distribution (variability) of steak with mean 100, 150 and 250 g.
+ There is a positive correlation between the serving of the children, and
+ a negative one with the one of the mother.
+ You want to derive the distribution (variability) of steak eaten by 500
+ babies.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh21, echo=true, eval=true>>=
+\end_layout
+
+\begin_layout Standard
+
+(x <- mcstoc(rmultinormal,type="V", nvariates=3, mean=c(100,150,250), 
+\end_layout
+
+\begin_layout Standard
+
+                              sigma=c(10,2,-5,2,10,-5,-5,-5,10))) 
+\end_layout
+
+\begin_layout Standard
+
+cor(x[,1,])
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this example, 
+\family typewriter
+mean
+\family default
+ could be variable or uncertain, as well as 
+\family typewriter
+sigma
+\family default
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Standard
+Caution: the use of a varying 
+\family typewriter
+sigma
+\family default
+ would be very slow.
+\end_layout
+
+\end_inset
+
+.
+ You could have used, for an uncertain mean.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh21, echo=true, eval=true>>=
+\end_layout
+
+\begin_layout Standard
+
+m <- mcdata(c(100,150,250), type="0", nvariates=3)
+\end_layout
+
+\begin_layout Standard
+
+mun <- mcstoc(rnorm, type="U", nvariates=3, mean=m, sd=20)
+\end_layout
+
+\begin_layout Standard
+
+x <- mcstoc(rmultinormal, type="VU", nvariates=3, mean=mun, sigma=c(10,2,-5,2,10
+,-5,-5,-5,10))
+\end_layout
+
+\begin_layout Standard
+
+cor(x[,1,])
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The correlation is preserved, but the mean of each categories is known with
+ uncertainty.
+\end_layout
+
+\begin_layout Standard
+Multivariate nodes may finally be useful to derive non parametric bootstrap.
+ Assume that, from a study, you obtained 6 individuals that eat 100 g, 12
+ individuals that eat 150 g, 6 individuals that eat 170 g and 6 individuals
+ that eat 200 g of ground beef.
+ You want to derive a non parametric bootstrap to derive uncertainty 
+\begin_inset LatexCommand cite
+key "CULLEN-FREY-1999"
+
+\end_inset
+
+, and then pick in the empirical distribution.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<sh22, echo=true, eval=true>>=
+\end_layout
+
+\begin_layout Standard
+
+(x <- mcstoc(rempiricalD, type="U", outm=c('min','mean','max'), nvariates=30,
+ 
+\end_layout
+
+\begin_layout Standard
+
+              values=c(100,150,170,200),prob=c(6,12,6,6)))
+\end_layout
+
+\begin_layout Standard
+
+mcstoc(rempiricalD,type="VU", values=x)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Printing the statistics of the 30 variates of 
+\family typewriter
+x
+\family default
+ has no interest.
+ Instead, we use the 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+outm
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ option which allows to specify which output we want (
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+none
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ for none, 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+each
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+, the default, for a series of statistics for each variates, or, as in the
+ example, a vector of functions that are applied over all the 30 variates).
+ 
+\end_layout
+
+\begin_layout Subsection
+Multivariate Nodes as a 
+\begin_inset Quotes eld
+\end_inset
+
+Third Dimension
+\begin_inset Quotes erd
+\end_inset
+
+ for Multiple Options in a Model
+\end_layout
+
+\begin_layout Standard
+The recycling rules in 
+\family typewriter
+mc2d
+\family default
+ regarding the 
+\family typewriter
+nvariate
+\family default
+ dimension is as following: the recycling will be done from 
+\family typewriter
+nvariates=1
+\family default
+ to 
+\family typewriter
+nvariates=n
+\family default
+ with 
+\begin_inset Formula $n>1$
+\end_inset
+
+.
+ This allows to use the multivariates nodes as a third dimension, in case
+ you want to test various alternatives.
+ 
+\end_layout
+
+\begin_layout Standard
+Assume as in section 
+\begin_inset LatexCommand ref
+reference "sub:The-mcprobtree-function"
+
+\end_inset
+
+ that the distribution reflecting the uncertainty on 
+\family typewriter
+conc
+\family default
+ was not sure, and that the microbiologists suggest that 
+\begin_inset Formula $conc\sim N\left(10,2\right)$
+\end_inset
+
+ is possible, but that 
+\begin_inset Formula $conc\sim U\left(8,12\right)$
+\end_inset
+
+ is also possible.
+ We can 
+\emph on
+i
+\emph default
+) build a 
+\begin_inset Quotes eld
+\end_inset
+
+bivariate
+\begin_inset Quotes erd
+\end_inset
+
+ node reflecting these two options; ii) transfer these options until the
+ final risk estimate.
+ We obtain a bivariate node for the risk, one using the first hypothesis,
+ the second the second hypothesis.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+<<sh23, echo=true>>=
+\end_layout
+
+\begin_layout Standard
+
+conc1 <- mcstoc(rnorm, type="U", mean=10, sd=2)
+\end_layout
+
+\begin_layout Standard
+
+conc2 <- mcstoc(runif, type="U", min=8, max=12)
+\end_layout
+
+\begin_layout Standard
+
+conc <- mcdata(c(conc1,conc2),type="U",nvariates=2)
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+cook <- mcstoc(rempiricalD, type="V", values=c(1,1/5,1/50), prob=c(0.027,0.373,0.60
+0))
+\end_layout
+
+\begin_layout Standard
+
+serving <- mcstoc(rgamma,type="V",shape=3.93,rate=0.0806)
+\end_layout
+
+\begin_layout Standard
+
+expo <- conc * cook * serving
+\end_layout
+
+\begin_layout Standard
+
+dose <- mcstoc(rpois,type="VU",nvariates=2,lambda=expo)
+\end_layout
+
+\begin_layout Standard
+
+r <- mcstoc(runif,type="U",min=0.0005,max=0.0015)
+\end_layout
+
+\begin_layout Standard
+
+risk <- 1-(1-r)^dose
+\end_layout
+
+\begin_layout Standard
+
+EC5 <- mc(conc,cook,serving,expo,dose,r,risk)
+\end_layout
+
+\begin_layout Standard
+
+summary(EC5)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+(Do not forget to transfer the number of variates you want in 
+\family typewriter
+mcstoc
+\family default
+...
+ (see the definition of 
+\family typewriter
+dose
+\family default
+).
+ 
+\family typewriter
+mc2d
+\family default
+ can not guess...)
+\end_layout
+
+\begin_layout Subsection
+Multivariate Nodes as a 
+\begin_inset Quotes eld
+\end_inset
+
+Third Dimension
+\begin_inset Quotes erd
+\end_inset
+
+ for Multiple Vectors/Contaminants
+\end_layout
+
+\begin_layout Standard
+The recycling rules in 
+\family typewriter
+mc2d
+\family default
+ also allows to use the multivariate nodes as a third dimension for multiple
+ vectors/Contaminants.
+ 
+\end_layout
+
+\begin_layout Standard
+Assume  in our ground beef example that we have two contaminants: one has
+ a mean concentration that follows an uncertainty distribution 
+\begin_inset Formula $conc\sim N\left(10,2\right)$
+\end_inset
+
+, the second one 
+\begin_inset Formula $conc\sim N\left(14,2\right)$
+\end_inset
+
+.
+ We can 
+\emph on
+i
+\emph default
+) build a 
+\begin_inset Quotes eld
+\end_inset
+
+bivariate
+\begin_inset Quotes erd
+\end_inset
+
+ node reflecting these two concentrations
+\begin_inset Foot
+status collapsed
+
+\begin_layout Standard
+Note that we could simulate a correlation between both contaminants using
+ a multinormal distribution.
+\end_layout
+
+\end_inset
+
+ ; 
+\emph on
+ii
+\emph default
+) transfer these options until the final dose; 
+\emph on
+iii
+\emph default
+) sum the dose over the variates (using 
+\family typewriter
+mcapply
+\family default
+).
+ The behavior of contaminants is transferred in the model.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+<<sh24, echo=true>>=
+\end_layout
+
+\begin_layout Standard
+
+mconc <- mcdata(c(10,14), type="0", nvariates=2)
+\end_layout
+
+\begin_layout Standard
+
+conc <- mcstoc(rnorm, nvariates=2, type="U", mean=mconc, sd=2)
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+cook <- mcstoc(rempiricalD, type="V", values=c(1,1/5,1/50), prob=c(0.027,0.373,0.60
+0))
+\end_layout
+
+\begin_layout Standard
+
+serving <- mcstoc(rgamma,type="V",shape=3.93,rate=0.0806)
+\end_layout
+
+\begin_layout Standard
+
+expo <- conc * cook * serving
+\end_layout
+
+\begin_layout Standard
+
+dose <- mcstoc(rpois,type="VU",nvariates=2,lambda=expo)
+\end_layout
+
+\begin_layout Standard
+
+dosetot <- mcapply(dose, margin="variates", fun=sum)
+\end_layout
+
+\begin_layout Standard
+
+r <- mcstoc(runif,type="U",min=0.0005,max=0.0015)
+\end_layout
+
+\begin_layout Standard
+
+risk <- 1-(1-r)^dosetot
+\end_layout
+
+\begin_layout Standard
+
+EC6 <- mc(conc,cook,serving,expo,dose,dosetot,r,risk)
+\end_layout
+
+\begin_layout Standard
+
+summary(EC6)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As a conclusion, this "third" dimension is highly flexible...
+\end_layout
+
+\begin_layout Section
+Other Examples
+\end_layout
+
+\begin_layout Subsection
+A QRA of Waterborne Cryptosporidiosis in France
+\end_layout
+
+\begin_layout Standard
+This example is adapted from 
+\begin_inset LatexCommand cite
+key "POUILLOT-2004"
+
+\end_inset
+
+.
+ The aim is to evaluate the risk of infection with 
+\emph on
+Cryptosporidium
+\emph default
+ 
+\emph on
+parvum
+\emph default
+ from consumption of tap-water, given that 
+\begin_inset Formula $n$
+\end_inset
+
+ oocysts /100 l.
+ have been observed in a storage reservoir.
+\end_layout
+
+\begin_layout Subsubsection
+Tap Water Consumption Model
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+<<Crypto1, echo=false, eval=true>>=
+\end_layout
+
+\begin_layout Standard
+
+library(mc2d)
+\end_layout
+
+\begin_layout Standard
+
+inca <- structure(c(0, 22.08, 60, 64.4, 72, 82.8, 90, 96, 100, 110, 120,  137.5,
+ 144, 150, 160, 162.5, 165, 180, 182.5, 184, 192, 192.5,  200, 216, 220, 225,
+ 230, 240, 250, 264, 270, 276, 288, 290, 300,  304, 312.8, 320, 322, 325,
+ 330, 336, 340, 350, 360, 370, 375,  380, 384, 390, 400, 414, 420, 425,
+ 430, 432, 432.5, 440, 442,  450, 456, 460, 460.8, 464, 470, 470.4, 480, 490,
+ 500, 504, 510,  510.4, 516, 520, 525, 525.6, 528, 530, 540, 544, 550, 552,
+ 560,  562, 565, 570, 576, 580, 582.5, 584, 585.6, 590, 596, 600, 606,  610,
+ 614, 620, 625, 630, 635.4, 640, 648, 650, 656.2, 660, 664.4,  670, 670.4, 672,
+ 675, 680, 682, 690, 696, 700, 710, 716, 720,  730, 730.4, 740, 744, 750,
+ 756, 760, 774.8, 780, 784, 792, 796,  800, 810, 820, 828, 830, 840, 850,
+ 850.4, 860, 864, 866.4, 870,  880, 890, 900, 908, 910, 915.2, 920, 930, 936,
+ 950, 960, 970,  980, 984, 986.4, 990, 996, 1000, 1015.2, 1020, 1028, 1032,
+ 1036,  1040, 1042, 1050, 1070, 1075, 1078.8, 1080, 1090, 1096, 1100,  1110,
+ 1120, 1126.4, 1128, 1130, 1140, 1148, 1150, 1152, 1160,  1170, 1175, 1176.2,
+ 1190, 1196, 1200, 1214, 1220, 1230, 1240,  1248, 1250, 1260, 1276, 1280,
+ 1290, 1296, 1300, 1320, 1322, 1330,  1340, 1350, 1360, 1370, 1386.4, 1400,
+ 1410, 1414, 1420, 1430,  1440, 1446, 1450, 1460, 1480, 1500, 1520, 1530,
+ 1550, 1560, 1600,  1650, 1680, 1696, 1700, 1710, 1720, 1750, 1760, 1800,
+ 1830, 1840,  1850, 1900, 1920, 1936, 1954, 1980, 1990, 2000, 2014, 2050,
+ 2100,  2200, 2220, 2248, 2250, 2276, 2300, 2310, 2340, 2400, 2550, 2568,
+  2700, 2720, 2784, 2820, 2876, 3000, 3100, 3108, 3200, 2578, 7,  1, 8,
+ 14, 3, 1, 1, 10, 1, 250, 1, 2, 120, 8, 6, 1, 5, 3, 12,  5, 5, 375, 2, 8,
+ 7, 41, 408, 53, 4, 24, 7, 3, 2, 217, 1, 1, 44,  9, 1, 31, 1, 1, 17, 294,
+ 5, 3, 9, 3, 12, 525, 5, 23, 1, 3, 4,  1, 28, 3, 154, 2, 5, 1, 2, 6, 1,
+ 299, 8, 148, 1, 2, 1, 1, 8,  3, 1, 2, 14, 20, 1, 18, 2, 20, 6, 1, 8, 2,
+ 8, 1, 1, 1, 4, 1,  487, 3, 5, 1, 7, 1, 5, 1, 24, 3, 17, 1, 42, 1, 2, 1,
+ 1, 1, 16,  1, 3, 1, 30, 4, 1, 183, 4, 1, 5, 1, 141, 1, 14, 1, 12, 1, 2,
+  1, 206, 6, 2, 1, 4, 92, 10, 1, 5, 1, 3, 5, 5, 2, 87, 1, 1, 1,  5, 5, 4,
+ 4, 78, 1, 3, 2, 1, 16, 1, 133, 1, 5, 1, 1, 1, 4, 1,  43, 1, 1, 1, 30, 1,
+ 1, 7, 2, 6, 1, 1, 3, 3, 1, 10, 1, 5, 1, 1,  1, 1, 1, 159, 2, 1, 1, 10,
+ 1, 16, 4, 2, 5, 3, 1, 3, 11, 4, 1,  2, 12, 5, 1, 1, 44, 3, 2, 1, 2, 17,
+ 1, 4, 1, 1, 17, 1, 1, 3,  4, 18, 14, 4, 1, 2, 1, 1, 1, 2, 12, 1, 2, 1,
+ 1, 1, 1, 1, 3, 1,  20, 1, 1, 1, 7, 1, 1, 3, 1, 2, 2, 1, 6, 1, 1, 1, 1,
+ 1, 1, 1,  2, 1, 1, 2), .Dim = c(270L, 2L))
+\end_layout
+
+\begin_layout Standard
+
+inca <- rep(inca[,1],inca[,2])/1000 
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We own row data of daily cunsomption of tap water from 1,180 tap water consumers
+ (var 
+\family typewriter
+inca
+\family default
+, see Figure 
+\begin_inset LatexCommand ref
+reference "fig:Function-inca"
+
+\end_inset
+
+).
+ We could choose to use this empirical distribution:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+
+\lang french
+\begin_inset LatexCommand label
+name "fig:Function-inca"
+
+\end_inset
+
+Histogram of daily tap water intake
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<Crypto2, echo=false, eval=true, fig=true>>=
+\end_layout
+
+\begin_layout Standard
+
+hist(inca, xlab="l/day",freq=FALSE,main="") 
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<Crypto3, echo=true>>=
+\end_layout
+
+\begin_layout Standard
+
+ndvar(1001);ndunc(1001)
+\end_layout
+
+\begin_layout Standard
+
+mcstoc(rempiricalD,type="V",values=inca)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+but we will use the "
+\family typewriter
+fitdistrplus
+\family default
+" library.
+ 
+\family typewriter
+inca
+\family default
+ includes a lot of 
+\family typewriter
+0
+\family default
+, corresponding to days when individuals do not drink tap water (possibly
+ bottled water).
+ We could try a mixture of distributions, with 
+\family typewriter
+0
+\family default
+ and non-
+\family typewriter
+0
+\family default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<Crypto4, echo=true, figure=false>>=
+\end_layout
+
+\begin_layout Standard
+
+library(specdist) 
+\end_layout
+
+\begin_layout Standard
+
+pnonzero <- sum(inca!=0)/length(inca)
+\end_layout
+
+\begin_layout Standard
+
+descdist(inca[inca!=0])
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+
+\lang french
+\begin_inset LatexCommand label
+name "fig:Function-descdist"
+
+\end_inset
+
+Graph from the 
+\family typewriter
+descdist
+\family default
+ function.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<Crypto5, echo=false, eval=true, fig=true>>=
+\end_layout
+
+\begin_layout Standard
+
+descdist(inca[inca!=0])
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Following the 
+\family typewriter
+descdist
+\family default
+ function (See figure 
+\begin_inset LatexCommand ref
+reference "fig:Function-descdist"
+
+\end_inset
+
+), let us try the gamma distribution.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<Crypto6, echo=true, figure=false>>=
+\end_layout
+
+\begin_layout Standard
+
+gam <- mledist(inca[inca!=0],"gamma")
+\end_layout
+
+\begin_layout Standard
+
+summary(gam)
+\end_layout
+
+\begin_layout Standard
+
+plot(gam)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Standard
+\begin_inset Caption
+
+\begin_layout Standard
+
+\lang french
+\begin_inset LatexCommand label
+name "fig:Function-mledist"
+
+\end_inset
+
+Graph from the 
+\family typewriter
+descdist
+\family default
+ function.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<Crypto7, echo=false, eval=true, fig=true>>=
+\end_layout
+
+\begin_layout Standard
+
+plot(gam)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Not so bad (See Figure 
+\begin_inset LatexCommand ref
+reference "fig:Function-mledist"
+
+\end_inset
+
+), and not worse than a lognormal distribution (results not shown).
+ We can now rebuild our mixture.
+ For simplicity, we will not consider uncertainty around the estimates.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+<<Crypto8, echo=true, figure=false>>=
+\end_layout
+
+\begin_layout Standard
+
+conso0 <- mcdata(0,type="V")
+\end_layout
+
+\begin_layout Standard
+
+conso1 <- mcstoc(rgamma,type="V",shape=gam$est[1],rate=gam$est[2])
+\end_layout
+
+\begin_layout Standard
+
+mcswitch <- mcstoc(rbern,type="V",prob=pnonzero)
+\end_layout
+
+\begin_layout Standard
+
+v <- mcprobtree(mcswitch, list("0"=conso0,"1"=conso1), type = "V")
+\end_layout
+
+\begin_layout Standard
+
+summary(v)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+The Dose-Response Model
+\end_layout
+
+\begin_layout Standard
+We propose a boostrap from data (
+\family typewriter
+datDR
+\family default
+) issued from 
+\begin_inset LatexCommand cite
+key "CHAPPELL-1996"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<Crypto9, echo=true, figure=false>>=
+\end_layout
+
+\begin_layout Standard
+
+datDR <- list(   dose=c(30,100,300,500,1000,10000,100000,1000000),
+\end_layout
+
+\begin_layout Standard
+
+                 pi=c(2,4,2,5,2,3,1,1),
+\end_layout
+
+\begin_layout Standard
+
+                 ni=c(5,8,3,6,2,3,1,1))
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+estDR <- function(dat,ref){
+\end_layout
+
+\begin_layout Standard
+
+   -glm(cbind(ref$ni-dat,dat) ~ ref$dose + 0,binomial(link="log"))$coefficients}
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+laDR <- function(dat,iter){
+\end_layout
+
+\begin_layout Standard
+
+   ml <- 1-exp(-estDR(dat$pi,dat)*datDR$dose)
+\end_layout
+
+\begin_layout Standard
+
+   boot <- matrix(rbinom(length(datDR$dose)*iter,datDR$ni,ml),nrow=length(datDR$
+dose))
+\end_layout
+
+\begin_layout Standard
+
+   apply(boot,2,estDR,ref=dat)}
+\end_layout
+
+\begin_layout Standard
+
+bootr <- laDR(datDR,ndunc()) 
+\end_layout
+
+\begin_layout Standard
+
+r <- mcdata(bootr, type="U")
+\end_layout
+
+\begin_layout Standard
+
+summary(r)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+The Model
+\end_layout
+
+\begin_layout Standard
+Deriving the final model is direct.
+ We build the 
+\family typewriter
+mcnode
+\family default
+ corresponding to the recovery rate (Uncertainty,
+\family typewriter
+ Rr
+\family default
+), the probability for an oocyst to be infective (Variability, 
+\family typewriter
+w
+\family default
+): 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<Crypto10, echo=true, figure=false>>=
+\end_layout
+
+\begin_layout Standard
+
+Rr <- mcstoc(rbeta, type="U", shape1=2.65, shape2=3.64)
+\end_layout
+
+\begin_layout Standard
+
+w <- mcstoc(rbeta, type="V", shape1=2.6, shape2=3.4) 
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Given that 
+\begin_inset Formula $n=2$
+\end_inset
+
+ oocysts are observed in 100 l of water, the expected number of oocysts
+ in the sample is 
+\family typewriter
+l
+\family default
+: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<Crypto11, echo=true, figure=false>>=
+\end_layout
+
+\begin_layout Standard
+
+Oo <- 2
+\end_layout
+
+\begin_layout Standard
+
+l <- (Oo + mcstoc(rnbinom, type="U", size=Oo+1, prob=Rr))/100
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The expected number of oocysts drunk by the individuals is 
+\family typewriter
+Or
+\family default
+ and the risk (
+\begin_inset Formula $\times10000$
+\end_inset
+
+) is estimated by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<Crypto12, echo=true, figure=false>>=
+\end_layout
+
+\begin_layout Standard
+
+Or <- l * v * w
+\end_layout
+
+\begin_layout Standard
+
+P <- 10000 * (1-exp(-r*Or))
+\end_layout
+
+\begin_layout Standard
+
+summary(P)
+\end_layout
+
+\begin_layout Standard
+
+@ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To be compared to the results obtained in the Table 2 in 
+\begin_inset LatexCommand cite
+key "POUILLOT-2004"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Improvement: the results for 
+\begin_inset Formula $n=\left\{ 0,1,2,5,10,20,50,100,1000\right\} $
+\end_inset
+
+ can be obtained in one step using: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Standard
+
+<<Crypto13, echo=true, figure=false>>=
+\end_layout
+
+\begin_layout Standard
+
+Oo <- mcdata(c(0,1,2,5,10,20,50,100,1000),type="0",nvariates=9) 
+\end_layout
+
+\begin_layout Standard
+
+@ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+As a Conclusion
+\end_layout
+
+\begin_layout Standard
+We think and hope that 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+mc2d
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ could help risk assessors to build or study their models, and that it may
+ help developing the use of "Two-dimensional" simulation.
+ Nevertheless, "
+\family typewriter
+mc2d
+\family default
+" is currently under development and 
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\emph on
+CHECK CAREFULLY YOUR MODEL AND RESULTS TO TRACK THE BUGS.
+ 
+\end_layout
+
+\begin_layout Standard
+Please refer any commentary or bugs to 
+\begin_inset LatexCommand url
+target "rpouillot@yahoo.fr"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset LatexCommand bibtex
+options "plain"
+bibfiles "Bibtex"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
