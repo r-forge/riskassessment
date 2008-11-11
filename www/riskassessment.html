@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+  <title>riskassessment</title>
+  <meta name="generator" content="Amaya, see http://www.w3.org/Amaya/" />
+  <style type="text/css" title="Amaya theme">
+/* Modern style for Amaya Editor Lite */
+
+/* default rules for the whole document */
+body {
+    font-size: 12pt;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    color: black;
+    background-color: white;
+    line-height: 1.2em;
+    margin-left: 4em;
+    margin-right: 2em;
+   }
+
+/* paragraphs */
+p  {
+    padding: 0;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    text-align: left;
+   }
+
+/* headings */
+h1 {
+    font-size: 180%;
+    font-weight: bold;
+    font-style: normal;
+    font-variant: small-caps;
+    text-align: left;
+    padding: 0;
+    margin-top: 1.7em;
+    margin-bottom: 1.7em;
+   }
+h2 {
+    font-size: 150%;
+    font-weight: bold;
+    font-style: normal;
+    padding: 0;
+    margin-top: 1.5em;
+    margin-bottom: 1.1em;
+   }
+h3 {
+    font-size: 130%;
+    font-weight: bold;
+    font-style: normal;
+    padding: 0;
+    margin-top: 1.3em;
+    margin-bottom: 1.1em;
+   }
+h4 {
+    font-size: 110%;
+    font-weight: bold;
+    font-style: normal;
+    padding: 0;
+    margin-top: 1.1em;
+    margin-bottom: 1.1em;
+   }
+h5 {
+    font-size: 100%;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin-top: 1em;
+    margin-bottom: 1em;
+   }
+h6 {
+    font-size: 100%;
+    font-weight: normal;
+    font-style: italic;
+    padding: 0;
+    margin-top: 1em;
+    margin-bottom: 1em;
+   }
+
+/* divisions */
+div {
+    padding: 0;
+    margin-top: 0em;
+    margin-bottom: 0em;
+   }
+
+/* lists */
+ul, ol {
+    padding: 0 0 0 3em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+   }
+ul ul, ol ol, ul ol, ol ul {
+    margin-top: 1em;
+    margin-bottom: 1em;
+   }
+li {
+    padding: 0;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    text-align: left;
+   }
+li p {
+    margin-top: 1em;
+    margin-bottom: 1em;
+   }
+dl {
+    padding: 0;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 1em;
+   }
+dl dl {
+    margin-top: 0em;
+    margin-bottom: 0em;
+   }
+dt {
+    padding: 0;
+    font-weight: bold;
+    margin-top: .3em;
+    margin-bottom: .3em;
+   }
+dd {
+    padding: 0;
+    margin-top: .3em;
+    margin-left: 3em;
+    margin-bottom: .3em;
+   }
+dl p {
+    margin-top: .3em;
+    margin-bottom: .3em;
+   }
+
+/* inline */
+strong {
+    font-weight: bold;
+   }
+em {
+    font-style: italic;
+   }
+code {
+    font-family: Courier New, Courier, monospace;
+   }
+ins {
+    background-color: yellow;
+    text-decoration: underline;
+   }
+del {
+    text-decoration: line-through;
+   }
+
+/* anchors */
+a[href] {
+    color: blue;
+    text-decoration: underline;
+   }
+
+/* end */
+  </style>
+</head>
+
+<body>
+<h1 style="text-align:center;background-color:#0080c0"><span
+style="color:#ffffff">Welcome to the Project "Risk Assessment with
+R"</span></h1>
+
+<p>This R-Forge project was first developed to help the administrators <a
+href="mailto:ml.delignette@vet-lyon.fr">Marie-Laure Delignette Muller</a>, <a
+href="mailto:Jean-Baptiste.Denis@jouy.inra.fr">Jean-Baptiste Denis</a> and <a
+href="mailto:rpouillot@yahoo.fr">Régis Pouillot</a> to share elements from the
+two R packages they are building, "fitdistr+" and "mc2d". </p>
+
+<p>Those packages are developed in the aim to help risk assessors to build and
+study their models using Monte-Carlo simulations with R.</p>
+
+<h2><span
+style="font-family: Courier New,Courier,monospace">fitdistrplus</span>:
+Specification of a Parametric Distribution from Data </h2>
+
+<p>&ldquo;fitdistr+&rdquo; is an set of functions specifically written to: </p>
+<ul>
+  <li>help to choose the best parametric distribution that fit your data;</li>
+  <li>for a given distribution, estimate the parameters using the maximum
+    likelihood method or the method of matching moments and provides graphs and
+    statistics to assess the fit. A specific function was written for censored
+    data (right- left- and interval-censored).</li>
+</ul>
+
+<h2><span style="font-family: Courier New,Courier,monospace">mc2d</span>: Tools
+for 2D Monte-Carlo Simulations</h2>
+
+<p>"mc2d" is a set of functions specially written to:</p>
+<ul>
+  <li>provide additional distributions: Bernoulli, triangular, PERT, discrete
+    empirical, generalized beta, (vectorized) multi-normal, (vectorized)
+    Dirichlet, (vectorized) multinomial;</li>
+  <li>provide tools to build correlation structure between parameters: using
+    the Iman &amp; Conover (1982) method, possibly on more than two
+  parameters;</li>
+  <li>provide tools to build models: the package transfers easily variability
+    and uncertainty along a mathematical model;</li>
+  <li>provide tools to study the model: through ad-hoc summaries and graphics,
+    sensitivity analyses (rank correlation on the variability or the
+    uncertainty dimension), etc.</li>
+</ul>
+
+<p></p>
+
+<p></p>
+
+<p>Both packages come with a vignette which should help you understand their
+use and usage.</p>
+
+<p></p>
+
+<p style="text-align:center;"><strong>These packages are Beta versions and come
+with absolutly no warranty!!! </strong></p>
+
+<p></p>
+
+<p><strong>Feel free to join this project to:</strong></p>
+<ul>
+  <li>Test the packages;</li>
+  <li>Implement new functions;</li>
+  <li>Implement new R packages in the Risk Assessment domain...</li>
+</ul>
+
+<p></p>
+</body>
+</html>
