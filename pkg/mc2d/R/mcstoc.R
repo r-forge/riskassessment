@@ -216,8 +216,10 @@ mcstoc <- function(func=runif, type=c("V","U","VU","0"), ..., nsv=ndvar(), nsu=n
   if(rtrunc){
        pfun <- paste("p",distr,sep="")                            #define pfunc
 
-       func <- function(argsd){
-          attach(argsd)                                           # attache linf and lsup
+       func <- function(...){
+          argsd <- list(...)
+          linf <- argsd$linf
+          lsup <- argsd$lsup
           if(any(pmin(linf,lsup) != linf)) stop("linf should be <= lsup")  #not min since vectors should be recycled
           nnfin <- argsd[[nsample]]
           argsd$linf <- argsd$lsup <- argsd[[nsample]] <- NULL
@@ -234,7 +236,8 @@ mcstoc <- function(func=runif, type=c("V","U","VU","0"), ..., nsv=ndvar(), nsu=n
           data[is.na(linf) | is.na(lsup)] <- NaN      #ex: rtrunc("norm",10,sd=-2)
           return(data)}
     }
-    else func <- function(argsd) {                    # LHS only
+    else func <- function(...) {                    # LHS only
+          argsd <- list(...)
           argsd[[nsample]] <- NULL
           lesp <- lhs(distr="runif",nsv=dimf[1],nsu=dimf[2],nvariates=dimf[3],min=0,max=1)
           return(do.call(qfun,c(list(p=lesp),argsd)))}
