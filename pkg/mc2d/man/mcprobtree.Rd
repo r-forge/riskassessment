@@ -4,28 +4,39 @@
 Creates a Stochastic mcnode Object using a Probability Tree
 }
 \description{
-If one node should be built using a mixed of \code{mcstoc}
-functions/nodes, \code{mcprobtree} creates this \code{\link{mcnode}}
-object from one node specifying the \code{mcstoc} functions/nodes to
-pick and a list of the different \code{mcstoc} functions/nodes.
+This function builds a \code{mcnode} as a mixture of \code{mcstoc}
+functions or \code{mcnode} objects.
 }
 \usage{
 mcprobtree(mcswitch, mcvalues, type=c("V", "U", "VU", "0"), nsv=ndvar(),
 	  nsu=ndunc(), nvariates=1, outm="each", seed=NULL)
 }
 \examples{
-conc1 <- mcstoc(rnorm, type="U", mean=10, sd=2)
-conc2 <- mcstoc(runif, type="U", min=8, max=12)
-whichdist <- mcstoc(rbern, type="U", prob=0.25) 
-concbis <- mcprobtree(whichdist, list("0"=conc1, "1"=conc2), type="VU")
+## A mixture of normal (prob=0.75), uniform (prob=0.20) and constant (prob=0.05)
+conc1 <- mcstoc(rnorm, type="VU", mean=10, sd=2)
+conc2 <- mcstoc(runif, type="VU", min=-6, max=-5)
+conc3 <- mcdata(0, type="VU")
+whichdist <- mcstoc(rempiricalD, type="VU", values=1:3, prob= c(.75, .25, .05)) 
+mcprobtree(whichdist, list("1"=conc1, "2"=conc2, "3"=conc3), type="VU")
+mcprobtree(c(.75, .20, .05), list("1"=conc1, "2"=conc2, "3"=conc3), type="VU")
+
+## Randomly by colums (Uncertainty) 
+whichdist <- mcstoc(rempiricalD, type="U", values=1:3, prob= c(.75, .25, .05)) 
+mcprobtree(whichdist, list("1"=conc1, "2"=conc2, "3"=conc3), type="VU")
+
+## Randomly by line (Variability) 
+whichdist <- mcstoc(rempiricalD, type="V", values=1:3, prob= c(.75, .25, .05)) 
+mcprobtree(whichdist, list("1"=conc1, "2"=conc2, "3"=conc3), type="VU")
 
 }
 \arguments{
-\item{mcswitch}{A \code{mcnode} including the \code{mcstoc}
-functions/mcnodes to pick.}
+\item{mcswitch}{A vector of probabilities/weights or a \code{mcnode}
+including the \code{mcstoc} functions/mcnodes to pick.}
 \item{mcvalues}{A named list of \code{mcnode}, \code{mcdata}
 functions or \code{mcstoc} functions, or a combination of those
-objects.}
+objects. Each element should lead to an \code{mcnode} of type
+\code{type} and of dimension \code{c(nsv x nsu x 1)} or \code{c(nsv x
+nsu x nvariates)} }
 \item{type}{The type of \code{mcnode} to be built. By default, a
 \code{"V"} node. see \code{\link{mcnode}} for details.}
 \item{nsv}{The number of simulations in the variability dimension of
@@ -42,15 +53,16 @@ the \code{seed} is unchanged.}
 \code{mcswitch} may be: 
 
 \itemize{
+\item a vector of length the length of \code{mcvalues}. They need not
+sum to one, but they should be nonnegative and not all zero. In that
+case, each elements of \code{mcvalues} will appear in the final
+sample a random number of times as specified by this vector.
 \item a \code{"0"} mcnode to build any type of node.
 \item a \code{"V"} mcnode to build a \code{"V"} or a \code{"VU"}
 mcnode.
 \item a \code{"U"} mcnode to build a \code{"U"} or a \code{"VU"}
 mcnode.
 \item a \code{"VU"} mcnode to build a \code{"VU"}.}
- \code{mcswitch} will be recycled correctly if needed. (see
-\code{\link{mcdata}})
-
 The elements in \code{mcvalues} should be of same type and dimension
 as specified in \code{type}, \code{nsv}, \code{nsu} and
 \code{nvariates}. The name should correspond to the values in
