@@ -74,8 +74,7 @@ Simulations.
 In a previous version, some tools to fit parametric distributions
 to data were included. These functions being useful for other purposes,
 they have been placed in a specific package called \texttt{specdist}.
-These packages are available at the URL \url{http://w3.jouy.inra.fr/unites/miaj/public/matrisq/jbdenis/outils/welcome.html},
-and soon on the CRAN: \url{http://lib.stat.cmu.edu/R/CRAN/}. 
+These packages are available at the URL \url{https://r-forge.r-project.org/projects/riskassessment/}. 
 
 \texttt{mc2d} was built for QRA in the Food Safety domain but it might
 be used for other domains. 
@@ -1159,10 +1158,7 @@ As a conclusion, this \char`\"{}third\char`\"{} dimension is highly
 flexible...
 
 
-\section{Other Examples}
-
-
-\subsection{A QRA of Waterborne Cryptosporidiosis in France}
+\section{Another Example: A QRA of Waterborne Cryptosporidiosis in France}
 
 This example is adapted from \cite{POUILLOT-2004}. The aim is to
 evaluate the risk of infection with \emph{Cryptosporidium} \emph{parvum}
@@ -1170,7 +1166,7 @@ from consumption of tap-water, given that $n$ oocysts /100 l. have
 been observed in a storage reservoir.
 
 
-\subsubsection{Tap Water Consumption Model}
+\subsection{Tap Water Consumption Model}
 
 <<Crypto1, echo=false, eval=true>>=
 library(mc2d)
@@ -1206,9 +1202,10 @@ when individuals do not drink tap water (possibly bottled water).
 We could try a mixture of distributions, with \texttt{0} and non-\texttt{0}. 
 
 <<Crypto4, echo=true, figure=false>>=
-library(specdist) 
+library(fitdistrplus) 
 pnonzero <- sum(inca!=0)/length(inca)
-descdist(inca[inca!=0])
+inca_non_0 <- inca[inca!=0] 
+descdist(inca_non_0)
 @
 
 %
@@ -1219,7 +1216,7 @@ descdist(inca[inca!=0])
 
 
 <<Crypto5, echo=false, eval=true, fig=true>>=
-descdist(inca[inca!=0])
+descdist(inca_non_0)
 @
 \end{figure}
 
@@ -1228,9 +1225,11 @@ Following the \texttt{descdist} function (See figure \ref{fig:Function-descdist}
 let us try the gamma distribution. 
 
 <<Crypto6, echo=true, figure=false>>=
-gam <- mledist(inca[inca!=0],"gamma")
-summary(gam)
-plot(gam)
+Adj_water <- fitdist(inca_non_0,"lnorm",method="mle")
+meanlog <- Adj_water$est[1]
+sdlog   <- Adj_water$est[2]
+summary(Adj_water)
+plot(Adj_water)
 @
 
 %
@@ -1241,48 +1240,60 @@ plot(gam)
 
 
 <<Crypto7, echo=false, eval=true, fig=true>>=
-plot(gam)
+plot(Adj_water)
 @
 \end{figure}
 
 
-Not so bad (See Figure \ref{fig:Function-mledist}), and not worse
-than a lognormal distribution (results not shown). We can now rebuild
-our mixture. For simplicity, we will not consider uncertainty around
-the estimates.
+Not so bad (See Figure \ref{fig:Function-mledist}), and better than
+a gamma distribution (results not shown). We can now rebuild our mixture.
+We could consider uncertainty around the maximum likelihood estimates
+using the \texttt{bootdist} function of the \texttt{fitdistrplus}
+package.
+
+<<Crypto7bis, echo=true, eval=false>>=
+Boot <- bootdist(Ajust_lnorm, bootmethod="param", niter=ndunc())
+Mean_conso <- mcdata(Boot$bootestim$meanlog, type="U")
+Sd_conso <- mcdata(Boot$bootestim$sdlog, type="U")
+conso1 <- mcstoc(rlnorm, type="VU", meanlog= Mean_conso, sdlog= Sd_conso)
+@
+
+For simplicity, we will not consider uncertainty around the estimates
+(see the \texttt{fitdistrplus} vignette).
 
 <<Crypto8, echo=true, figure=false>>=
 conso0 <- mcdata(0,type="V")
-conso1 <- mcstoc(rgamma,type="V",shape=gam$est[1],rate=gam$est[2])
-mcswitch <- mcstoc(rbern,type="V",prob=pnonzero)
+conso1 <- mcstoc(rlnorm, type="V", meanlog=meanlog, sdlog=sdlog)
+mcswitch <- mcstoc(rbern, type="V", prob=pnonzero)
 v <- mcprobtree(mcswitch, list("0"=conso0,"1"=conso1), type = "V")
 summary(v)
 @
 
 
-\subsubsection{The Dose-Response Model}
+\subsection{The Dose-Response Model}
 
 We propose a boostrap from data (\texttt{datDR}) issued from \cite{CHAPPELL-1996}.
+We first define a function 
 
 <<Crypto9, echo=true, figure=false>>=
 datDR <- list(   dose=c(30,100,300,500,1000,10000,100000,1000000),
                  pi=c(2,4,2,5,2,3,1,1),
                  ni=c(5,8,3,6,2,3,1,1))
 
-estDR <- function(dat,ref){
-   -glm(cbind(ref$ni-dat,dat) ~ ref$dose + 0,binomial(link="log"))$coefficients}
+estDR <- function(pos,ref){
+   -glm(cbind(ref$ni-pos,pos) ~ ref$dose + 0, binomial(link="log"))$coefficients}
 
-laDR <- function(dat,iter){
-   ml <- 1-exp(-estDR(dat$pi,dat)*datDR$dose)
-   boot <- matrix(rbinom(length(datDR$dose)*iter,datDR$ni,ml),nrow=length(datDR$dose))
-   apply(boot,2,estDR,ref=dat)}
-bootr <- laDR(datDR,ndunc()) 
-r <- mcdata(bootr, type="U")
+ml <- 1-exp(-estDR(datDR$pi, datDR) * datDR$dose)
+
+laDR <- function(n){
+   boot <- matrix(rbinom(length(datDR$dose)*n,datDR$ni,ml),nrow=length(datDR$dose))
+   apply(boot,2,estDR,ref=datDR)}
+r <- mcstoc(laDR, type="U")
 summary(r)
 @
 
 
-\subsubsection{The Model}
+\subsection{The Model}
 
 Deriving the final model is direct. We build the \texttt{mcnode} corresponding
 to the recovery rate (Uncertainty,\texttt{ Rr}), the probability for
@@ -1315,7 +1326,7 @@ To be compared to the results obtained in the Table 2 in \cite{POUILLOT-2004}.
 Improvement: the results for $n=\left\{ 0,1,2,5,10,20,50,100,1000\right\} $
 can be obtained in one step using: 
 
-<<Crypto13, echo=true, figure=false>>=
+<<Crypto13, echo=true, eval=false, figure=false>>=
 Oo <- mcdata(c(0,1,2,5,10,20,50,100,1000),type="0",nvariates=9) 
 @ 
 

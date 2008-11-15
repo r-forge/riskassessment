@@ -178,13 +178,7 @@ specdist
 .
  These packages are available at the URL 
 \begin_inset LatexCommand htmlurl
-target "http://w3.jouy.inra.fr/unites/miaj/public/matrisq/jbdenis/outils/welcome.html"
-
-\end_inset
-
-, and soon on the CRAN: 
-\begin_inset LatexCommand htmlurl
-target "http://lib.stat.cmu.edu/R/CRAN/"
+target "https://r-forge.r-project.org/projects/riskassessment/"
 
 \end_inset
 
@@ -6955,11 +6949,7 @@ As a conclusion, this "third" dimension is highly flexible...
 \end_layout
 
 \begin_layout Section
-Other Examples
-\end_layout
-
-\begin_layout Subsection
-A QRA of Waterborne Cryptosporidiosis in France
+Another Example: A QRA of Waterborne Cryptosporidiosis in France
 \end_layout
 
 \begin_layout Standard
@@ -6986,13 +6976,13 @@ parvum
  have been observed in a storage reservoir.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Tap Water Consumption Model
 \end_layout
 
 \begin_layout Standard
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Standard
 
@@ -7195,7 +7185,7 @@ status open
 
 \begin_layout Standard
 
-library(specdist) 
+library(fitdistrplus) 
 \end_layout
 
 \begin_layout Standard
@@ -7205,7 +7195,12 @@ pnonzero <- sum(inca!=0)/length(inca)
 
 \begin_layout Standard
 
-descdist(inca[inca!=0])
+inca_non_0 <- inca[inca!=0] 
+\end_layout
+
+\begin_layout Standard
+
+descdist(inca_non_0)
 \end_layout
 
 \begin_layout Standard
@@ -7259,7 +7254,7 @@ status open
 
 \begin_layout Standard
 
-descdist(inca[inca!=0])
+descdist(inca_non_0)
 \end_layout
 
 \begin_layout Standard
@@ -7288,7 +7283,7 @@ reference "fig:Function-descdist"
 
 \end_inset
 
-), let us try the gamma distribution.
+), let us try the lognormal distribution.
  
 \end_layout
 
@@ -7303,17 +7298,27 @@ status open
 
 \begin_layout Standard
 
-gam <- mledist(inca[inca!=0],"gamma")
+Adj_water <- fitdist(inca_non_0,"lnorm",method="mle")
 \end_layout
 
 \begin_layout Standard
 
-summary(gam)
+meanlog <- Adj_water$est[1]
 \end_layout
 
 \begin_layout Standard
 
-plot(gam)
+sdlog   <- Adj_water$est[2]
+\end_layout
+
+\begin_layout Standard
+
+summary(Adj_water)
+\end_layout
+
+\begin_layout Standard
+
+plot(Adj_water)
 \end_layout
 
 \begin_layout Standard
@@ -7367,7 +7372,7 @@ status open
 
 \begin_layout Standard
 
-plot(gam)
+plot(Adj_water)
 \end_layout
 
 \begin_layout Standard
@@ -7392,14 +7397,67 @@ reference "fig:Function-mledist"
 
 \end_inset
 
-), and not worse than a lognormal distribution (results not shown).
+), and better than a gamma distribution (results not shown).
  We can now rebuild our mixture.
- For simplicity, we will not consider uncertainty around the estimates.
+ We could consider uncertainty around the maximum likelihood estimates using
+ the 
+\family typewriter
+bootdist
+\family default
+ function of the 
+\family typewriter
+fitdistrplus
+\family default
+ package, using something like.
 \end_layout
 
 \begin_layout Standard
 \begin_inset ERT
-status collapsed
+status open
+
+\begin_layout Standard
+
+<<Crypto7bis, echo=true, eval=false>>=
+\end_layout
+
+\begin_layout Standard
+
+Boot <- bootdist(Ajust_lnorm, bootmethod="param", niter=ndunc())
+\end_layout
+
+\begin_layout Standard
+
+Mean_conso <- mcdata(Boot$bootestim$meanlog, type="U")
+\end_layout
+
+\begin_layout Standard
+
+Sd_conso <- mcdata(Boot$bootestim$sdlog, type="U")
+\end_layout
+
+\begin_layout Standard
+
+conso1 <- mcstoc(rlnorm, type="VU", meanlog= Mean_conso, sdlog= Sd_conso)
+\end_layout
+
+\begin_layout Standard
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+But for simplicity, we will not consider uncertainty around the estimates.
+ We will thus use:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
 
 \begin_layout Standard
 
@@ -7413,12 +7471,12 @@ conso0 <- mcdata(0,type="V")
 
 \begin_layout Standard
 
-conso1 <- mcstoc(rgamma,type="V",shape=gam$est[1],rate=gam$est[2])
+conso1 <- mcstoc(rlnorm, type="V", meanlog=meanlog, sdlog=sdlog)
 \end_layout
 
 \begin_layout Standard
 
-mcswitch <- mcstoc(rbern,type="V",prob=pnonzero)
+mcswitch <- mcstoc(rbern, type="V", prob=pnonzero)
 \end_layout
 
 \begin_layout Standard
@@ -7441,7 +7499,7 @@ summary(v)
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 The Dose-Response Model
 \end_layout
 
@@ -7457,6 +7515,20 @@ key "CHAPPELL-1996"
 \end_inset
 
 .
+ We first define a function "
+\family typewriter
+DR
+\family default
+" with a 
+\family typewriter
+n
+\family default
+ argument for the size of the sample to draw.
+ This function may then be used in a 
+\family typewriter
+mcstoc
+\family default
+ function:
 \end_layout
 
 \begin_layout Standard
@@ -7489,12 +7561,13 @@ datDR <- list(   dose=c(30,100,300,500,1000,10000,100000,1000000),
 
 \begin_layout Standard
 
-estDR <- function(dat,ref){
+estDR <- function(pos,ref){
 \end_layout
 
 \begin_layout Standard
 
-   -glm(cbind(ref$ni-dat,dat) ~ ref$dose + 0,binomial(link="log"))$coefficients}
+   -glm(cbind(ref$ni-pos,pos) ~ ref$dose + 0, binomial(link="log"))$coefficients
+}
 \end_layout
 
 \begin_layout Standard
@@ -7503,33 +7576,32 @@ estDR <- function(dat,ref){
 
 \begin_layout Standard
 
-laDR <- function(dat,iter){
+ml <- 1-exp(-estDR(datDR$pi, datDR) * datDR$dose)
 \end_layout
 
 \begin_layout Standard
 
-   ml <- 1-exp(-estDR(dat$pi,dat)*datDR$dose)
 \end_layout
 
 \begin_layout Standard
 
-   boot <- matrix(rbinom(length(datDR$dose)*iter,datDR$ni,ml),nrow=length(datDR$
-dose))
+DR <- function(n){
 \end_layout
 
 \begin_layout Standard
 
-   apply(boot,2,estDR,ref=dat)}
+   boot <- matrix(rbinom(length(datDR$dose)*n,datDR$ni,ml),nrow=length(datDR$dos
+e))
 \end_layout
 
 \begin_layout Standard
 
-bootr <- laDR(datDR,ndunc()) 
+   apply(boot,2,estDR,ref=datDR)}
 \end_layout
 
 \begin_layout Standard
 
-r <- mcdata(bootr, type="U")
+r <- mcstoc(DR, type="U")
 \end_layout
 
 \begin_layout Standard
@@ -7547,7 +7619,7 @@ summary(r)
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 The Model
 \end_layout
 
@@ -7710,7 +7782,7 @@ status open
 
 \begin_layout Standard
 
-<<Crypto13, echo=true, figure=false>>=
+<<Crypto13, echo=true, eval=false, figure=false>>=
 \end_layout
 
 \begin_layout Standard
@@ -7751,7 +7823,7 @@ mc2d
 \family typewriter
 mc2d
 \family default
-" is currently under development and 
+" is currently under development:
 \end_layout
 
 \begin_layout Standard
@@ -7759,8 +7831,25 @@ mc2d
 \align center
 
 \emph on
-CHECK CAREFULLY YOUR MODEL AND RESULTS TO TRACK THE BUGS.
- 
+CHECK CAREFULLY YOUR MODEL AND RESULTS TO TRACK THE BUGS
+\end_layout
+
+\begin_layout Standard
+and, if you would like to improve it
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\emph on
+JOIN US AT 
+\begin_inset LatexCommand htmlurl
+target "http://riskassessment.r-forge.r-project.org/"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
