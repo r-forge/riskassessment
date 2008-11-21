@@ -9,7 +9,8 @@ ddirichlet <- function (x, alpha)
 #{alpha}<<A vector of shape parameters, or a matrix of shape parameters by rows. Recycling (by row) is permitted.>>
 #{n}<<Number of random vectors to generate. If length(n) > 1, the length is taken to be the number required.>>
 #DETAILS
-#The Dirichlet distribution is the multidimensional generalization of the beta distribution.
+#The Dirichlet distribution is the multidimensional generalization of the beta distribution. 
+#The original code was adapted to provide a kind of "vectorization" used in multivariates \code{mcnode}.
 #VALUE
 #\code{ddirichlet} gives the density. \code{rdirichlet} returns a matrix with \code{n} rows, each containing a single Dirichlet random deviate.
 #AUTHOR

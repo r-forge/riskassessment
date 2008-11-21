@@ -11,7 +11,7 @@
 \alias{xVUM}
 \alias{xVUM2}
 \alias{xVUM3}
-\title{An exemple of all kind of mcnode}
+\title{An Exemple of all Kind of mcnode}
 \description{
 An exemple for each kind of \code{mcnode}s. They are used in some \code{mc2d} examples. They
 have been built using the following code:

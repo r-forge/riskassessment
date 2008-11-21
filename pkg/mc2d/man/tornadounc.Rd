@@ -9,7 +9,7 @@ Computes Correlation between Inputs and Output in a mc Object
 }
 \description{
 Provides statistics for a tornado chart. Evaluates correlations
-between output and inputs of a mc object in the uncertainty
+between output and inputs of a \code{mc} object in the uncertainty
 dimension.
 }
 \usage{
@@ -34,10 +34,10 @@ plot(y, 1, 1)
 \item{mc}{a \code{mc} object.}
 \item{x}{a \code{tornadounc} object.}
 \item{output}{The rank or the name of the output to be considered.
-Should be a \code{"2DVU"} or a \code{"2DU" type mcnode}. By default:
-the last element of \code{mc}.}
-\item{quant}{The vector of quantiles as statistics used in the
-variability dimension.}
+Should be a \code{"VU"} or a \code{"U" type mcnode}. By default: the
+last element of \code{mc}.}
+\item{quant}{The vector of quantiles used in the variability
+dimension.}
 \item{use}{An optional character string giving a method for computing
 covariances in the presence of missing values. This must be (an
 abbreviation of) one of the strings "all.obs", "complete.obs" or
@@ -52,21 +52,25 @@ function.}
 }
 \details{
 The \code{tornadounc.mc} function computes the spearman's rho
-statistic between values (\code{"2DU" type mcnode}) or statistics
-calculated in the variability dimension (\code{"2DU" type mcnode}) of
-inputs and values (\code{"2DU" type mcnode}) or statistics calculated
-in the variability dimension (\code{"2DU" type mcnode}) of one
-output. The statistics are the mean, the median and the quantiles
-specified by \code{quant}. It is used to estimate a rank-based
-measure of association between one set of random variable of a
-\code{mc} object (the output) and the others in the uncertainty
-dimension.
+statistic between 
+
+\itemize{
+\item values (\code{"U" type mcnode}) or statistics calculated in the
+variability dimension (\code{"VU" type mcnode}) of inputs and
+\item values (\code{"U" type mcnode}) or statistics calculated in the
+variability dimension (\code{"VU" type mcnode}) of one output.}
+ The statistics are the mean, the median and the quantiles specified
+by \code{quant}.
+
+It is useful to estimate a rank-based measure of association between
+one set of random variable of a \code{mc} object (the output) and the
+others in the uncertainty dimension.
 
  \code{tornadounc.mccut} may be applied on a \code{\link{mccut}}
 object if a \code{summary.mc} function was used in the third block of
 the \code{\link{evalmccut}} call.
 
-If output refers to a \code{"0D", "1D"} or \{"2DV" mcnode\}, it is an
+If output refers to a \code{"0"} or \code{"V" mcnode}, it is an
 error.
 
 If use is "all.obs", then the presence of missing observations will
@@ -77,15 +81,15 @@ variables is computed using all complete pairs of observations on
 those variables.
 }
 \value{
-An invisible object of class tornadounc. A tornadounc object is a
-list of objects containing the following objects: 
+An invisible object of class \code{tornadounc}. A \code{tornadounc}
+object is a list of objects containing the following objects: 
 
 \item{value}{a matrix of values of correlation coefficients. Each row
 are the value or the statistics of inputs, each columns the value or
 the statistics of outputs.}
 \item{output}{the name of the output}
 \item{method}{the method used}
-\item{use}{the use parameter}
+\item{use}{the \code{use} parameter}
 }
 \author{
 Regis Pouillot

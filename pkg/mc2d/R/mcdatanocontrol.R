@@ -1,5 +1,5 @@
 #<<BEGIN>>
-mcdatanocontrol <- function(data, type=c("V","U","VU","0"), nsv=ndvar(), nsu=ndunc(), nvariates=1,outm="each")
+mcdatanocontrol <- function(data, type=c("V","U","VU","0"), nsv=ndvar(), nsu=ndunc(), nvariates=1, outm="each")
 #ISALIAS mcdata
 #DETAILS
 #\code{mcdatanocontrol} is a dangerous version of \code{mcnode} which forces the dimension

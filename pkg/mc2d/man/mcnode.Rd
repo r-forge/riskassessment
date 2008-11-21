@@ -110,11 +110,11 @@ node.}
 May be "each" (default) if output should be provided for each
 variates considered independently, "none" for no output or a vector
 of name of function(s) (as a character string) that will be applied
-on the variates dimension before any output (ex: "mean", "median",
-c("min",max)). The function should have no other arguments and send
-one value per vector of values (ex. do not use \code{"range"}). Note
-that the \code{outm} attribute may be changed using the
-\code{\link{outm}} function.}
+on the variates dimension before any output (ex: \code{"mean"},
+\code{"median"}, \code{c("min", "max")}). The function should have no
+other arguments and send one value per vector of values (ex. do not
+use \code{"range"}). Note that the \code{outm} attribute may be
+changed at any time using the \code{\link{outm}} function.}
 }
 \details{
 A \code{mcnode} object is the basic element of a \code{\link{mc}}
@@ -134,16 +134,13 @@ data reflects separated variability (in rows) and uncertainty (in
 columns) of the parameter.
 \item \code{"0" mcnode}, for "Neither Variability or Uncertainty",
 are arrays of dimension \code{(1 x 1 x nvariates)}. No alea is
-considered for these nodes. \code{"O" mcnode} are not necessary in
+considered for these nodes. \code{"0" mcnode} are not necessary in
 the univariate context (use scalar instead) but may be useful for
 operations on multivariate nodes.}
-Multivariates node (i.e. \code{nvariates != 1}) should be used only
-for multivariates distributions implemented in \code{mc2d}
+Multivariate nodes (i.e. \code{nvariates != 1}) should be used for
+multivariate distributions implemented in \code{mc2d}
 (\code{\link{rmultinomial}}, \code{\link{rmultinormal}},
-\code{\link{rempiricalD}} and \code{\link{rdirichlet}}). For all
-other distributions, univariate nodes are easier and quicker to
-handle (e.g. use two nodes to specify a normal distribution: one
-including the \code{mean}, the other including the \code{sd}).
+\code{\link{rempiricalD}} and \code{\link{rdirichlet}}).
 
 For security, recycling rules are limited to fill the array using
 \code{data}. The general rules is that recycling is only permitted to

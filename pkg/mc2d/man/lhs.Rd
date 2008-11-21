@@ -34,8 +34,8 @@ adapted from a code of Rob Carnell (library \code{lhs})
 \code{\link{mcstoc}}
 }
 \note{
-The lhs is in fact a latin hypersquare sampling: the lhs is assured
-only in the first 2 dimensions.
+The resulting lhs is in fact a latin hypersquare sampling: the lhs is
+provided only in the first 2 dimensions.
 
  It is not possible to send truncated distribution with
 \code{\link{rtrunc}}. Use \code{\link{mcstoc}} for this purpose, with

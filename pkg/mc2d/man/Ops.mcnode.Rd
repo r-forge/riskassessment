@@ -67,8 +67,8 @@ xVUM - xU
 }
 \arguments{
 \item{e1}{An \code{mcnode} object, a vector or an array.}
-\item{e2}{An optionnal \code{mcnode} object, vector or matrix with at
-least one of both objects as \code{mcnode}.}
+\item{e2}{An optionnal \code{mcnode} object, a vector or a matrix
+with at least one of both objects as an \code{mcnode}.}
 }
 \details{
 This method will be used for any of the Group \code{\link{Ops}}
@@ -107,18 +107,18 @@ dimension;
 nsu)}. The \code{"U"} object will be recycled "by row";
 \item \code{"VU" + "VU" = "VU"}: if the dimension of the \code{"VU"}
 nodes is \code{(nsu x nsv)};}
-A vector or an array \code{e2} may be combined with an \code{mcnode}
-of size \code{(nsv x nsu)} if a \code{mcnode} of this dimension may
-be built from this vector/array using the \code{mcdata} function. See
-\code{\link{mcdata}} for all rules.
+A vector or an array may be combined with an \code{mcnode} of size
+\code{(nsv x nsu)} if an \code{mcnode} of this dimension may be built
+from this vector/array using the \code{mcdata} function. See
+\code{\link{mcdata}} for the rules.
 
 The \code{outm} attribute is transferred as following: \code{"each" +
 "each" = "each"}; \code{"none" + other = other}; \code{other1 +
-other2 = other1}. You can change the \code{outm} attribute of the
-resulting node using the \code{\link{outm}} function.
+other2 = other1}. The \code{outm} attribute of the resulting node may
+be changed using the \code{\link{outm}} function.
 
 For multivariate nodes, a recycling on the \code{nvariates} dimension
-is done if a \code{(nsu x nsv x nvariates)} node is combined with
+is done if a \code{(nsu x nsv x nvariates)} node is combined with a
 \code{(nsu x nsv x 1)} node.
 }
 \value{

@@ -3,17 +3,17 @@ mcmodel <- function(x, is.expr=FALSE)
 #TITLE Monte Carlo model
 #DESCRIPTION
 # Specify a \code{mcmodel}, without evaluating it, for a further evaluation using \code{\link{evalmcmod}}.
-#KEYWORDS programming
+#KEYWORDS methods
 #INPUTS
 #{x}<<An \R call or an expression.>>
 #[INPUTS]
-#{is.expr}<< \code{FALSE} to send a call,  \code{TRUE} to send an expression (see examples)>>
+#{is.expr}<< \code{FALSE} to send a call,  \code{TRUE} to send an expression (see Examples)>>
 #VALUE
 # an \R expression, with class \code{mcmodel}
 #DETAILS
-# The model should be put between \code{\{\dots\}} and the last line should be of the form \code{mc(...)}.
-# Any reference to the number to the number of simulation in the
-#dimension of variability (2D model) should be done via \code{ndvar()} or (preferred) \code{nsv}.
+# The model should be put between \code{\{} and the last line should be of the form \code{mc(...)}.
+# Any reference to the number of simulation in the
+#dimension of variability should be done via \code{ndvar()} or (preferred) \code{nsv}.
 # Any reference to the number of simulations in the dimension of uncertainty
 # should be done via \code{ndunc()} or (preferred) \code{nsu}.
 #SEE ALSO

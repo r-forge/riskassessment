@@ -16,16 +16,19 @@ mcprobtree(mcswitch, mcvalues, type=c("V", "U", "VU", "0"), nsv=ndvar(),
 conc1 <- mcstoc(rnorm, type="VU", mean=10, sd=2)
 conc2 <- mcstoc(runif, type="VU", min=-6, max=-5)
 conc3 <- mcdata(0, type="VU")
-whichdist <- mcstoc(rempiricalD, type="VU", values=1:3, prob= c(.75, .25, .05)) 
+## Randomly in the cells 
+whichdist <- mcstoc(rempiricalD, type="VU", values=1:3, prob= c(.75, .20, .05)) 
 mcprobtree(whichdist, list("1"=conc1, "2"=conc2, "3"=conc3), type="VU")
+## Which is equivalent to 
 mcprobtree(c(.75, .20, .05), list("1"=conc1, "2"=conc2, "3"=conc3), type="VU")
+## Not that there is no control on the exact number of occurences.
 
 ## Randomly by colums (Uncertainty) 
-whichdist <- mcstoc(rempiricalD, type="U", values=1:3, prob= c(.75, .25, .05)) 
+whichdist <- mcstoc(rempiricalD, type="U", values=1:3, prob= c(.75, .20, .05)) 
 mcprobtree(whichdist, list("1"=conc1, "2"=conc2, "3"=conc3), type="VU")
 
 ## Randomly by line (Variability) 
-whichdist <- mcstoc(rempiricalD, type="V", values=1:3, prob= c(.75, .25, .05)) 
+whichdist <- mcstoc(rempiricalD, type="V", values=1:3, prob= c(.75, .20, .05)) 
 mcprobtree(whichdist, list("1"=conc1, "2"=conc2, "3"=conc3), type="VU")
 
 }
@@ -56,7 +59,8 @@ the \code{seed} is unchanged.}
 \item a vector of length the length of \code{mcvalues}. They need not
 sum to one, but they should be nonnegative and not all zero. In that
 case, each elements of \code{mcvalues} will appear in the final
-sample a random number of times as specified by this vector.
+sample a random number of times as specified by this vector. (Note
+that there is a random process).
 \item a \code{"0"} mcnode to build any type of node.
 \item a \code{"V"} mcnode to build a \code{"V"} or a \code{"VU"}
 mcnode.

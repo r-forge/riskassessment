@@ -4,7 +4,7 @@
 Provides the Type of a mcnode Object
 }
 \description{
-Provide the type of a \code{mcnode} object from its class.
+Provide the type of a \code{mcnode} object.
 }
 \usage{
 typemcnode(x, index=FALSE)

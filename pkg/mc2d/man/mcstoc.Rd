@@ -102,11 +102,11 @@ passed to \code{func}. These arguments should be vectors or
 May be "each" (default) if an output should be provided for each
 variates considered independently, "none" for no output or a vector
 of functions (as a character string) that will be applied on the
-variates dimension before any output (ex: "mean", "median",
-c("min","max")). Each function should return 1 value when applied to
-1 value (ex. do not use \code{"range"}). Note that the \code{outm}
-attribute may be changed further using the \code{\link{outm}}
-function.}
+variates dimension before any output (ex: \code{"mean"},
+\code{"median"}, \code{c("min","max")}). Each function should return
+1 value when applied to 1 value (ex. do not use \code{"range"}). Note
+that the \code{outm} attribute may be changed further using the
+\code{\link{outm}} function.}
 \item{nsample}{The name of the parameter of the function giving the
 size of the vector. By default, \code{n}, as in most of the random
 sampling distributions of the \code{stats} library (with the

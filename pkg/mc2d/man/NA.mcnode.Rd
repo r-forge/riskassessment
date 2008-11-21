@@ -37,4 +37,4 @@ Regis Pouillot
 \seealso{
 \code{\link{is.finite}}, \code{\link{NA}}
 }
-\keyword{misc}
+\keyword{NA}

@@ -7,9 +7,10 @@
 Plots Results of a Monte Carlo Simulation
 }
 \description{
-Plots empirical cumulative distribution function of a \code{mcnode}
-or a \code{mc} object (1D) or the empirical cumulative distribution
-function of the estimate of a \code{mcnode} or \code{mc} object (2D).
+Plots the empirical cumulative distribution function of a
+\code{mcnode} or a \code{mc} object ("0" and "V" nodes) or the
+empirical cumulative distribution function of the estimate of a
+\code{mcnode} or \code{mc} object ("U" and "VU" nodes).
 }
 \usage{
 \method{plot}{mc}(x, prec=0.01, stat=c("median", "mean"), lim=c(0.025, 0.975),
@@ -31,8 +32,8 @@ plot(total)
 \arguments{
 \item{x}{a \code{mcnode} or a \code{mc} objects}
 \item{prec}{the precision of the plot. 0.01 will provide an ecdf from
-the 0.00, 0.01, .02, ..., 1.00th quantiles, 0.001 will provide a
-0.000, 0.001, 0.002, ... 0.999, 1.000 quantiles,... }
+the 0.00, 0.01, .02, ..., 1.00 quantiles, 0.001 will provide a 0.000,
+0.001, 0.002, ..., 1.000 quantiles,... }
 \item{stat}{the function used for estimates (2D \code{mc} or
 \code{mcnode}). By default the median.}
 \item{lim}{a vector of numbers (between 0 and 1) indicating the
@@ -53,16 +54,20 @@ name of the node.}
 \code{plot.mcnode} is a user-friendly function that send the
 \code{mcnode} to \code{plot.mc}.
 
- For 2D simulations (2D \code{mc} or 2DV, 2DU, 2DVU \code{mcnode}),
-quantiles are calculated using \code{\link{quantile.mc}} within each
-of the \code{nsu} simulations (i.e. by columns of each
-\code{mcnode}). The medians (but may be the means using
-\code{stat="mean"}) calculated from the \code{nsu} values are
-plotted. The 0.025 and 0.975 quantiles of these quantiles are used as
-the enveloppe.
+ For \code{"VU"} and \code{"U"} \code{mcnode}s, quantiles are
+calculated using \code{\link{quantile.mc}} within each of the
+\code{nsu} simulations (i.e. by columns of each \code{mcnode}). The
+medians (but may be the means using \code{stat="mean"}) calculated
+from the \code{nsu} values are plotted. The 0.025 and 0.975 quantiles
+(default values of \code{lim}) of these quantiles are used as the
+enveloppe.
 }
 \value{
 A \code{plot.mc} object, list of the quantiles used to plot the draw.
+}
+\references{
+Cullen AC and Frey HC (1999) Probabilistic techniques in exposure
+assessment. Plenum Press, USA, pp. 81-155.
 }
 \author{
 Regis Pouillot

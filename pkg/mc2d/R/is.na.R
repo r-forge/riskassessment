@@ -11,7 +11,7 @@ is.na.mcnode <- function(x)
 #A logical \code{mcnode} object.
 #SEE ALSO
 #\code{\link{is.finite}}, \code{\link{NA}}
-#KEYWORDS misc
+#KEYWORDS NA
 #EXAMPLE
 #x <- log(mcstoc(rnorm,nsv=1001))
 #x
