@@ -5,7 +5,7 @@ rmultinormal <- function(n, mean, sigma , method=c("eigen", "svd", "chol"))
 #KEYWORDS distribution
 #DESCRIPTION
 #This function is the vectorized version of \code{\link{rmvnorm}}.
-#It provides a random number generator for the multivariate normal distribution. 
+#It provides a random number generator for the multivariate normal distribution 
 #with varying vectors of means and varying covariance matrixes.
 #INPUTS
 #{n}<<Number of observations.>>
@@ -15,7 +15,7 @@ rmultinormal <- function(n, mean, sigma , method=c("eigen", "svd", "chol"))
 #{method}<<Matrix decomposition used to determine the matrix root of sigma, possible methods are
 #eigenvalue decomposition ("eigen", default), singular value decomposition ("svd"), and Cholesky decomposition ("chol").>>
 #DETAILS
-#\code{rmvnorm(n, mean, sigma)} is equivalent to \code{rmultinormal(n, mean, as.vector(sigma))}.
+#\code{rmvnorm(n, m, s)} is equivalent to \code{rmultinormal(n, m, as.vector(s))}.
 #
 #If \code{mean} and/or \code{sigma} is a matrix, 
 #the first random deviate will use the first row of \code{mean} and/or \code{sigma}, the second random

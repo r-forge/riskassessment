@@ -25,16 +25,15 @@ evalmcmod(modEC1, nsv=100, nsu=100)
 \arguments{
 \item{x}{An \R call or an expression.}
 \item{is.expr}{ \code{FALSE} to send a call, \code{TRUE} to send an
-expression (see examples)}
+expression (see Examples)}
 }
 \details{
-The model should be put between \code{\{\dots\}} and the last line
-should be of the form \code{mc(...)}. Any reference to the number to
-the number of simulation in the dimension of variability (2D model)
-should be done via \code{ndvar()} or (preferred) \code{nsv}. Any
-reference to the number of simulations in the dimension of
-uncertainty should be done via \code{ndunc()} or (preferred)
-\code{nsu}.
+The model should be put between \code{\{} and the last line should be
+of the form \code{mc(...)}. Any reference to the number of simulation
+in the dimension of variability should be done via \code{ndvar()} or
+(preferred) \code{nsv}. Any reference to the number of simulations in
+the dimension of uncertainty should be done via \code{ndunc()} or
+(preferred) \code{nsu}.
 }
 \value{
 an \R expression, with class \code{mcmodel}
@@ -50,4 +49,4 @@ Regis Pouillot
  \code{\link{mcmodelcut}} to evaluate high Dimension Monte Carlo
 Model in a loop.
 }
-\keyword{programming}
+\keyword{methods}

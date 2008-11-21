@@ -27,7 +27,7 @@ dimmc(total)
 A vector of three scalars: the dimension of variability (1 for
 \code{"0"} and \code{"U" mcnode}), the dimension of uncertainty (1
 for \code{"0"} and \code{"V" mcnode}) and the number of variates (the
-macimal number of variates for an \\code{mc} object.
+maximal number of variates for an \code{mc} object.
 }
 \author{
 Regis Pouillot

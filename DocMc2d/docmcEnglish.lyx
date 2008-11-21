@@ -1112,7 +1112,7 @@ EC2 <- mc(conc,cook,serving,expo,dose,r,risk)
 
 \begin_layout Standard
 
-EC2
+print(EC2,digits=2)
 \end_layout
 
 \begin_layout Standard
@@ -4627,16 +4627,20 @@ mcprobtree
 \family default
  as
 \begin_inset Foot
-status collapsed
+status open
 
 \begin_layout Standard
-an alternative for 
+two alternatives for 
 \family typewriter
 whichdist
 \family default
  could be 
 \family typewriter
 whichdist <- mcstoc(rempiricalD, type="U", values=c(0,1), prob=c(75,25))
+\family default
+ or 
+\family typewriter
+whichdist <- mcstoc(rbern,type="U",prob=0.25)
 \end_layout
 
 \end_inset
@@ -4665,7 +4669,7 @@ conc2 <- mcstoc(runif,type="U",min=8,max=12)
 
 \begin_layout Standard
 
-whichdist <- mcstoc(rbern,type="U",prob=0.25)
+whichdist <- c(0.75,0.25)
 \end_layout
 
 \begin_layout Standard
@@ -5364,7 +5368,7 @@ mcmodelcut
 
 \begin_layout Standard
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Standard
 
@@ -5479,7 +5483,7 @@ modEC4 <- mcmodelcut({
 
 \begin_layout Standard
 
-evalmccut(modEC4, nsv = 10001, nsu = 101, seed = 666,  progress.bar=TRUE)
+evalmccut(modEC4, nsv = 10001, nsu = 101, seed = 666)
 \end_layout
 
 \begin_layout Standard
@@ -6982,7 +6986,7 @@ Tap Water Consumption Model
 
 \begin_layout Standard
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Standard
 
@@ -7048,8 +7052,8 @@ inca <- rep(inca[,1],inca[,2])/1000
 \end_layout
 
 \begin_layout Standard
-We own row data of daily cunsomption of tap water from 1,180 tap water consumers
- (var 
+We have raw data of daily consumption of tap water from 1,180 tap water
+ consumers (var 
 \family typewriter
 inca
 \family default
@@ -7060,7 +7064,8 @@ reference "fig:Function-inca"
 \end_inset
 
 ).
- We could choose to use this empirical distribution:
+ We could choose to use this empirical distribution to evaluate the variability
+ in the tap-water consumption:
 \end_layout
 
 \begin_layout Standard
@@ -7162,15 +7167,15 @@ inca
 \family default
 , corresponding to days when individuals do not drink tap water (possibly
  bottled water).
- We could try a mixture of distributions, with 
+ We could try a mixture of distributions, with "
 \family typewriter
 0
 \family default
- and non-
+"and "non-
 \family typewriter
 0
 \family default
-.
+" data.
  
 \end_layout
 
@@ -7190,7 +7195,7 @@ library(fitdistrplus)
 
 \begin_layout Standard
 
-pnonzero <- sum(inca!=0)/length(inca)
+pzero <- sum(inca==0)/length(inca)
 \end_layout
 
 \begin_layout Standard
@@ -7408,7 +7413,7 @@ bootdist
 \family typewriter
 fitdistrplus
 \family default
- package, using something like.
+ package, using something like:
 \end_layout
 
 \begin_layout Standard
@@ -7427,12 +7432,12 @@ Boot <- bootdist(Ajust_lnorm, bootmethod="param", niter=ndunc())
 
 \begin_layout Standard
 
-Mean_conso <- mcdata(Boot$bootestim$meanlog, type="U")
+Mean_conso <- mcdata(Boot$estim$meanlog, type="U")
 \end_layout
 
 \begin_layout Standard
 
-Sd_conso <- mcdata(Boot$bootestim$sdlog, type="U")
+Sd_conso <- mcdata(Boot$estim$sdlog, type="U")
 \end_layout
 
 \begin_layout Standard
@@ -7452,7 +7457,15 @@ conso1 <- mcstoc(rlnorm, type="VU", meanlog= Mean_conso, sdlog= Sd_conso)
 
 \begin_layout Standard
 But for simplicity, we will not consider uncertainty around the estimates.
- We will thus use:
+ 
+\end_layout
+
+\begin_layout Standard
+We will use the 
+\family typewriter
+mcprobtree
+\family default
+ function to build the mixture "0", "non-0" distribution:
 \end_layout
 
 \begin_layout Standard
@@ -7476,12 +7489,7 @@ conso1 <- mcstoc(rlnorm, type="V", meanlog=meanlog, sdlog=sdlog)
 
 \begin_layout Standard
 
-mcswitch <- mcstoc(rbern, type="V", prob=pnonzero)
-\end_layout
-
-\begin_layout Standard
-
-v <- mcprobtree(mcswitch, list("0"=conso0,"1"=conso1), type = "V")
+v <- mcprobtree(c(pzero,1-pzero), list("0"=conso0,"1"=conso1), type = "V")
 \end_layout
 
 \begin_layout Standard
@@ -7671,7 +7679,7 @@ w <- mcstoc(rbeta, type="V", shape1=2.6, shape2=3.4)
 
 \begin_layout Standard
 Given that 
-\begin_inset Formula $n=2$
+\begin_inset Formula $O_{o}=2$
 \end_inset
 
  oocysts are observed in 100 l of water, the expected number of oocysts
@@ -7758,7 +7766,8 @@ summary(P)
 \end_layout
 
 \begin_layout Standard
-To be compared to the results obtained in the Table 2 in 
+To be compared (roughly since there is some variations) to the results obtained
+ in the Table 2 in 
 \begin_inset LatexCommand cite
 key "POUILLOT-2004"
 
@@ -7770,7 +7779,7 @@ key "POUILLOT-2004"
 
 \begin_layout Standard
 Improvement: the results for 
-\begin_inset Formula $n=\left\{ 0,1,2,5,10,20,50,100,1000\right\} $
+\begin_inset Formula $O_{o}=\left\{ 0,1,2,5,10,20,50,100,1000\right\} $
 \end_inset
 
  can be obtained in one step using: 
@@ -7818,7 +7827,7 @@ mc2d
 \end_inset
 
  could help risk assessors to build or study their models, and that it may
- help developing the use of "Two-dimensional" simulation.
+ help developing the use of "two-dimensional" simulations.
  Nevertheless, "
 \family typewriter
 mc2d
@@ -7835,7 +7844,7 @@ CHECK CAREFULLY YOUR MODEL AND RESULTS TO TRACK THE BUGS
 \end_layout
 
 \begin_layout Standard
-and, if you would like to improve it
+and, if you would like to improve it, join us at
 \end_layout
 
 \begin_layout Standard
@@ -7843,7 +7852,6 @@ and, if you would like to improve it
 \align center
 
 \emph on
-JOIN US AT 
 \begin_inset LatexCommand htmlurl
 target "http://riskassessment.r-forge.r-project.org/"
 

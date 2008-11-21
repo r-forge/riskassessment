@@ -5,7 +5,7 @@
 Quantiles of a mc Object
 }
 \description{
-Evaluates quantiles of a mc object. This function is used by
+Evaluates quantiles of a \code{mc} object. This function is used by
 \code{plot.mc}
 }
 \usage{
@@ -26,12 +26,13 @@ quantile(total)
 enveloppe. Maybe \code{NULL} or empty.}
 \item{\dots}{For generic method consistancy.}
 }
+\details{
+The quantiles are evaluated in the variability dimension. Then, the
+median, the mean and the \code{lim} quantiles are evaluated for each
+of these quantiles.
+}
 \value{
-A list of quantiles. For 1D objects (\code{mcnode "0D","1D","2DV"}),
-the corresponding element is a vector of quantiles. For 2D objects
-(\code{mcnode "2D","1D","2DV"}), the corresponding element is a
-\code{length(lim)+2} rows matrix (includes median, mean and
-\code{lim} quantiles in the uncertainty dimension.
+A list of quantiles.
 }
 \author{
 Regis Pouillot

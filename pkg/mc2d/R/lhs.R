@@ -17,7 +17,7 @@ lhs <- function(distr=runif,nsv,nsu,nvariates=1,...)
 #VALUE
 #A \code{nsv x nsu} matrix of random variates.
 #NOTE
-#The lhs is in fact a latin hypersquare sampling: the lhs is assured only in the first 2 dimensions.</>
+#The resulting lhs is in fact a latin hypersquare sampling: the lhs is provided only in the first 2 dimensions.</>
 #It is not possible to send truncated distribution with \code{\link{rtrunc}}. Use \code{\link{mcstoc}} for
 #this purpose, with \code{lhs=TRUE} and \code{rtrunc=TRUE}.</>
 #The \dots arguments will be recycled.

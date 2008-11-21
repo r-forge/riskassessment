@@ -17,7 +17,7 @@ range(rtrunc(rnorm, n=1000, linf=3, lsup=5, sd=10))
 \arguments{
 \item{distr}{A function providing random data or its name as
 character. The function 'rdistr' should have a 'qdistr' form (with
-argument 'p') and a 'pdistr' form. (with argument 'q'). Example :
+argument 'p') and a 'pdistr' form (with argument 'q'). Example :
 'rnorm' (has a 'qnorm' and a 'pnorm' form), 'rbeta', 'rbinom',
 'rgamma', ...}
 \item{n}{The size of the sample.}
@@ -44,5 +44,9 @@ A vector of \code{n} values.
 }
 \author{
 Regis Pouillot
+}
+\note{
+The inversion of the quantile function leads to time consuming
+functions for some distributions.
 }
 \keyword{distribution}

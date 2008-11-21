@@ -20,7 +20,7 @@ unmc(total$xV, drop=FALSE)
 \arguments{
 \item{x}{A \code{mc} or a \code{mcnode} object.}
 \item{drop}{Should the dimensions of size 1 be dropped (see
-\code{\link{drop}}.}
+\code{\link{drop}}).}
 }
 \value{
 if x is an \code{mc} object: a list of arrays. If \code{drop=TRUE}, a

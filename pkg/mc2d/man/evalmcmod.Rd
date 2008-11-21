@@ -39,12 +39,12 @@ Regis Pouillot
 \seealso{
 \code{\link{mcmodel}}
 
- \code{\link{evalmccut}} to evaluate high Dimension Monte Carlo Model
+ \code{\link{evalmccut}} to evaluate high dimension Monte Carlo Model
 in a loop.
 }
 \note{
 The seed is set at the beginning of the evaluation. Thus, the
-complete similarity of two evaluations is not certain, depending of
-the structure of your model.
+complete similarity of two evaluations with similar seed is not
+certain, depending on the structure of your model.
 }
 \keyword{methods}

@@ -16,7 +16,7 @@ mcstoc <- function(func=runif, type=c("V","U","VU","0"), ..., nsv=ndvar(), nsu=n
 #{outm}<<The  output of the \code{mcnode} for multivariates nodes. May be "each" (default)
 #if an output should be provided for each variates considered independently, "none" for no output
 #or a vector of functions (as a character string) that will be applied on the variates dimension
-#before any output (ex: "mean", "median", c("min","max")). Each function should return 1
+#before any output (ex: \code{"mean"}, \code{"median"}, \code{c("min","max")}). Each function should return 1
 #value when applied to 1 value (ex. do not use \code{"range"}).
 #Note that the \code{outm} attribute may be changed further using the \code{\link{outm}} function.>>
 #{nsample}<<The name of the parameter of the function giving the size of the vector.

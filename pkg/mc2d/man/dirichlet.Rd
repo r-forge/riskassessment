@@ -37,7 +37,8 @@ parameters by rows. Recycling (by row) is permitted.}
 }
 \details{
 The Dirichlet distribution is the multidimensional generalization of
-the beta distribution.
+the beta distribution. The original code was adapted to provide a
+kind of "vectorization" used in multivariates \code{mcnode}.
 }
 \value{
 \code{ddirichlet} gives the density. \code{rdirichlet} returns a

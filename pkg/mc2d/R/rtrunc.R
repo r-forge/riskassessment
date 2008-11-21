@@ -7,7 +7,7 @@ rtrunc <- function(distr=runif, n, linf=-Inf, lsup=Inf,...)
 #KEYWORDS distribution
 #INPUTS
 #{distr}<<A function providing random data or its name as character.
-#The function 'rdistr' should have a 'qdistr' form (with argument 'p') and a 'pdistr' form.
+#The function 'rdistr' should have a 'qdistr' form (with argument 'p') and a 'pdistr' form
 #(with argument 'q'). Example : 'rnorm' (has a 'qnorm' and a 'pnorm' form), 'rbeta', 'rbinom', 'rgamma', ...>>
 #{n}<<The size of the sample.>>         .
 #[INPUTS]
@@ -23,6 +23,8 @@ rtrunc <- function(distr=runif, n, linf=-Inf, lsup=Inf,...)
 #
 #All distributions (but sample) implemented in the stats library could be used.
 #The arguments in \dots should be named. Do not use 'log' or 'log.p' or 'lower.tail'.
+#NOTE
+#The inversion of the quantile function leads to time consuming functions for some distributions.
 #EXAMPLE
 #rtrunc("rnorm", n=10, linf=0)
 #range(rtrunc(rnorm, n=1000, linf=3, lsup=5, sd=10))

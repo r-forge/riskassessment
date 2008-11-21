@@ -8,7 +8,7 @@ unmc <- function(x, drop=TRUE)
 #INPUTS
 #{x}<<A \code{mc} or a \code{mcnode} object.>>
 #[INPUTS]
-#{drop}<<Should the dimensions of size 1 be dropped (see \code{\link{drop}}.>>
+#{drop}<<Should the dimensions of size 1 be dropped (see \code{\link{drop}}).>>
 #VALUE
 #if x is an \code{mc} object: a list of arrays. If \code{drop=TRUE}, a list of vectors, matrixes and arrays.
 #if x is an \code{mcnode} object: an array. If \code{drop=TRUE}, a vector, matrix or array.

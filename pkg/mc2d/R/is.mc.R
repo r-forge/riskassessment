@@ -11,7 +11,7 @@ dimmcnode <- function(x)
 #VALUE
 #A vector of three scalars: the dimension of variability (1 for \code{"0"} and \code{"U" mcnode}), 
 # the dimension of uncertainty (1 for \code{"0"} and \code{"V" mcnode}) and
-# the number of variates (the macimal number of variates for an \\code{mc} object.
+# the number of variates (the maximal number of variates for an \code{mc} object.
 #NOTE
 #This function does not test if the object is correctly built. See \code{\link{is.mcnode}} and \code{\link{is.mc}} .
 #EXAMPLE
@@ -43,7 +43,7 @@ dimmc <- function(x)
 typemcnode <- function(x,index=FALSE)
 #TITLE Provides the Type of a mcnode Object
 #DESCRIPTION
-# Provide the type of a \code{mcnode} object from its class.
+# Provide the type of a \code{mcnode} object.
 #KEYWORDS utilities
 #INPUTS
 #{x}<<a \code{mcnode} object>>

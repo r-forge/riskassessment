@@ -15,9 +15,8 @@ summary.mc <- function(object,probs = c(0,0.025,0.25,0.5,0.75,0.975,1),lim=c(0.0
 #VALUE
 #a list.
 #DETAILS
-#\code{probs} will be used to provide quantiles for one dimension objects (i.e. \code{"0D" and "1D" mcnode} and \code{"1D" mc}), and
-#will be used on the variability dimension of two dimensions objects (i.e. \code{"2DV", "2DU" and "2DVU" mcnode} and \code{"2D" mc}).
-#\code{lim} will then be used to provide quantiles of these statistics for two dimensions objects.
+#The mean, the standard deviation and the \code{probs} quantiles will be evaluated in the variability dimension.
+#The median, the mean and the \code{lim} quantiles will then be evaluated on these statistics in the uncertainty dimension.
 #
 #Multivariate nodes:
 #

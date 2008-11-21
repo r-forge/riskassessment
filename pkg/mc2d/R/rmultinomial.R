@@ -10,7 +10,7 @@ dmultinomial <- function (x, size = NULL, prob, log = FALSE)
 #{size}<<A vector of integers, say N, specifying the total number of objects that are put
 #into K boxes in the typical multinomial experiment. For \code{dmultinom}, it defaults to \code{sum(x)}.
 #The first element correspond to the vector \code{prob} or the first row of \code{prob}, ...>>
-#{prob}<<Numeric non-negative vector of length K, or matrix of size \code{x x K}
+#{prob}<<Numeric non-negative vector of length K, or matrix of size \code{(x x K)}
 #specifying the probability for the K classes; is internally normalized to sum 1.>>
 #{log}<<Logical; if TRUE, log probabilities are computed.>>
 #EXAMPLE
@@ -18,9 +18,11 @@ dmultinomial <- function (x, size = NULL, prob, log = FALSE)
 #rmultinomial(4,1000,prob)
 #rmultinomial(4,c(10,100,1000,10000),prob)
 #
-#(prob <- matrix(c(1,2,7,3,3,3,7,2,1),ncol=3,byrow=TRUE))
-#rmultinomial(3,1000,prob)
-#rmultinomial(4,c(10,100,1000,10000),prob)
+### rmultinomial used with mcstoc
+### (uncertain size and prob)
+#s <- mcstoc(rpois,"U",lambda=50)
+#p <- mcstoc(rdirichlet,"U",nvariates=3,alpha=c(4,10,20))
+#mcstoc(rmultinomial,"VU",nvariates=3,size=s, prob=p)
 #DETAILS
 #This function is the vectorized version of \code{\link{rmultinom}} and \code{\link{dmultinom}}.
 #Recycling is permitted.

@@ -1,11 +1,11 @@
 \name{converg}
 \alias{converg}
 \title{
-Graph of Running Statistics in the Variability or the Uncertainty
-dimension.
+Graph of Running Statistics in the Variability or in the Uncertainty
+Dimension.
 }
 \description{
-This functions provides basic graphs to evaluate the convergence of a
+This function provides basic graphs to evaluate the convergence of a
 node of a \code{\link{mc}} or a \code{\link{mccut}} object in the
 variability or in the uncertainty dimension. 
 }
@@ -20,17 +20,17 @@ converg(xVU, margin="var")
 converg(xVU, margin="unc")
 }
 \arguments{
-\item{x}{A \code{link{mcnode}} object, a \code{\link{mc}} object or a
-\code{\link{mccut}} object.}
+\item{x}{A \code{\link{mcnode}} object, a \code{\link{mc}} object or
+a \code{\link{mccut}} object.}
 \item{node}{The node to be considered in a \code{mc} object or a
 \code{mccut} object, displayed either as the order number or the name
 of the node. By default: the last node of the object.The
-corresponding node should not be of type \code{"0"} (\code{mc}
-object) or of type \code{"0"} or \code{"V"} in a \code{mccut}
-object.}
+corresponding node should not be of type \code{"0"} in a \code{mc}
+object or of type \code{"0"} or \code{"V"} in a \code{mccut} object.}
 \item{margin}{The margin used to plot the graph. \code{margin} is
 used only if the node is a \code{"VU" mcnode}.}
-\item{nvariates}{The variates to be considered (multivariates nodes)}
+\item{nvariates}{The variates to be considered. \code{nvariates} is
+used only for multivariates nodes.}
 \item{iter}{If \code{margin == "var"} and the node is a \code{"VU"
 mcnode}, \code{iter} specify the iteration in the uncertainty
 dimension to be used for the graph.}
@@ -56,8 +56,7 @@ provided.
  If the node is of type \code{"VU"} (with \code{margin="unc"} or from
 a \code{mccut} object), one graph are provided for each of the mean,
 median and \code{probs} quantiles calculated in the variability
-dimension. The function display a graph for the first variates of a
-multivariates node only.
+dimension.
 }
 \author{
 Regis Pouillot

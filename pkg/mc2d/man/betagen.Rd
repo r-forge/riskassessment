@@ -48,8 +48,8 @@ are \code{P[X <= x]}, otherwise, \code{P[X > x]}.}
 betagen(shape1, shape2, min, max, ncp)} if
 \deqn{\frac{x-min}{max-min}\sim
 beta(shape1,shape2,ncp)}{(x-min)/(max-min)~beta(shape1,shape2,ncp)}
-These functions use \code{\link{Beta}} distribution functions after
-correct parametrisation.
+These functions use the \code{\link{Beta}} distribution functions
+after correct parametrisation.
 }
 \value{
 \code{dbetagen} gives the density, \code{pbetagen} gives the

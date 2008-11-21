@@ -5,9 +5,9 @@
 \alias{modEC2}
 \title{An exemple on Escherichia coli in ground beef}
 \description{
-The fictive exemple is as following:
+The fictive example is as following:
 
-A batch of ground beef is contaminated by \emph{E. coli},
+A batch of ground beef is contaminated with \emph{E. coli},
 with a mean concentration \code{conc}.
 
 Consumers may eat the beef "rare", "medium rare" or
@@ -15,9 +15,9 @@ Consumers may eat the beef "rare", "medium rare" or
 
 The serving size is variable.
 
-The risk of infection follow an exponential model.
+The risk of infection follows an exponential model.
 
-For the One dimension model, it is assumed that:
+For the one-dimensional model, it is assumed that:
 
 \code{conc <- 10}
 
@@ -31,8 +31,8 @@ For the One dimension model, it is assumed that:
 
 \code{risk <- 1-(1-0.001)^dose}
 
-For the Two dimension model, it is assumed moreover that the concentration and the \code{r} parameter
-of the dose response is uncertain.
+For the two-dimensional model, it is assumed moreover that the concentration and the \code{r} parameter
+of the dose response are uncertain.
 
 \code{conc <- rnorm(n,mean=10,sd=2)}
   
@@ -45,7 +45,7 @@ of the dose response is uncertain.
   \item{modEC1}{Expression for a one dimension model.}
   \item{modEC2}{Expression for a two dimensions model.}
 }
-\source{Marie-Laure Delignette-Muller, Personnal communication}
+\source{Fictive example}
 \references{
   None
 }
