@@ -173,7 +173,7 @@ In a previous version, some tools to fit parametric distributions to data
  These functions being useful for other purposes, they have been placed
  in a specific package called 
 \family typewriter
-specdist
+fitdistrplus
 \family default
 .
  These packages are available at the URL 
@@ -1226,7 +1226,7 @@ parents
 
 
 \family typewriter
-specdist
+fitdistrplus
 \family default
 
 \begin_inset Quotes erd
@@ -7355,7 +7355,7 @@ name "fig:Function-mledist"
 
 Graph from the 
 \family typewriter
-descdist
+fitdist
 \family default
  function.
  
