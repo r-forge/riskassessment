@@ -1,5 +1,5 @@
-\name{empirical}
-\alias{empirical}
+\name{empiricalD}
+\alias{empiricalD}
 \alias{dempiricalD}
 \alias{pempiricalD}
 \alias{qempiricalD}
@@ -75,7 +75,7 @@ and \code{rempiricalD} generates random deviates.
 Regis Pouillot
 }
 \seealso{
-\code{\link{sample}}.
+\code{\link{sample}}. \code{\link{empiricalC}}.
 }
 \note{
 In the future, the fonctions should be written for non numerical

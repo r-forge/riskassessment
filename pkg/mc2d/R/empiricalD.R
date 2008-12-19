@@ -1,7 +1,7 @@
 #<<BEGIN>>
 dempiricalD <- function(x,values,prob=NULL,log=FALSE)
 #TITLE The Discrete Empirical Distribution
-#NAME empirical
+#NAME empiricalD
 #KEYWORDS distribution
 #DESCRIPTION
 #Density, distribution function and random generation
@@ -31,6 +31,7 @@ dempiricalD <- function(x,values,prob=NULL,log=FALSE)
 #In the future, the fonctions should be written for non numerical values.
 #SEE ALSO
 #\code{\link{sample}}.
+#\code{\link{empiricalC}}.
 #VALUE
 #\code{dempiricalD} gives the density, \code{pempiricalD} gives the distribution function,
 #\code{qempiricalD} gives the quantile function and \code{rempiricalD} generates random deviates.
