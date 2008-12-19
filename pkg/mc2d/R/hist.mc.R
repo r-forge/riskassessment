@@ -56,7 +56,7 @@ hist.mc <- function(x, griddim = NULL, xlab = names(x),ylab = "Frequency", main 
 
         if(j == "each"){
           nvar <- dim(x[[i]])[3]
-          xlab2 <- ifelse(nvar==1, xlab[i], paste(xlab[i],1:nvar,sep="."))
+          if(nvar==1) xlab2 <- xlab[i] else xlab2 <- paste(xlab[i],1:nvar,sep="")
         }
         else {
           func <- get(j,mode="function")                                        # apply the function
@@ -69,7 +69,7 @@ hist.mc <- function(x, griddim = NULL, xlab = names(x),ylab = "Frequency", main 
         if(is.logical(x[[i]])) x[[i]] <- unclass(x[[i]]) * 1                        # unclass to avoid Ops.mcnode
 
         for(k in 1:nvar){
-		      hist(x[[i]][,,k],main=main[i],xlab=xlab2,ylab=ylab[i],...)      # loop on nvariates
+		      hist(x[[i]][,,k],main=main[i],xlab=xlab2[k],ylab=ylab[i],...)      # loop on nvariates
 		    }
       }
     }

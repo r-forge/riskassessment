@@ -10,7 +10,9 @@ plot.tornado <- function(x,which=1,name=NULL,stat=c("median","mean"),xlab="metho
 #{which}<<Which output to print -for multivariates output-.>>
 #{name}<<Vector of name of input variables.
 #If NULL, the name will be given from the name of the elements.>>
-#{stat}<<The name (or the number of column) of the statistics of the output to be considered.>>
+#{stat}<<The name of the statistics of the output to be considered. For a \code{tornado} object: "median" or "mean". 
+#For a \code{tornadounc} object: the value should match one row name of the \code{tornadounc} object.
+#Alternatively, for a \code{tornadounc} object, the number of the row may be used.>>
 #{xlab}<<Label of the x axis. if "method", use the correlation method used in the \code{tornado} object.>>
 #{ylab}<<Label of the y axis.>>
 #{\dots}<<Further arguments to be passed to the \code{plot} function.>>
@@ -61,12 +63,17 @@ plot.tornado <- function(x,which=1,name=NULL,stat=c("median","mean"),xlab="metho
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 #<<BEGIN>>
-plot.tornadounc <- function(x,which=1, stat=2, name=NULL, xlab="method", ylab="",...)
+plot.tornadounc <- function(x,which=1, stat="median", name=NULL, xlab="method", ylab="",...)
 #ISALIAS plot.tornado
 #--------------------------------------------
 #
 {
+  statposs <- rownames(x$value[[which]])
+  
+  if(is.character(stat)) stat <- pmatch(stat, rownames(x$value[[which]]))
+  if(is.na(stat)) stop("stat should match with: ",paste(statposs,collapse=", ")) 
+
   x$value <- list(x$value[[which]][stat,,drop=FALSE])
-	plot.tornado(x,which=1, name=name, xlab=xlab,ylab=ylab,...)
+	plot.tornado(x,which=1, stat="median", name=name, xlab=xlab,ylab=ylab,...)
  }
 
