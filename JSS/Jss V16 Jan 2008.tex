@@ -1,0 +1,174 @@
+%% LyX 1.6.1 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[article]{jss}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[authoryear]{natbib}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+%the following commands are used only for articles and codesnippets
+
+\author{Régis Pouillot\\CFSAN \And 
+        Marie Laure Delignette-Muller\\Université de Lyon \AND
+        Jean-Baptiste Denis\\INRA}
+\title{\pkg{fitdistrplus} and \pkg{mc2d}, Two Packages for Risk Assessment in \proglang{R}}
+
+% the same as above, without any formatting
+\Plainauthor{Régis Pouillot, Marie Laure Delignette Muller, Jean-Baptiste Denis}
+\Plaintitle{fitdistrplus and mc2d, two packages for risk assessment in R} 
+%if necessary, provide a short title
+\Shorttitle{Package fitdistrplus and mc2d in R} 
+
+\Abstract{This is the abstract of the article.}
+%at least one keyword is needed
+\Keywords{keyword 1, keyword 2, \pkg{fitdistrplus}, \pkg{mc2d}, \proglang{R}}
+%the same as above, without any formatting
+\Plainkeywords{keyword 1, keyword 2, foo, R} 
+
+
+%The address of at least one author should be given in the following format
+\Address{
+  Régis Pouillot\\
+  Center for Food Safety and Applied Nutrition\\
+  FDA/HHS\\
+  College Park, USA\\
+  E-mail: \email{rpouillot@yahoo.fr}\\
+  URL: \url{http://www.lyx.org}
+}
+
+%% need no \usepackage{Sweave.sty}
+
+%you can add a telephone and fax number before the e-mail in the format
+%Telephone: +12/3/4567-89
+%Fax: +12/3/4567-89
+
+%if you use Sweave,  include the following line (with % symbols):
+%% need no \usepackage{Sweave.sty}
+
+\makeatother
+
+\begin{document}
+
+
+\section[Introduction]{Introduction}
+
+Ceci est un essai de bibliographie \citealt{CULLEN-FREY-1999}.
+
+
+\subsection{Variability and uncertainty in the risk assessment framework }
+
+According to international recommendations, a QRA should reflect the
+{}``variability'' in the risk and calculate the {}``uncertainty''
+associated with the risk estimate. The variability represents temporal,
+geographical and/or individual heterogeneity of the risk for a given
+population. The {}``uncertainty'' is understood as stemming from
+a lack of perfect knowledge about the QRA model structure and associated
+parameters%
+\footnote{In the engineering risk community, these concepts are refered as \textquotedbl{}aleatoric
+uncertainty\textquotedbl{} for \textquotedbl{}variability\textquotedbl{}
+and \textquotedbl{}epistemic uncertainty\textquotedbl{} for \textquotedbl{}uncertainty\textquotedbl{}.%
+}.
+
+In order to estimate the natural {}``variability'' of the risk,
+a Monte-Carlo simulation approach may be useful: the empirical distribution
+of the risk within the population may be estimated from the mathematical
+combination of distributions reflecting the variability of parameters
+across the population.
+
+A two-dimensional (or second-order) Monte-Carlo simulation was proposed
+to estimate the {}``uncertainty'' in the risk estimates stemming
+from parameter uncertainty. A two-dimensional Monte-Carlo simulation
+is a Monte-Carlo simulation where the distributions reflecting \textquotedbl{}variability\textquotedbl{}
+and the distributions representing \textquotedbl{}uncertainty\textquotedbl{}
+are sampled separately in the simulation, so that \textquotedbl{}variability\textquotedbl{}
+and \textquotedbl{}uncertainty\textquotedbl{} in the output may be
+estinated separately. 
+
+
+\subsection{The need for a package for risk assessment}
+
+Integrated 
+
+
+\subsection{An example}
+
+\emph{Escherichia coli} O157:H7 in ground beef.
+
+
+\section[Using fitdistrplus]{Using \pkg{fitdistrplus}}
+
+To evaluate the intake distribution
+
+
+\section[Using mc2d]{Using \pkg{mc2d}}
+
+To derive the risk
+
+
+\section{Conclusions}
+
+
+\section{To be discarded}
+
+\proglang{R} for the names of programming languages, \pkg{foo}
+for software packages, and \code{some code} or \pkg{some code}
+for code; $\E$  for expectations, $\VAR$  for variances, $\COV$
+ for covariances, and $\Prob$  for probabilities.
+
+Writing several lines of code: 
+
+\begin{CodeChunk}
+\begin{Code}
+first line of code
+second line of code
+third line of code
+\end{Code}
+\end{CodeChunk}
+
+Alternatively, you can distinguish between input and output code:
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> library(mc2d)
+R> ndvar(1001)
+\end{CodeInput}
+\begin{CodeOutput}
+[1] 1001 
+\end{CodeOutput}
+\begin{CodeInput}
+ndunc(1001)
+\end{CodeInput}
+\begin{CodeOutput}
+[1] 1001 
+\end{CodeOutput}
+\end{CodeChunk}
+
+Or
+
+\begin{CodeChunk}
+\begin{CodeInput}
+library(mc2d)
+ndvar(1001)
+\end{CodeInput}
+\begin{CodeOutput}
+[1] 1001 
+\end{CodeOutput}
+\begin{CodeInput}
+ndunc(1001)
+\end{CodeInput}
+\begin{CodeOutput}
+[1] 1001 
+\end{CodeOutput}
+\end{CodeChunk}
+
+
+\section*{Acknowledgments}
+
+Here you can write some acknowledgments.
+
+\bibliographystyle{jss}
+\bibliography{BibJss}
+
+
+\end{document}
