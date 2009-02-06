@@ -29,11 +29,10 @@ mcstoc(rmultinomial, "VU", nvariates=3, size=s, prob=p)
 \item{n}{Number of random vectors to draw.}
 \item{size}{A vector of integers, say N, specifying the total number
 of objects that are put into K boxes in the typical multinomial
-experiment. For \code{dmultinom}, it defaults to \code{sum(x)}. The
-first element correspond to the vector \code{prob} or the first row
-of \code{prob}, ...}
+experiment. For dmultinom, it defaults to sum(x). The first element
+correspond to the vector prob or the first row of prob, ...}
 \item{prob}{Numeric non-negative vector of length K, or matrix of
-size \code{(x x K)} specifying the probability for the K classes; is
+size (x x K) specifying the probability for the K classes; is
 internally normalized to sum 1.}
 \item{log}{Logical; if TRUE, log probabilities are computed.}
 }

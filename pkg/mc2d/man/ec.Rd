@@ -41,9 +41,7 @@ of the dose response are uncertain.
 }
 \usage{ec}
 \format{
-  A list of two expression to be passed in \code{mcmodel}.
-  \item{modEC1}{Expression for a one dimension model.}
-  \item{modEC2}{Expression for a two dimensions model.}
+  A list of two expression to be passed in \code{mcmodel}
 }
 \source{Fictive example}
 \references{

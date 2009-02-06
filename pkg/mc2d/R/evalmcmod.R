@@ -9,11 +9,11 @@ evalmcmod <- function(expr, nsv = ndvar(), nsu = ndunc(), seed = NULL)
 #[INPUTS]
 #{nsv}<<The number of simulations in the dimension of variability used in the evaluation.>>
 #{nsu}<<The number of simulations in the dimension of uncertainty used in the evaluation.>>
-#{seed}<<The random seed used for the evaluation. If \code{NULL} the \code{seed} is unchanged.>>
+#{seed}<<The random seed used for the evaluation. If NULL the seed is unchanged.>>
 #VALUE
-# The results of the evaluation. It should be a \code{mc} object.
+# The results of the evaluation. It should be a mc object.
 #DETAILS
-# The model is evaluated. The intermediate variables used to build the \code{mc} object are not stored.</>
+# The model is evaluated. The intermediate variables used to build the mc object are not stored.</>
 #NOTE
 #The seed is set at the beginning of the evaluation. Thus, the complete similarity
 #of two evaluations with similar seed is not certain, depending on the structure of your model.

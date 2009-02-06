@@ -8,8 +8,8 @@
 Finite, Infinite, NA and NaN Numbers in mcnode.
 }
 \description{
-\code{is.na}, \code{is.nan}, \code{is.finite} and \code{is.infinite}
-return a logical \code{mcnode} of the same dimension as \code{x}.
+is.na, is.nan, is.finite and is.infinite return a logical mcnode of
+the same dimension as x.
 }
 \usage{
 \method{is.na}{mcnode}(x)
@@ -26,10 +26,10 @@ is.na(x)
 
 }
 \arguments{
-\item{x}{A \code{mcnode} object.}
+\item{x}{A mcnode object.}
 }
 \value{
-A logical \code{mcnode} object.
+A logical mcnode object.
 }
 \author{
 Regis Pouillot

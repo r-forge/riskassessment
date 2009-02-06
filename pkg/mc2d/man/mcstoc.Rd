@@ -90,30 +90,29 @@ ndunc(Oldnunc)
 \arguments{
 \item{func}{A function providing random data or its name as
 character.}
-\item{type}{The type of \code{mcnode} to be built. By default, a
-\code{"V"} node. see \code{\link{mcnode}} for details.}
+\item{type}{The type of mcnode to be built. By default, a "V" node.
+see \code{\link{mcnode}} for details.}
 \item{\dots}{All other arguments but the size of the sample to be
-passed to \code{func}. These arguments should be vectors or
-\code{mcnode}s (arrays prohibited).}
+passed to func. These arguments should be vectors or mcnodes (arrays
+prohibited).}
 \item{nsv}{The number of simulations in the variability dimension.}
 \item{nsu}{The number of simulations in the uncertainty dimension.}
 \item{nvariates}{The number of variates of the output.}
-\item{outm}{The output of the \code{mcnode} for multivariates nodes.
-May be "each" (default) if an output should be provided for each
-variates considered independently, "none" for no output or a vector
-of functions (as a character string) that will be applied on the
-variates dimension before any output (ex: \code{"mean"},
-\code{"median"}, \code{c("min","max")}). Each function should return
-1 value when applied to 1 value (ex. do not use \code{"range"}). Note
-that the \code{outm} attribute may be changed further using the
-\code{\link{outm}} function.}
+\item{outm}{The output of the mcnode for multivariates nodes. May be
+"each" (default) if an output should be provided for each variates
+considered independently, "none" for no output or a vector of
+functions (as a character string) that will be applied on the
+variates dimension before any output (ex: "mean", "median",
+c("min","max")). Each function should return 1 value when applied to
+1 value (ex. do not use "range"). Note that the outm attribute may be
+changed further using the \code{\link{outm}} function.}
 \item{nsample}{The name of the parameter of the function giving the
-size of the vector. By default, \code{n}, as in most of the random
-sampling distributions of the \code{stats} library (with the
-exceptions of \code{rhyper} and \code{rwilcox} where
-\code{nsample="nn"} should be used).}
-\item{seed}{The random seed used for the evaluation. If \code{NULL}
-the \code{seed} is unchanged.}
+size of the vector. By default, "n", as in most of the random
+sampling distributions of the \pkg{stats} library (with the
+exceptions of \code{\link{rhyper}} and \code{\link{rwilcox}} where
+nsample="nn" should be used).}
+\item{seed}{The random seed used for the evaluation. If NULL the seed
+is unchanged.}
 \item{rtrunc}{Should the distribution be truncated? See
 \code{\link{rtrunc}}.}
 \item{linf}{If truncated: lower limit. May be a scalar, an array or a
@@ -127,71 +126,65 @@ mcnode.}
 Note that arguments after \dots must be matched exactly.
 
 Any function who accepts vectors/matrix as arguments may be used
-(notably: all current random generator of the \code{stats} package).
+(notably: all current random generator of the \pkg{stats} package).
 The arguments may be sent classically but it is strongly recommended
-to use consistant \code{mcnode}s if arguments should be recycled,
-since a complex recycling is handled for \code{mcnode} and not for
-vectors. The rules for compliance of \code{mcnode} arguments are as
-following (see below for special functions): 
+to use consistant mcnodes if arguments should be recycled, since a
+complex recycling is handled for mcnode and not for vectors. The
+rules for compliance of mcnode arguments are as following (see below
+for special functions): 
 
 \describe{
-\item{type="V"}{accepts \code{"0" mcnode} of dimension \code{(1 x 1 x
-nvariates)} or of dimension \code{(1 x 1 x 1)} (recycled) and
-\code{"V" mcnode} of dimension \code{(nsv x 1 x nvariates)} or
-\code{(nsv x 1 x 1)} (recycled).}
-\item{type="U"}{accepts \code{"0" mcnode} of dimension \code{(1 x 1 x
-nvariates)} or of dimension \code{(1 x 1 x 1)} (recycled) and
-\code{"U" mcnode} of dimension \code{(1 x nsu x nvariates)} or of
-dimension \code{(1 x nsu x 1)} (recycled).}
-\item{type="VU"}{accepts \code{"0" mcnode} of dimension \code{(1 x 1
-x nvariates)} or of dimension \code{(1 x 1 x 1)} (recycled),
-\code{"V" mcnode} of dimension \code{(nsv x 1 x nvariates)} (recycled
-classicaly) or \code{(nsv x 1 x 1)} (recycled classically), \code{"U"
-mcnode} of dimension \code{(1 x nsu x nvariates)} (recycled by rows)
-or \code{(1 x nsu x 1)} (recycled by row on the uncertainty dimension
-and classicaly on variates), \code{"VU" mcnode} of dimension
-\code{(nsv x nsu x nvariates)} or of dimension \code{(nsv x nsu x 1)}
-(recycled).}
-\item{type="0"}{accepts \code{"0" mcnode} of dimension \code{(1 x 1 x
-nvariates)} or \code{(1 x 1 x 1)} (recycled).}}
+\item{type="V"}{accepts "0" mcnode of dimension (1 x 1 x nvariates)
+or of dimension (1 x 1 x 1) (recycled) and "V" mcnode of dimension
+(nsv x 1 x nvariates) or (nsv x 1 x 1) (recycled).}
+\item{type="U"}{accepts "0" mcnode of dimension (1 x 1 x nvariates)
+or of dimension (1 x 1 x 1) (recycled) and "U" mcnode of dimension (1
+x nsu x nvariates) or of dimension (1 x nsu x 1) (recycled).}
+\item{type="VU"}{accepts "0" mcnode of dimension (1 x 1 x nvariates)
+or of dimension (1 x 1 x 1) (recycled), "V" mcnode of dimension (nsv
+x 1 x nvariates) (recycled classicaly) or (nsv x 1 x 1) (recycled
+classically), "U" mcnode of dimension (1 x nsu x nvariates) (recycled
+by rows) or (1 x nsu x 1) (recycled by row on the uncertainty
+dimension and classicaly on variates), "VU" mcnode of dimension (nsv
+x nsu x nvariates) or of dimension (nsv x nsu x 1) (recycled).}
+\item{type="0"}{accepts "0" mcnode of dimension (1 x 1 x nvariates)
+or (1 x 1 x 1) (recycled).}}
 Multivariate nodes and multivariate distributions:
 
 The number of variates should be provided (not guesses by the
 function). A multivariates node may be built using a univariate
-distribution and \code{nvariates!=1}. See examples.
+distribution and nvariates!=1. See examples.
 
-\code{\link{rdirichlet}} needs for \code{alpha} a vector or a
-multivariates nodes and returns a multivariate node.
-\code{\link{rmultinomial}} needs for \code{size} and \code{prob}
-vectors and/or multivariate nodes and return a univariate or a
-multivariate node. \code{\link{rmultinormal}} needs for \code{mean}
-and \code{sigma} vectors and/or multivariate nodes and return a
-multivariate node. \code{\link{rempiricalD}} needs for \code{values}
-and \code{prob} vectors and/or multivariate nodes and return a a
-univariate or a multivariate node. See examples.
+\code{\link{rdirichlet}} needs for alpha a vector or a multivariates
+nodes and returns a multivariate node. \code{\link{rmultinomial}}
+needs for size and prob vectors and/or multivariate nodes and return
+a univariate or a multivariate node. \code{\link{rmultinormal}} needs
+for mean and sigma vectors and/or multivariate nodes and return a
+multivariate node. \code{\link{rempiricalD}} needs for values and
+prob vectors and/or multivariate nodes and return a a univariate or a
+multivariate node. See examples.
 
-\code{trunc=TRUE} is valid for univariates distributions only. The
-distribution will be truncated on \code{[linf, lsup]}. The function
-'func' should have a 'q' form (with first argument 'p') and a 'p'
-form, as all current random generator of the \code{stats} library.
-Example : 'rnorm' (has a 'qnorm' and a 'pnorm' form), 'rbeta',
-'rbinom', 'rgamma', ...
+trunc==TRUE is valid for univariates distributions only. The
+distribution will be truncated on [linf, lsup]. The function 'func'
+should have a 'q' form (with first argument 'p') and a 'p' form, as
+all current random generator of the \pkg{stats} library. Example :
+'rnorm' (has a 'qnorm' and a 'pnorm' form), 'rbeta', 'rbinom',
+'rgamma', ...
 
-If \code{lhs=TRUE}, a Random Hypercube Sampling will be used on
-\code{nsv} and \code{nsu} The function 'func' should have a 'q' form
-(with argument 'p'). \code{lhs=TRUE} is thus not allowed on
-multivariates distributions.
+If lhs=TRUE, a Random Hypercube Sampling will be used on nsv and nsu
+The function 'func' should have a 'q' form (with argument 'p').
+lhs=TRUE is thus not allowed on multivariates distributions.
 }
 \value{
-An \code{mcnode} object.
+An mcnode object.
 }
 \author{
 Regis Pouillot
 }
 \seealso{
-\code{\link{mcnode}} for a description of \code{mcnode} object,
-methods and functions on \code{mcnode} objects.
+\code{\link{mcnode}} for a description of mcnode object, methods and
+functions on mcnode objects.
 
- \code{\link{Ops.mcnode}} for operations on \code{mcnode} objects.
+ \code{\link{Ops.mcnode}} for operations on mcnode objects.
 }
 \keyword{methods}

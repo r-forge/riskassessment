@@ -4,8 +4,8 @@
 Monte Carlo model
 }
 \description{
-Specify a \code{mcmodel}, without evaluating it, for a further
-evaluation using \code{\link{evalmcmod}}.
+Specify a mcmodel, without evaluating it, for a further evaluation
+using \code{\link{evalmcmod}}.
 }
 \usage{
 mcmodel(x, is.expr=FALSE)
@@ -24,19 +24,18 @@ evalmcmod(modEC1, nsv=100, nsu=100)
 }
 \arguments{
 \item{x}{An \R call or an expression.}
-\item{is.expr}{ \code{FALSE} to send a call, \code{TRUE} to send an
-expression (see Examples)}
+\item{is.expr}{ FALSE to send a call, TRUE to send an expression (see
+Examples)}
 }
 \details{
-The model should be put between \code{\{} and the last line should be
-of the form \code{mc(...)}. Any reference to the number of simulation
-in the dimension of variability should be done via \code{ndvar()} or
-(preferred) \code{nsv}. Any reference to the number of simulations in
-the dimension of uncertainty should be done via \code{ndunc()} or
-(preferred) \code{nsu}.
+The model should be put between "\{" and the last line should be of
+the form mc(...). Any reference to the number of simulation in the
+dimension of variability should be done via ndvar() or (preferred)
+nsv. Any reference to the number of simulations in the dimension of
+uncertainty should be done via ndunc() or (preferred) nsu.
 }
 \value{
-an \R expression, with class \code{mcmodel}
+an \R expression, with class mcmodel
 }
 \author{
 Regis Pouillot

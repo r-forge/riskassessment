@@ -2,18 +2,18 @@
 quantile.mc <- function(x, probs = seq(0, 1, 0.01), lim=c(0.025,0.975), na.rm=TRUE,  ...)
 #TITLE Quantiles of a mc Object
 #DESCRIPTION
-# Evaluates quantiles of a \code{mc} object. This function is used by \code{plot.mc}
+# Evaluates quantiles of a mc object. This function is used by plot.mc
 #KEYWORDS univar
 #INPUTS
-# {x}<<a \code{mc} objects>>
+# {x}<<a mc objects>>
 #[INPUTS]
 #{probs}<<the quantiles to be calculated>>
 #{na.rm}<<TRUE or FALSE>>
-#{lim}<<a vector of numbers (between 0 and 1) indicating the enveloppe. Maybe \code{NULL} or empty.>>
+#{lim}<<a vector of numbers (between 0 and 1) indicating the enveloppe. Maybe NULL or empty.>>
 #{\dots}<<For generic method consistancy.>>
 #DETAILS
 #The quantiles are evaluated in the variability dimension.
-#Then, the median, the mean and the \code{lim} quantiles are evaluated for each of these quantiles.
+#Then, the median, the mean and the lim quantiles are evaluated for each of these quantiles.
 #VALUE
 #A list of quantiles.
 #SEE ALSO

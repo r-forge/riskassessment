@@ -9,9 +9,9 @@ The Generalised Beta Distribution
 }
 \description{
 Density, distribution function, quantile function and random
-generation for the Beta distribution defined on the \code{[min, max]}
-domain with parameters \code{shape1} and \code{shape2} ( and optional
-non-centrality parameter \code{ncp}).
+generation for the Beta distribution defined on the [min, max] domain
+with parameters shape1 and shape2 ( and optional non-centrality
+parameter ncp).
 }
 \usage{
 dbetagen(x, shape1, shape2, min=0, max=1, ncp=0, log=FALSE)
@@ -32,16 +32,16 @@ curve(dbetagen(x, shape1=.5, shape2=.5, min=0, max=7), from = 0, to = 7, lty=3, 
 \arguments{
 \item{x,q}{Vector of quantiles.}
 \item{p}{Vector of probabilities.}
-\item{n}{Number of observations. If \code{length(n) > 1}, the length
+\item{n}{Number of observations. If length(n) \eqn{>} 1, the length
 is taken to be the number required.}
 \item{shape1, shape2}{Positive parameters of the Beta distribution.}
 \item{min}{Vector of minima.}
 \item{max}{Vector of maxima.}
 \item{ncp}{Non-centrality parameter of the Beta distribution.}
-\item{log, log.p}{Logical; if \code{TRUE}, probabilities \code{p} are
-given as \code{log(p)}.}
-\item{lower.tail}{Logical; if \code{TRUE} (default), probabilities
-are \code{P[X <= x]}, otherwise, \code{P[X > x]}.}
+\item{log, log.p}{Logical; if TRUE, probabilities p are given as
+log(p).}
+\item{lower.tail}{Logical; if TRUE (default), probabilities are P[X
+\eqn{<}= x], otherwise, P[X \eqn{>} x].}
 }
 \details{
 \deqn{x \sim betagen(shape1, shape2, min, max, ncp)}{x ~
@@ -52,9 +52,9 @@ These functions use the \code{\link{Beta}} distribution functions
 after correct parametrisation.
 }
 \value{
-\code{dbetagen} gives the density, \code{pbetagen} gives the
-distribution function, \code{qbetagen} gives the quantile function,
-and \code{rbetagen} generates random deviates.
+dbetagen gives the density, pbetagen gives the distribution function,
+qbetagen gives the quantile function, and rbetagen generates random
+deviates.
 }
 \author{
 Regis Pouillot

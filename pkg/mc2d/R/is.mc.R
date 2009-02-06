@@ -4,14 +4,14 @@ dimmcnode <- function(x)
 #DESCRIPTION
 # Provides the dimension (i.e. the number of simulations in the variability dimension,
 # the number of simulations in the uncertainty dimension and the 
-# maximum number of variates of a \code{mcnode} or a \code{mc} object.
+# maximum number of variates of a mcnode or a mc object.
 #KEYWORDS utilities
 #INPUTS
-#{x}<<a \code{mcnode} or a \code{mc} object.>>
+#{x}<<a mcnode or a mc object.>>
 #VALUE
-#A vector of three scalars: the dimension of variability (1 for \code{"0"} and \code{"U" mcnode}), 
-# the dimension of uncertainty (1 for \code{"0"} and \code{"V" mcnode}) and
-# the number of variates (the maximal number of variates for an \code{mc} object.
+#A vector of three scalars: the dimension of variability (1 for "0" and "U" mcnode), 
+# the dimension of uncertainty (1 for "0" and "V" mcnode) and
+# the number of variates (the maximal number of variates for an mc object.
 #NOTE
 #This function does not test if the object is correctly built. See \code{\link{is.mcnode}} and \code{\link{is.mc}} .
 #EXAMPLE
@@ -43,15 +43,15 @@ dimmc <- function(x)
 typemcnode <- function(x,index=FALSE)
 #TITLE Provides the Type of a mcnode Object
 #DESCRIPTION
-# Provide the type of a \code{mcnode} object.
+# Provide the type of a mcnode object.
 #KEYWORDS utilities
 #INPUTS
-#{x}<<a \code{mcnode} object>>
+#{x}<<a mcnode object>>
 #[INPUTS]
-#{index}<<if \code{TRUE} give the index of the type rather than the type.>>
+#{index}<<if TRUE give the index of the type rather than the type.>>
 #VALUE
-# \code{"0", "V","U" or "VU"} or the corresponding index if \code{index=TRUE}.</>
-#\code{NULL} if none of this element is found.
+# "0", "V","U" or "VU" or the corresponding index if index==TRUE.</>
+#NULL if none of this element is found.
 #NOTE
 #This function does not test if the object is correct. See \code{\link{is.mcnode}}.
 #EXAMPLE
@@ -73,19 +73,19 @@ typemcnode <- function(x,index=FALSE)
 is.mc <- function(x)
 #TITLE Tests mc and mcnode Objects
 #DESCRIPTION
-# \code{is.mc} tests \code{mc} objects and \code{is.mcnode} tests \code{mcnode} objects.
+# is.mc tests mc objects and is.mcnode tests mcnode objects.
 #KEYWORDS utilities
 #INPUTS
-#{x}<<An \code{mc} or a \code{mcnode} object.>>
+#{x}<<An mc or a mcnode object.>>
 #VALUE
-# \code{TRUE} or \code{FALSE}
+# TRUE or FALSE
 #DETAILS
-# \code{is.mc} tests if \code{x} is a list of \code{mcnode},
+# is.mc tests if x is a list of mcnode,
 #each elements being of compatible dimension.
-#It tests if the class \code{"mc"} is affected to the object.</>
-# \code{is.mcnode} tests if \code{x} is an array of numeric or logical,
+#It tests if the class "mc" is affected to the object.</>
+# is.mcnode tests if x is an array of numeric or logical,
 # if it has a "type" attribute and compatible dimensions,
-# and if the class \code{"mcnode"} is affected to the object.
+# and if the class "mcnode" is affected to the object.
 #EXAMPLE
 #data(total)
 #is.mcnode(xVU)

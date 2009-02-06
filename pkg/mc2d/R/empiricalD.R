@@ -6,7 +6,7 @@ dempiricalD <- function(x,values,prob=NULL,log=FALSE)
 #DESCRIPTION
 #Density, distribution function and random generation
 #for a discrete empirical distribution. This function is vectorized to accept
-#different sets of \code{values} or \code{prob}.
+#different sets of values or prob.
 #INPUTS
 #{x, q}<<Vector of quantiles.>>
 #{p}<<Vector of probabilities.>>
@@ -14,18 +14,18 @@ dempiricalD <- function(x,values,prob=NULL,log=FALSE)
 #{values}<<Vector or matrix of numerical values. See details.>>
 #[INPUTS]
 #{prob}<<Optionnal vector or matrix of count or probabilities. See details.>>
-#{log, log.p}<<logical; if \code{TRUE}, probabilities \code{p} are given as \code{log(p)}.>>
-#{lower.tail}<<logical; if \code{TRUE} (default), probabilities are \code{P[X <= x]}, otherwise, \code{P[X > x]}.>>
+#{log, log.p}<<logical; if TRUE, probabilities p are given as log(p).>>
+#{lower.tail}<<logical; if TRUE (default), probabilities are P[X <= x] otherwise, P[X > x].>>
 #DETAILS
-#If \code{prob} is missing, the discrete distribution is obtained directly from the vector of \code{values},
-#otherwise \code{prob} is used to weight the values. \code{prob} is normalized before use. Thus, \code{prob}
-#may be the count of each \code{values}. \code{prob} values should be non negative and their sum should not be 0.</>
-#\code{values} and/or \code{prob} may vary: in that case, \code{values} and/or \code{prob} should be sent
-#as matrixes, the first row being used for the first element of \code{x}, \code{q}, \code{p} or the first random value, the
-#second row for the second element of \code{x}, \code{q}, \code{p} or random value, ...
-#Recycling is permitted if the number of rows of \code{prob} and \code{values} are equal or
-#if the number of rows of \code{prob} and/or \code{values} are one.</>
-#\code{rempiricalD(n, values, prob)} with \code{values} and \code{prob} as vectors
+#If prob is missing, the discrete distribution is obtained directly from the vector of values,
+#otherwise prob is used to weight the values. prob is normalized before use. Thus, prob
+#may be the count of each values. prob values should be non negative and their sum should not be 0.</>
+#values and/or prob may vary: in that case, values and/or prob should be sent
+#as matrixes, the first row being used for the first element of x, q, p or the first random value, the
+#second row for the second element of x, q, p or random value, ...
+#Recycling is permitted if the number of rows of prob and values are equal or
+#if the number of rows of prob and/or values are one.</>
+#rempiricalD(n, values, prob) with values and prob as vectors
 #is equivalent to \code{sample(x=values, size=n, replace=TRUE, prob=prob)}.
 #NOTE
 #In the future, the fonctions should be written for non numerical values.
@@ -33,8 +33,8 @@ dempiricalD <- function(x,values,prob=NULL,log=FALSE)
 #\code{\link{sample}}.
 #\code{\link{empiricalC}}.
 #VALUE
-#\code{dempiricalD} gives the density, \code{pempiricalD} gives the distribution function,
-#\code{qempiricalD} gives the quantile function and \code{rempiricalD} generates random deviates.
+#dempiricalD gives the density, pempiricalD gives the distribution function,
+#qempiricalD gives the quantile function and rempiricalD generates random deviates.
 #EXAMPLE
 #dempiricalD(1:6,2:6,prob=c(10,10,70,0,10))
 #pempiricalD(1:6,2:6,prob=c(10,10,70,0,10))

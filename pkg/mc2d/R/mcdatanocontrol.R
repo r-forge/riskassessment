@@ -2,8 +2,8 @@
 mcdatanocontrol <- function(data, type=c("V","U","VU","0"), nsv=ndvar(), nsu=ndunc(), nvariates=1, outm="each")
 #ISALIAS mcdata
 #DETAILS
-#\code{mcdatanocontrol} is a dangerous version of \code{mcnode} which forces the dimension
-#of data to be \code{(nsv x nsu x nvariates)} and gives the atributes and the class
+#mcdatanocontrol is a dangerous version of mcnode which forces the dimension
+#of data to be (nsv x nsu x nvariates) and gives the atributes and the class
 #without any control. This function is useful when your model is tested since
 #it is much more quicker.
 #

@@ -27,21 +27,20 @@ ndunc(oldunc)
 \item{n}{Number of simulations.}
 }
 \details{
-\code{ndvar()} gets and \code{ndvar(n)} sets the default number of
-simulation in the 1D simulations or the number of simulation in the
-variability dimension in the 2D simulations.
+ndvar() gets and ndvar(n) sets the default number of simulation in
+the 1D simulations or the number of simulation in the variability
+dimension in the 2D simulations.
 
- \code{ndunc()} gets and \code{ndunc(n)} sets the number of
-simulations in the uncertainty dimension in the 2D simulations.
+ ndunc() gets and ndunc(n) sets the number of simulations in the
+uncertainty dimension in the 2D simulations.
 
- \code{n} is rounded to its ceiling value.
+ n is rounded to its ceiling value.
 
- The default values when loaded are 1001 for \code{ndvar} and 101 for
-\code{ndunc}.
+ The default values when loaded are 1001 for ndvar and 101 for ndunc.
 }
 \value{
-The current value, AFTER modification if \code{n} is present (!=
-\code{options}).
+The current value, AFTER modification if n is present (!=
+\code{options()}).
 }
 \author{
 Regis Pouillot

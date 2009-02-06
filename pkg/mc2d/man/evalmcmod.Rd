@@ -23,15 +23,15 @@ expression.}
 used in the evaluation.}
 \item{nsu}{The number of simulations in the dimension of uncertainty
 used in the evaluation.}
-\item{seed}{The random seed used for the evaluation. If \code{NULL}
-the \code{seed} is unchanged.}
+\item{seed}{The random seed used for the evaluation. If NULL the seed
+is unchanged.}
 }
 \details{
 The model is evaluated. The intermediate variables used to build the
-\code{mc} object are not stored.
+mc object are not stored.
 }
 \value{
-The results of the evaluation. It should be a \code{mc} object.
+The results of the evaluation. It should be a mc object.
 }
 \author{
 Regis Pouillot

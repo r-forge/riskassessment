@@ -2,35 +2,35 @@
 mc <- function(..., name=NULL, devname=FALSE)
 #TITLE Monte Carlo Object
 #DESCRIPTION
-# Creates \code{mc} objects from \code{\link{mcnode}} or \code{mc} objects.
+# Creates mc objects from \code{\link{mcnode}} or mc objects.
 #KEYWORDS methods
 #INPUTS
-#{...}<<\code{mcnode} and/or \code{mc} object(s) to be gathered in a \code{mc} object
+#{...}<<mcnode and/or mc object(s) to be gathered in a mc object
 #separated by a coma.>>
 #[INPUTS]
-#{name}<<Vector of character of the same length of the final \code{mc} object.
+#{name}<<Vector of character of the same length of the final mc object.
 #If NULL, the name will be given from the name of the elements. >>
-#{devname}<<Develop the name from the name of the \code{mc} objects, if any.>>
-##{remove}<<If \code{TRUE}, original objects are removed from the parent environment.>>
+#{devname}<<Develop the name from the name of the mc objects, if any.>>
+##{remove}<<If TRUE, original objects are removed from the parent environment.>>
 #VALUE
-# An object of class \code{mc}.
+# An object of class mc.
 #DETAILS
-#A \code{mc} object is a list of \code{\link{mcnode}} objects.
-#\code{mcnode} objects must be of coherent dimensions.
+#A mc object is a list of \code{\link{mcnode}} objects.
+#mcnode objects must be of coherent dimensions.
 #
-#If one of the arguments is a \code{mc} object, the name of the elements of this \code{mc} object are used.
-#\code{devname = TRUE} will develop the name, using as a prefix the name of the \code{mc} object.</>
+#If one of the arguments is a mc object, the name of the elements of this mc object are used.
+#devname = TRUE will develop the name, using as a prefix the name of the mc object.</>
 #Finally, names are transformed to be unique.
 #SEE ALSO
-#\code{\link{mcnode}}, the basic element of a \code{mc} object.</>
-#To evaluate \code{mc} objects: \code{\link{mcmodel}}, \code{\link{evalmcmod}}, \code{\link{evalmccut}}</>
-#Informations about an \code{mc} object: \code{\link{is.mc}}, \code{\link{dimmc}}</>
-##To apply a function on a \code{mc} object: \code{\link{mcapply}}</>
-#To study \code{mc} objects: \code{\link{print.mc}}, \code{\link{summary.mc}}, \code{\link{plot.mc}},
+#\code{\link{mcnode}}, the basic element of a mc object.</>
+#To evaluate mc objects: \code{\link{mcmodel}}, \code{\link{evalmcmod}}, \code{\link{evalmccut}}</>
+#Informations about an mc object: \code{\link{is.mc}}, \code{\link{dimmc}}</>
+##To apply a function on a mc object: \code{\link{mcapply}}</>
+#To study mc objects: \code{\link{print.mc}}, \code{\link{summary.mc}}, \code{\link{plot.mc}},
 #\code{\link{converg}}, \code{\link{hist.mc}}, \code{\link{tornado}}, \code{\link{tornadounc.mc}}</>
-##To modify \code{mc} objects:
+##To modify mc objects:
 ##\code{\link{subset.mc}}</>
-##To transform \code{mc} objects in a list, a data.frame, a matrix or an array: \code{\link{unmcnode}}.
+##To transform mc objects in a list, a data.frame, a matrix or an array: \code{\link{unmcnode}}.
 #EXAMPLE   
 #x <- mcstoc(runif)
 #y <- mcdata(3,type="0")

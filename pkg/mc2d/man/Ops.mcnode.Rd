@@ -4,8 +4,8 @@
 Operations on mcnode Objects
 }
 \description{
-This function alters the way operations are performed on
-\code{mcnode} objects for a better consistancy of the theory.
+This function alters the way operations are performed on mcnode
+objects for a better consistancy of the theory.
 }
 \usage{
 \method{Ops}{mcnode}(e1, e2)
@@ -66,63 +66,58 @@ xUM - xU
 xVUM - xU
 }
 \arguments{
-\item{e1}{An \code{mcnode} object, a vector or an array.}
-\item{e2}{An optionnal \code{mcnode} object, a vector or a matrix
-with at least one of both objects as an \code{mcnode}.}
+\item{e1}{An mcnode object, a vector or an array.}
+\item{e2}{An optionnal mcnode object, a vector or a matrix with at
+least one of both objects as an mcnode.}
 }
 \details{
 This method will be used for any of the Group \code{\link{Ops}}
 functions, i.e.: 
 
 \itemize{
-\item \code{"+"}, \code{"-"}, \code{"*"}, \code{"/"}, \code{"^"},
-\code{"\%
+\item "+", "-", "*", "/", "\eqn{\mbox{\textasciicircum}}{^}", "\%
 \%
-"}, \code{"\%
+","\%
 /\%
-"}
-\item \code{"&", "|", "!"}
-\item \code{"==", "!=", "<", "<=", ">=", ">"}}
-The rules are as following (illustrated with a \code{"+"} function
-and ignoring the \code{nvariates} dimension): 
+"
+\item "\&", "\eqn{|}", "!"
+\item "==", "!=", "\eqn{<}", "\eqn{<}=", "\eqn{>}=", "\eqn{>}"}
+The rules are as following (illustrated with a "+" function and
+ignoring the nvariates dimension): 
 
 \itemize{
-\item \code{"0" + "0" = "0"};
-\item \code{"0" + "V" = "V"}: classical recycling of the scalar;
-\item \code{"0" + "U" = "U"}: classical recycling of the scalar;
-\item \code{"0" + "VU" = "VU"}: classical recycling of the scalar;
-\item \code{"V" + "V" = "V"}: if both of the same \code{(nsv)}
-dimension;
-\item \code{"V" + "U" = "VU"}: the \code{"U"} object will be recycled
-"by row". The \code{"V"} object will be recycled classically "by
-column";
-\item \code{"V" + "VU" = "VU"}: if the dimension of the \code{"V"} is
-\code{(nsv)} and the dimension of the \code{"VU"} is \code{(nsv x
-nsu)}. The \code{"V"} object will be recycled classically "by
-column";
-\item \code{"U" + "U" = "U"}: if both of the same \code{(nsu)}
-dimension;
-\item \code{"U" + "VU" = "VU"}: if the dimension of the \code{"U"} is
-\code{(nsu)} and the dimension of the \code{"VU"} is \code{(nsv x
-nsu)}. The \code{"U"} object will be recycled "by row";
-\item \code{"VU" + "VU" = "VU"}: if the dimension of the \code{"VU"}
-nodes is \code{(nsu x nsv)};}
-A vector or an array may be combined with an \code{mcnode} of size
-\code{(nsv x nsu)} if an \code{mcnode} of this dimension may be built
-from this vector/array using the \code{mcdata} function. See
-\code{\link{mcdata}} for the rules.
+\item "0" + "0" = "0";
+\item "0" + "V" = "V": classical recycling of the scalar;
+\item "0" + "U" = "U": classical recycling of the scalar;
+\item "0" + "VU" = "VU": classical recycling of the scalar;
+\item "V" + "V" = "V": if both of the same (nsv) dimension;
+\item "V" + "U" = "VU": the "U" object will be recycled "by row". The
+"V" object will be recycled classically "by column";
+\item "V" + "VU" = "VU": if the dimension of the "V" is (nsv) and the
+dimension of the "VU" is (nsv x nsu). The "V" object will be recycled
+classically "by column";
+\item "U" + "U" = "U": if both of the same (nsu) dimension;
+\item "U" + "VU" = "VU": if the dimension of the "U" is (nsu) and the
+dimension of the "VU" is (nsv x nsu). The "U" object will be recycled
+"by row";
+\item "VU" + "VU" = "VU": if the dimension of the "VU" nodes is (nsu
+x nsv);}
+A vector or an array may be combined with an mcnode of size (nsv x
+nsu) if an mcnode of this dimension may be built from this
+vector/array using the mcdata function. See \code{\link{mcdata}} for
+the rules.
 
-The \code{outm} attribute is transferred as following: \code{"each" +
-"each" = "each"}; \code{"none" + other = other}; \code{other1 +
-other2 = other1}. The \code{outm} attribute of the resulting node may
-be changed using the \code{\link{outm}} function.
+The outm attribute is transferred as following: "each" + "each" =
+"each"; "none" + other = other; other1 + other2 = other1. The outm
+attribute of the resulting node may be changed using the
+\code{\link{outm}} function.
 
-For multivariate nodes, a recycling on the \code{nvariates} dimension
-is done if a \code{(nsu x nsv x nvariates)} node is combined with a
-\code{(nsu x nsv x 1)} node.
+For multivariate nodes, a recycling on the nvariates dimension is
+done if a (nsu x nsv x nvariates) node is combined with a (nsu x nsv
+x 1) node.
 }
 \value{
-The results as a \code{mcnode} object.
+The results as a mcnode object.
 }
 \author{
 Regis Pouillot
