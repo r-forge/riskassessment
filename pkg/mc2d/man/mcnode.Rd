@@ -6,8 +6,7 @@
 Build mcnode Objects from Data or other mcnode Objects
 }
 \description{
-Creates a \code{mcnode} object from a vector, an array or a
-\code{mcnode}.
+Creates a mcnode object from a vector, an array or a mcnode.
 }
 \usage{
 mcdata(data, type=c("V", "U", "VU", "0"), nsv=ndvar(), nsu=ndunc(),
@@ -96,117 +95,106 @@ ndunc(oldunc)
 }
 \arguments{
 \item{data}{The numeric/logical vector/matrix/array of data or the
-\code{mcnode} object.}
-\item{type}{The type of node to be built. By default, a \code{"V"}
-node.}
-\item{nsv}{The variability dimension (\code{type="V"} or
-\code{type="VU"}) of the node. By default: the current value in
-\code{\link{mc.control}}}
-\item{nsu}{The uncertainty dimension (\code{type="U"} or
-\code{type="VU"}) of the node. By default: the current value in
-\code{\link{mc.control}}}
+mcnode object.}
+\item{type}{The type of node to be built. By default, a "V" node.}
+\item{nsv}{The variability dimension (type="V" or type=="VU") of the
+node. By default: the current value in \code{\link{mc.control}}}
+\item{nsu}{The uncertainty dimension (type=="U" or type=="VU") of the
+node. By default: the current value in \code{\link{mc.control}}}
 \item{nvariates}{The number of variates. By default: 1}
-\item{outm}{The output of the \code{mcnode} for multivariates nodes.
-May be "each" (default) if output should be provided for each
-variates considered independently, "none" for no output or a vector
-of name of function(s) (as a character string) that will be applied
-on the variates dimension before any output (ex: \code{"mean"},
-\code{"median"}, \code{c("min", "max")}). The function should have no
-other arguments and send one value per vector of values (ex. do not
-use \code{"range"}). Note that the \code{outm} attribute may be
-changed at any time using the \code{\link{outm}} function.}
+\item{outm}{The output of the mcnode for multivariates nodes. May be
+"each" (default) if output should be provided for each variates
+considered independently, "none" for no output or a vector of name of
+function(s) (as a character string) that will be applied on the
+variates dimension before any output (ex: "mean", "median", c("min",
+"max")). The function should have no other arguments and send one
+value per vector of values (ex. do not use "range"). Note that the
+outm attribute may be changed at any time using the
+\code{\link{outm}} function.}
 }
 \details{
-A \code{mcnode} object is the basic element of a \code{\link{mc}}
-object. It is an array of dimension \code{(nsv x nsu x nvariates)}.
-Four types of \code{mcnode} exists:
+A mcnode object is the basic element of a \code{\link{mc}} object. It
+is an array of dimension (nsv x nsu x nvariates). Four types of
+mcnode exists:
 
 \itemize{
-\item \code{"V" mcnode}, for "Variability", are arrays of dimension
-\code{(nsv x 1 x nvariates)}. The alea in the data should reflect
-variability of the parameter.
-\item \code{"U" mcnode}, for "Uncertainty", are arrays of dimension
-\code{c(1 x nsu x nvariates)}. The alea in the data should reflect
-uncertainty of the parameter.
-\item \code{"VU" mcnode}, for "Variability and Uncertainty", are
-arrays of dimension \code{(nsv x nsu x nvariates)}. The alea in the
-data reflects separated variability (in rows) and uncertainty (in
-columns) of the parameter.
-\item \code{"0" mcnode}, for "Neither Variability or Uncertainty",
-are arrays of dimension \code{(1 x 1 x nvariates)}. No alea is
-considered for these nodes. \code{"0" mcnode} are not necessary in
-the univariate context (use scalar instead) but may be useful for
-operations on multivariate nodes.}
-Multivariate nodes (i.e. \code{nvariates != 1}) should be used for
-multivariate distributions implemented in \code{mc2d}
+\item "V" mcnode, for "Variability", are arrays of dimension (nsv x 1
+x nvariates). The alea in the data should reflect variability of the
+parameter.
+\item "U" mcnode, for "Uncertainty", are arrays of dimension (1 x nsu
+x nvariates). The alea in the data should reflect uncertainty of the
+parameter.
+\item "VU" mcnode, for "Variability and Uncertainty", are arrays of
+dimension (nsv x nsu x nvariates). The alea in the data reflects
+separated variability (in rows) and uncertainty (in columns) of the
+parameter.
+\item "0" mcnode, for "Neither Variability or Uncertainty", are
+arrays of dimension (1 x 1 x nvariates). No alea is considered for
+these nodes. "0" mcnode are not necessary in the univariate context
+(use scalar instead) but may be useful for operations on multivariate
+nodes.}
+Multivariate nodes (i.e. nvariates != 1) should be used for
+multivariate distributions implemented in \pkg{mc2d}
 (\code{\link{rmultinomial}}, \code{\link{rmultinormal}},
 \code{\link{rempiricalD}} and \code{\link{rdirichlet}}).
 
 For security, recycling rules are limited to fill the array using
-\code{data}. The general rules is that recycling is only permitted to
-fill a dimension from 1 to the final size of the dimension.
+data. The general rules is that recycling is only permitted to fill a
+dimension from 1 to the final size of the dimension.
 
- If the final dimension of the node is \code{(nsv x nsu x nvariates)}
-(with \code{nsv = 1} and \code{nsu = 1} for \code{"0"} nodes,
-\code{nsu = 1} for \code{"V"} nodes and \code{nsv = 1} for \code{"U"}
-nodes), \code{mcdata} accepts : 
+ If the final dimension of the node is (nsv x nsu x nvariates) (with
+nsv = 1 and nsu = 1 for "0" nodes, nsu = 1 for "V" nodes and nsv = 1
+for "U" nodes), mcdata accepts : 
 
 \itemize{
-\item Vectors of length \code{1} (recycled on all dimensions),
-vectors of length \code{(nsv * nsu)} (filling first the dimension of
-variability, then the dimension of uncertainty then recycling on
-nvariates), or vectors of length \code{(nsv * nsu * nvariates)}
-(filling first the dimension of variability, then the uncertainty,
-then the variates).
-\item Matrixes of dimensions \code{(nsv x nsu)}, recycling on
-variates.
-\item Arrays of dimensions \code{(nsv x nsu x nvariates)} or
-\code{(nsv x nsu x 1)}, recycling on variates.
-\item For \code{data} as \code{mcnode}, recycling is dealt to proper
-fill the array:\enumerate{
-\item a \code{"V"} node accepts a \code{"0"} node of dimension
-\code{(1 x 1 x nvariates)} (recycling on variability) or of dimension
-\code{(1 x 1 x 1)} (recycling on variability and variates), or a
-\code{"V"} node of dimension \code{(nsv x 1 x nvariates)} or
-\code{(nsv x 1 x 1)} (recycling on variates),
-\item a \code{"U"} node accepts a \code{"0"} node of dimension
-\code{(1 x 1 x nvariates)} (recycling on uncertainty) or of dimension
-\code{(1 x 1 x 1)} (recycling on uncertainty and variates), or a
-\code{"U"} node of dimension \code{(1 x nsu x nvariates)}, or
-\code{(1 x nsu x 1)} (recycling on variates),
-\item a \code{"VU"} node accepts a \code{"0"} node of dimension
-\code{(1 x 1 x nvariates)} (recycling on varaiability and
-uncertainty) or of dimension \code{(1 x 1 x 1)} (recycling on
-variability, uncertainty and variates), a \code{"U"} node of
-dimension \code{(1 x nsu x nvariates)}(recycling "by row" on the
-variability dimension), or of dimension \code{(1 x nsu x 1)}(recycled
-"by row" on the variability dimension then on variates), a \code{"V"}
-node of dimension \code{(nsv x 1 x nvariates)}(recycling on the
-uncertainty dimension) or of dimension \code{(nsv x 1 x 1)}(recycled
-on the uncertainty dimension then on variates), and a \code{"VU"}
-node of dimension \code{(nsv x nsu x nvariates)} or of dimension
-\code{(nsv x nsu x 1)} (recycling on variates).
-\item a \code{"0"} node accepts a \code{"0"} node of dimension
-\code{(1 x 1 x nvariates)} or \code{(1 x 1 x 1)} (recycling on
-variates).}
+\item Vectors of length 1 (recycled on all dimensions), vectors of
+length (nsv * nsu) (filling first the dimension of variability, then
+the dimension of uncertainty then recycling on nvariates), or vectors
+of length (nsv * nsu * nvariates) (filling first the dimension of
+variability, then the uncertainty, then the variates).
+\item Matrixes of dimensions (nsv x nsu), recycling on variates.
+\item Arrays of dimensions (nsv x nsu x nvariates) or (nsv x nsu x
+1), recycling on variates.
+\item For data as mcnode, recycling is dealt to proper fill the
+array:\enumerate{
+\item a "V" node accepts a "0" node of dimension (1 x 1 x nvariates)
+(recycling on variability) or of dimension (1 x 1 x 1) (recycling on
+variability and variates), or a "V" node of dimension (nsv x 1 x
+nvariates) or (nsv x 1 x 1) (recycling on variates),
+\item a "U" node accepts a "0" node of dimension (1 x 1 x nvariates)
+(recycling on uncertainty) or of dimension (1 x 1 x 1) (recycling on
+uncertainty and variates), or a "U" node of dimension (1 x nsu x
+nvariates), or (1 x nsu x 1) (recycling on variates),
+\item a "VU" node accepts a "0" node of dimension (1 x 1 x nvariates)
+(recycling on varaiability and uncertainty) or of dimension (1 x 1 x
+1) (recycling on variability, uncertainty and variates), a "U" node
+of dimension (1 x nsu x nvariates)(recycling "by row" on the
+variability dimension), or of dimension (1 x nsu x 1)(recycled "by
+row" on the variability dimension then on variates), a "V" node of
+dimension (nsv x 1 x nvariates)(recycling on the uncertainty
+dimension) or of dimension (nsv x 1 x 1)(recycled on the uncertainty
+dimension then on variates), and a "VU" node of dimension (nsv x nsu
+x nvariates) or of dimension (nsv x nsu x 1) (recycling on variates).
+\item a "0" node accepts a "0" node of dimension (1 x 1 x nvariates)
+or (1 x 1 x 1) (recycling on variates).}
 }
-\code{mcdatanocontrol} is a dangerous version of \code{mcnode} which
-forces the dimension of data to be \code{(nsv x nsu x nvariates)} and
-gives the atributes and the class without any control. This function
-is useful when your model is tested since it is much more quicker.
+mcdatanocontrol is a dangerous version of mcnode which forces the
+dimension of data to be (nsv x nsu x nvariates) and gives the
+atributes and the class without any control. This function is useful
+when your model is tested since it is much more quicker.
 }
 \value{
-An \code{mcnode} object.
+An mcnode object.
 }
 \author{
 Regis Pouillot
 }
 \seealso{
-\code{\link{mcstoc}} to build a stochastic \code{mcnode} object,
-\code{\link{mcprobtree}} to build a stochastic node fro a probability
-tree.
+\code{\link{mcstoc}} to build a stochastic mcnode object,
+\code{\link{mcprobtree}} to build a stochastic node from a
+probability tree.
 
- \code{\link{Ops.mcnode}} for operations on \code{mcnode} objects.
+ \code{\link{Ops.mcnode}} for operations on mcnode objects.
 
  \code{\link{mc}} to build a Monte-Carlo object.
 
@@ -215,13 +203,13 @@ tree.
  Informations about an mcnode: \code{\link{is.mcnode}},
 \code{\link{dimmcnode}}, \code{\link{typemcnode}}.
 
- To build a correlation structure between \code{mcnode}:
+ To build a correlation structure between mcnode:
 \code{\link{cornode}}.
 
- To study \code{mcnode} objects: \code{\link{print.mcnode}},
+ To study mcnode objects: \code{\link{print.mcnode}},
 \code{\link{summary.mcnode}}, \code{\link{plot.mcnode}},
 \code{\link{converg}}, \code{\link{hist.mcnode}}
 
- To modify \code{mcnode} objects: \code{\link{NA.mcnode}}
+ To modify mcnode objects: \code{\link{NA.mcnode}}
 }
 \keyword{methods}

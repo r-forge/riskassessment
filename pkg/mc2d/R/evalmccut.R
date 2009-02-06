@@ -3,73 +3,72 @@ evalmccut <- function(model, nsv = ndvar(), nsu = ndunc(), seed = NULL,  ind = "
 #TITLE Evaluates a Two-Dimensional Monte Carlo Model in a Loop.
 #NAME mccut
 #DESCRIPTION
-#\code{evalmccut} evaluates a Two-Dimensional Monte Carlo model using a loop on the uncertainty dimension.
+#evalmccut evaluates a Two-Dimensional Monte Carlo model using a loop on the uncertainty dimension.
 #Within each loop, it calculates statistics in the variability dimension and stores them 
 #for further analysis.
 #It allows to evaluate very high dimension models using (unlimited?) time instead of (limited) memory.</>
-#\code{mcmodelcut} builds a \code{mcmodelcut} object that can be sent to \code{evalmccut}.
+#mcmodelcut builds a mcmodelcut object that can be sent to evalmccut.
 #KEYWORDS methods
 #INPUTS
-#{model}<<a \code{mcmodelcut} object obtained using \code{mcmodelcut} function or (directly) a valid call including three blocks.
+#{model}<<a mcmodelcut object obtained using mcmodelcut function or (directly) a valid call including three blocks.
 #See Details and Examples for the structure of the call.>>
-#{x}<<a call or an expression (if \code{is.expr=TRUE}) including three blocks. See Details and Examples for the structure of the call.>>
+#{x}<<a call or an expression (if is.expr=TRUE) including three blocks. See Details and Examples for the structure of the call.>>
 #[INPUTS]
 #{nsv}<<The number of simulations for variability used in the evaluation.>>
 #{nsu}<<The number of simulations for uncertainty used in the evaluation.>>
-#{seed}<<The random seed used for the evaluation. If \code{NULL} the \code{seed} is unchanged.>>
-#{ind}<<The variable name used in \code{model} to refers to the uncertainty. see Details and Example.>>
-#{is.expr}<< \code{FALSE} to send a call,  \code{TRUE} to send an expression (see \code{\link{mcmodel}} examples)>>
+#{seed}<<The random seed used for the evaluation. If NULL the seed is unchanged.>>
+#{ind}<<The variable name used in model to refers to the uncertainty. see Details and Example.>>
+#{is.expr}<< FALSE to send a call,  TRUE to send an expression (see \code{\link{mcmodel}} examples)>>
 #{lim}<<A vector of values used for the quantile function (uncertainty dimension).>>
 #{digits}<<Number of digits in the print.>>
 #{\dots}<<Additional arguments to be passed in the final print function.>>
 #VALUE
-#An object of class \code{mccut}. This is a list including statistics evaluated within the third block. Each list consists of all the \code{nsu}
-#values obtained. The \code{print.mccut} method print the median, the mean, the \code{lim} quantiles estimated on each statistics on the
+#An object of class mccut. This is a list including statistics evaluated within the third block. Each list consists of all the nsu
+#values obtained. The print.mccut method print the median, the mean, the lim quantiles estimated on each statistics on the
 #uncertainty dimension.
 #NOTE
-#The methods and functions available on the \code{mccut} object is function of the statistics evaluated within the third block:
+#The methods and functions available on the mccut object is function of the statistics evaluated within the third block:
 #{*}<<a \code{\link{print.mccut}} is available as soon as one statistic is evaluated within the third block;>>
 #{*}<<a \code{\link{summary.mccut}} and a \code{\link{tornadounc.mccut}} are available if a \code{\link{summary.mc}}
 #is evaluated within the third block;>>
 #{*}<<\code{\link{converg}} may be used if a \code{\link{summary.mc}} is evaluated within the third block;>>
 #{*}<<a \code{\link{plot.mccut}} is available if a \code{\link{plot.mc}} is evaluated within the third block.
-#(Do not forget to use the argument \code{draw = FALSE} in the third block);>>
+#(Do not forget to use the argument draw = FALSE in the third block);>>
 #{*}<<a \code{\link{tornado}} is available if a \code{\link{tornado}} is evaluated within the third block.>>
 #DETAILS
 #This function should be used for high dimension Two-Dimensional Monte-Carlo simulations, when the memory limits of \R are attained.
 #The use of a loop will take (lots of) time, but less memory.</>
-#\code{x} (or \code{model} if a call is used directly in \code{evalmccut}) should be built as three blocks, separated by \code{\{}.
+#x (or model if a call is used directly in evalmccut) should be built as three blocks.
 #{#}<<The first block is evaluated once (and only once) before the first loop (step 1).>>
-#{#}<<The second block, which should lead to an \code{mc} object, is evaluated using \code{nsu = 1} (step 2).>>
-#{#}<<The third block is evaluated on the \code{mc} object. All resulting statistics are stored (step 3).>>
-#{#}<<The steps 2 and 3 are repeated \code{nsu} times. At each iteration, the values of the loop index (from 1 to \code{nsu})
-#is given to the variable specified in \code{ind}.>>
-#{#}<<Finally, the \code{nsu} statistics are returned in an invisible object of class \code{mccut}.>>
-#Understanding this, the call should be built like this:
-#\code{{{block 1}{block 2}{block 3}}}
+#{#}<<The second block, which should lead to an mc object, is evaluated using nsu = 1 (step 2).>>
+#{#}<<The third block is evaluated on the mc object. All resulting statistics are stored (step 3).>>
+#{#}<<The steps 2 and 3 are repeated nsu times. At each iteration, the values of the loop index (from 1 to nsu)
+#is given to the variable specified in ind.>>
+#{#}<<Finally, the nsu statistics are returned in an invisible object of class mccut.>>
+#
 #{#}<<The first block (maybe empty) is an expression that will be evaluated only once.
-#This block should evaluate all \code{"V" mcnode} and \code{"0" mcnode}s. It may evaluate and \code{"U" mcnode}
+#This block should evaluate all "V" mcnode and "0" mcnodes. It may evaluate "U" mcnodes
 #that will be sent in the second and third block by column, and, optionnaly, some other codes
-#(even \code{"VU" mcnode}, sent by columns) that can not be evaluated if \code{ndunc=1}
+#(even "VU" mcnode, sent by columns) that can not be evaluated if ndunc==1
 #(e.g. sampling without replacement in the uncertainty dimension).>>
-#{#}<<The second block is an expression that leads to the \code{mc} object.
-#It must end with an expression as \code{mymc <- mc(...)}. The variable specified as \code{ind}
+#{#}<<The second block is an expression that leads to the mc object.
+#It must end with an expression as mymc <- mc(...). The variable specified as ind
 #may be helpful to refer to the uncertainty dimension in this step >>
-#{#}<<The last block should build a list of statistics refering to the \code{mc}
-#object. The function \code{summary} should be used if a summary, a tornado on uncertainty (\code{\link{tornadounc.mccut}}) or a convergence diagnostic
+#{#}<<The last block should build a list of statistics refering to the mc
+#object. The function summary should be used if a summary, a tornado on uncertainty (\code{\link{tornadounc.mccut}}) or a convergence diagnostic
 #\code{\link{converg}} is needed,
 #the function \code{\link{plot.mc}} should be used if a plot is needed, the function \code{\link{tornado}} should be used if a tornado is needed.
 #Moreover, any other function that leads to a
-#vector, a matrix, or a list of vector/matrix of statistics evaluated from the \code{mc} object may be used. list are time consuming.>>
+#vector, a matrix, or a list of vector/matrix of statistics evaluated from the mc object may be used. list are time consuming.>>
 #IMPORTANT WARNING: do not forget to affect the results, since the print method provide only
-#a summary of the results while all data may be stored in an \code{mccut} object.
+#a summary of the results while all data may be stored in an mccut object.
 #NOTE
 #The seed is set at the beginning of the evaluation. Thus, the complete similarity of two evaluations
 #is not certain, depending of the structure of your model. Moreover, with a similar seed, the simulation will not be equal to
 #the one obtained with \code{\link{evalmcmod}} since the random samples will not be obtained in the same order.</>
-#In order to avoid conflicts between the \code{model} evaluation and the function, the function uses upper case variables.
+#In order to avoid conflicts between the model evaluation and the function, the function uses upper case variables.
 #Do not use upper case variables in your model.</>
-#The function should be re-adapted if a new function to be applied on \code{mc} objects is written.
+#The function should be re-adapted if a new function to be applied on mc objects is written.
 #SEE ALSO
 #\code{\link{evalmcmod}}
 #EXAMPLE

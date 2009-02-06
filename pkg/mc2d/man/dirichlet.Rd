@@ -38,15 +38,14 @@ parameters by rows. Recycling (by row) is permitted.}
 \details{
 The Dirichlet distribution is the multidimensional generalization of
 the beta distribution. The original code was adapted to provide a
-kind of "vectorization" used in multivariates \code{mcnode}.
+kind of "vectorization" used in multivariates mcnode.
 }
 \value{
-\code{ddirichlet} gives the density. \code{rdirichlet} returns a
-matrix with \code{n} rows, each containing a single Dirichlet random
-deviate.
+ddirichlet gives the density. rdirichlet returns a matrix with n
+rows, each containing a single Dirichlet random deviate.
 }
 \author{
-Code is adapted from \code{MCMCpack}. It originates from Greg's
+Code is adapted from \pkg{MCMCpack}. It originates from Greg's
 Miscellaneous Functions (gregmisc).
 }
 \seealso{

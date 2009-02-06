@@ -8,9 +8,9 @@ dmultinomial <- function (x, size = NULL, prob, log = FALSE)
 #{x}<<Vector of length K of integers in 0:size.>>
 #{n}<<Number of random vectors to draw.>>
 #{size}<<A vector of integers, say N, specifying the total number of objects that are put
-#into K boxes in the typical multinomial experiment. For \code{dmultinom}, it defaults to \code{sum(x)}.
-#The first element correspond to the vector \code{prob} or the first row of \code{prob}, ...>>
-#{prob}<<Numeric non-negative vector of length K, or matrix of size \code{(x x K)}
+#into K boxes in the typical multinomial experiment. For dmultinom, it defaults to sum(x).
+#The first element correspond to the vector prob or the first row of prob, ...>>
+#{prob}<<Numeric non-negative vector of length K, or matrix of size (x x K)
 #specifying the probability for the K classes; is internally normalized to sum 1.>>
 #{log}<<Logical; if TRUE, log probabilities are computed.>>
 #EXAMPLE

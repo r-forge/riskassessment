@@ -10,11 +10,11 @@ ddirichlet <- function (x, alpha)
 #{n}<<Number of random vectors to generate. If length(n) > 1, the length is taken to be the number required.>>
 #DETAILS
 #The Dirichlet distribution is the multidimensional generalization of the beta distribution. 
-#The original code was adapted to provide a kind of "vectorization" used in multivariates \code{mcnode}.
+#The original code was adapted to provide a kind of "vectorization" used in multivariates mcnode.
 #VALUE
-#\code{ddirichlet} gives the density. \code{rdirichlet} returns a matrix with \code{n} rows, each containing a single Dirichlet random deviate.
+#ddirichlet gives the density. rdirichlet returns a matrix with n rows, each containing a single Dirichlet random deviate.
 #AUTHOR
-#Code is adapted from \code{MCMCpack}. It originates from Greg's Miscellaneous Functions (gregmisc).
+#Code is adapted from \pkg{MCMCpack}. It originates from Greg's Miscellaneous Functions (gregmisc).
 #SEE ALSO
 #\code{\link{Beta}}
 #EXAMPLE

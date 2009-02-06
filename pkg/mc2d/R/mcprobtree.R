@@ -2,37 +2,37 @@
 mcprobtree <- function(mcswitch, mcvalues, type=c("V","U","VU","0"), nsv=ndvar(), nsu=ndunc(), nvariates=1, outm="each", seed=NULL)
 #TITLE Creates a Stochastic mcnode Object using a Probability Tree
 #DESCRIPTION
-#This function builds a \code{mcnode} as a mixture of \code{mcstoc} functions or \code{mcnode} objects.
+#This function builds a mcnode as a mixture of mcstoc functions or mcnode objects.
 #KEYWORDS methods
 #INPUTS
-#{mcswitch}<<A vector of probabilities/weights or a \code{mcnode} including the \code{mcstoc} functions/mcnodes to pick.>>
-#{mcvalues}<<A named list of \code{mcnode}, \code{mcdata} functions or \code{mcstoc} functions, or a combination of those objects.
-#Each element should lead to an \code{mcnode} of type \code{type} and of dimension \code{c(nsv x nsu x 1)} or \code{c(nsv x nsu x nvariates)} >>
+#{mcswitch}<<A vector of probabilities/weights or a mcnode including the mcstoc functions/mcnodes to pick.>>
+#{mcvalues}<<A named list of mcnode, mcdata functions or mcstoc functions, or a combination of those objects.
+#Each element should lead to an mcnode of type type and of dimension (nsv x nsu x 1) or (nsv x nsu x nvariates) >>
 #[INPUTS]
-#{type}<<The type of \code{mcnode} to be built. By default, a \code{"V"} node. see \code{\link{mcnode}} for details.>>
+#{type}<<The type of mcnode to be built. By default, a "V" node. see \code{\link{mcnode}} for details.>>
 #{nsv}<<The number of simulations in the variability dimension of the final node.>>
 #{nsu}<<The number of simulations in the uncertainty dimension of the final node.>>
-#{nvariates}<<The number of variates of the final \code{mcnode}.>>
-#{outm}<<The default output of the \code{mcnode} for multivariates nodes. see \code{\link{outm}}.>>
-#{seed}<<The random seed used for the evaluation. If \code{NULL} the \code{seed} is unchanged.>>
+#{nvariates}<<The number of variates of the final mcnode.>>
+#{outm}<<The default output of the mcnode for multivariates nodes. see \code{\link{outm}}.>>
+#{seed}<<The random seed used for the evaluation. If NULL the seed is unchanged.>>
 #VALUE
-#An \code{mcnode} object.
+#An mcnode object.
 #DETAILS
-#\code{mcswitch} may be:
-#{*}<<a vector of length the length of \code{mcvalues}. They need not sum to one, but they should be nonnegative and not all zero.
-#In that case, each elements of \code{mcvalues} will appear in the final sample a random number of times as specified by this vector.
+#mcswitch may be:
+#{*}<<a vector of length the length of mcvalues. They need not sum to one, but they should be nonnegative and not all zero.
+#In that case, each elements of mcvalues will appear in the final sample a random number of times as specified by this vector.
 #(Note that there is a random process).>> 
-#{*}<<a \code{"0"} mcnode to build any type of node.>>
-#{*}<<a \code{"V"} mcnode to build a \code{"V"} or a \code{"VU"} mcnode.>>
-#{*}<<a \code{"U"} mcnode to build a \code{"U"} or a \code{"VU"} mcnode.>>
-#{*}<<a \code{"VU"} mcnode to build a \code{"VU"}.>>
+#{*}<<a "0" mcnode to build any type of node.>>
+#{*}<<a "V" mcnode to build a "V" or a "VU" mcnode.>>
+#{*}<<a "U" mcnode to build a "U" or a "VU" mcnode.>>
+#{*}<<a "VU" mcnode to build a "VU".>>
 #
 #
-#The elements in \code{mcvalues} should be of same type and dimension
-#as specified in \code{type}, \code{nsv}, \code{nsu} and \code{nvariates}. The name
-#should correspond to the values in \code{mcswitch}, specified as character (See Examples).
+#The elements in mcvalues should be of same type and dimension
+#as specified in type, nsv, nsu and nvariates. The name
+#should correspond to the values in mcswitch, specified as character (See Examples).
 #These elements will
-#be evaluated only if needed : if the corresponding value is not present in \code{mcswitch},
+#be evaluated only if needed : if the corresponding value is not present in mcswitch,
 #the element will not be evaluated.
 #
 #EXAMPLE

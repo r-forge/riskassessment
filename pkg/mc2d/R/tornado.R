@@ -1,21 +1,23 @@
 #<<BEGIN>>
 tornado <- function(mc,output = length(mc),use = "all.obs",	method=c("spearman","kendall","pearson"),lim=c(0.025,0.975))
 #TITLE Computes Correlation between Inputs and Output in a mc Object (tornado) in the Variability Dimension;
-#DESCRIPTION Provides statistics for a tornado chart. Evaluates correlations between output and inputs of a \code{mc} object.
+#DESCRIPTION Provides statistics for a tornado chart. Evaluates correlations between output and inputs of a mc object.
 #KEYWORDS univar
 #INPUTS
 #{mc}<<a \code{\link{mc}} object or a \code{\link{mccut}} object.>>
-#{x}<<A \code{tornado} object as provided by the \code{tornado} function.>>
+#{x}<<A tornado object as provided by the tornado function.>>
 #[INPUTS]
-#{output}<<(for \code{mc} objects only). The rank or the name of the output to be considered. By default: the last element of the \code{mc}.>>
-#{use}<<(for \code{mc} objects only). An optional character string giving a method for computing covariances in the presence of missing values. This must be (an abbreviation of) one of the strings "all.obs", "complete.obs" or "pairwise.complete.obs" (see \code{\link{cor}}).>>
-#{method}<<(for \code{mc} objects only). A character string indicating which correlation coefficient (or covariance) is to be computed. One of "spearman" (default), "kendall" or "pearson", can be abbreviated (see \code{\link{cor}}). Warning : the default is not the same in \code{\link{cor}}.>>
+#{output}<<(for mc objects only). The rank or the name of the output to be considered. By default: the last element of the mc.>>
+#{use}<<(for mc objects only). An optional character string giving a method for computing covariances in the presence of missing values. 
+#This must be (an abbreviation of) one of the strings "all.obs", "complete.obs" or "pairwise.complete.obs" (see \code{\link{cor}}).>>
+#{method}<<(for mc objects only). A character string indicating which correlation coefficient (or covariance) is to be computed. 
+#One of "spearman" (default), "kendall" or "pearson", can be abbreviated (see \code{\link{cor}}). Warning : the default is not the same in \code{\link{cor}}.>>
 #{lim}<<A vector of quantiles used to compute the credible interval in two-dimensional models.>>
 #{\dots}<<Further arguments to be passed to the final print function.>>
 #DETAILS
 # The tornado function computes the spearman's rho statistic. It is used to estimate a rank-based measure of association between one set of 
-#random variable of a \code{mc} object (the output) and the others (the inputs).</>
-#\code{tornado} may be applied on a \code{mccut} object if a \code{tornado} function was used in the third block of the
+#random variable of a mc object (the output) and the others (the inputs).</>
+#tornado may be applied on a mccut object if a tornado function was used in the third block of the
 #\code{\link{evalmccut}} call.
 #VALUE
 #An invisible object of class tornado.
@@ -25,10 +27,10 @@ tornado <- function(mc,output = length(mc),use = "all.obs",	method=c("spearman",
 #{method}<<the method used>>
 #{use}<<the use parameter>>
 #DETAILS
-#If "output" refers to a \code{"0" mcnode}, it is an error.
-#If "output" refers to a \code{"V" mcnode}, correlations are only provided for other \code{"V" mcnode}s.
-#If "output" refers to a \code{"U" mcnode}, correlations are only provided for other \code{"U" mcnode}s.
-#If "output" refers to a \code{"VU" mcnode}, correlations are only provided for other \code{"VU" mcnode}s and \code{"V" mcnode}s.
+#If "output" refers to a "0" mcnode, it is an error.
+#If "output" refers to a "V" mcnode, correlations are only provided for other "V" mcnodes.
+#If "output" refers to a "U" mcnode, correlations are only provided for other "U" mcnodes.
+#If "output" refers to a "VU" mcnode, correlations are only provided for other "VU" mcnodes and "V" mcnodes.
 #
 #If use is "all.obs", then the presence of missing observations will produce an error.
 #If use is "complete.obs" then missing values are handled by casewise deletion.

@@ -4,9 +4,8 @@
 Apply Functions Over mc or mcnode Objects
 }
 \description{
-Apply a function on all values or over a given dimension of an
-\code{mcnode} object. May be used for all \code{mcnode} of an
-\code{mc} object.
+Apply a function on all values or over a given dimension of an mcnode
+object. May be used for all mcnode of an mc object.
 }
 \usage{
 mcapply(x, margin=c("all", "var", "unc", "variates"), fun, ...)
@@ -21,22 +20,20 @@ mcapply(xVUM, "variates", sum)
 mcapply(total, "all", exp)
 }
 \arguments{
-\item{x}{A \code{mc} or a \code{mcnode} object.}
+\item{x}{A mc or a mcnode object.}
 \item{margin}{The dimension on which applying the function. Maybe
-\code{"all"} (default) to apply the function on all values,
-\code{"var"} to apply the function on the variability dimension,
-\code{"unc"} to apply the function on the uncertainty dimension, or
-\code{"variates"} to apply the function on the variates.}
+"all" (default) to apply the function on all values, "var" to apply
+the function on the variability dimension, "unc" to apply the
+function on the uncertainty dimension, or "variates" to apply the
+function on the variates.}
 \item{fun}{The function to be applied. When applied to a vector of
-length \code{n}, \code{fun} should return a vector of length \code{n}
-or \code{1}.}
-\item{\dots}{Optionnal arguments to \code{fun}.}
+length n, fun should return a vector of length n or 1.}
+\item{\dots}{Optionnal arguments to fun.}
 }
 \value{
-If \code{fun} returns a function of length \code{n} or if
-\code{margin="all"}, the returned \code{mcnode}s are of type and
-dimension of \code{x}. In other cases, the type of \code{mcnode} is
-changed.
+If fun returns a function of length n or if margin=="all", the
+returned mcnodes are of type and dimension of x. In other cases, the
+type of mcnode is changed.
 }
 \author{
 Regis Pouillot

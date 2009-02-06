@@ -5,7 +5,7 @@
 Histogram of a Monte Carlo Simulation
 }
 \description{
-Shows histogram of a \code{mcnode} or a \code{mc} object.
+Shows histogram of a mcnode or a mc object.
 }
 \usage{
 \method{hist}{mc}(x, griddim=NULL, xlab=names(x), ylab="Frequency", main="", ...)
@@ -18,12 +18,12 @@ hist(total)
 
 }
 \arguments{
-\item{x}{An \code{mcnode} or an \code{mc} object.}
+\item{x}{An mcnode or an mc object.}
 \item{griddim}{A vector of two integers, indicating the size of the
-grid of plots. If \code{NULL}, the grid is calculated to produce a
-"nice" graph.}
+grid of plots. If NULL, the grid is calculated to produce a "nice"
+graph.}
 \item{xlab}{A vector of labels for the x-axis for drawn histograms
-(those whose \code{outm(x)!="none"}). May be recycled.}
+(those whose outm(x)!="none"). May be recycled.}
 \item{ylab}{A vector of labels for the y-axis for drawn histograms.
 May be recycled.}
 \item{main}{A vector of main title of histograms for drawn
@@ -35,7 +35,7 @@ histograms. May be recycled.}
 Regis Pouillot
 }
 \note{
-For Two-dimensional \code{mc}, the histogram is based on all data
+For Two-dimensional mc, the histogram is based on all data
 (variability and uncertainty) pooled together.
 }
 \keyword{hplot}

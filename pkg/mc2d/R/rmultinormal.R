@@ -9,20 +9,20 @@ rmultinormal <- function(n, mean, sigma , method=c("eigen", "svd", "chol"))
 #with varying vectors of means and varying covariance matrixes.
 #INPUTS
 #{n}<<Number of observations.>>
-#{mean}<<Vector of means (if unique for all \code{n}) or array of means (if varying according to \code{n}).>>
-#{sigma}<<Covariance vector corresponding to the coercion of the covariance matrix into a vector (if unique for all \code{n}) 
-#or array of covariance vectors (if varying according to \code{n}).>>
+#{mean}<<Vector of means (if unique for all n) or array of means (if varying according to n).>>
+#{sigma}<<Covariance vector corresponding to the coercion of the covariance matrix into a vector (if unique for all n) 
+#or array of covariance vectors (if varying according to n).>>
 #{method}<<Matrix decomposition used to determine the matrix root of sigma, possible methods are
 #eigenvalue decomposition ("eigen", default), singular value decomposition ("svd"), and Cholesky decomposition ("chol").>>
 #DETAILS
 #\code{rmvnorm(n, m, s)} is equivalent to \code{rmultinormal(n, m, as.vector(s))}.
 #
-#If \code{mean} and/or \code{sigma} is a matrix, 
-#the first random deviate will use the first row of \code{mean} and/or \code{sigma}, the second random
-#deviate will use the second row of \code{mean} and/or \code{sigma}, ...
+#If mean and/or sigma is a matrix, 
+#the first random deviate will use the first row of mean and/or sigma, the second random
+#deviate will use the second row of mean and/or sigma, ...
 #recycling being permitted by raw.
-#If \code{mean} is a vector of length \code{l} or is a matrix with \code{l} columns, \code{sigma}
-#should be a vector of length \code{l^2} or a matrix of number of \code{l^2} columns. 
+#If mean is a vector of length l or is a matrix with l columns, sigma
+#should be a vector of length (l^2) or a matrix of number of (l^2) columns. 
 #NOTE
 #The use of a varying sigma may be very time consumming.
 #EXAMPLE

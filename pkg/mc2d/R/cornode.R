@@ -3,41 +3,41 @@ cornode <- function(...,target, outrank=FALSE, result=FALSE, seed=NULL)
 #TITLE Builds a Rank Correlation using the Iman and Connover Method.
 #KEYWORDS multivariate
 #DESCRIPTION
-#This function builds a rank correlation structure between columns of a matrix or between \code{mcnode} objects
+#This function builds a rank correlation structure between columns of a matrix or between mcnode objects
 #using the Iman and Connover method (1982).
 #INPUTS
-#{\ldots}<<A matrix (each of its \code{n} columns but the first one will be reordered)
-#or \code{n mcnode} objects (each elements but the first one will be reordered).>>
-#{target}<<A scalar (only if \code{n=2}) or a \code{(n x n)} matrix of correlation.>>
+#{\ldots}<<A matrix (each of its n columns but the first one will be reordered)
+#or n mcnode objects (each elements but the first one will be reordered).>>
+#{target}<<A scalar (only if n==2) or a (n x n) matrix of correlation.>>
 #[INPUTS]
 #{outrank}<<Should the order be returned?>>
 #{result}<<Should the correlation eventually obtained be printed?>>
-#{seed}<<The random seed used for building the correlation. If \code{NULL} the \code{seed} is unchanged.>>
+#{seed}<<The random seed used for building the correlation. If NULL the seed is unchanged.>>
 #DETAILS
 #The arguments should be named.
 #
-#The function accepts for \code{data} a matrix or:
-#{*}<<some \code{"V" mcnode} objects separated by a comma;>>
-#{*}<<some \code{"U" mcnode} objects separated by a comma;>>
-#{*}<<some \code{"VU" mcnode} objects separated by a comma. In that case, the structure is built columns by colums (the first column of each \code{"VU" mcnode}
+#The function accepts for data a matrix or:
+#{*}<<some "V" mcnode objects separated by a comma;>>
+#{*}<<some "U" mcnode objects separated by a comma;>>
+#{*}<<some "VU" mcnode objects separated by a comma. In that case, the structure is built columns by colums (the first column of each "VU" mcnode
 #will have a correlation structure, the second ones will have a correlation structure, ....).>>
-#{*}<<one \code{"V" mcnode} as a first element and some \code{"VU" mcnode} objects, separated by a comma.
-#In that case, the structure is built between the \code{"V" mcnode} and each column of the \code{"VU" mcnode} objects.
-#The correlation result (\code{result = TRUE}) is not provided in that case.>>
+#{*}<<one "V" mcnode as a first element and some "VU" mcnode objects, separated by a comma.
+#In that case, the structure is built between the "V" mcnode and each column of the "VU" mcnode objects.
+#The correlation result (result = TRUE) is not provided in that case.>>
 #
 #The number of variates of the elements should be equal.
 #
-#\code{target} should be a scalar (two columns only) or a real symmetric positive-definite square matrix.
-#Only the upper triangular part of \code{target} is used (see \code{\link{chol}}).</>
+#target should be a scalar (two columns only) or a real symmetric positive-definite square matrix.
+#Only the upper triangular part of target is used (see \code{\link{chol}}).</>
 # The final correlation structure should be
 #checked because it is not always possible to build the target correlation structure.</>
-#In a Monte-Carlo simulation, note that the order of the values within each \code{mcnode} will be changed by this function
+#In a Monte-Carlo simulation, note that the order of the values within each mcnode will be changed by this function
 # (excepted for the first one of the list).
 #As a consequence, previous links between variables will be broken.
-#The \code{outrank} option may help to rebuild these links (see the Examples).
+#The outrank option may help to rebuild these links (see the Examples).
 #VALUE
-#If \code{rank = FALSE}: the matrix or a list of rearranged \code{mcnode}s. </>
-#If \code{rank = TRUE}: the order to be used to rearranged the matrix or the \code{mcnodes} to build the desired correlation structure.
+#If rank == FALSE: the matrix or a list of rearranged mcnodes. </>
+#If rank == TRUE: the order to be used to rearranged the matrix or the mcnodes to build the desired correlation structure.
 #EXAMPLE
 #x1 <- rnorm(1000)
 #x2 <- rnorm(1000)

@@ -14,21 +14,21 @@ ceiling(lhs(runif, nsu=10, nsv=10)*10)
 }
 \arguments{
 \item{distr}{The function for generating random sample or its name.
-If \code{distr} is "rdist", the function "qdist" must be the quantile
-function of this distribution with argument \code{p} as a vector of
-probabilities, as all univariates distributions of the \code{stat}
+If distr is "rdist", the function "qdist" must be the quantile
+function of this distribution with argument p as a vector of
+probabilities, as all univariates distributions of the \pkg{stat}
 library.}
 \item{nsv}{The number of raws of the final matrix.}
 \item{nsu}{The number of columns of the final matrix}
 \item{nvariates}{The number of variates}
-\item{\dots}{All arguments to be passed to \code{distr} except the
-size of the sample.}
+\item{\dots}{All arguments to be passed to distr except the size of
+the sample.}
 }
 \value{
-A \code{nsv x nsu} matrix of random variates.
+A (nsv x nsu) matrix of random variates.
 }
 \author{
-adapted from a code of Rob Carnell (library \code{lhs})
+adapted from a code of Rob Carnell (library \pkg{lhs})
 }
 \seealso{
 \code{\link{mcstoc}}
@@ -39,7 +39,7 @@ provided only in the first 2 dimensions.
 
  It is not possible to send truncated distribution with
 \code{\link{rtrunc}}. Use \code{\link{mcstoc}} for this purpose, with
-\code{lhs=TRUE} and \code{rtrunc=TRUE}.
+lhs=TRUE and rtrunc=TRUE.
 
  The \dots arguments will be recycled.
 }

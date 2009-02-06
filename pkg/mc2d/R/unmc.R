@@ -2,16 +2,16 @@
 unmc <- function(x, drop=TRUE)
 #TITLE Unclasses the mc or the mcnode Object
 #DESCRIPTION
-#Unclasses the \code{mc} object in a list of arrays 
-#or the \code{mcnode} object in an array.  
+#Unclasses the mc object in a list of arrays 
+#or the mcnode object in an array.  
 #KEYWORDS manip
 #INPUTS
-#{x}<<A \code{mc} or a \code{mcnode} object.>>
+#{x}<<A mc or a mcnode object.>>
 #[INPUTS]
 #{drop}<<Should the dimensions of size 1 be dropped (see \code{\link{drop}}).>>
 #VALUE
-#if x is an \code{mc} object: a list of arrays. If \code{drop=TRUE}, a list of vectors, matrixes and arrays.
-#if x is an \code{mcnode} object: an array. If \code{drop=TRUE}, a vector, matrix or array.
+#if x is an mc object: a list of arrays. If drop=TRUE, a list of vectors, matrixes and arrays.
+#if x is an mcnode object: an array. If drop=TRUE, a vector, matrix or array.
 #EXAMPLE
 #data(total)
 ### A vector

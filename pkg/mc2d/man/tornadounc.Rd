@@ -9,7 +9,7 @@ Computes Correlation between Inputs and Output in a mc Object
 }
 \description{
 Provides statistics for a tornado chart. Evaluates correlations
-between output and inputs of a \code{mc} object in the uncertainty
+between output and inputs of a mc object in the uncertainty
 dimension.
 }
 \usage{
@@ -31,11 +31,11 @@ plot(y, 1, 1)
 
 }
 \arguments{
-\item{mc}{a \code{mc} object.}
-\item{x}{a \code{tornadounc} object.}
+\item{mc}{a mc object.}
+\item{x}{a tornadounc object.}
 \item{output}{The rank or the name of the output to be considered.
-Should be a \code{"VU"} or a \code{"U" type mcnode}. By default: the
-last element of \code{mc}.}
+Should be a "VU" or a "U" type mcnode. By default: the last element
+of mc.}
 \item{quant}{The vector of quantiles used in the variability
 dimension.}
 \item{use}{An optional character string giving a method for computing
@@ -55,23 +55,22 @@ The \code{tornadounc.mc} function computes the spearman's rho
 statistic between 
 
 \itemize{
-\item values (\code{"U" type mcnode}) or statistics calculated in the
-variability dimension (\code{"VU" type mcnode}) of inputs and
-\item values (\code{"U" type mcnode}) or statistics calculated in the
-variability dimension (\code{"VU" type mcnode}) of one output.}
+\item values ("U" type mcnode) or statistics calculated in the
+variability dimension ("VU" type mcnode) of inputs and
+\item values ("U" type mcnode) or statistics calculated in the
+variability dimension ("VU" type mcnode) of one output.}
  The statistics are the mean, the median and the quantiles specified
-by \code{quant}.
+by quant.
 
 It is useful to estimate a rank-based measure of association between
-one set of random variable of a \code{mc} object (the output) and the
-others in the uncertainty dimension.
+one set of random variable of a mc object (the output) and the others
+in the uncertainty dimension.
 
- \code{tornadounc.mccut} may be applied on a \code{\link{mccut}}
-object if a \code{summary.mc} function was used in the third block of
-the \code{\link{evalmccut}} call.
+ tornadounc.mccut may be applied on a \code{\link{mccut}} object if a
+summary.mc function was used in the third block of the
+\code{\link{evalmccut}} call.
 
-If output refers to a \code{"0"} or \code{"V" mcnode}, it is an
-error.
+If output refers to a "0" or "V" mcnode, it is an error.
 
 If use is "all.obs", then the presence of missing observations will
 produce an error. If use is "complete.obs" then missing values are
@@ -81,15 +80,15 @@ variables is computed using all complete pairs of observations on
 those variables.
 }
 \value{
-An invisible object of class \code{tornadounc}. A \code{tornadounc}
-object is a list of objects containing the following objects: 
+An invisible object of class tornadounc. A tornadounc object is a
+list of objects containing the following objects: 
 
 \item{value}{a matrix of values of correlation coefficients. Each row
 are the value or the statistics of inputs, each columns the value or
 the statistics of outputs.}
 \item{output}{the name of the output}
 \item{method}{the method used}
-\item{use}{the \code{use} parameter}
+\item{use}{the use parameter}
 }
 \author{
 Regis Pouillot

@@ -5,8 +5,8 @@ dtriang <- function(x,min=-1,mode=0,max=1,log=FALSE)
 #KEYWORDS distribution
 #DESCRIPTION
 #Density, distribution function, quantile function and random generation
-#for the triangular distribution with minimum equal to \code{min}, mode equal \code{mode}
-#and maximum equal to \code{max}.
+#for the triangular distribution with minimum equal to min, mode equal mode
+#and maximum equal to max.
 #INPUTS
 #{x,q}<<vector of quantiles.>>
 #{p}<<vector of probabilities.>>
@@ -15,11 +15,11 @@ dtriang <- function(x,min=-1,mode=0,max=1,log=FALSE)
 #{min}<<vector of minima.>>
 #{mode}<<vector of modes.>>
 #{max}<<vector of maxima.>>
-#{log, log.p}<<logical; if \code{TRUE}, probabilities \code{p} are given as \code{log(p)}.>>
-#{lower.tail}<<logical; if \code{TRUE} (default), probabilities are \code{P[X <= x]}, otherwise, \code{P[X > x]}.>>
+#{log, log.p}<<logical; if TRUE, probabilities p are given as log(p).>>
+#{lower.tail}<<logical; if TRUE (default), probabilities are P[X <= x], otherwise, P[X > x].>>
 #VALUE
-#\code{dtriang} gives the density, \code{ptriang} gives the distribution function,
-#\code{qtriang} gives the quantile function, and \code{rtriang} generates random deviates.
+#dtriang gives the density, ptriang gives the distribution function,
+#qtriang gives the quantile function, and rtriang generates random deviates.
 #AUTHOR Regis Pouillot
 #EXAMPLE
 #curve(dtriang(x,min=3,mode=5,max=10), from = 2, to = 11)

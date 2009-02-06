@@ -9,8 +9,8 @@ The Triangular Distribution
 }
 \description{
 Density, distribution function, quantile function and random
-generation for the triangular distribution with minimum equal to
-\code{min}, mode equal \code{mode} and maximum equal to \code{max}.
+generation for the triangular distribution with minimum equal to min,
+mode equal mode and maximum equal to max.
 }
 \usage{
 dtriang(x, min=-1, mode=0, max=1, log=FALSE)
@@ -32,15 +32,15 @@ is taken to be the number required.}
 \item{min}{vector of minima.}
 \item{mode}{vector of modes.}
 \item{max}{vector of maxima.}
-\item{log, log.p}{logical; if \code{TRUE}, probabilities \code{p} are
-given as \code{log(p)}.}
-\item{lower.tail}{logical; if \code{TRUE} (default), probabilities
-are \code{P[X <= x]}, otherwise, \code{P[X > x]}.}
+\item{log, log.p}{logical; if TRUE, probabilities p are given as
+log(p).}
+\item{lower.tail}{logical; if TRUE (default), probabilities are P[X
+\eqn{<}= x], otherwise, P[X \eqn{>} x].}
 }
 \value{
-\code{dtriang} gives the density, \code{ptriang} gives the
-distribution function, \code{qtriang} gives the quantile function,
-and \code{rtriang} generates random deviates.
+dtriang gives the density, ptriang gives the distribution function,
+qtriang gives the quantile function, and rtriang generates random
+deviates.
 }
 \author{
 Regis Pouillot
