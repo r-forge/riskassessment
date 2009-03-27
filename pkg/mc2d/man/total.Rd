@@ -13,7 +13,7 @@
 \alias{xVUM3}
 \title{An Exemple of all Kind of mcnode}
 \description{
-An exemple for each kind of \code{mcnode}s. They are used in some \code{mc2d} examples. They
+An exemple for each kind of \samp{mcnode}s. They are used in some \samp{mc2d} examples. They
 have been built using the following code:
 
 \code{ndvar(101)}
@@ -45,7 +45,7 @@ have been built using the following code:
 }
 \usage{total}
 \format{
-  Some \code{mcnode} objects and one \code{mc} object.
+  Some \samp{mcnode} objects and one \samp{mc} object.
 }
 \source{None}
 \references{

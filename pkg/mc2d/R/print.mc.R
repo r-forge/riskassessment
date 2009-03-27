@@ -2,10 +2,10 @@
 print.mc <- function(x, digits=3,...)
 #TITLE Prints a mcnode or a mc Object
 #DESCRIPTION
-# Print a description of the structure of the mc or the mcnode object.
+# Print a description of the structure of the \samp{mc} or the \samp{mcnode} object.
 #KEYWORDS print
 #INPUTS
-#{x}<<a mcnode or a mc object.>>
+#{x}<<a \samp{mcnode} or a \samp{mc} object.>>
 #[INPUTS]
 #{digits}<<Number of digits to be used.>>
 #{\dots}<<Further arguments to be passed to the print function.>>
@@ -13,8 +13,8 @@ print.mc <- function(x, digits=3,...)
 #An invisible data frame.
 #DETAILS
 #SEE ALSO
-# \code{\link{mcnode}} for mcnode objects.
-# \code{\link{mc}} for mc objects.
+# \code{\link{mcnode}} for \samp{mcnode} objects.
+# \code{\link{mc}} for \samp{mc} objects.
 #EXAMPLE
 #AUTHOR Regis Pouillot
 #CREATED 08-01-25

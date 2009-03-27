@@ -8,8 +8,8 @@
 Finite, Infinite, NA and NaN Numbers in mcnode.
 }
 \description{
-is.na, is.nan, is.finite and is.infinite return a logical mcnode of
-the same dimension as x.
+\samp{is.na}, \samp{is.nan}, \samp{is.finite} and \samp{is.infinite}
+return a logical \samp{mcnode} of the same dimension as \samp{x}.
 }
 \usage{
 \method{is.na}{mcnode}(x)
@@ -26,10 +26,10 @@ is.na(x)
 
 }
 \arguments{
-\item{x}{A mcnode object.}
+\item{x}{A \samp{mcnode} object.}
 }
 \value{
-A logical mcnode object.
+A logical \samp{mcnode} object.
 }
 \author{
 Regis Pouillot

@@ -2,8 +2,8 @@
 rtrunc <- function(distr=runif, n, linf=-Inf, lsup=Inf,...)
 #TITLE Random Truncated Distributions
 #DESCRIPTION
-# Provides samples from classical \R distributions and \pkg{mc2d} specific
-# distributions truncated between linf and lsup.
+# Provides samples from classical \R distributions and \samp{mc2d} specific
+# distributions truncated between \samp{linf} and \samp{lsup}.
 #KEYWORDS distribution
 #INPUTS
 #{distr}<<A function providing random data or its name as character.
@@ -13,13 +13,13 @@ rtrunc <- function(distr=runif, n, linf=-Inf, lsup=Inf,...)
 #[INPUTS]
 #{linf}<<A vector of lower bounds.>>
 #{lsup}<<A vector of upper bounds.>>
-#{\dots}<<All arguments to be passed to pdistr and qdistr.>>
+#{\dots}<<All arguments to be passed to \samp{pdistr} and \samp{qdistr}.>>
 #VALUE
-#A vector of n values.
+#A vector of \samp{n} values.
 #DETAILS
-#The function 1) evaluates the p values corresponding to linf and lsup using pdistr;
-#2) samples n values using \code{runif(n, min=pinf, max=psup)}, and 3) takes
-#the n corresponding quantiles from the specified distribution using qdistr.
+#The function 1) evaluates the \samp{p} values corresponding to \samp{linf} and \samp{lsup} using \samp{pdistr};
+#2) samples \samp{n} values using \samp{runif(n, min=pinf, max=psup)}, and 3) takes
+#the \samp{n} corresponding quantiles from the specified distribution using \samp{qdistr}.
 #
 #All distributions (but sample) implemented in the stats library could be used.
 #The arguments in \dots should be named. Do not use 'log' or 'log.p' or 'lower.tail'.

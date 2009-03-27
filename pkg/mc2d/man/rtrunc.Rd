@@ -4,8 +4,8 @@
 Random Truncated Distributions
 }
 \description{
-Provides samples from classical \R distributions and \pkg{mc2d}
-specific distributions truncated between linf and lsup.
+Provides samples from classical \R distributions and \samp{mc2d}
+specific distributions truncated between \samp{linf} and \samp{lsup}.
 }
 \usage{
 rtrunc(distr=runif, n, linf=-Inf, lsup=Inf, ...)
@@ -25,20 +25,22 @@ argument 'p') and a 'pdistr' form (with argument 'q'). Example :
 
 \item{linf}{A vector of lower bounds.}
 \item{lsup}{A vector of upper bounds.}
-\item{\dots}{All arguments to be passed to pdistr and qdistr.}
+\item{\dots}{All arguments to be passed to \samp{pdistr} and
+\samp{qdistr}.}
 }
 \details{
-The function 1) evaluates the p values corresponding to linf and lsup
-using pdistr; 2) samples n values using \code{runif(n, min=pinf,
-max=psup)}, and 3) takes the n corresponding quantiles from the
-specified distribution using qdistr.
+The function 1) evaluates the \samp{p} values corresponding to
+\samp{linf} and \samp{lsup} using \samp{pdistr}; 2) samples \samp{n}
+values using \samp{runif(n, min=pinf, max=psup)}, and 3) takes the
+\samp{n} corresponding quantiles from the specified distribution
+using \samp{qdistr}.
 
 All distributions (but sample) implemented in the stats library could
 be used. The arguments in \dots should be named. Do not use 'log' or
 'log.p' or 'lower.tail'.
 }
 \value{
-A vector of n values.
+A vector of \samp{n} values.
 }
 \author{
 Regis Pouillot

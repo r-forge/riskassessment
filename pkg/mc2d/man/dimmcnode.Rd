@@ -7,8 +7,8 @@ Dimension of mcnode and mc Objects
 \description{
 Provides the dimension (i.e. the number of simulations in the
 variability dimension, the number of simulations in the uncertainty
-dimension and the maximum number of variates of a mcnode or a mc
-object.
+dimension and the maximum number of variates of a \samp{mcnode} or a
+\samp{mc} object.
 }
 \usage{
 dimmcnode(x)
@@ -21,13 +21,13 @@ dimmc(total)
 
 }
 \arguments{
-\item{x}{a mcnode or a mc object.}
+\item{x}{a \samp{mcnode} or a \samp{mc} object.}
 }
 \value{
-A vector of three scalars: the dimension of variability (1 for "0"
-and "U" mcnode), the dimension of uncertainty (1 for "0" and "V"
-mcnode) and the number of variates (the maximal number of variates
-for an mc object.
+A vector of three scalars: the dimension of variability (1 for
+\samp{"0"} and \samp{"U" mcnode}), the dimension of uncertainty (1
+for \samp{"0"} and \samp{"V" mcnode}) and the number of variates (the
+maximal number of variates for an \samp{mc} object.
 }
 \author{
 Regis Pouillot

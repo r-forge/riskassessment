@@ -3,87 +3,87 @@ mcdata <- function(data, type=c("V","U","VU","0"), nsv=ndvar(), nsu=ndunc(),nvar
 #TITLE Build mcnode Objects from Data or other mcnode Objects
 #NAME mcnode
 #DESCRIPTION
-# Creates a mcnode object from a vector, an array or a mcnode.
+# Creates a \samp{mcnode} object from a vector, an array or a \samp{mcnode}.
 #KEYWORDS methods
 #INPUTS
-#{data}<<The numeric/logical vector/matrix/array of data or the mcnode object.>>
+#{data}<<The numeric/logical vector/matrix/array of data or the \samp{mcnode} object.>>
 #[INPUTS]
-#{type}<<The type of node to be built. By default, a "V" node.>>
-#{nsv}<<The variability dimension (type="V" or type=="VU") of the node.
+#{type}<<The type of node to be built. By default, a \samp{"V"} node.>>
+#{nsv}<<The variability dimension (\samp{type="V"} or \samp{type="VU"}) of the node.
 #By default: the current value in \code{\link{mc.control}}>>
-#{nsu}<<The uncertainty dimension (type=="U" or type=="VU") of the node.
+#{nsu}<<The uncertainty dimension (\samp{type="U"} or \samp{type="VU"}) of the node.
 #By default: the current value in \code{\link{mc.control}}>>
 #{nvariates}<<The number of variates.
 #By default: 1>>
-#{outm}<<The output of the mcnode for multivariates nodes. May be "each" (default)
+#{outm}<<The output of the \samp{mcnode} for multivariates nodes. May be "each" (default)
 #if output should be provided for each variates considered independently, "none" for no output
 #or a vector of name of function(s) (as a character string) that will be applied on the variates dimension
-#before any output (ex: "mean", "median", c("min", "max")). The function should have no other arguments
-#and send one value per vector of values (ex. do not use "range").
-#Note that the outm attribute may be changed at any time using the \code{\link{outm}} function.>>
+#before any output (ex: \samp{"mean"}, \samp{"median"}, \samp{c("min", "max")}). The function should have no other arguments
+#and send one value per vector of values (ex. do not use \samp{"range"}).
+#Note that the \samp{outm} attribute may be changed at any time using the \code{\link{outm}} function.>>
 #VALUE
-#An mcnode object.
+#An \samp{mcnode} object.
 #DETAILS
-#A mcnode object is the basic element of a \code{\link{mc}} object.
-#It is an array of dimension (nsv x nsu x nvariates). Four types of mcnode exists:</>
-#{*}<<"V" mcnode, for "Variability", are arrays of dimension (nsv x 1 x nvariates). The alea in the data should
+#A \samp{mcnode} object is the basic element of a \code{\link{mc}} object.
+#It is an array of dimension \samp{(nsv x nsu x nvariates)}. Four types of \samp{mcnode} exists:</>
+#{*}<<\samp{"V" mcnode}, for "Variability", are arrays of dimension \samp{(nsv x 1 x nvariates)}. The alea in the data should
 #reflect variability of the parameter.>>
-#{*}<<"U" mcnode, for "Uncertainty", are arrays of dimension (1 x nsu x nvariates). The alea in the data should
+#{*}<<\samp{"U" mcnode}, for "Uncertainty", are arrays of dimension \samp{c(1 x nsu x nvariates)}. The alea in the data should
 #reflect uncertainty of the parameter.>>
-#{*}<<"VU" mcnode, for "Variability and Uncertainty", are arrays of dimension (nsv x nsu x nvariates). The alea in the data
+#{*}<<\samp{"VU" mcnode}, for "Variability and Uncertainty", are arrays of dimension \samp{(nsv x nsu x nvariates)}. The alea in the data
 #reflects separated variability (in rows) and uncertainty (in columns) of the parameter.>>
-#{*}<<"0" mcnode, for "Neither Variability or Uncertainty", are arrays of dimension (1 x 1 x nvariates). No alea is
-#considered for these nodes. "0" mcnode are not necessary in the univariate context (use scalar instead) but
+#{*}<<\samp{"0" mcnode}, for "Neither Variability or Uncertainty", are arrays of dimension \samp{(1 x 1 x nvariates)}. No alea is
+#considered for these nodes. \samp{"0" mcnode} are not necessary in the univariate context (use scalar instead) but
 #may be useful for operations on multivariate nodes.>>
 #
-#Multivariate nodes (i.e. nvariates != 1) should be used for multivariate distributions implemented in \pkg{mc2d}
+#Multivariate nodes (i.e. \samp{nvariates != 1}) should be used for multivariate distributions implemented in \samp{mc2d}
 #(\code{\link{rmultinomial}}, \code{\link{rmultinormal}}, \code{\link{rempiricalD}} and \code{\link{rdirichlet}}).
 #
-#For security, recycling rules are limited to fill the array using data. The general rules is that recycling is
+#For security, recycling rules are limited to fill the array using \samp{data}. The general rules is that recycling is
 #only permitted to fill a dimension from 1 to the final size of the dimension.</>
-#If the final dimension of the node is (nsv x nsu x nvariates) (with nsv = 1 and nsu = 1 for "0" nodes,
-#nsu = 1 for "V" nodes
-#and nsv = 1 for "U" nodes), mcdata accepts :
-#{*}<<Vectors of length 1 (recycled on all dimensions), vectors of length (nsv * nsu) (filling first the dimension of variability, then
+#If the final dimension of the node is \samp{(nsv x nsu x nvariates)} (with \samp{nsv = 1} and \samp{nsu = 1} for \samp{"0"} nodes,
+#\samp{nsu = 1} for \samp{"V"} nodes
+#and \samp{nsv = 1} for \samp{"U"} nodes), \samp{mcdata} accepts :
+#{*}<<Vectors of length \samp{1} (recycled on all dimensions), vectors of length \samp{(nsv * nsu)} (filling first the dimension of variability, then
 #the dimension of uncertainty then recycling on nvariates),
-#or vectors of length (nsv * nsu * nvariates) (filling first the dimension of variability, then the uncertainty,
+#or vectors of length \samp{(nsv * nsu * nvariates)} (filling first the dimension of variability, then the uncertainty,
 #then the variates).>>
-#{*}<<Matrixes of dimensions (nsv x nsu), recycling on variates.>>
-#{*}<<Arrays of dimensions (nsv x nsu x nvariates) or (nsv x nsu x 1), recycling on variates.>>
-#{*}<<For data as mcnode, recycling is dealt to proper fill the array:>>
-#{#}<<a "V" node accepts a "0" node of dimension (1 x 1 x nvariates) (recycling on variability)
-#or of dimension (1 x 1 x 1) (recycling on variability and variates),
-#or a "V" node of dimension (nsv x 1 x nvariates)
-#or (nsv x 1 x 1) (recycling on variates),>>
-#{#}<<a "U" node accepts a "0" node of dimension (1 x 1 x nvariates) (recycling on uncertainty)
-#or of dimension (1 x 1 x 1) (recycling on uncertainty and variates),
-#or a "U" node of dimension (1 x nsu x nvariates),
-#or (1 x nsu x 1) (recycling on variates),>>
-#{#}<<a "VU" node accepts a "0" node of dimension (1 x 1 x nvariates) (recycling on varaiability and uncertainty)
-#or of dimension (1 x 1 x 1) (recycling on variability, uncertainty and variates),
-#a "U" node of dimension (1 x nsu x nvariates)(recycling "by row" on the variability dimension),
-#or of dimension (1 x nsu x 1)(recycled "by row" on the variability dimension then on variates),
-#a "V" node of dimension (nsv x 1 x nvariates)(recycling on the uncertainty dimension)
-#or of dimension (nsv x 1 x 1)(recycled on the uncertainty dimension then on variates),
-#and a "VU" node of dimension (nsv x nsu x nvariates) or of dimension (nsv x nsu x 1) (recycling on variates).>>
-#{#}<<a "0" node accepts a "0" node of dimension (1 x 1 x nvariates) or
-#(1 x 1 x 1) (recycling on variates).>>
+#{*}<<Matrixes of dimensions \samp{(nsv x nsu)}, recycling on variates.>>
+#{*}<<Arrays of dimensions \samp{(nsv x nsu x nvariates)} or \samp{(nsv x nsu x 1)}, recycling on variates.>>
+#{*}<<For \samp{data} as \samp{mcnode}, recycling is dealt to proper fill the array:>>
+#{#}<<a \samp{"V"} node accepts a \samp{"0"} node of dimension \samp{(1 x 1 x nvariates)} (recycling on variability)
+#or of dimension \samp{(1 x 1 x 1)} (recycling on variability and variates),
+#or a \samp{"V"} node of dimension \samp{(nsv x 1 x nvariates)}
+#or \samp{(nsv x 1 x 1)} (recycling on variates),>>
+#{#}<<a \samp{"U"} node accepts a \samp{"0"} node of dimension \samp{(1 x 1 x nvariates)} (recycling on uncertainty)
+#or of dimension \samp{(1 x 1 x 1)} (recycling on uncertainty and variates),
+#or a \samp{"U"} node of dimension \samp{(1 x nsu x nvariates)},
+#or \samp{(1 x nsu x 1)} (recycling on variates),>>
+#{#}<<a \samp{"VU"} node accepts a \samp{"0"} node of dimension \samp{(1 x 1 x nvariates)} (recycling on varaiability and uncertainty)
+#or of dimension \samp{(1 x 1 x 1)} (recycling on variability, uncertainty and variates),
+#a \samp{"U"} node of dimension \samp{(1 x nsu x nvariates)}(recycling "by row" on the variability dimension),
+#or of dimension \samp{(1 x nsu x 1)}(recycled "by row" on the variability dimension then on variates),
+#a \samp{"V"} node of dimension \samp{(nsv x 1 x nvariates)}(recycling on the uncertainty dimension)
+#or of dimension \samp{(nsv x 1 x 1)}(recycled on the uncertainty dimension then on variates),
+#and a \samp{"VU"} node of dimension \samp{(nsv x nsu x nvariates)} or of dimension \samp{(nsv x nsu x 1)} (recycling on variates).>>
+#{#}<<a \samp{"0"} node accepts a \samp{"0"} node of dimension \samp{(1 x 1 x nvariates)} or
+#\samp{(1 x 1 x 1)} (recycling on variates).>>
 #
 #
 #SEE ALSO
-#\code{\link{mcstoc}} to build a stochastic mcnode object, \code{\link{mcprobtree}} to build a
-#stochastic node from a probability tree.</>
-#\code{\link{Ops.mcnode}} for operations on mcnode objects.</>
+#\code{\link{mcstoc}} to build a stochastic \samp{mcnode} object, \code{\link{mcprobtree}} to build a
+#stochastic node fro a probability tree.</>
+#\code{\link{Ops.mcnode}} for operations on \samp{mcnode} objects.</>
 #\code{\link{mc}} to build a Monte-Carlo object.</> </>
 #Informations about an mcnode: \code{\link{is.mcnode}}, \code{\link{dimmcnode}}, \code{\link{typemcnode}}.</>
-#To build a correlation structure between mcnode: \code{\link{cornode}}.</>
-##To apply a function on a mcnode object: \code{\link{mcapply}}</>
-#To study mcnode objects: \code{\link{print.mcnode}}, \code{\link{summary.mcnode}}, \code{\link{plot.mcnode}},
+#To build a correlation structure between \samp{mcnode}: \code{\link{cornode}}.</>
+##To apply a function on a \samp{mcnode} object: \code{\link{mcapply}}</>
+#To study \samp{mcnode} objects: \code{\link{print.mcnode}}, \code{\link{summary.mcnode}}, \code{\link{plot.mcnode}},
 #\code{\link{converg}}, \code{\link{hist.mcnode}}</>
-#To modify mcnode objects:
+#To modify \samp{mcnode} objects:
 ##\code{\link{subset.mc}}
 #\code{\link{NA.mcnode}}</>
-##To transform mc objects in vector or matrix: \code{\link{unmcnode}}.
+##To transform \samp{mc} objects in vector or matrix: \code{\link{unmcnode}}.
 #EXAMPLE
 #oldvar <- ndvar()
 #oldunc <- ndunc()
@@ -175,7 +175,7 @@ mcdata <- function(data, type=c("V","U","VU","0"), nsv=ndvar(), nsu=ndunc(),nvar
   if(inherits(data,"mcnode") ){
     typem <- attr(data,"type")
     dimd <- dim(data)
-    err <- paste("The output node dimension is not compatible with the input node dimension. Should be of dim:",paste(dimf,sep=" "))
+    err <- paste("The output node dimension is not compatible with the input node dimension. Should be of dim: ",paste(dimf,collapse=" "))
     if(dimd[3] != 1 && dimd[3]!=dimf[3]) stop(err)
     if(typem=="VU") {
       if(dimd[1]!=dimf[1] || dimd[2]!=dimf[2]) stop(err)
@@ -210,7 +210,7 @@ mcdata <- function(data, type=c("V","U","VU","0"), nsv=ndvar(), nsu=ndunc(),nvar
             (type=="U" &&  dimd[1]== 1 && dimd[2]==nsu && dimd[3] %in% c(0,1,nvariates)) ||
             (type=="0" &&  dimd[1]== 1 && dimd[1]==1 && dimd[3] %in% c(0,1,nvariates)) )
         data <- array(data,dim=dimf)
-        else stop("The array size is not compatible with the node dimension. Should be of dim:",paste(dimf,sep=" "))
+        else stop("The array size is not compatible with the node dimension. Should be of dim: ",paste(dimf,collapse=" "))
         }
 
       else stop("data should be a vector, a matrix, an array or a mcnode")}

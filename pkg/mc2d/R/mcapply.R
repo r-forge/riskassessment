@@ -5,22 +5,22 @@
 mcapply <- function(x, margin=c("all","var","unc","variates"), fun, ...)
 #TITLE Apply Functions Over mc or mcnode Objects
 #DESCRIPTION
-# Apply a function on all values or over a given dimension of an mcnode object. May be used for all mcnode of an mc object.
+# Apply a function on all values or over a given dimension of an \samp{mcnode} object. May be used for all \samp{mcnode} of an \samp{mc} object.
 #KEYWORDS misc
 #INPUTS
-#{x}<<A mc or a mcnode object.>>
+#{x}<<A \samp{mc} or a \samp{mcnode} object.>>
 #[INPUTS]
 #{margin}<<The dimension on which applying the function.
-#Maybe "all" (default) to apply the function on all values,
-#"var" to apply the function on the variability dimension,
-#"unc" to apply the function on the uncertainty dimension, or
-#"variates" to apply the function on the variates.>>
+#Maybe \samp{"all"} (default) to apply the function on all values,
+#\samp{"var"} to apply the function on the variability dimension,
+#\samp{"unc"} to apply the function on the uncertainty dimension, or
+#\samp{"variates"} to apply the function on the variates.>>
 #{fun}<<The function to be applied.
-#When applied to a vector of length n, fun should return a vector of length n or 1.>>
-#{\dots}<<Optionnal arguments to fun.>>
+#When applied to a vector of length \samp{n}, \samp{fun} should return a vector of length \samp{n} or \samp{1}.>>
+#{\dots}<<Optionnal arguments to \samp{fun}.>>
 #VALUE
-#If fun returns a function of length n or if margin=="all", the returned mcnodes are of type and dimension of x.
-#In other cases, the type of mcnode is changed.
+#If \samp{fun} returns a function of length \samp{n} or if \samp{margin="all"}, the returned \samp{mcnode}s are of type and dimension of \samp{x}.
+#In other cases, the type of \samp{mcnode} is changed.
 #SEE ALSO
 #\code{\link{apply}}, \code{\link{mc}}, \code{\link{mcnode}}.
 #EXAMPLE

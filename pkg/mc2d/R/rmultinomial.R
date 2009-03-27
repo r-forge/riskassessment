@@ -8,9 +8,9 @@ dmultinomial <- function (x, size = NULL, prob, log = FALSE)
 #{x}<<Vector of length K of integers in 0:size.>>
 #{n}<<Number of random vectors to draw.>>
 #{size}<<A vector of integers, say N, specifying the total number of objects that are put
-#into K boxes in the typical multinomial experiment. For dmultinom, it defaults to sum(x).
-#The first element correspond to the vector prob or the first row of prob, ...>>
-#{prob}<<Numeric non-negative vector of length K, or matrix of size (x x K)
+#into K boxes in the typical multinomial experiment. For \samp{dmultinom}, it defaults to \samp{sum(x)}.
+#The first element correspond to the vector \samp{prob} or the first row of \samp{prob}, ...>>
+#{prob}<<Numeric non-negative vector of length K, or matrix of size \samp{(x x K)}
 #specifying the probability for the K classes; is internally normalized to sum 1.>>
 #{log}<<Logical; if TRUE, log probabilities are computed.>>
 #EXAMPLE
@@ -68,13 +68,29 @@ rmultinomial <- function(n, size, prob)
 #ISALIAS dmultinomial
 #--------------------------------------------
 {
-  if(is.vector(prob)) {
-    if(length(n)==1 && length(size)==1) return(t(rmultinom(n,size,prob)))
+  if(length(n)!=1) n <- length(n)
+  if(is.vector(prob) || (dim(prob)[1]) == 1) {
+    if(length(size)==1) return(t(rmultinom(n,size,prob)))      # classical
     prob <- matrix(prob,nrow=1)
     }
-  ss <- NULL
-  ss[1:n] <- size
-  if(nrow(prob)!= n) prob <- matrix(t(prob),ncol=ncol(prob),nrow=n,byrow=TRUE)
-  t(sapply(1:n,function(x) rmultinom(1,ss[x],prob[x,])))
+
+  nrp <- nrow(prob)
+  mnr <- min( max(nrp ,length(size)), n)
+  ss  <- rep(size,length.out=mnr)              # recycling size
+  
+  if(nrp != mnr) prob <- matrix(t(prob),ncol=ncol(prob),nrow=mnr,byrow=TRUE)    # recycling prob
+
+  n1 <- n%/%mnr
+  n2 <- n%%mnr
+
+  res <- sapply(1:mnr,function(x) rmultinom(n1,ss[x],prob[x,]))
+  res <- matrix(res,ncol=ncol(prob),byrow=TRUE)
+  index <- as.vector(matrix(1:(mnr*n1),ncol=mnr,byrow=TRUE))
+  res <- res[index,]
+
+  if (n2 != 0){
+    res <- rbind(res,t(sapply(1:n2,function(x) rmultinom(1,ss[x],prob[x,]))))
+    }
+  return(res)
 }
 

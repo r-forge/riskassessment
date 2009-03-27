@@ -10,7 +10,7 @@ The Bernoulli Distribution
 \description{
 Density, distribution function, quantile function and random
 generation for the Bernoulli distribution with probability equals to
-prob.
+\samp{prob}.
 }
 \usage{
 dbern(x, prob=.5, log=FALSE)
@@ -28,22 +28,23 @@ rbern(n=3, prob=c(0, .5, 1))
 \arguments{
 \item{x,q}{vector of quantiles.}
 \item{p}{vector of probabilities.}
-\item{n}{number of observations. If length(n) \eqn{>} 1, the length
+\item{n}{number of observations. If \samp{length(n) > 1}, the length
 is taken to be the number required.}
 \item{prob}{vector of probabilities of success of each trial.}
-\item{log, log.p}{logical; if TRUE, probabilities p are given as
-log(p).}
-\item{lower.tail}{logical; if TRUE (default), probabilities are P[X
-\eqn{<}= x], otherwise, P[X \eqn{>} x].}
+\item{log, log.p}{logical; if \samp{TRUE}, probabilities \samp{p} are
+given as \samp{log(p)}.}
+\item{lower.tail}{logical; if \samp{TRUE} (default), probabilities
+are \samp{P[X <= x]}, otherwise, \samp{P[X > x]}.}
 }
 \details{
 These fonctions use the corresponding functions from the
-\code{\link{binomial}} distribution with argument size = 1. Thus, 1
-is for success, 0 is for failure.
+\code{\link{binomial}} distribution with argument \samp{size = 1}.
+Thus, 1 is for success, 0 is for failure.
 }
 \value{
-dbern gives the density, pbern gives the distribution function, qbern
-gives the quantile function, and rbern generates random deviates.
+\samp{dbern} gives the density, \samp{pbern} gives the distribution
+function, \samp{qbern} gives the quantile function, and \samp{rbern}
+generates random deviates.
 }
 \author{
 Regis Pouillot

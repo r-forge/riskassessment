@@ -5,7 +5,7 @@
 Draws a Tornado chart.
 }
 \description{
-Draws a Tornado chart as provided by tornado.
+Draws a Tornado chart as provided by \samp{tornado}.
 }
 \usage{
 \method{plot}{tornado}(x, which=1, name=NULL, stat=c("median", "mean"), xlab="method",
@@ -19,14 +19,15 @@ object.}
 \item{name}{Vector of name of input variables. If NULL, the name will
 be given from the name of the elements.}
 \item{stat}{The name of the statistics of the output to be
-considered. For a tornado object: "median" or "mean". For a
-tornadounc object: the value should match one row name of the
-tornadounc object. Alternatively, for a tornadounc object, the number
-of the row may be used.}
+considered. For a \samp{tornado} object: "median" or "mean". For a
+\samp{tornadounc} object: the value should match one row name of the
+\samp{tornadounc} object. Alternatively, for a \samp{tornadounc}
+object, the number of the row may be used.}
 \item{xlab}{Label of the x axis. if "method", use the correlation
-method used in the tornado object.}
+method used in the \samp{tornado} object.}
 \item{ylab}{Label of the y axis.}
-\item{\dots}{Further arguments to be passed to the plot function.}
+\item{\dots}{Further arguments to be passed to the \samp{plot}
+function.}
 }
 \details{
 A point is drawn at the estimate and the segment reflects the

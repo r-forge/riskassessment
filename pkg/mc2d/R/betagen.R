@@ -5,19 +5,19 @@ dbetagen <- function(x,shape1,shape2,min=0,max=1,ncp=0,log=FALSE)
 #KEYWORDS distribution
 #DESCRIPTION
 #Density, distribution function, quantile function and random generation for the Beta distribution
-#defined on the [min, max] domain with parameters shape1 and shape2 (
-#and optional non-centrality parameter ncp).
+#defined on the \samp{[min, max]} domain with parameters \samp{shape1} and \samp{shape2} (
+#and optional non-centrality parameter \samp{ncp}).
 #INPUTS
 #{x,q}<<Vector of quantiles.>>
 #{p}<<Vector of probabilities.>>
-#{n}<<Number of observations. If length(n) > 1, the length is taken to be the number required.>>
+#{n}<<Number of observations. If \samp{length(n) > 1}, the length is taken to be the number required.>>
 #{shape1, shape2}<<Positive parameters of the Beta distribution.>>
 #[INPUTS]
 #{min}<<Vector of minima.>>
 #{max}<<Vector of maxima.>>
 #{ncp}<<Non-centrality parameter of the Beta distribution.>>
-#{log, log.p}<<Logical; if TRUE, probabilities p are given as log(p).>>
-#{lower.tail}<<Logical; if TRUE (default), probabilities are P[X <= x], otherwise, P[X > x].>>
+#{log, log.p}<<Logical; if \samp{TRUE}, probabilities \samp{p} are given as \samp{log(p)}.>>
+#{lower.tail}<<Logical; if \samp{TRUE} (default), probabilities are \samp{P[X <= x]}, otherwise, \samp{P[X > x]}.>>
 #DETAILS
 #\deqn{x \sim  betagen(shape1, shape2, min, max, ncp)}{x ~ betagen(shape1, shape2, min, max, ncp)}
 #if
@@ -30,8 +30,8 @@ dbetagen <- function(x,shape1,shape2,min=0,max=1,ncp=0,log=FALSE)
 #SEE ALSO
 #\code{\link{Beta}}
 #VALUE
-#dbetagen gives the density, pbetagen gives the distribution function,
-#qbetagen gives the quantile function, and rbetagen generates random deviates.
+#\samp{dbetagen} gives the density, \samp{pbetagen} gives the distribution function,
+#\samp{qbetagen} gives the quantile function, and \samp{rbetagen} generates random deviates.
 #AUTHOR Regis Pouillot
 #CREATED 08-04-16
 #--------------------------------------------

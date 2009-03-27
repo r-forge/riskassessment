@@ -5,8 +5,8 @@ Builds a Rank Correlation using the Iman and Connover Method.
 }
 \description{
 This function builds a rank correlation structure between columns of
-a matrix or between mcnode objects using the Iman and Connover method
-(1982).
+a matrix or between \samp{mcnode} objects using the Iman and Connover
+method (1982).
 }
 \usage{
 cornode(..., target, outrank=FALSE, result=FALSE, seed=NULL)
@@ -48,52 +48,54 @@ serving[] <- serving[matc$roundserv, , ]
 cor(cbind(cook, roundserv, serving), method="spearman")
 }
 \arguments{
-\item{\ldots}{A matrix (each of its n columns but the first one will
-be reordered) or n mcnode objects (each elements but the first one
-will be reordered).}
-\item{target}{A scalar (only if n==2) or a (n x n) matrix of
-correlation.}
+\item{\ldots}{A matrix (each of its \samp{n} columns but the first
+one will be reordered) or \samp{n mcnode} objects (each elements but
+the first one will be reordered).}
+\item{target}{A scalar (only if \samp{n=2}) or a \samp{(n x n)}
+matrix of correlation.}
 \item{outrank}{Should the order be returned?}
 \item{result}{Should the correlation eventually obtained be printed?}
 \item{seed}{The random seed used for building the correlation. If
-NULL the seed is unchanged.}
+\samp{NULL} the \samp{seed} is unchanged.}
 }
 \details{
 The arguments should be named.
 
-The function accepts for data a matrix or: 
+The function accepts for \samp{data} a matrix or: 
 
 \itemize{
-\item some "V" mcnode objects separated by a comma;
-\item some "U" mcnode objects separated by a comma;
-\item some "VU" mcnode objects separated by a comma. In that case,
-the structure is built columns by colums (the first column of each
-"VU" mcnode will have a correlation structure, the second ones will
-have a correlation structure, ....).
-\item one "V" mcnode as a first element and some "VU" mcnode objects,
-separated by a comma. In that case, the structure is built between
-the "V" mcnode and each column of the "VU" mcnode objects. The
-correlation result (result = TRUE) is not provided in that case.}
+\item some \samp{"V" mcnode} objects separated by a comma;
+\item some \samp{"U" mcnode} objects separated by a comma;
+\item some \samp{"VU" mcnode} objects separated by a comma. In that
+case, the structure is built columns by colums (the first column of
+each \samp{"VU" mcnode} will have a correlation structure, the second
+ones will have a correlation structure, ....).
+\item one \samp{"V" mcnode} as a first element and some \samp{"VU"
+mcnode} objects, separated by a comma. In that case, the structure is
+built between the \samp{"V" mcnode} and each column of the \samp{"VU"
+mcnode} objects. The correlation result (\samp{result = TRUE}) is not
+provided in that case.}
 The number of variates of the elements should be equal.
 
-target should be a scalar (two columns only) or a real symmetric
-positive-definite square matrix. Only the upper triangular part of
-target is used (see \code{\link{chol}}).
+\samp{target} should be a scalar (two columns only) or a real
+symmetric positive-definite square matrix. Only the upper triangular
+part of \samp{target} is used (see \code{\link{chol}}).
 
  The final correlation structure should be checked because it is not
 always possible to build the target correlation structure.
 
  In a Monte-Carlo simulation, note that the order of the values
-within each mcnode will be changed by this function (excepted for the
-first one of the list). As a consequence, previous links between
-variables will be broken. The outrank option may help to rebuild
-these links (see the Examples).
+within each \samp{mcnode} will be changed by this function (excepted
+for the first one of the list). As a consequence, previous links
+between variables will be broken. The \samp{outrank} option may help
+to rebuild these links (see the Examples).
 }
 \value{
-If rank == FALSE: the matrix or a list of rearranged mcnodes. 
+If \samp{rank = FALSE}: the matrix or a list of rearranged
+\samp{mcnode}s. 
 
- If rank == TRUE: the order to be used to rearranged the matrix or
-the mcnodes to build the desired correlation structure.
+ If \samp{rank = TRUE}: the order to be used to rearranged the matrix
+or the \samp{mcnodes} to build the desired correlation structure.
 }
 \references{
 Connover W., Iman R. (1982). A distribution-free approach to inducing

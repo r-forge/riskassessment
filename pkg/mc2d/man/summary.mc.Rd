@@ -7,7 +7,8 @@
 Summary of mcnode and mc Object
 }
 \description{
-Provides a summary of a mcnode, a mc or a mccut object.
+Provides a summary of a \samp{mcnode}, a \samp{mc} or a \samp{mccut}
+object.
 }
 \usage{
 \method{summary}{mc}(object, probs=c(0, 0.025, 0.25, 0.5, 0.75, 0.975, 1), lim=c(0.025,
@@ -26,8 +27,10 @@ summary(total)
 
 }
 \arguments{
-\item{object}{a mcnode or a mc object or a mccut object.}
-\item{x}{A summary.mc object as provided by the summary.mc function.}
+\item{object}{a \samp{mcnode} or a \samp{mc} object or a \samp{mccut}
+object.}
+\item{x}{A \samp{summary.mc} object as provided by the
+\samp{summary.mc} function.}
 \item{probs}{A vector of values used for the quantile function
 (variability dimension).}
 \item{digits}{Number of digits in the print.}
@@ -36,17 +39,17 @@ summary(total)
 \item{\dots}{For generic functions consistancy.}
 }
 \details{
-The mean, the standard deviation and the probs quantiles will be
-evaluated in the variability dimension. The median, the mean and the
-lim quantiles will then be evaluated on these statistics in the
-uncertainty dimension.
+The mean, the standard deviation and the \samp{probs} quantiles will
+be evaluated in the variability dimension. The median, the mean and
+the \samp{lim} quantiles will then be evaluated on these statistics
+in the uncertainty dimension.
 
 Multivariate nodes:
 
-If the "outm" attributes of the mcnode is "none", the node is not
-evaluated, if it is "each" the variates are evaluated one by one, if
-it is a function (e.g. "mean"), the function is applied on the
-nvariates dimension before providing a classical output.
+If the \samp{"outm"} attributes of the mcnode is "none", the node is
+not evaluated, if it is "each" the variates are evaluated one by one,
+if it is a function (e.g. "mean"), the function is applied on the
+\samp{nvariates} dimension before providing a classical output.
 }
 \value{
 a list.

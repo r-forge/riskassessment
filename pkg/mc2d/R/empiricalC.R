@@ -8,26 +8,26 @@ dempiricalC <- function(x, min, max, values, prob=rep(1,length(values)), log=FAL
 #INPUTS
 #{x, q}<<Vector of quantiles.>>
 #{p}<<Vector of probabilities.>>
-#{n}<<Number of random values. If length(n) > 1, the length is taken to be the number required.>>
+#{n}<<Number of random values. If \samp{length(n) > 1}, the length is taken to be the number required.>>
 #{min}<<A finite minimal value.>>
 #{max}<<A finite maximal value.>>
 #{values}<<Vector of numerical values.>>
 #[INPUTS]
 #{prob}<<Optionnal vector of count or probabilities.>>
-#{log, log.p}<<logical; if TRUE, probabilities p are given as log(p).>>
-#{lower.tail}<<logical; if TRUE (default), probabilities are P[X <= x], otherwise, P[X > x].>>
+#{log, log.p}<<logical; if \samp{TRUE}, probabilities \samp{p} are given as \samp{log(p)}.>>
+#{lower.tail}<<logical; if \samp{TRUE} (default), probabilities are \samp{P[X <= x]}, otherwise, \samp{P[X > x]}.>>
 #DETAILS
-#Given \eqn{p_{i}}{p_i}, the distribution value for \eqn{x_{i}}{x_i} with i the rank \eqn{i = 0, 1, 2, \ldots, N+1},
+#Given \eqn{p_{i}}{p_i}, the distribution value for \eqn{x_{i}}{x_i} with \samp{i} the rank \eqn{i = 0, 1, 2, \ldots, N+1},
 # \eqn{x_{0}=min}{x_0 = min} and \eqn{x_{N+1}=max}{x_(N+1) = max} the density is:
 # \deqn{f(x)=p_{i}+(\frac{x-x_{i}}{x_{i+1}-x_{i}})(p_{i+1}-p_{i})}{f(x) = p_i + (p_(i+1) - p_i)/(x_(i+1) - x_i) for x_i<=x<x_(i+1)}
-# The p values being normalized to give the distribution a unit area.
+# The \samp{p} values being normalized to give the distribution a unit area.
 #
 #This function is not vectorized. It can not currently be use with varying parameters.
 #SEE ALSO
 #\code{\link{empiricalD}}
 #VALUE
-#dempiricalC gives the density, pempiricalC gives the distribution function,
-#qempiricalC gives the quantile function and rempiricalC generates random deviates.
+#\samp{dempiricalC} gives the density, \samp{pempiricalC} gives the distribution function,
+#\samp{qempiricalC} gives the quantile function and \samp{rempiricalC} generates random deviates.
 #EXAMPLE
 #prob <- c(2,3,1,6,1)
 #values <- 1:5

@@ -2,35 +2,35 @@
 mc <- function(..., name=NULL, devname=FALSE)
 #TITLE Monte Carlo Object
 #DESCRIPTION
-# Creates mc objects from \code{\link{mcnode}} or mc objects.
+# Creates \samp{mc} objects from \code{\link{mcnode}} or \samp{mc} objects.
 #KEYWORDS methods
 #INPUTS
-#{...}<<mcnode and/or mc object(s) to be gathered in a mc object
+#{...}<<\samp{mcnode} and/or \samp{mc} object(s) to be gathered in a \samp{mc} object
 #separated by a coma.>>
 #[INPUTS]
-#{name}<<Vector of character of the same length of the final mc object.
+#{name}<<Vector of character of the same length of the final \samp{mc} object.
 #If NULL, the name will be given from the name of the elements. >>
-#{devname}<<Develop the name from the name of the mc objects, if any.>>
-##{remove}<<If TRUE, original objects are removed from the parent environment.>>
+#{devname}<<Develop the name from the name of the \samp{mc} objects, if any.>>
+##{remove}<<If \samp{TRUE}, original objects are removed from the parent environment.>>
 #VALUE
-# An object of class mc.
+# An object of class \samp{mc}.
 #DETAILS
-#A mc object is a list of \code{\link{mcnode}} objects.
-#mcnode objects must be of coherent dimensions.
+#A \samp{mc} object is a list of \code{\link{mcnode}} objects.
+#\samp{mcnode} objects must be of coherent dimensions.
 #
-#If one of the arguments is a mc object, the name of the elements of this mc object are used.
-#devname = TRUE will develop the name, using as a prefix the name of the mc object.</>
+#If one of the arguments is a \samp{mc} object, the name of the elements of this \samp{mc} object are used.
+#\samp{devname = TRUE} will develop the name, using as a prefix the name of the \samp{mc} object.</>
 #Finally, names are transformed to be unique.
 #SEE ALSO
-#\code{\link{mcnode}}, the basic element of a mc object.</>
-#To evaluate mc objects: \code{\link{mcmodel}}, \code{\link{evalmcmod}}, \code{\link{evalmccut}}</>
-#Informations about an mc object: \code{\link{is.mc}}, \code{\link{dimmc}}</>
-##To apply a function on a mc object: \code{\link{mcapply}}</>
-#To study mc objects: \code{\link{print.mc}}, \code{\link{summary.mc}}, \code{\link{plot.mc}},
+#\code{\link{mcnode}}, the basic element of a \samp{mc} object.</>
+#To evaluate \samp{mc} objects: \code{\link{mcmodel}}, \code{\link{evalmcmod}}, \code{\link{evalmccut}}</>
+#Informations about an \samp{mc} object: \code{\link{is.mc}}, \code{\link{dimmc}}</>
+##To apply a function on a \samp{mc} object: \code{\link{mcapply}}</>
+#To study \samp{mc} objects: \code{\link{print.mc}}, \code{\link{summary.mc}}, \code{\link{plot.mc}},
 #\code{\link{converg}}, \code{\link{hist.mc}}, \code{\link{tornado}}, \code{\link{tornadounc.mc}}</>
-##To modify mc objects:
+##To modify \samp{mc} objects:
 ##\code{\link{subset.mc}}</>
-##To transform mc objects in a list, a data.frame, a matrix or an array: \code{\link{unmcnode}}.
+##To transform \samp{mc} objects in a list, a data.frame, a matrix or an array: \code{\link{unmcnode}}.
 #EXAMPLE   
 #x <- mcstoc(runif)
 #y <- mcdata(3,type="0")

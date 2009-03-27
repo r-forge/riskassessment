@@ -8,7 +8,7 @@
 The fictive example is as following:
 
 A batch of ground beef is contaminated with \emph{E. coli},
-with a mean concentration \code{conc}.
+with a mean concentration \samp{conc}.
 
 Consumers may eat the beef "rare", "medium rare" or
 "well cooked". If "rare", no bacteria is killed. If "medium rare", 1/5 of bacteria survive. If "well cooked", 1/50 of bacteria survive.
@@ -31,7 +31,7 @@ For the one-dimensional model, it is assumed that:
 
 \code{risk <- 1-(1-0.001)^dose}
 
-For the two-dimensional model, it is assumed moreover that the concentration and the \code{r} parameter
+For the two-dimensional model, it is assumed moreover that the concentration and the \samp{r} parameter
 of the dose response are uncertain.
 
 \code{conc <- rnorm(n,mean=10,sd=2)}
