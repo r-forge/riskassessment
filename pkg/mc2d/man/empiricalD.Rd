@@ -10,7 +10,7 @@ The Discrete Empirical Distribution
 \description{
 Density, distribution function and random generation for a discrete
 empirical distribution. This function is vectorized to accept
-different sets of values or prob.
+different sets of \samp{values} or \samp{prob}.
 }
 \usage{
 dempiricalD(x, values, prob=NULL, log=FALSE)
@@ -41,33 +41,35 @@ is taken to be the number required.}
 \item{values}{Vector or matrix of numerical values. See details.}
 \item{prob}{Optionnal vector or matrix of count or probabilities. See
 details.}
-\item{log, log.p}{logical; if TRUE, probabilities p are given as
-log(p).}
-\item{lower.tail}{logical; if TRUE (default), probabilities are P[X
-\eqn{<}= x] otherwise, P[X \eqn{>} x].}
+\item{log, log.p}{logical; if \samp{TRUE}, probabilities \samp{p} are
+given as \samp{log(p)}.}
+\item{lower.tail}{logical; if \samp{TRUE} (default), probabilities
+are \samp{P[X <= x]}, otherwise, \samp{P[X > x]}.}
 }
 \details{
-If prob is missing, the discrete distribution is obtained directly
-from the vector of values, otherwise prob is used to weight the
-values. prob is normalized before use. Thus, prob may be the count of
-each values. prob values should be non negative and their sum should
-not be 0.
+If \samp{prob} is missing, the discrete distribution is obtained
+directly from the vector of \samp{values}, otherwise \samp{prob} is
+used to weight the values. \samp{prob} is normalized before use.
+Thus, \samp{prob} may be the count of each \samp{values}. \samp{prob}
+values should be non negative and their sum should not be 0.
 
- values and/or prob may vary: in that case, values and/or prob should
-be sent as matrixes, the first row being used for the first element
-of x, q, p or the first random value, the second row for the second
-element of x, q, p or random value, ... Recycling is permitted if the
-number of rows of prob and values are equal or if the number of rows
-of prob and/or values are one.
+ \samp{values} and/or \samp{prob} may vary: in that case,
+\samp{values} and/or \samp{prob} should be sent as matrixes, the
+first row being used for the first element of \samp{x}, \samp{q},
+\samp{p} or the first random value, the second row for the second
+element of \samp{x}, \samp{q}, \samp{p} or random value, ...
+Recycling is permitted if the number of rows of \samp{prob} and
+\samp{values} are equal or if the number of rows of \samp{prob}
+and/or \samp{values} are one.
 
- rempiricalD(n, values, prob) with values and prob as vectors is
-equivalent to \code{sample(x=values, size=n, replace=TRUE,
-prob=prob)}.
+ \samp{rempiricalD(n, values, prob)} with \samp{values} and
+\samp{prob} as vectors is equivalent to \samp{sample(x=values,
+size=n, replace=TRUE, prob=prob)}.
 }
 \value{
-dempiricalD gives the density, pempiricalD gives the distribution
-function, qempiricalD gives the quantile function and rempiricalD
-generates random deviates.
+\samp{dempiricalD} gives the density, \samp{pempiricalD} gives the
+distribution function, \samp{qempiricalD} gives the quantile function
+and \samp{rempiricalD} generates random deviates.
 }
 \author{
 Regis Pouillot

@@ -4,8 +4,8 @@
 Creates a Stochastic mcnode Object using a Probability Tree
 }
 \description{
-This function builds a mcnode as a mixture of mcstoc functions or
-mcnode objects.
+This function builds a \samp{mcnode} as a mixture of \samp{mcstoc}
+functions or \samp{mcnode} objects.
 }
 \usage{
 mcprobtree(mcswitch, mcvalues, type=c("V", "U", "VU", "0"), nsv=ndvar(),
@@ -33,46 +33,50 @@ mcprobtree(whichdist, list("1"=conc1, "2"=conc2, "3"=conc3), type="VU")
 
 }
 \arguments{
-\item{mcswitch}{A vector of probabilities/weights or a mcnode
-including the mcstoc functions/mcnodes to pick.}
-\item{mcvalues}{A named list of mcnode, mcdata functions or mcstoc
-functions, or a combination of those objects. Each element should
-lead to an mcnode of type type and of dimension (nsv x nsu x 1) or
-(nsv x nsu x nvariates) }
-\item{type}{The type of mcnode to be built. By default, a "V" node.
-see \code{\link{mcnode}} for details.}
+\item{mcswitch}{A vector of probabilities/weights or a \samp{mcnode}
+including the \samp{mcstoc} functions/mcnodes to pick.}
+\item{mcvalues}{A named list of \samp{mcnode}, \samp{mcdata}
+functions or \samp{mcstoc} functions, or a combination of those
+objects. Each element should lead to an \samp{mcnode} of type
+\samp{type} and of dimension \samp{c(nsv x nsu x 1)} or \samp{c(nsv x
+nsu x nvariates)} }
+\item{type}{The type of \samp{mcnode} to be built. By default, a
+\samp{"V"} node. see \code{\link{mcnode}} for details.}
 \item{nsv}{The number of simulations in the variability dimension of
 the final node.}
 \item{nsu}{The number of simulations in the uncertainty dimension of
 the final node.}
-\item{nvariates}{The number of variates of the final mcnode.}
-\item{outm}{The default output of the mcnode for multivariates nodes.
-see \code{\link{outm}}.}
-\item{seed}{The random seed used for the evaluation. If NULL the seed
-is unchanged.}
+\item{nvariates}{The number of variates of the final \samp{mcnode}.}
+\item{outm}{The default output of the \samp{mcnode} for multivariates
+nodes. see \code{\link{outm}}.}
+\item{seed}{The random seed used for the evaluation. If \samp{NULL}
+the \samp{seed} is unchanged.}
 }
 \details{
-mcswitch may be: 
+\samp{mcswitch} may be: 
 
 \itemize{
-\item a vector of length the length of mcvalues. They need not sum to
-one, but they should be nonnegative and not all zero. In that case,
-each elements of mcvalues will appear in the final sample a random
-number of times as specified by this vector. (Note that there is a
-random process).
-\item a "0" mcnode to build any type of node.
-\item a "V" mcnode to build a "V" or a "VU" mcnode.
-\item a "U" mcnode to build a "U" or a "VU" mcnode.
-\item a "VU" mcnode to build a "VU".}
-The elements in mcvalues should be of same type and dimension as
-specified in type, nsv, nsu and nvariates. The name should correspond
-to the values in mcswitch, specified as character (See Examples).
-These elements will be evaluated only if needed : if the
-corresponding value is not present in mcswitch, the element will not
-be evaluated.
+\item a vector of length the length of \samp{mcvalues}. They need not
+sum to one, but they should be nonnegative and not all zero. In that
+case, each elements of \samp{mcvalues} will appear in the final
+sample a random number of times as specified by this vector. (Note
+that there is a random process).
+\item a \samp{"0"} mcnode to build any type of node.
+\item a \samp{"V"} mcnode to build a \samp{"V"} or a \samp{"VU"}
+mcnode.
+\item a \samp{"U"} mcnode to build a \samp{"U"} or a \samp{"VU"}
+mcnode.
+\item a \samp{"VU"} mcnode to build a \samp{"VU"}.}
+The elements in \samp{mcvalues} should be of same type and dimension
+as specified in \samp{type}, \samp{nsv}, \samp{nsu} and
+\samp{nvariates}. The name should correspond to the values in
+\samp{mcswitch}, specified as character (See Examples). These
+elements will be evaluated only if needed : if the corresponding
+value is not present in \samp{mcswitch}, the element will not be
+evaluated.
 }
 \value{
-An mcnode object.
+An \samp{mcnode} object.
 }
 \author{
 Regis Pouillot

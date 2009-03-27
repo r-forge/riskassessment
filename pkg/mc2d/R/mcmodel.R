@@ -2,20 +2,20 @@
 mcmodel <- function(x, is.expr=FALSE)
 #TITLE Monte Carlo model
 #DESCRIPTION
-# Specify a mcmodel, without evaluating it, for a further evaluation using \code{\link{evalmcmod}}.
+# Specify a \samp{mcmodel}, without evaluating it, for a further evaluation using \code{\link{evalmcmod}}.
 #KEYWORDS methods
 #INPUTS
 #{x}<<An \R call or an expression.>>
 #[INPUTS]
-#{is.expr}<< FALSE to send a call,  TRUE to send an expression (see Examples)>>
+#{is.expr}<< \samp{FALSE} to send a call,  \samp{TRUE} to send an expression (see Examples)>>
 #VALUE
-# an \R expression, with class mcmodel
+# an \R expression, with class \samp{mcmodel}
 #DETAILS
-# The model should be put between "{" and the last line should be of the form mc(...).
+# The model should be put between \samp{\{} and the last line should be of the form \samp{mc(...)}.
 # Any reference to the number of simulation in the
-#dimension of variability should be done via ndvar() or (preferred) nsv.
+#dimension of variability should be done via \samp{ndvar()} or (preferred) \samp{nsv}.
 # Any reference to the number of simulations in the dimension of uncertainty
-# should be done via ndunc() or (preferred) nsu.
+# should be done via \samp{ndunc()} or (preferred) \samp{nsu}.
 #SEE ALSO
 #\code{\link{expression}}.</>
 #\code{\link{evalmcmod}} to evaluate the model.</>

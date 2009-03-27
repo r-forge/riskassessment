@@ -5,14 +5,14 @@ outm <- function(x,value="each",which.node=1)
 # Changes the output of Nodes
 #KEYWORDS misc
 #INPUTS
-#{x}<<A mcnode or a mc object.>>
+#{x}<<A \samp{mcnode} or a \samp{mc} object.>>
 #[INPUTS]
-#{value}<<The output of the mcnode for multivariates nodes. May be "each" (default)
+#{value}<<The output of the \samp{mcnode} for multivariates nodes. May be "each" (default)
 #if output should be provided for each variates considered independently, "none" for no output
 #or a vector of name of function(s) (as a character string) that will be applied on the variates dimension
-#before any output (ex: "mean", "median", c("min","max")). The function should have no other arguments
-#and send one value per vector of values (ex. do not use "range").>>
-#{which.node}<<which node should be changed in a mc object>>
+#before any output (ex: \samp{"mean"}, \samp{"median"}, \samp{c("min","max")}). The function should have no other arguments
+#and send one value per vector of values (ex. do not use \samp{"range"}).>>
+#{which.node}<<which node should be changed in a \samp{mc} object>>
 #EXAMPLE
 #data(total)
 #total$xVUM2
@@ -22,7 +22,7 @@ outm <- function(x,value="each",which.node=1)
 #summary(x)
 
 #VALUE
-#x with a modified outm attribute.
+#\samp{x} with a modified \samp{outm} attribute.
 #--------------------------------------------
 {
 

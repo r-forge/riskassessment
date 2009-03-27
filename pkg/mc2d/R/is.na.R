@@ -3,12 +3,12 @@ is.na.mcnode <- function(x)
 #NAME NA.mcnode
 #TITLE Finite, Infinite, NA and NaN Numbers in mcnode.
 #DESCRIPTION
-# is.na, is.nan, is.finite and is.infinite return a logical mcnode 
-#of the same dimension as x.
+# \samp{is.na}, \samp{is.nan}, \samp{is.finite} and \samp{is.infinite} return a logical \samp{mcnode} 
+#of the same dimension as \samp{x}.
 #INPUTS
-#{x}<<A mcnode object.>>
+#{x}<<A \samp{mcnode} object.>>
 #VALUE
-#A logical mcnode object.
+#A logical \samp{mcnode} object.
 #SEE ALSO
 #\code{\link{is.finite}}, \code{\link{NA}}
 #KEYWORDS NA

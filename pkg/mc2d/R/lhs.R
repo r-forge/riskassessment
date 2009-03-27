@@ -5,27 +5,27 @@ lhs <- function(distr=runif,nsv,nsu,nvariates=1,...)
 # Creates a Latin Hypercube Sample (LHS) of the specified distribution.
 #KEYWORDS design
 #INPUTS
-#{distr}<<The function for generating random sample or its name. If distr is "rdist",
+#{distr}<<The function for generating random sample or its name. If \samp{distr} is "rdist",
 #the function "qdist" must be the quantile function of this distribution with argument
-#p as a vector of probabilities, as all univariates distributions of the \pkg{stat}
+#\samp{p} as a vector of probabilities, as all univariates distributions of the \samp{stat}
 #library.>>
 #{nsv}<<The number of raws of the final matrix.>>
 #{nsu}<<The number of columns of the final matrix>>
 #[INPUTS]
 #{nvariates}<<The number of variates>>
-#{\dots}<<All arguments to be passed to distr except the size of the sample.>>
+#{\dots}<<All arguments to be passed to \samp{distr} except the size of the sample.>>
 #VALUE
-#A (nsv x nsu) matrix of random variates.
+#A \samp{nsv x nsu} matrix of random variates.
 #NOTE
 #The resulting lhs is in fact a latin hypersquare sampling: the lhs is provided only in the first 2 dimensions.</>
 #It is not possible to send truncated distribution with \code{\link{rtrunc}}. Use \code{\link{mcstoc}} for
-#this purpose, with lhs=TRUE and rtrunc=TRUE.</>
+#this purpose, with \samp{lhs=TRUE} and \samp{rtrunc=TRUE}.</>
 #The \dots arguments will be recycled.
 #SEE ALSO
 #\code{\link{mcstoc}}
 #EXAMPLE
 #ceiling(lhs(runif,nsu=10,nsv=10)*10)
-#AUTHOR adapted from a code of Rob Carnell (library \pkg{lhs})
+#AUTHOR adapted from a code of Rob Carnell (library \samp{lhs})
 #CREATED 08-01-25
 #--------------------------------------------
 {

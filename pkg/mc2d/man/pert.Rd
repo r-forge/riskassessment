@@ -9,8 +9,9 @@ The Pert Distribution
 }
 \description{
 Density, distribution function, quantile function and random
-generation for the pert distribution with minimum equal to min, mode
-equal to mode and maximum equal to max.
+generation for the pert distribution with minimum equal to
+\samp{min}, mode equal to \samp{mode} and maximum equal to
+\samp{max}.
 }
 \usage{
 dpert(x, min=-1, mode=0, max=1, shape=4, log=FALSE)
@@ -36,10 +37,10 @@ is taken to be the number required.}
 \item{mode}{Vector of modes.}
 \item{max}{Vector of maxima.}
 \item{shape}{Vector of scaling parameters.}
-\item{log, log.p}{Logical; if TRUE, probabilities p are given as
-log(p).}
-\item{lower.tail}{Logical; if TRUE (default), probabilities are P[X
-\eqn{<}= x], otherwise, P[X \eqn{>} x].}
+\item{log, log.p}{Logical; if \samp{TRUE}, probabilities \samp{p} are
+given as \samp{log(p)}.}
+\item{lower.tail}{Logical; if \samp{TRUE} (default), probabilities
+are \samp{P[X <= x]}, otherwise, \samp{P[X > x]}.}
 }
 \details{
 The Pert distribution is a special case of the Beta distribution
@@ -53,14 +54,15 @@ mode-min-max)/((mode-mu)*(max - min)}
 \deqn{\alpha_{2}=\frac{\alpha_{1}\times
 (max-\mu)}{mu-min}}{shape2=shape1*(max - mu)/(mu - min)}
 
-on the domain [min, max].
+on the domain \samp{[min, max]}.
 
  If \eqn{\mu=mode}{mu=mode}, \eqn{\alpha_{1}}{shape1} is set to
 \eqn{1+\nu/2}{1+shape/2}.
 }
 \value{
-dpert gives the density, ppert gives the distribution function, qpert
-gives the quantile function, and rpert generates random deviates.
+\samp{dpert} gives the density, \samp{ppert} gives the distribution
+function, \samp{qpert} gives the quantile function, and \samp{rpert}
+generates random deviates.
 }
 \references{
 Vose D. Risk Analysis - A Quantitative Guide (John Wiley \& Sons,

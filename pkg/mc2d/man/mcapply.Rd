@@ -4,8 +4,9 @@
 Apply Functions Over mc or mcnode Objects
 }
 \description{
-Apply a function on all values or over a given dimension of an mcnode
-object. May be used for all mcnode of an mc object.
+Apply a function on all values or over a given dimension of an
+\samp{mcnode} object. May be used for all \samp{mcnode} of an
+\samp{mc} object.
 }
 \usage{
 mcapply(x, margin=c("all", "var", "unc", "variates"), fun, ...)
@@ -20,20 +21,22 @@ mcapply(xVUM, "variates", sum)
 mcapply(total, "all", exp)
 }
 \arguments{
-\item{x}{A mc or a mcnode object.}
+\item{x}{A \samp{mc} or a \samp{mcnode} object.}
 \item{margin}{The dimension on which applying the function. Maybe
-"all" (default) to apply the function on all values, "var" to apply
-the function on the variability dimension, "unc" to apply the
-function on the uncertainty dimension, or "variates" to apply the
-function on the variates.}
+\samp{"all"} (default) to apply the function on all values,
+\samp{"var"} to apply the function on the variability dimension,
+\samp{"unc"} to apply the function on the uncertainty dimension, or
+\samp{"variates"} to apply the function on the variates.}
 \item{fun}{The function to be applied. When applied to a vector of
-length n, fun should return a vector of length n or 1.}
-\item{\dots}{Optionnal arguments to fun.}
+length \samp{n}, \samp{fun} should return a vector of length \samp{n}
+or \samp{1}.}
+\item{\dots}{Optionnal arguments to \samp{fun}.}
 }
 \value{
-If fun returns a function of length n or if margin=="all", the
-returned mcnodes are of type and dimension of x. In other cases, the
-type of mcnode is changed.
+If \samp{fun} returns a function of length \samp{n} or if
+\samp{margin="all"}, the returned \samp{mcnode}s are of type and
+dimension of \samp{x}. In other cases, the type of \samp{mcnode} is
+changed.
 }
 \author{
 Regis Pouillot

@@ -2,18 +2,18 @@
 hist.mc <- function(x, griddim = NULL, xlab = names(x),ylab = "Frequency", main = "",  ...)
 #TITLE Histogram of a Monte Carlo Simulation
 #DESCRIPTION
-# Shows histogram of a mcnode or a mc object.
+# Shows histogram of a \samp{mcnode} or a \samp{mc} object.
 #KEYWORDS hplot
 #INPUTS
-#{x}<<An mcnode or an mc object.>>
+#{x}<<An \samp{mcnode} or an \samp{mc} object.>>
 #[INPUTS]
-#{griddim}<<A vector of two integers, indicating the size of the grid of plots. If NULL, the grid is calculated to produce a "nice" graph.>>
-#{xlab}<<A vector of labels for the x-axis for drawn histograms (those whose outm(x)!="none"). May be recycled.>>
+#{griddim}<<A vector of two integers, indicating the size of the grid of plots. If \samp{NULL}, the grid is calculated to produce a "nice" graph.>>
+#{xlab}<<A vector of labels for the x-axis for drawn histograms (those whose \samp{outm(x)!="none"}). May be recycled.>>
 #{ylab}<<A vector of labels for the y-axis for drawn histograms. May be recycled.>>
 #{main}<<A vector of main title of histograms for drawn histograms. May be recycled.>>
-#{\dots}<<Other arguments to be passed to all calls of \code{hist}.>>
+#{\dots}<<Other arguments to be passed to all calls of \samp{hist}.>>
 #NOTE
-#For Two-dimensional mc, the histogram is based on all data (variability and uncertainty) pooled together.
+#For Two-dimensional \samp{mc}, the histogram is based on all data (variability and uncertainty) pooled together.
 #EXAMPLE
 #data(total)
 #hist(xVUM3)

@@ -18,17 +18,18 @@ x <- outm(total$xVUM2, c("min"))
 summary(x)
 }
 \arguments{
-\item{x}{A mcnode or a mc object.}
-\item{value}{The output of the mcnode for multivariates nodes. May be
-"each" (default) if output should be provided for each variates
-considered independently, "none" for no output or a vector of name of
-function(s) (as a character string) that will be applied on the
-variates dimension before any output (ex: "mean", "median",
-c("min","max")). The function should have no other arguments and send
-one value per vector of values (ex. do not use "range").}
-\item{which.node}{which node should be changed in a mc object}
+\item{x}{A \samp{mcnode} or a \samp{mc} object.}
+\item{value}{The output of the \samp{mcnode} for multivariates nodes.
+May be "each" (default) if output should be provided for each
+variates considered independently, "none" for no output or a vector
+of name of function(s) (as a character string) that will be applied
+on the variates dimension before any output (ex: \samp{"mean"},
+\samp{"median"}, \samp{c("min","max")}). The function should have no
+other arguments and send one value per vector of values (ex. do not
+use \samp{"range"}).}
+\item{which.node}{which node should be changed in a \samp{mc} object}
 }
 \value{
-x with a modified outm attribute.
+\samp{x} with a modified \samp{outm} attribute.
 }
 \keyword{misc}

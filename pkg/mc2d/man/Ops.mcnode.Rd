@@ -4,8 +4,8 @@
 Operations on mcnode Objects
 }
 \description{
-This function alters the way operations are performed on mcnode
-objects for a better consistancy of the theory.
+This function alters the way operations are performed on
+\samp{mcnode} objects for a better consistancy of the theory.
 }
 \usage{
 \method{Ops}{mcnode}(e1, e2)
@@ -66,58 +66,63 @@ xUM - xU
 xVUM - xU
 }
 \arguments{
-\item{e1}{An mcnode object, a vector or an array.}
-\item{e2}{An optionnal mcnode object, a vector or a matrix with at
-least one of both objects as an mcnode.}
+\item{e1}{An \samp{mcnode} object, a vector or an array.}
+\item{e2}{An optionnal \samp{mcnode} object, a vector or a matrix
+with at least one of both objects as an \samp{mcnode}.}
 }
 \details{
 This method will be used for any of the Group \code{\link{Ops}}
 functions, i.e.: 
 
 \itemize{
-\item "+", "-", "*", "/", "\eqn{\mbox{\textasciicircum}}{^}", "\%
+\item \samp{"+"}, \samp{"-"}, \samp{"*"}, \samp{"/"}, \samp{"^"},
+\samp{"\%
 \%
-","\%
+"}, \samp{"\%
 /\%
-"
-\item "\&", "\eqn{|}", "!"
-\item "==", "!=", "\eqn{<}", "\eqn{<}=", "\eqn{>}=", "\eqn{>}"}
-The rules are as following (illustrated with a "+" function and
-ignoring the nvariates dimension): 
+"}
+\item \samp{"&", "|", "!"}
+\item \samp{"==", "!=", "<", "<=", ">=", ">"}}
+The rules are as following (illustrated with a \samp{"+"} function
+and ignoring the \samp{nvariates} dimension): 
 
 \itemize{
-\item "0" + "0" = "0";
-\item "0" + "V" = "V": classical recycling of the scalar;
-\item "0" + "U" = "U": classical recycling of the scalar;
-\item "0" + "VU" = "VU": classical recycling of the scalar;
-\item "V" + "V" = "V": if both of the same (nsv) dimension;
-\item "V" + "U" = "VU": the "U" object will be recycled "by row". The
-"V" object will be recycled classically "by column";
-\item "V" + "VU" = "VU": if the dimension of the "V" is (nsv) and the
-dimension of the "VU" is (nsv x nsu). The "V" object will be recycled
-classically "by column";
-\item "U" + "U" = "U": if both of the same (nsu) dimension;
-\item "U" + "VU" = "VU": if the dimension of the "U" is (nsu) and the
-dimension of the "VU" is (nsv x nsu). The "U" object will be recycled
-"by row";
-\item "VU" + "VU" = "VU": if the dimension of the "VU" nodes is (nsu
-x nsv);}
-A vector or an array may be combined with an mcnode of size (nsv x
-nsu) if an mcnode of this dimension may be built from this
-vector/array using the mcdata function. See \code{\link{mcdata}} for
-the rules.
+\item \samp{"0" + "0" = "0"};
+\item \samp{"0" + "V" = "V"}: classical recycling of the scalar;
+\item \samp{"0" + "U" = "U"}: classical recycling of the scalar;
+\item \samp{"0" + "VU" = "VU"}: classical recycling of the scalar;
+\item \samp{"V" + "V" = "V"}: if both of the same \samp{(nsv)}
+dimension;
+\item \samp{"V" + "U" = "VU"}: the \samp{"U"} object will be recycled
+"by row". The \samp{"V"} object will be recycled classically "by
+column";
+\item \samp{"V" + "VU" = "VU"}: if the dimension of the \samp{"V"} is
+\samp{(nsv)} and the dimension of the \samp{"VU"} is \samp{(nsv x
+nsu)}. The \samp{"V"} object will be recycled classically "by
+column";
+\item \samp{"U" + "U" = "U"}: if both of the same \samp{(nsu)}
+dimension;
+\item \samp{"U" + "VU" = "VU"}: if the dimension of the \samp{"U"} is
+\samp{(nsu)} and the dimension of the \samp{"VU"} is \samp{(nsv x
+nsu)}. The \samp{"U"} object will be recycled "by row";
+\item \samp{"VU" + "VU" = "VU"}: if the dimension of the \samp{"VU"}
+nodes is \samp{(nsu x nsv)};}
+A vector or an array may be combined with an \samp{mcnode} of size
+\samp{(nsv x nsu)} if an \samp{mcnode} of this dimension may be built
+from this vector/array using the \samp{mcdata} function. See
+\code{\link{mcdata}} for the rules.
 
-The outm attribute is transferred as following: "each" + "each" =
-"each"; "none" + other = other; other1 + other2 = other1. The outm
-attribute of the resulting node may be changed using the
-\code{\link{outm}} function.
+The \samp{outm} attribute is transferred as following: \samp{"each" +
+"each" = "each"}; \samp{"none" + other = other}; \samp{other1 +
+other2 = other1}. The \samp{outm} attribute of the resulting node may
+be changed using the \code{\link{outm}} function.
 
-For multivariate nodes, a recycling on the nvariates dimension is
-done if a (nsu x nsv x nvariates) node is combined with a (nsu x nsv
-x 1) node.
+For multivariate nodes, a recycling on the \samp{nvariates} dimension
+is done if a \samp{(nsu x nsv x nvariates)} node is combined with a
+\samp{(nsu x nsv x 1)} node.
 }
 \value{
-The results as a mcnode object.
+The results as a \samp{mcnode} object.
 }
 \author{
 Regis Pouillot

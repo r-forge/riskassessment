@@ -5,7 +5,8 @@
 Tests mc and mcnode Objects
 }
 \description{
-is.mc tests mc objects and is.mcnode tests mcnode objects.
+\samp{is.mc} tests \samp{mc} objects and \samp{is.mcnode} tests
+\samp{mcnode} objects.
 }
 \usage{
 is.mc(x)
@@ -19,19 +20,19 @@ is.mc(total)
 
 }
 \arguments{
-\item{x}{An mc or a mcnode object.}
+\item{x}{An \samp{mc} or a \samp{mcnode} object.}
 }
 \details{
-is.mc tests if x is a list of mcnode, each elements being of
-compatible dimension. It tests if the class "mc" is affected to the
-object.
+\samp{is.mc} tests if \samp{x} is a list of \samp{mcnode}, each
+elements being of compatible dimension. It tests if the class
+\samp{"mc"} is affected to the object.
 
- is.mcnode tests if x is an array of numeric or logical, if it has a
-"type" attribute and compatible dimensions, and if the class "mcnode"
-is affected to the object.
+ \samp{is.mcnode} tests if \samp{x} is an array of numeric or
+logical, if it has a "type" attribute and compatible dimensions, and
+if the class \samp{"mcnode"} is affected to the object.
 }
 \value{
-TRUE or FALSE
+\samp{TRUE} or \samp{FALSE}
 }
 \author{
 Regis Pouillot

@@ -4,8 +4,8 @@
 Monte Carlo model
 }
 \description{
-Specify a mcmodel, without evaluating it, for a further evaluation
-using \code{\link{evalmcmod}}.
+Specify a \samp{mcmodel}, without evaluating it, for a further
+evaluation using \code{\link{evalmcmod}}.
 }
 \usage{
 mcmodel(x, is.expr=FALSE)
@@ -24,18 +24,19 @@ evalmcmod(modEC1, nsv=100, nsu=100)
 }
 \arguments{
 \item{x}{An \R call or an expression.}
-\item{is.expr}{ FALSE to send a call, TRUE to send an expression (see
-Examples)}
+\item{is.expr}{ \samp{FALSE} to send a call, \samp{TRUE} to send an
+expression (see Examples)}
 }
 \details{
-The model should be put between "\{" and the last line should be of
-the form mc(...). Any reference to the number of simulation in the
-dimension of variability should be done via ndvar() or (preferred)
-nsv. Any reference to the number of simulations in the dimension of
-uncertainty should be done via ndunc() or (preferred) nsu.
+The model should be put between \samp{\{} and the last line should be
+of the form \samp{mc(...)}. Any reference to the number of simulation
+in the dimension of variability should be done via \samp{ndvar()} or
+(preferred) \samp{nsv}. Any reference to the number of simulations in
+the dimension of uncertainty should be done via \samp{ndunc()} or
+(preferred) \samp{nsu}.
 }
 \value{
-an \R expression, with class mcmodel
+an \R expression, with class \samp{mcmodel}
 }
 \author{
 Regis Pouillot

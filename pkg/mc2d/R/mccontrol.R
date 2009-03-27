@@ -8,14 +8,14 @@ ndvar <- function(n)
 #INPUTS
 #{n}<<Number of simulations.>>
 #DETAILS
-#ndvar() gets and ndvar(n) sets the default number of simulation in the 1D simulations
+#\samp{ndvar()} gets and \samp{ndvar(n)} sets the default number of simulation in the 1D simulations
 #or the number of simulation in the variability dimension in the 2D simulations.</>
-#ndunc() gets and ndunc(n) sets the number of simulations in the uncertainty dimension
+#\samp{ndunc()} gets and \samp{ndunc(n)} sets the number of simulations in the uncertainty dimension
 #in the 2D simulations.</>
-#n is rounded to its ceiling value.</>
-#The default values when loaded are 1001 for ndvar and 101 for ndunc.
+#\samp{n} is rounded to its ceiling value.</>
+#The default values when loaded are 1001 for \samp{ndvar} and 101 for \samp{ndunc}.
 #VALUE
-#The current value, AFTER modification if n is present (!= \code{options()}).
+#The current value, AFTER modification if \samp{n} is present (!= \samp{options}).
 #EXAMPLE
 #(oldvar <- ndvar())
 #(oldunc <- ndunc())

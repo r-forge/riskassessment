@@ -5,43 +5,41 @@ tornadounc.mc <- function(mc,output = length(mc), quant=c(0.5,0.75,0.975),use = 
 #TITLE Computes Correlation between Inputs and Output in a mc Object (tornado) in the Uncertainty Dimension
 #KEYWORDS univar
 #NAME tornadounc
-#DESCRIPTION Provides statistics for a tornado chart. Evaluates correlations between output and inputs of a mc object in the uncertainty dimension.
+#DESCRIPTION Provides statistics for a tornado chart. Evaluates correlations between output and inputs of a \samp{mc} object in the uncertainty dimension.
 #INPUTS
-#{mc}<<a mc object.>>
-#{x}<<a tornadounc object.>>
+#{mc}<<a \samp{mc} object.>>
+#{x}<<a \samp{tornadounc} object.>>
 #[INPUTS]
-#{output}<<The rank or the name of the output to be considered. Should be a "VU" or a "U" type mcnode. By default: the last element of mc.>>
+#{output}<<The rank or the name of the output to be considered. Should be a \samp{"VU"} or a \samp{"U" type mcnode}. By default: the last element of \samp{mc}.>>
 #{quant}<<The vector of quantiles used in the variability dimension.>>
-#{use}<<An optional character string giving a method for computing covariances in the presence of missing values. 
-#This must be (an abbreviation of) one of the strings "all.obs", "complete.obs" or "pairwise.complete.obs" (see \code{\link{cor}}).>>
-#{method}<<A character string indicating which correlation coefficient (or covariance) is to be computed. One of "spearman" (default),
-# "kendall" or "pearson", can be abbreviated (see \code{\link{cor}}). Warning : "pearson" is the default for \code{\link{cor}}).>>
+#{use}<<An optional character string giving a method for computing covariances in the presence of missing values. This must be (an abbreviation of) one of the strings "all.obs", "complete.obs" or "pairwise.complete.obs" (see \code{\link{cor}}).>>
+#{method}<<A character string indicating which correlation coefficient (or covariance) is to be computed. One of "spearman" (default), "kendall" or "pearson", can be abbreviated (see \code{\link{cor}}). Warning : "pearson" is the default for \code{\link{cor}}).>>
 #{\dots}<<Further arguments to be passed to the final print function.>>
 #DETAILS
-# The \code{tornadounc.mc} function computes the spearman's rho statistic between 
-#{*}<<values ("U" type mcnode) or statistics calculated in the variability dimension ("VU" type mcnode) of inputs and>>
-#{*}<<values ("U" type mcnode) or statistics calculated in the variability dimension ("VU" type mcnode) of one output.>>
-#The statistics are the mean, the median and the quantiles specified by quant.
+# The \samp{tornadounc.mc} function computes the spearman's rho statistic between 
+#{*}<<values (\samp{"U" type mcnode}) or statistics calculated in the variability dimension (\samp{"VU" type mcnode}) of inputs and>>
+#{*}<<values (\samp{"U" type mcnode}) or statistics calculated in the variability dimension (\samp{"VU" type mcnode}) of one output.>>
+#The statistics are the mean, the median and the quantiles specified by \samp{quant}.
 #
 #It is useful to estimate a rank-based measure of association between one set of
-# random variable of a mc object (the output) and the others in the uncertainty dimension.</>
-#tornadounc.mccut may be applied on a \code{\link{mccut}} object if a summary.mc function was used in the third block of the
+# random variable of a \samp{mc} object (the output) and the others in the uncertainty dimension.</>
+#\samp{tornadounc.mccut} may be applied on a \code{\link{mccut}} object if a \samp{summary.mc} function was used in the third block of the
 #\code{\link{evalmccut}} call.
 #
-#If output refers to a "0" or "V" mcnode, it is an error.
+#If output refers to a \samp{"0"} or \samp{"V" mcnode}, it is an error.
 #
 #If use is "all.obs", then the presence of missing observations will produce an error.
 #If use is "complete.obs" then missing values are handled by casewise deletion.
 #Finally, if use has the value "pairwise.complete.obs" then the correlation between each pair of variables
 #is computed using all complete pairs of observations on those variables.
 #VALUE
-#An invisible object of class tornadounc.
-#A tornadounc object is a list of objects containing the following objects:
+#An invisible object of class \samp{tornadounc}.
+#A \samp{tornadounc} object is a list of objects containing the following objects:
 #{value}<<a matrix of values of correlation coefficients. Each row are the value
 #or the statistics of inputs, each columns the value or the statistics of outputs.>>
 #{output}<<the name of the output>>
 #{method}<<the method used>>
-#{use}<<the use parameter>>
+#{use}<<the \samp{use} parameter>>
 #SEE ALSO
 # \code{\link{cor}}.</>
 # \code{\link{tornado}} for tornado in the variability dimension.</>
