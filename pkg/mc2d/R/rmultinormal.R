@@ -4,7 +4,7 @@ rmultinormal <- function(n, mean, sigma , method=c("eigen", "svd", "chol"))
 #NAME multinormal
 #KEYWORDS distribution
 #DESCRIPTION
-#This function is the vectorized version of \code{\link{rmvnorm}}.
+#This function is the vectorized version of the \samp{rmvnorm} from the \samp{mvtnorm} library.
 #It provides a random number generator for the multivariate normal distribution 
 #with varying vectors of means and varying covariance matrixes.
 #INPUTS
