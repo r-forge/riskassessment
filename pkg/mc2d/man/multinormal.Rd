@@ -5,10 +5,10 @@
 The Vectorized Multivariate Random Deviates
 }
 \description{
-This function is the vectorized version of \code{\link{rmvnorm}}. It
-provides a random number generator for the multivariate normal
-distribution with varying vectors of means and varying covariance
-matrixes.
+This function is the vectorized version of the \samp{rmvnorm} from
+the \samp{mvtnorm} library. It provides a random number generator for
+the multivariate normal distribution with varying vectors of means
+and varying covariance matrixes.
 }
 \usage{
 rmultinormal(n, mean, sigma, method=c("eigen", "svd", "chol"))
