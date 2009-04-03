@@ -22,7 +22,7 @@ rmultinormal <- function(n, mean, sigma , method=c("eigen", "svd", "chol"))
 #deviate will use the second row of \samp{mean} and/or \samp{sigma}, ...
 #recycling being permitted by raw.
 #If \samp{mean} is a vector of length \samp{l} or is a matrix with \samp{l} columns, \samp{sigma}
-#should be a vector of length \samp{l^2} or a matrix of number of \samp{l^2} columns. 
+#should be a vector of length \samp{l x l} or a matrix of number of \samp{l x 2} columns. 
 #NOTE
 #The use of a varying sigma may be very time consumming.
 #EXAMPLE
