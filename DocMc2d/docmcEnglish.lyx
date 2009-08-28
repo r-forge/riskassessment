@@ -1,10 +1,10 @@
-#LyX 1.6.1 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.2 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
 \textclass literate-article
 \begin_preamble
-
+%% \VignetteIndexEntry
 \end_preamble
 \use_default_options false
 \language english
@@ -541,7 +541,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename mc2dSaumon.bmp
+	filename mc2dsaumon
 	lyxscale 50
 	scale 50
 
@@ -1539,7 +1539,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename Illustration.bmp
+	filename Illustration
 	lyxscale 40
 	scale 40
 
