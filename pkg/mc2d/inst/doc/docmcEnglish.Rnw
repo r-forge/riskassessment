@@ -1,5 +1,6 @@
+%% LyX 1.6.2 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
 \documentclass[10pt,english]{article}
-\VignetteIndexEntry
 \usepackage[T1]{fontenc}
 \usepackage[latin9]{inputenc}
 \usepackage[letterpaper]{geometry}
@@ -20,6 +21,9 @@
 \usepackage{noweb}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+% sweave commands for vignette
+%\VignetteIndexEntry{Tools for Two-Dimensional Monte-Carlo Simulations}
+%\VignettePackage{mc2d}
 
 \usepackage{babel}
 
@@ -149,7 +153,7 @@ obtained from the $N_{u}$ estimates of each of the 101 percentiles.
 %
 \begin{figure}
 \noindent \begin{centering}
-\includegraphics[scale=0.5]{mc2dSaumon}
+\includegraphics[scale=0.5,bb = 0 0 200 100, draft, type=eps]{mc2dsaumon}
 \par\end{centering}
 
 \caption{\label{fig:Mc2d}Shematic Representation of a Two-Dimensional Monte-Carlo
@@ -369,7 +373,7 @@ section \ref{sec:Multivar}).
 %
 \begin{figure}
 \noindent \begin{centering}
-\includegraphics[scale=0.4]{Illustration}
+\includegraphics[scale=0.4,bb = 0 0 200 100, draft, type=eps]{Illustration}
 \par\end{centering}
 
 \caption{\label{fig:Structure}Structure of the various \texttt{mcnode} objects.}
