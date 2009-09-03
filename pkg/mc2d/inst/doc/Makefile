@@ -11,7 +11,7 @@ docmcEnglish.pdf : docmcEnglish.Rnw
 	$(TEXI2DVI) docmcEnglish.tex
 
 clean:
-	$(RM) Rplots*.eps Rplots*.pdf Rplots*.jpg docmcEnglish-*.eps docmcEnglish-*.pdf docmcEnglish-*.jpg *.aux *.log *.blg *.bbl *.brf *.out *.tex *.rel *.toc *.bib *~ auto
+	$(RM) Rplots*.eps Rplots*.pdf Rplots*.jpg docmcEnglish-*.eps docmcEnglish-*.pdf docmcEnglish-*.jpg *.aux *.log *.blg *.bbl *.brf *.out *.tex *.rel *.toc *.bib *.sty *~ auto
 
 allclean: 
-	$(RM) Rplots*.eps Rplots*.pdf Rplots*.jpg docmcEnglish-*.eps docmcEnglish-*.pdf docmcEnglish-*.jpg *.aux *.log *.blg *.bbl *.brf *.out *.tex *.rel *.toc *.bib *~ auto docmcEnglish.pdf
+	$(RM) Rplots*.eps Rplots*.pdf Rplots*.jpg docmcEnglish-*.eps docmcEnglish-*.pdf docmcEnglish-*.jpg *.aux *.log *.blg *.bbl *.brf *.out *.tex *.rel *.toc *.bib *.sty *~ auto docmcEnglish.pdf
