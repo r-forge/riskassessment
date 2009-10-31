@@ -5,16 +5,18 @@
 === short term ===
 
 1. Remove calls to options(digits) in the code and replace it by calls in the examples when necessary
+	done and todo										
 
 2. Change print.fitdist and print.fitdistcens in order to give an output ressembling to the one of fitdistr
 
 3. put spaces before and after affectations (x <- 3) to make codes easier to read
+	done in fitdist and mledist 
 
 4. Remove echo in mledist before submission to CRAN
 
 5. Change fitdistcens and mledistcens in the same way as fitdist and mledist
 
-6. Split summary.fitdist which is too long in two parts : summary and gof (for goodness-of-fit results)
+6. Split summary.fitdist and print.summary.fitdist which is too long in two parts : summary and gof (for goodness-of-fit results)
 
 7. Change plotdist to use plot(ecdf...)
 
@@ -27,23 +29,28 @@
 11. Add a which argument to plotdist (be careful, only two plots are possible for
 discrete distributions or when there is only data in the arguments)
 
+12. Split summary.fitdist in two parts : summary.fitdist and print.summary.fitdist
+	done
+
 
 
 === long term ===
 
 1. Enable to enter complete names of distributions as in fitdistr
 
-2. Split summary.fitdist in two parts : summary.fitdist and print.summary.fitdist
-
-3. Examine how it is possible to replace plotdist by plot.fitdist 
+2. Examine how it is possible to replace plotdist by plot.fitdist 
 (not so simple as plotdist was written also to plot an observed distribution,
 but it could be be splitted in two parts)
 
-4. Try to do only one fonction for bootstrap that could be called with on the output of fitdist or fitdistcens
+3. Try to do only one fonction for bootstrap that could be called with on the output of fitdist or fitdistcens
 
-5. Try to gather mledist and mledistcens
+4. Try to gather mledist and mledistcens
 
-6. Decide if it is possible and desirable to gather fitdist and fitdistcens
+5. Decide if it is possible and desirable to gather fitdist and fitdistcens
 
-7. Add other gof graphs and stats for fits on censored data (Turnbull, ...).
+6. Add other gof graphs and stats for fits on censored data (Turnbull, ...).
 Ask to JBD who seemed to have ideas
+
+7. Improve moment matching estimation with numerical optimization
+
+8. Start quantile matching estimation
