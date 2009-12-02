@@ -14,7 +14,8 @@
 
 4. Remove echo in mledist before submission to CRAN
 
-5. Change fitdistcens and mledistcens in the same way as fitdist and mledist
+5. Change fitdistcens and mledistcens in the same way as fitdist and mledist (almost done by gathering mledist and mledistcens
+but there is still some work to do on examples with custom function and censored data)
 
 6. Split summary.fitdist and print.summary.fitdist which is too long in two parts : summary and gof (for goodness-of-fit results)
 
@@ -43,8 +44,6 @@ discrete distributions or when there is only data in the arguments)
 but it could be be splitted in two parts)
 
 3. Try to do only one fonction for bootstrap that could be called with on the output of fitdist or fitdistcens
-
-4. Try to gather mledist and mledistcens
 
 5. Decide if it is possible and desirable to gather fitdist and fitdistcens
 
