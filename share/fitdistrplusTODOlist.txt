@@ -16,27 +16,31 @@
    done
 
 5. Change fitdistcens and mledistcens in the same way as fitdist and mledist 
-done by gathering mledist and mledistcens
-and adding new examples with optim.function or custom function for censored data)
+   done by gathering mledist and mledistcens
+   and adding new examples with optim.function or custom function for censored data)
 
-6. Split summary.fitdist and print.summary.fitdist which is too long in two parts : summary and gof (for goodness-of-fit results)
+6. Split summary.fitdist and print.summary.fitdist which is too long in two parts : 
+   summary and gof (for goodness-of-fit results)
 
 7. Change plotdist to use plot(ecdf...)
 
 8. Try not to cut the density plot
+   done
 
 9. Draw the observed point in color in descdist
 
 10. Add an argument in descdist not to plot the Cullen and Frey graph as in boxplot
 
 11. Add a which argument to plotdist (be careful, only two plots are possible for
-discrete distributions or when there is only data in the arguments)
+    discrete distributions or when there is only data in the arguments)
 
 12. Split summary.fitdist in two parts : summary.fitdist and print.summary.fitdist
     done but to STILL TO DO for fitdistcens, bootdist and bootdistcens
     
 13. Check the values in the data set for censored data to reject a left value greater than a right value
 
+14. Add a part on how to change le algorithm used to maximize the likelihood in the vignette
+    done
 
 
 === long term ===
