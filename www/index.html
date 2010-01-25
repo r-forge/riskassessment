@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
   <title>riskassessment</title>
-  <meta name="generator" content="Amaya, see http://www.w3.org/Amaya/" />
+  <meta name="generator" content="Amaya, see http://www.w3.org/Amaya/">
   <style type="text/css" title="Amaya theme">
 /* Modern style for Amaya Editor Lite */
 
@@ -163,120 +162,108 @@ a[href] {
 /* end */
   </style>
 </head>
-
-<body style="line-height:2em;">
-
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<body style="line-height: 2em;">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tbody>
     <tr>
       <td><a href="/"><img
-        src="http://r-forge.r-project.org/themes/rforge/images/logo.png"
-        alt="R-Forge Logo" border="0" /> </a> </td>
+ src="http://r-forge.r-project.org/themes/rforge/images/logo.png"
+ alt="R-Forge Logo" border="0"> </a> </td>
     </tr>
   </tbody>
 </table>
-
 <h1><span>Welcome to the Project "Risk Assessment with R" !</span></h1>
-
 <p>This R-Forge project was first developed to help the administrators <a
-href="mailto:ml.delignette@vet-lyon.fr">Marie-Laure Delignette Muller</a>, <a
-href="mailto:Jean-Baptiste.Denis@jouy.inra.fr">Jean-Baptiste Denis</a> and <a
-href="mailto:rpouillot@yahoo.fr">Regis Pouillot</a> to share elements from the
+ href="mailto:ml.delignette@vet-lyon.fr">Marie-Laure Delignette Muller</a>,
+<a href="mailto:Jean-Baptiste.Denis@jouy.inra.fr">Jean-Baptiste Denis</a>
+and <a href="mailto:rpouillot@yahoo.fr">Regis Pouillot</a> to share
+elements from the
 three R packages they are building, "<span
-style="font-family: Courier New,Courier,monospace;">fitdistrplus"</span>, <span
-style="font-family: Courier New,Courier,monospace;">"mc2d"</span> and <span
-style="font-family: Courier New,Courier,monospace;">"rebastaba"</span>. </p>
-
-<p>These packages are developed in the aim to help risk assessors to build and
-study their models using Monte-Carlo simulations with R.</p>
-
-<h2><span
-style="font-family: Courier New,Courier,monospace;">fitdistrplus</span>:
-Specification of a Parametric Distribution from Data </h2>
-
-<p>&ldquo;<span
-style="font-family: Courier New,Courier,monospace;">fitdistrplus</span>&rdquo;
-is a set of functions specifically written: </p>
-<ul>
-  <li>to help to choose the best parametric distribution that fits a given
-    dataset;</li>
-  <li>for a given distribution, to estimate the parameters using the maximum
-    likelihood method or the method of matching moments and provide graphs and
-    statistics to assess the fit. Specific functions were written for censored
-    data (right- left- and interval-censored);</li>
-  <li>for a fitted distribution, to simulate the uncertainty in the estimated
-    parameters by parametric or nonparametric bootstrap resampling.</li>
-</ul>
-
-<p>Get the <a name="vignette" id="vignette" href="fitdistrplusE.pdf">vignette
-(.pdf)</a></p>
-
-<p>Get the <a href="fitdistrplus.pdf">reference manual (.pdf)</a></p>
-
-<p>A stable version (Version: 0.1-1 | 2009-02-04 | Rev.: 36) is now available
-on <strong>CRAN</strong> <a
-href="http://cran.at.r-project.org/web/packages/fitdistrplus/index.html">here</a>!
+ style="font-family: Courier New,Courier,monospace;">fitdistrplus"</span>,
+<span style="font-family: Courier New,Courier,monospace;">"mc2d"</span>
+and <span style="font-family: Courier New,Courier,monospace;">"rebastaba"</span>.
 </p>
-
+<p>These packages are developed in the aim to help risk assessors to
+build and
+study their models using Monte-Carlo simulations with R.</p>
+<h2><span style="font-family: Courier New,Courier,monospace;">fitdistrplus</span>:
+Specification
+of a Parametric Distribution from Data </h2>
+<p>&#8220;<span style="font-family: Courier New,Courier,monospace;">fitdistrplus</span>&#8221;
+is
+a set of functions specifically written: </p>
+<ul>
+  <li>to help to choose the best parametric distribution that fits a
+given dataset;</li>
+  <li>for a given distribution, to estimate the parameters using the
+maximum likelihood method or the method of matching moments and provide
+graphs and statistics to assess the fit. Specific functions were
+written for censored data (right- left- and interval-censored);</li>
+  <li>for a fitted distribution, to simulate the uncertainty in the
+estimated parameters by parametric or nonparametric bootstrap
+resampling.</li>
+</ul>
+<p>Get the <a name="vignette" id="vignette"
+ href="intro2fitdistrplus.pdf">vignette
+(.pdf)</a></p>
+<p>Get the <a href="fitdistrplus.pdf">reference manual (.pdf)</a></p>
+<p>A new stable version (Version: 0.1-2 | 2009-12-29 | Rev.: 81) is
+available
+on <strong>CRAN</strong> <a
+ href="http://cran.at.r-project.org/web/packages/fitdistrplus/index.html">here</a>!
+</p>
 <h2><span style="font-family: Courier New,Courier,monospace;">mc2d</span>:
-Tools for Two-Dimensional Monte-Carlo Simulations</h2>
-
-<p>"<span style="font-family: Courier New,Courier,monospace;">mc2d</span>" is a
+Tools
+for Two-Dimensional Monte-Carlo Simulations</h2>
+<p>"<span style="font-family: Courier New,Courier,monospace;">mc2d</span>"
+is a
 set of functions specially written to:</p>
 <ul>
-  <li>provide additional distributions: Bernoulli, triangular, PERT, discrete
-    empirical, generalized beta, (vectorized) multi-normal, (vectorized)
-    Dirichlet, (vectorized) multinomial;</li>
-  <li>provide tools to build correlation structure between parameters: using
-    the Iman &amp; Conover (1982) method, possibly on more than two
-  parameters;</li>
-  <li>provide tools to build models: the package transfers easily variability
-    and uncertainty along a mathematical model;</li>
-  <li>provide tools to study the model: through ad-hoc summaries and graphics,
-    sensitivity analyses (rank correlation on the variability or the
-    uncertainty dimension), etc.</li>
+  <li>provide additional distributions: Bernoulli, triangular, PERT,
+discrete empirical, generalized beta, (vectorized) multi-normal,
+(vectorized) Dirichlet, (vectorized) multinomial;</li>
+  <li>provide tools to build correlation structure between parameters:
+using the Iman &amp; Conover (1982) method, possibly on more than two
+parameters;</li>
+  <li>provide tools to build models: the package transfers easily
+variability and uncertainty along a mathematical model;</li>
+  <li>provide tools to study the model: through ad-hoc summaries and
+graphics, sensitivity analyses (rank correlation on the variability or
+the uncertainty dimension), etc.</li>
 </ul>
-
 <p>Get the <a name="vignette1" id="vignette1" href="docmcEnglish.pdf">vignette
 (.pdf)</a></p>
-
 <p>Get the <a href="mc2d.pdf">reference manual (.pdf)</a></p>
-
-<p>Get a "stable" Beta version (Version 0.1-5, April 4th 2009, Rev 45): </p>
+<p>Get a "stable" Beta version (Version 0.1-5, April 4th 2009, Rev 45):
+</p>
 <ul>
   <li><a href="mc2d_0.1-5.tar.gz">Package source (.tar.gz)</a></li>
   <li><a href="mc2d_0.1-5.zip">Windows binary (.zip)</a></li>
   <li><a href="mc2d_0.1-5.gz">MacOS X universal (.tgz)</a></li>
 </ul>
-
 <p><strong>This package is a Beta version and come with absolutly no
 warranty!!! </strong></p>
-
-<h2><span style="font-family: Arial,Helvetica,sans-serif"><span
-style="font-size: 15pt"><span style="color:#808000"><span
-style="color:#000080">Coming soon: </span></span></span></span></h2>
-
+<h2><span style="font-family: Arial,Helvetica,sans-serif;"><span
+ style="font-size: 15pt;"><span style="color: rgb(128, 128, 0);"><span
+ style="color: rgb(0, 0, 128);">Coming soon: </span></span></span></span></h2>
 <h2><span style="font-family: Courier New,Courier,monospace;">rebastaba</span>:
-Manipulation of Bayesian networks within R</h2>
-
+Manipulation
+of Bayesian networks within R</h2>
 <p>See <a
-href="http://w3.jouy.inra.fr/unites/miaj/public/matrisq/jbdenis/outils/welcome.html">here</a>
+ href="http://w3.jouy.inra.fr/unites/miaj/public/matrisq/jbdenis/outils/welcome.html">here</a>
 for further details. </p>
-
 <p><a
-href="http://w3.jouy.inra.fr/unites/miaj/public/matrisq/jbdenis/outils/welcome.html"></a>
+ href="http://w3.jouy.inra.fr/unites/miaj/public/matrisq/jbdenis/outils/welcome.html"></a>
 </p>
-
 <p><strong>Feel free to join this project to:</strong></p>
 <ul>
   <li>Test the packages;</li>
   <li>Develop new functions within the packages;</li>
   <li>Develop and post new R packages in the Risk Assessment domain ...</li>
 </ul>
-
-<p><a href="https://r-forge.r-project.org/projects/riskassessment/">Back to the
+<p><a href="https://r-forge.r-project.org/projects/riskassessment/">Back
+to the
 project</a></p>
-
 <p></p>
 </body>
 </html>
