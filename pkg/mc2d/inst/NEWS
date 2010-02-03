@@ -5,6 +5,7 @@ Version 0.1-7
 
 BUG FIXES
 
+- vignette
 - lhs: could bug when sent without default distribution. Now, distr="runif" by default.
 - lhs: nsv=ndvar and nsu = ndunc by default
 
