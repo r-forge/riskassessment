@@ -4,6 +4,8 @@
 %%%         Sweave vignette file
 %%%
 
+
+
 \documentclass[10pt, english]{article}
 
 %\usepackage[letterpaper]{geometry}
@@ -11,6 +13,7 @@
 \usepackage[latin9]{inputenc}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage[scale=0.8, centering]{geometry}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 % sweave commands for vignette
@@ -22,6 +25,7 @@
 \author{R. POUILLOT, M.-L. DELIGNETTE-MULLER, D.L. KELLY \& J.-B. DENIS}
 
 \begin{document}
+
 \maketitle
 
 This documentation is intended for readers with:
@@ -1203,7 +1207,7 @@ hist(inca, xlab="l/day",freq=FALSE,main="")
 
 %true
 <<Crypto3, echo=true, eval=true>>=
-ndvar(1001);ndunc(1001)
+ndvar(1001);ndunc(101)
 mcstoc(rempiricalD,type="V",values=inca)
 @
 

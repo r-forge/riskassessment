@@ -2,7 +2,6 @@
 \alias{plot.mc}
 \alias{plot.mcnode}
 \alias{plot.plotmc}
-\alias{plot.mccut}
 \title{
 Plots Results of a Monte Carlo Simulation
 }
@@ -13,13 +12,11 @@ empirical cumulative distribution function of the estimate of a
 \samp{mcnode} or \samp{mc} object ("U" and "VU" nodes).
 }
 \usage{
-\method{plot}{mc}(x, prec=0.01, stat=c("median", "mean"), lim=c(0.025, 0.975),
-	  na.rm=TRUE, griddim=NULL, xlab=NULL, ylab="Fn(x)", main="",
-	  draw=TRUE, ...)
+\method{plot}{mc}(x, prec=0.001, stat=c("median", "mean"), lim=c(0.025, 0.25, 0.75,
+	  0.975), na.rm=TRUE, griddim=NULL, xlab=NULL, ylab="Fn(x)",
+	  main="", draw=TRUE, paint=TRUE, ...)
 \method{plot}{mcnode}(x, ...)
 \method{plot}{plotmc}(x, ...)
-\method{plot}{mccut}(x, stat=c("median", "mean"), lim=c(0.025, 0.975), griddim=NULL,
-	  xlab=names(x), ylab="Fn(x)", main="", draw=TRUE, ...)
 }
 \examples{
 data(total)
@@ -27,13 +24,11 @@ plot(xVUM3)
 plot(total)
 
 
-
 }
 \arguments{
 \item{x}{a \samp{mcnode} or a \samp{mc} objects}
-\item{prec}{the precision of the plot. 0.01 will provide an ecdf from
-the 0.00, 0.01, .02, ..., 1.00 quantiles, 0.001 will provide a 0.000,
-0.001, 0.002, ..., 1.000 quantiles,... }
+\item{prec}{the precision of the plot. 0.001 will provide an ecdf
+from the 0.000, 0.001, .002, ..., 1.000 quantiles.}
 \item{stat}{the function used for estimates (2D \samp{mc} or
 \samp{mcnode}). By default the median.}
 \item{lim}{a vector of numbers (between 0 and 1) indicating the
@@ -48,7 +43,8 @@ name of the node.}
 \item{ylab}{vector of labels for the y-axis.}
 \item{main}{vector of main titles of the graph.}
 \item{draw}{Should the plot be drawn?}
-\item{\dots}{further arguments to be passed to \samp{plot.ecdf}.}
+\item{paint}{Should the enveloppes be filled?}
+\item{\dots}{further arguments to be passed to \samp{plot.stepfun}.}
 }
 \details{
 \samp{plot.mcnode} is a user-friendly function that send the
