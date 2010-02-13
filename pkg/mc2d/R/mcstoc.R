@@ -218,17 +218,18 @@ mcstoc <- function(func=runif, type=c("V","U","VU","0"), ..., nsv=ndvar(), nsu=n
 
        func <- function(...){
           argsd <- list(...)
-          linf <- argsd$linf
-          lsup <- argsd$lsup
-          if(any(pmin(linf,lsup) != linf)) stop("linf should be <= lsup")  #not min since vectors should be recycled
           nnfin <- argsd[[nsample]]
+          linf <- if(length(argsd$linf) <= nnfin) argsd$linf else rep(argsd$linf, length.out=nnfin)      # solve a problem when linf was multivariate
+          lsup <- if(length(argsd$lsup) <= nnfin) argsd$lsup else rep(argsd$lsup, length.out=nnfin)      # solve a problem when linf was multivariate
+          if(any(pmin(linf,lsup) != linf)) stop("linf should be <= lsup")  #not min since vectors should be recycled
           argsd$linf <- argsd$lsup <- argsd[[nsample]] <- NULL
           
           pinf <- do.call(pfun,c(list(q=linf),argsd),quote=TRUE)
           psup <- do.call(pfun,c(list(q=lsup),argsd),quote=TRUE)
+           
 
           if(!lhs) lesp <- runif(nnfin,min=pinf,max=psup)
-          else     lesp <- lhs(distr="runif",nsv=dimf[1],nsu=dimf[2], nvariates=dimf[3], min=pinf,max=psup) 
+          else     lesp <- lhs(distr="runif",nsv=dimf[1],nsu=dimf[2], nvariates=dimf[3], min=pinf, max=psup) 
 
           data <- do.call(qfun,c(list(p=lesp),argsd))
           data[pinf==0 & data > lsup] <- NaN          #ex: rtrunc("lnorm",10,linf=-2,lsup=-1)
@@ -236,7 +237,7 @@ mcstoc <- function(func=runif, type=c("V","U","VU","0"), ..., nsv=ndvar(), nsu=n
           data[is.na(linf) | is.na(lsup)] <- NaN      #ex: rtrunc("norm",10,sd=-2)
           return(data)}
     }
-    else func <- function(...) {                    # LHS only
+    else func <- function(...) {                      # LHS only
           argsd <- list(...)
           argsd[[nsample]] <- NULL
           lesp <- lhs(distr="runif",nsv=dimf[1],nsu=dimf[2],nvariates=dimf[3],min=0,max=1)
@@ -247,14 +248,14 @@ mcstoc <- function(func=runif, type=c("V","U","VU","0"), ..., nsv=ndvar(), nsu=n
     if(largsd != 0) argsdtest <- mapply(function(x,typemc){
                             if(is.null(typemc)) return(unclass(x))
                             if(is.matrix(x)) return(x[1,,drop=FALSE])
-                            return(x[1])},argsd,typemc,SIMPLIFY=FALSE)
+                            return(x[1])},argsd, typemc, SIMPLIFY=FALSE)
       else argsdtest <- vector(mode="list",length=0)
     argsdtest[[nsample]] <- 1
     dimf <- c(1,1,1)
     data <- do.call(func,argsdtest,quote=TRUE)
     l <- length(data)
-    if(l==nvariates) dimf <- c(nsv,nsu,1)
-        else if(l==1) dimf <- c(nsv,nsu,nvariates)
+    if(l==nvariates) dimf <- c(nsv,nsu,1)                                       # If it returns a vector
+        else if(l==1) dimf <- c(nsv,nsu,nvariates)                              # if it returns a number
           else stop("the function should return a vector of size 1 or nvariates if",nsample,"=1")
     }
 
