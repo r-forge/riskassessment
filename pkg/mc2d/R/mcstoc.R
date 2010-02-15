@@ -25,7 +25,7 @@ mcstoc <- function(func=runif, type=c("V","U","VU","0"), ..., nsv=ndvar(), nsu=n
 #{seed}<<The random seed used for the evaluation. If \samp{NULL} the \samp{seed} is unchanged.>>
 #{rtrunc}<<Should the distribution be truncated? See \code{\link{rtrunc}}.>>
 #{linf}<<If truncated: lower limit. May be a scalar, an array or a mcnode.>>
-#{lsup}<<If truncated: upper limit. May be a scalar, an array or a mcnode.>>
+#{lsup}<<If truncated: upper limit. May be a scalar, an array or a mcnode. \samp{lsup} should be pairwise strictly greater then \samp{linf}>>
 #{lhs}<<Should a Random Latin Hypercube Sampling be used? see \code{\link{lhs}}>>
 #VALUE
 #An \samp{mcnode} object.
@@ -61,7 +61,7 @@ mcstoc <- function(func=runif, type=c("V","U","VU","0"), ..., nsv=ndvar(), nsu=n
 #See examples.
 #
 #\samp{trunc=TRUE} is valid for univariates distributions only.
-#The distribution will be truncated on \samp{[linf, lsup]}.
+#The distribution will be truncated on \samp{(linf, lsup]}.
 #The function 'func' should have a 'q' form (with first argument 'p') and a 'p' form, as
 #all current random generator of the \samp{stats} library.
 #Example : 'rnorm' (has a 'qnorm' and a 'pnorm' form), 'rbeta', 'rbinom', 'rgamma', ...
@@ -221,9 +221,10 @@ mcstoc <- function(func=runif, type=c("V","U","VU","0"), ..., nsv=ndvar(), nsu=n
           nnfin <- argsd[[nsample]]
           linf <- if(length(argsd$linf) <= nnfin) argsd$linf else rep(argsd$linf, length.out=nnfin)      # solve a problem when linf was multivariate
           lsup <- if(length(argsd$lsup) <= nnfin) argsd$lsup else rep(argsd$lsup, length.out=nnfin)      # solve a problem when linf was multivariate
-          if(any(pmin(linf,lsup) != linf)) stop("linf should be <= lsup")  #not min since vectors should be recycled
+          lmax <- max(length(linf),length(lsup))
+          if(any(rep(linf, length.out = lmax) >= rep(lsup, length.out = lmax))) stop("linf should be < lsup")  #recycle vectors
           argsd$linf <- argsd$lsup <- argsd[[nsample]] <- NULL
-          
+        
           pinf <- do.call(pfun,c(list(q=linf),argsd),quote=TRUE)
           psup <- do.call(pfun,c(list(q=lsup),argsd),quote=TRUE)
            
@@ -244,7 +245,7 @@ mcstoc <- function(func=runif, type=c("V","U","VU","0"), ..., nsv=ndvar(), nsu=n
           return(do.call(qfun,c(list(p=lesp),argsd)))}
   }
 
-  if(nvariates!=1){                                                 # do a try to test the length if nvariates != 1
+  if(nvariates != 1){                                                 # do a try to test the length if nvariates != 1
     if(largsd != 0) argsdtest <- mapply(function(x,typemc){
                             if(is.null(typemc)) return(unclass(x))
                             if(is.matrix(x)) return(x[1,,drop=FALSE])
