@@ -1,6 +1,7 @@
 \name{mcnode}
 \alias{mcnode}
 \alias{mcdata}
+\alias{mcdatanocontrol}
 \title{
 Build mcnode Objects from Data or other mcnode Objects
 }
@@ -10,6 +11,8 @@ Creates a \samp{mcnode} object from a vector, an array or a
 }
 \usage{
 mcdata(data, type=c("V", "U", "VU", "0"), nsv=ndvar(), nsu=ndunc(),
+	  nvariates=1, outm="each")
+mcdatanocontrol(data, type=c("V", "U", "VU", "0"), nsv=ndvar(), nsu=ndunc(),
 	  nvariates=1, outm="each")
 }
 \examples{
@@ -89,6 +92,7 @@ mcdata(xVUM, type="VU", nvariates=2)
 
 ndvar(oldvar)
 ndunc(oldunc)
+
 }
 \arguments{
 \item{data}{The numeric/logical vector/matrix/array of data or the
@@ -186,6 +190,10 @@ node of dimension \samp{(nsv x nsu x nvariates)} or of dimension
 \samp{(1 x 1 x nvariates)} or \samp{(1 x 1 x 1)} (recycling on
 variates).}
 }
+\samp{mcdatanocontrol} is a dangerous version of \samp{mcnode} which
+forces the dimension of data to be \samp{(nsv x nsu x nvariates)} and
+gives the atributes and the class without any control. This function
+is useful when your model is tested since it is much more quicker.
 }
 \value{
 An \samp{mcnode} object.

@@ -82,8 +82,9 @@ mcratio <- function(x, pcentral = .5, pvar = .975, punc = .975, na.rm=FALSE)
     if(is.list(x)) return(lapply(x,LESSTAT,prob=prob,wdim=wdim))
     return(apply(x,wdim,quantile,prob = prob,na.rm=na.rm))    
         }
-  res   <- mapply(LESSTAT, x,  MoreArgs = list(prob=c(central,percvar), wdim=2),SIMPLIFY=FALSE)
-  res   <- mapply(LESSTAT, res,MoreArgs = list(prob=c(central,percunc), wdim=1),SIMPLIFY=FALSE)
+        
+  res   <- mapply(LESSTAT, x,  MoreArgs = list(prob=c(pcentral,pvar), wdim=2),SIMPLIFY=FALSE)
+  res   <- mapply(LESSTAT, res,MoreArgs = list(prob=c(pcentral,punc), wdim=1),SIMPLIFY=FALSE)
 
   LESRATIOS <- function(x){
     if(is.list(x)) return(lapply(x,LESRATIOS))

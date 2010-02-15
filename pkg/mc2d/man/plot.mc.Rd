@@ -2,6 +2,7 @@
 \alias{plot.mc}
 \alias{plot.mcnode}
 \alias{plot.plotmc}
+\alias{plot.mccut}
 \title{
 Plots Results of a Monte Carlo Simulation
 }
@@ -17,11 +18,14 @@ empirical cumulative distribution function of the estimate of a
 	  main="", draw=TRUE, paint=TRUE, ...)
 \method{plot}{mcnode}(x, ...)
 \method{plot}{plotmc}(x, ...)
+\method{plot}{mccut}(x, stat=c("median", "mean"), lim=c(0.025, 0.975), griddim=NULL,
+	  xlab=names(x), ylab="Fn(x)", main="", draw=TRUE, ...)
 }
 \examples{
 data(total)
 plot(xVUM3)
 plot(total)
+
 
 
 }

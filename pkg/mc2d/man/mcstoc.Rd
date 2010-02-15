@@ -119,7 +119,8 @@ the \samp{seed} is unchanged.}
 \item{linf}{If truncated: lower limit. May be a scalar, an array or a
 mcnode.}
 \item{lsup}{If truncated: upper limit. May be a scalar, an array or a
-mcnode.}
+mcnode. \samp{lsup} should be pairwise strictly greater then
+\samp{linf}}
 \item{lhs}{Should a Random Latin Hypercube Sampling be used? see
 \code{\link{lhs}}}
 }
@@ -171,7 +172,7 @@ and \samp{prob} vectors and/or multivariate nodes and return a a
 univariate or a multivariate node. See examples.
 
 \samp{trunc=TRUE} is valid for univariates distributions only. The
-distribution will be truncated on \samp{[linf, lsup]}. The function
+distribution will be truncated on \samp{(linf, lsup]}. The function
 'func' should have a 'q' form (with first argument 'p') and a 'p'
 form, as all current random generator of the \samp{stats} library.
 Example : 'rnorm' (has a 'qnorm' and a 'pnorm' form), 'rbeta',
