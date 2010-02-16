@@ -1,7 +1,7 @@
 \name{geom3xyz2pol}
 \alias{geom3xyz2pol}
 \title{
-(f0) transforms cartesian coordinates in polar coordinates
+(00) transforms cartesian coordinates in polar coordinates
 }
 \description{
 Transforms, into R to three, cartesian coordinates in polar

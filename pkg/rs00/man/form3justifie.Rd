@@ -1,7 +1,7 @@
 \name{form3justifie}
 \alias{form3justifie}
 \title{
-(f0) formats a character string
+(00) formats a character string
 }
 \description{
 The aim of this function is to produce aligned columns lists while

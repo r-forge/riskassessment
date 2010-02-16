@@ -1,7 +1,7 @@
 \name{isempty}
 \alias{isempty}
 \title{
-(f0) to avoid difficulty with is.null
+(00) to avoid difficulty with is.null
 }
 \description{
 returns TRUE is the structure is empty
@@ -10,9 +10,10 @@ returns TRUE is the structure is empty
 isempty(x)
 }
 \examples{
+ rs003k("RESET"); # needed only for R checking, to be forgotten
  isempty(numeric(0));
  isempty(NULL);
- isempty(rbsb3k("nfa"));
+ isempty(rbsb.fau0);
 }
 \arguments{
 \item{x}{object to be scrutinazed}

@@ -1,7 +1,7 @@
 \name{form3liste}
 \alias{form3liste}
 \title{
-(f0) returns the formatted list of a series of names or whatever
+(00) formats a series of names or whatever
 }
 \description{
 returns a scalar character of the names surrounded by any kind of

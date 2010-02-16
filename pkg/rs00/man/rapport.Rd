@@ -1,7 +1,7 @@
 \name{rapport}
 \alias{rapport}
 \title{
-(f0) issues an error message when rebastaba fails
+(00) issues an error message when rebastaba fails
 }
 \description{
 Ask the user to send the author a detailed report.

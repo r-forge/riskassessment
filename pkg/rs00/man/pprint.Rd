@@ -1,7 +1,7 @@
 \name{pprint}
 \alias{pprint}
 \title{
-(f0) double print at the screen and into a text file
+(00) double print at the screen and into a text file
 }
 \description{
 Just doing a double printing (i) on the screen and (ii) appending to

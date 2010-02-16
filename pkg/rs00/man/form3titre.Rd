@@ -1,7 +1,7 @@
 \name{form3titre}
 \alias{form3titre}
 \title{
-(f0) prints or prepares a title
+(00) prints or prepares a title
 }
 \description{
 prints a character string "tit" with more or less emphasis

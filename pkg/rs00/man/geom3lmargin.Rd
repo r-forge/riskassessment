@@ -1,7 +1,7 @@
 \name{geom3lmargin}
 \alias{geom3lmargin}
 \title{
-(f0) adds some padding to a range
+(00) adds some padding to a range
 }
 \description{
 Used for the preparation of graphic outputs: the range of 'x' is

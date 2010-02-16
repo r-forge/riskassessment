@@ -1,7 +1,7 @@
 \name{form3decadre}
 \alias{form3decadre}
 \title{
-(f0) remove character before and after a character string
+(00) remove character before and after a character string
 }
 \description{
 remove 'bef's before and 'aft's after a character string.

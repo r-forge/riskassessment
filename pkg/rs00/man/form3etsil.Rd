@@ -1,7 +1,7 @@
 \name{form3etsil}
 \alias{form3etsil}
 \title{
-(f0) inverse function of form3liste or whatever
+(00) inverse function of form3liste or whatever
 }
 \description{
 returns a vector character of the names from a character string

@@ -1,7 +1,7 @@
 \name{form3encadre}
 \alias{form3encadre}
 \title{
-(f0) surrounds a character string
+(00) surrounds a character string
 }
 \description{
 Adds before and after some characters to a character string

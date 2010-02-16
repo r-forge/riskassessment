@@ -1,7 +1,7 @@
 \name{unex}
 \alias{unex}
 \title{
-(f1) collapsing indices
+(00) collapsing indices
 }
 \description{
 Transforms multiple indices into a unique index following the storage
@@ -11,7 +11,8 @@ order of array elements by R.
 unex(xv, di, check=TRUE)
 }
 \examples{
- uu <- data.frame(F1=factor(rep(1:3, each=4)), F2=factor(rep(1:4, 3)));
+ rs003k("RESET"); # needed only for R checking, to be forgotten
+ uu <- rbsb.dfr1;
  print(cbind(uu, unex(uu, 3:4)));
 }
 \arguments{

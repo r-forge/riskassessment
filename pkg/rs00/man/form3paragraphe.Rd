@@ -1,7 +1,7 @@
 \name{form3paragraphe}
 \alias{form3paragraphe}
 \title{
-(f0) prints or prepares paragraphes from a character vector. Each
+(00) prints or prepares paragraphes from a character vector. Each
 component is supposed to be a paragraph but the first one can be
 considered as a title.
 }
@@ -14,6 +14,7 @@ form3paragraphe(texte, titre=-1, wid=60, fli=NULL, sep=1, jus=1, tronc=TRUE, ed=
 	  ef="", imp=TRUE)
 }
 \examples{
+ rs003k("RESET"); # needed only for R checking, to be forgotten
  form3paragraphe(c("My Title", "My important first sentence.", "Last one!"));
 }
 \arguments{

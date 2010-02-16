@@ -1,7 +1,7 @@
 \name{print8des}
 \alias{print8des}
 \title{
-(f3) prints a des object
+(00) prints a des object
 }
 \description{
 This function prints in a interpreted way a /des/ object.
@@ -17,8 +17,8 @@ d=definition, o=origin, t=time, r=role, c=comments.}
 \item{empha}{(=1) Emphasize level of printing; between -2 and 5}
 }
 \details{
-Global constant rbsb3k("mwi") is used to justify the paragraphes. It
-is the generic print for /des/ objects.
+Global constant rbsb.mwi is used to justify the paragraphes. It is
+the generic print for /des/ objects.
 }
 \value{
 nothing but a print is performed

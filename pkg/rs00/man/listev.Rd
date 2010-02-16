@@ -1,7 +1,7 @@
 \name{listev}
 \alias{listev}
 \title{
-(f0) returns the ith element of a list supposed to be numeric
+(00) returns the ith element of a list supposed to be numeric
 }
 \description{
 as liste[[ith]] but returns numeric(0) if the length of the list is

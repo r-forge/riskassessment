@@ -1,7 +1,7 @@
 \name{form3file}
 \alias{form3file}
 \title{
-(f0) adds a character vector into a file
+(00) adds a character vector into a file
 }
 \description{
 The aim of this function is generate files from a character vector.

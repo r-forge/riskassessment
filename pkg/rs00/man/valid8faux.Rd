@@ -1,7 +1,7 @@
 \name{valid8faux}
 \alias{valid8faux}
 \title{
-(f3) checks a /faux/
+(00) checks a /faux/
 }
 \description{
 This function checks a /faux/ objects

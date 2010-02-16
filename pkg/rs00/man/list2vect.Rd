@@ -1,7 +1,7 @@
 \name{list2vect}
 \alias{list2vect}
 \title{
-(f0) transforms a list of scalars into a (named) vector
+(00) transforms a list of scalars into a (named) vector
 }
 \description{
 All components of the list are supposed to be scalars (if not a fatal
@@ -12,6 +12,7 @@ possible, NA is returned.
 list2vect(li, wh="C", name.rm=TRUE)
 }
 \examples{
+ rs003k("RESET"); # needed only for R checking, to be forgotten
  list2vect(list(a="AAA", b="BBB"));
 }
 \arguments{

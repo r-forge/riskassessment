@@ -1,7 +1,7 @@
 \name{pause}
 \alias{pause}
 \title{
-(f0) pauses the program until an answer is given
+(00) pauses the program until an answer is given
 }
 \description{
 This function issues a pause with a message allowing to stop the
@@ -11,6 +11,7 @@ process or to continue it.
 pause(what="", where=NULL)
 }
 \examples{
+ rs003k("RESET"); # needed only for R checking, to be forgotten
  pause("Time for lunch!");
 }
 \arguments{

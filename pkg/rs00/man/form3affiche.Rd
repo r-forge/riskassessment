@@ -1,7 +1,7 @@
 \name{form3affiche}
 \alias{form3affiche}
 \title{
-(f0) displays with its name the object x
+(00) displays with its name the object x
 }
 \description{
 everything is in the title
@@ -20,6 +20,6 @@ form3affiche(x, pau=FALSE, cat=FALSE, ...)
 \item{\dots}{possible arguments for the print function.}
 }
 \value{
-nothing but a print (or cat) is done
+a print (or cat) is done and x is returned
 }
 \keyword{print}

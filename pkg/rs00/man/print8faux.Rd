@@ -1,7 +1,7 @@
 \name{print8faux}
 \alias{print8faux}
 \title{
-(f0) prints a faux object
+(00) prints a faux object
 }
 \description{
 This function prints in a interpreted way a /faux/ object.
@@ -10,8 +10,8 @@ This function prints in a interpreted way a /faux/ object.
 print8faux(x, ..., print=1)
 }
 \examples{
- uu <- new("faux", orig="ici", defi="Fatal Error", comm=c("In fact it was a joke", "No error occurred!", "You must be relieved"));
- print(uu, print=2);
+ rs003k("RESET"); # needed only for R checking, to be forgotten
+ print(rbsb.fau1, print=2);
 }
 \arguments{
 \item{x}{The faux object to be printed.}
@@ -20,8 +20,8 @@ print8faux(x, ..., print=1)
 the origin and the definition 2= }
 }
 \details{
-Global constant rbsb3k("mwi") is used to justify the paragraphes. It
-is the generic print for /faux/ objects.
+Global constant rbsb.mwi is used to justify the paragraphes. It is
+the generic print for /faux/ objects.
 }
 \value{
 nothing but a print is performed

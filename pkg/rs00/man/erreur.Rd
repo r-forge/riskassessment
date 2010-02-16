@@ -1,20 +1,21 @@
 \name{erreur}
 \alias{erreur}
 \title{
-(f0) issues an error message and concludes accordingly
+(00) issues an error message and concludes accordingly
 }
 \description{
 when called this function prints x, then displays a message before
 stopping the process except if it is a warning or if the general
-constant of rebastaba rbsb3k("mfa") is true.
+constant of rebastaba rbsb.mfa is true.
 }
 \usage{
 erreur(x, ..., w=FALSE)
 }
 \examples{
- ## Not run:
+ rs003k("RESET"); # needed only for R checking, to be forgotten
+ erreur(matrix(1:4, 2), "This matrix is not symmetric", w=TRUE)
  erreur("Are you sure of it?", w=TRUE);
- ## End(Not run)
+
 }
 \arguments{
 \item{x}{object to be printed before the message. When NULL or "",
