@@ -1,7 +1,7 @@
 \name{sj}
 \alias{sj}
 \title{
-(f0) trick for loops
+(00) trick for loops
 }
 \description{
 returns 1:nb when nb \eqn{>}0 and numeric(0) otherwise. Quite useful

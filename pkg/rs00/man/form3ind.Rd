@@ -1,16 +1,17 @@
 \name{form3ind}
 \alias{form3ind}
 \title{
-(f0) provides indentation of different levels
+(00) provides indentation of different levels
 }
 \description{
-The level of indentation is given by \code{niv*rbsb3k("min")} times
-the character ele. When cr, a line feed is made at first.
+The level of indentation is given by \code{niv*rbsb.min} times the
+character ele. When cr, a line feed is made at first.
 }
 \usage{
 form3ind(niv=1, cr=TRUE, ele="")
 }
 \examples{
+ rs003k("RESET"); # needed only for R checking, to be forgotten
  cat(form3ind(2), "Bien `a vous", "\n");
 }
 \arguments{

@@ -1,7 +1,7 @@
 \name{expr3cobu}
 \alias{expr3cobu}
 \title{
-(f0) provides a suitable Bugs transcription for translation into Bugs
+(00) provides a suitable Bugs transcription for translation into Bugs
 language
 }
 \description{

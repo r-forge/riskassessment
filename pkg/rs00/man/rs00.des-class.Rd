@@ -12,7 +12,7 @@ Objects can be created by calls of the form \code{new("des",name="myobject")}.
 }
 \section{Slots}{
 	 \describe{
-    \item{\code{name}:}{Object of class \code{"character"}  name of the object being described. It must be a scalar. It is the only compulsory slots, the other one can \code{character(0)}. }
+    \item{\code{name}:}{Object of class \code{"character"}  name of the object being described. It must be a scalar. It is the only compulsory slots, the other ones can be \code{character(0)}. }
     \item{\code{orig}:}{Object of class \code{"character"} scalar giving the origin  }
     \item{\code{time}:}{Object of class \code{"character"} scalar giving the time of creation/modification }
     \item{\code{defi}:}{Object of class \code{"character"} scalar giving the definition }
@@ -22,10 +22,10 @@ Objects can be created by calls of the form \code{new("des",name="myobject")}.
 }
 \section{Methods}{
   \describe{
-    \item{print:}{ see \code{print.des} for more details. }
+    \item{print:}{ see \code{print8des} for the details. }
          }
 }
-\references{ ~put references to the literature/web site here ~ }
+
 \author{ Jean-Baptiste Denis }
 \note{ ~~further notes~~ }
 

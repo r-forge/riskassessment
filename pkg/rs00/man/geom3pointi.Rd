@@ -1,7 +1,7 @@
 \name{geom3pointi}
 \alias{geom3pointi}
 \title{
-(f0) interpolation in R to the 2
+(00) interpolation in R to the 2
 }
 \description{
 Interpolation in the plane: given two points p0=(x0,y0) and

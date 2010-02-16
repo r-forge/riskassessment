@@ -1,7 +1,7 @@
 \name{var3standard}
 \alias{var3standard}
 \title{
-(f0) provides nvar standard names of variables
+(00) provides nvar standard names of variables
 }
 \description{
 numbering surrounded with 'bef' and 'aft'
@@ -10,6 +10,7 @@ numbering surrounded with 'bef' and 'aft'
 var3standard(nvar, bef="-", aft="-")
 }
 \examples{
+ rs003k("RESET"); # needed only for R checking, to be forgotten
  var3standard(5);
 }
 \arguments{

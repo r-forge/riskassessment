@@ -1,7 +1,7 @@
 \name{depeche}
 \alias{depeche}
 \title{
-(f0) issues a message on the screen [and returns the answer]
+(00) issues a message on the screen [and returns the answer]
 }
 \description{
 This function issues a message and pause if an answer is required.

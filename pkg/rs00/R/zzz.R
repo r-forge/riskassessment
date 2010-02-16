@@ -1,3 +1,4 @@
 .First.lib <- function(libname, pkgname) {
-    rbsb3k(whi="*",wha="std");
+    # creating the constant for the rs00 package
+    rs003k("reset");
 }

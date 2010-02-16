@@ -1,7 +1,7 @@
 \name{read8list}
 \alias{read8list}
 \title{
-(f0) read a list of lists of characters from a file
+(00) read a list of lists of characters from a file
 }
 \description{
 read from 'file' a list of sublists, each being a character vector.

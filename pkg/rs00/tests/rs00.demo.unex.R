@@ -1,4 +1,13 @@
-# script test for the file management functions of rs00
+#
+# This was added by paquet.pl (version 0.04) (beginning)
+#
+library("rs00");
+#
+# This was added by paquet.pl (version 0.04) (end)
+#
+chemin <- searchpaths()[grep("rs00",searchpaths())];
+chemin <- paste(chemin,"/files/",sep="");
+# script test for unex
 # 
 # 09_09_22 09_09_28 09_09_29
 #

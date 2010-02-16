@@ -1,7 +1,7 @@
 \name{form3repete}
 \alias{form3repete}
 \title{
-(f0) prints a repeated given string
+(00) prints a repeated given string
 }
 \description{
 Without adding breaking line characters, prints "nb" times a given

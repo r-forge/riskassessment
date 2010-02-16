@@ -1,7 +1,7 @@
 \name{sjl}
 \alias{sjl}
 \title{
-(f0) trick for loops
+(00) trick for loops
 }
 \description{
 returns 1:length(x) when length(x) \eqn{>}0 and numeric(0) otherwise.

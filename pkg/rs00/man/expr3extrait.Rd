@@ -1,7 +1,7 @@
 \name{expr3extrait}
 \alias{expr3extrait}
 \title{
-(f0) extracts the contents of parentheses from a character
+(00) extracts the contents of parentheses from a character
 }
 \description{
 returns a vector character with the contents of different

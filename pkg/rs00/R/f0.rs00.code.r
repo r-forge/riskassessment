@@ -1,62 +1,42 @@
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-rbsb3k <- function(whi="msi",wha='cval',val=NULL)
-#TITLE (f0) standard constants
+rs003k <- function(whi)
+#TITLE (00) assigns the constants for the rs00 layer
 #DESCRIPTION
-# defines/returns/prints the constants used within /rbsb/. 
-# The performed action depends on the first argument.
-# The set involved depends on the second argument.\cr
-# Be aware that there is no checks about the modification
-# of values... Not recommended for a standard use.
+# defines or returns the constants used within /rbsb00/. 
+# The performed action depends on the argument.
 #DETAILS
+# All constant names start with 'rbsb.'.
 # This solution was adopted to replace
-# a set of global constants that I was not
-# able to make acceptable with R packages standards.
-# It is recommended to use rbsb3k to change the values of
-# the constants, but this can be directly done with \code{options}.
+# a set of global constants that I had difficulty
+# to make acceptable with R packages standards.
+# It is recommended not to modify these constants
+# unless you are completely aware of the consequences.\cr
+# The constants can be any object type.
 #PKEYWORDS helpful
 #KEYWORDS misc
 #INPUTS
-#[INPUTS]
-#{whi}    <<(='msi') a character(1) indicating which subset of /rbsb/ 
-#            constants must be updated/returned/printed.
-# \code{'*'} for all;
-# \code{'m'} for the miscellaneous subset;
-# \code{'f'} for the file subset;
-# \code{'c'} for the coding subset;
-# \code{'n'} for the null object subset.
-# \code{'s'} for the statistics sunset.
-# \cr And constant name
-# for individual subsets (with three characters).>>
-#{wha} <<(='cval') What to do with the designated subset.
-# can be \code{'std'} then the standard values are
-# imposed to the designated subset of constants.
-# Or \code{'print'} then the designated subset of constants is 
-# printed.  Or \code{'list'}, then the designated subset of constants
-# is returned as a named list. Or \code{'cval'} then the current
-# value is returned (only one constant). Or \code{'nval'} then
-# the new value is imposed to the one constant precised with \code{whi'}.
+#{whi}    <<a character(1) indicating either to reset or
+#           to return the names or the current values. The three
+#           values are \code{RESET}, \code{reset}, \code{names}, \code{definitions} or \code{values}.>>
 # >>
-#{val} <<(=NULL) any object to be imposed to the designated constant
-# by \code{whi} when \code{wha} is \code{'nval'}.>>
+#[INPUTS]
 #VALUE
-# According to \code{wa} nothing (with possibly a printing), a list, an objet.
+# When \code{whi=="RESET"} nothing (but the assignments are
+# performed for all layers: only \code{rs00} since it is the first one.).
+# When \code{whi=="reset"} nothing (but the assignments of 
+# the layer \code{rs00} are performed).
+# When \code{whi=="names"} the names as a character vector.
+# When \code{whi=="definitions"} the definitions as a named character vector.
+# When \code{whi=="values"} the values through a named list.
 #EXAMPLE
+## First assign the standard values
+# rs003k("reset");
+# print(rbsb.msi);
 ## to get the short labels
-# names(rbsb3k("*","list"));
-## to obtain the standard values
-# rbsb3k('*','std');
-## to print the current values
-# rbsb3k('*','print');
-## to impose a new /rbsb/ signature
-# rbsb3k('msi','nval','my rebastaba');
-# rbsb3k('msi','print');
-## to modify the current indentation
-# rbsb3k("min","nval",123);
-# rbsb3k("min","print");
-## any object can be involved
-# rbsb3k('*','std');
-# is.matrix(rbsb3k("cpt"));
+# rs003k("names");
+## to obtain the current values
+# rs003k("values");
 #REFERENCE
 #SEE ALSO
 #CALLING
@@ -64,216 +44,638 @@ rbsb3k <- function(whi="msi",wha='cval',val=NULL)
 #FUTURE
 #AUTHOR J.-B. Denis
 #CREATED 09_09_16
-#REVISED 09_09_29
+#REVISED 10_02_11
 #--------------------------------------------
 {
+# checking
+if (!expr3present(whi,c("RESET","reset","names","definitions","values"))) {
+    print.default(whi);
+    stop("rs003k does not accept this argument");
+}
+#
+#if (whi=="RESET") { }
 #
 # definition of the different constants
 sc <- character(0);
 sc["msi"] <- "The signature of rebastaba";
 sc["min"] <- "Number of spaces for indentation";
 sc["mba"] <- "Must batch be activated (= no pause after displaying a result)?";
+sc["mck"] <- "Must systematic checks be done?";
+sc["mwa"] <- "Must warning be simple warning?";
 sc["mfa"] <- "Must fatal error be fatal?";
 sc["mwi"] <- "The width (nbr of characters) for printing paragraphs";
 sc["mfi"] <- "Must the results be directed to files (if not to the screen)?";
 sc["mgr"] <- "Type of graphics files";
+sc["mnd"] <- "Number of decimals when printing";
+sc["mep"] <- "When printing an object: *e*m*p*hasize level";
 sc["ffg"] <- "Last number of the graphics files";
 sc["fpx"] <- "Prefix for the resulting files";
 sc["fou"] <- "Standard file for text outputs";
 sc["cpt"] <- "Different closing parentheses as a dimnamed matrix";
 sc["cni"] <- "character(1) to designate the node under consideration";
-sc["nlo"] <- "Null value for logical objects";
-sc["nnu"] <- "Null value for numeric objects";
-sc["nch"] <- "Null value for character objects";
-sc["nli"] <- "Null value for list objects";
-sc["nfu"] <- "Null value for function objects";
-sc["ndf"] <- "Null value for data.frame objects";
-sc["nde"] <- "Null value for des objects";
-sc["nfa"] <- "Null value for faux objects";
+sc["cac"] <- "character(1) to indicate something to be computed";
+sc["log0"] <- "Null value for logical objects";
+sc["num0"] <- "Null value for numeric objects";
+sc["cha0"] <- "Null value for character objects";
+sc["lis0"] <- "Null value for list objects";
+sc["fun0"] <- "Null value for function objects";
+sc["dfr0"] <- "Null value for data.frame objects";
+sc["dfr1"] <- "Example1 of data.frame object";
+sc["des0"] <- "Null value for des objects";
+sc["fau0"] <- "Null value for faux objects";
+sc["fau1"] <- "Example 1 of faux object";
+sc["daf0"] <- "Null value for daf objects";
 sc["smn"] <- "Minimum number of observations to compute statistics";
 sc["sna"] <- "The different natures for random variates";
 sc["spr"] <- "The different natures for random variates";
 sc["snp"] <- "Properties of the different natures of random variates as a dimnamed matrix";
 #
-# checking
-check4tyle(whi,"character",1);
-check4tyle(wha,"character",1);
-p_wha <- c("std","nval","print","list","cval");
-if (!expr3present(wha,p_wha)) {
-    erreur(list(wha,p_wha),"The first argument is not accepted...");
+# returning the names
+#
+if (whi=="names") { return(names(sc));}
+#
+# returning the definitions
+#
+if (whi=="definitions") { return(sc);}
+#
+# returning the values
+#
+if (whi=="values") {
+    res <- vector("list",0);
+    for (ii in sjl(sc)) {
+        noco <- names(sc)[[ii]];
+        eee <- paste("res[[\"",noco,"\"]] <- rbsb.",noco,";",sep="");
+        eval(parse(text=eee));
+    }
+    return(res);
 }
 #
-# getting the designated subset of constants
-whis <- character(0);
-if ("*"==whi) { whis <- sc;}
-if ("m"==whi) { whis <- sc[ 1: 7];}
-if ("f"==whi) { whis <- sc[ 8:10];}
-if ("c"==whi) { whis <- sc[11:12];}
-if ("n"==whi) { whis <- sc[13:20];}
-if ("s"==whi) { whis <- sc[21:24];}
-if (length(whis)==0) {
-    if (sum(names(sc)==whi)==0) {
-        erreur(whi,"First argument 'whi' not accepted!");
-    }
-    whis <- sc[whi]; 
-}
-nwhi <- names(whis);
-if (expr3present(wha,c("cval","nval")) & (length(nwhi)!=1)) {
-    erreur(list(wha,whis),"When getting or imposing constants, one and only one is required!");
-}
+# loading the standard values
 #
-# changing the subset of constants
-if (expr3present(wha,c("std","nval"))) {
-    # imposing the standard values
-    if (expr3present("msi",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.msi="/rbsb0.1-0/");
-        } else { options(rbsb.msi=val); }
-    }
-    if (expr3present("min",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.min=3);
-        } else { options(rbsb.min=val); }
-    }
-    if (expr3present("mba",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.mba= TRUE);
-        } else { options(rbsb.mba=val); }
-    }
-    if (expr3present("mfa",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.mfa= TRUE);
-        } else { options(rbsb.mfa=val); }
-    }
-    if (expr3present("mwi",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.mwi=  70);
-        } else { options(rbsb.mwi=val); }
-    }
-    if (expr3present("mfi",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.mfi=TRUE);
-        } else { options(rbsb.mfi=val); }
-    }
-    if (expr3present("mgr",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.mgr="pdf");
-        } else { options(rbsb.mgr=val); }
-    }
-    if (expr3present("ffg",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.ffg=0);
-        } else { options(rbsb.ffg=val); }
-    }
-    if (expr3present("fpx",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.fpx=paste("rbsb",format(Sys.time(), "%y_%m_%d"),sep="."));
-        } else { options(rbsb.fpx=val); }
-    }
-    if (expr3present("fou",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.fou=paste(options()$rbsb.fpx,"txt",sep="."));
-        } else { options(rbsb.fou=val); }
-    }
-    if (expr3present("cpt",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.cpt= matrix(c("{{","}}",
-                                                     "[[","]]",
+if (tolower(whi)=="reset") {
+#
+    assign("rbsb.msi","/rbsb0.1-0/",pos=".GlobalEnv");
+    assign("rbsb.min",3,pos=".GlobalEnv");
+    assign("rbsb.mba", TRUE,pos=".GlobalEnv");
+    assign("rbsb.mfa", TRUE,pos=".GlobalEnv");
+    assign("rbsb.mck", TRUE,pos=".GlobalEnv");
+    assign("rbsb.mwa", TRUE,pos=".GlobalEnv");
+    assign("rbsb.mwi",  70,pos=".GlobalEnv");
+    assign("rbsb.mfi",TRUE,pos=".GlobalEnv");
+    assign("rbsb.mgr","pdf",pos=".GlobalEnv");
+    assign("rbsb.mnd",3,pos=".GlobalEnv");
+    assign("rbsb.mep",1,pos=".GlobalEnv");
+    assign("rbsb.ffg",0,pos=".GlobalEnv");
+    assign("rbsb.fpx",paste("rbsb",format(Sys.time(), "%y_%m_%d"),sep="."),pos=".GlobalEnv");
+    assign("rbsb.fou",paste(options()$rbsb.fpx,"txt",sep="."),pos=".GlobalEnv");
+    # due to the use of easyp3cut, no nesting parenthesis are allowed!
+    # also opening and closing must be different
+    assign("rbsb.cpt", matrix(c("{{","}}",
+                                                     "(|","|)",
                                                      "[" ,"]" ,
                                                      "<<",">>"),ncol=2,
-                                  byrow=TRUE,dimnames=list(c("nodes","rounding","variables","vectors"),c("opening","closing"))));
-        } else { options(rbsb.cpt=val); }
-    }
-    if (expr3present("cni",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.cni= "*Y*");
-        } else { options(rbsb.cni=val); }
-    }
-    if (expr3present("nlo",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.nlo= logical(0));
-        } else { options(rbsb.nlo=val); }
-    }
-    if (expr3present("nnu",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.nnu= numeric(0));
-        } else { options(rbsb.nnu=val); }
-    }
-    if (expr3present("nch",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.nch= character(0));
-        } else { options(rbsb.nch=val); }
-    }
-    if (expr3present("nli",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.nli=    vector("list",0));
-        } else { options(rbsb.nli=val); }
-    }
-    if (expr3present("nfu",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.nfu= function(...){invisible()});
-        } else { options(rbsb.nfu=val); }
-    }
-    if (expr3present("ndf",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.ndf= as.data.frame(matrix(0,0,0)));
-        } else { options(rbsb.ndf=val); }
-    }
-    if (expr3present("nde",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.nde= new("des"));
-        } else { options(rbsb.nde=val); }
-    }
-    if (expr3present("nfa",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.nfa= new("faux"));
-        } else { options(rbsb.nfa=val); }
-    if (expr3present("smn",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.smn= 30);}
-        } else { options(rbsb.smn=val); }
-    if (expr3present("sna",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.sna=c("conti","integ","cateo","categ","unkno"));}
-        } else { options(rbsb.sna=val); }
-    if (expr3present("spr",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.spr=c("categoric","ordered","numeric"));}
-        } else { options(rbsb.spr=val); }
-    if (expr3present("snp",nwhi,TRUE)) {
-        if (wha=="std") { options(rbsb.snp= 
+                                  byrow=TRUE,dimnames=list(c("nodes","rounding","variables","vectors"),c("opening","closing"))),pos=".GlobalEnv");
+    assign("rbsb.cni", "*Y*",pos=".GlobalEnv");
+    assign("rbsb.cac", "acalculer",pos=".GlobalEnv");
+    assign("rbsb.log0", logical(0),pos=".GlobalEnv");
+    assign("rbsb.num0", numeric(0),pos=".GlobalEnv");
+    assign("rbsb.cha0", character(0),pos=".GlobalEnv");
+    assign("rbsb.lis0",    vector("list",0),pos=".GlobalEnv");
+    assign("rbsb.fun0", function(...){invisible()},pos=".GlobalEnv");
+    #assign("rbsb.dfr0",data.frame(matrix(NA,5,3)),pos=".GlobalEnv");
+    assign("rbsb.dfr0", as.data.frame(matrix(0,0,0)),pos=".GlobalEnv");
+    assign("rbsb.dfr1", data.frame(F1=factor(rep(1:3,each=4)),F2=factor(rep(1:4,3))),pos=".GlobalEnv");
+    assign("rbsb.des0", new("des"),pos=".GlobalEnv");
+    assign("rbsb.fau0", new("faux"),pos=".GlobalEnv");
+    assign("rbsb.fau1", new("faux",orig="ici",defi="Fatal Error",comm=c("In fact it was a joke","No error occurred!","You must be relieved")),pos=".GlobalEnv");
+    assign("rbsb.smn", 30,pos=".GlobalEnv");
+    assign("rbsb.sna",c("conti","integ","cateo","categ","unkno"),pos=".GlobalEnv");
+    assign("rbsb.spr",c("categoric","ordered","numeric"),pos=".GlobalEnv");
+    assign("rbsb.snp", 
           matrix(c(FALSE,FALSE,TRUE,TRUE,FALSE,TRUE,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE),5,3,dimnames=list(c("conti","integ","cateo","categ","unkno"),c("categoric","ordered","numeric"))
-             ));}
-        } else { options(rbsb.snp=val); }
-    }
-    return(invisible());
-} else {
-    # loading the current values in a list
-    lili <- vector("list",0);
-    fax <- function(lili,qui,nwhi) {
-        if (expr3present(qui,nwhi,TRUE)) { lili[[qui]] <- options()[[paste("rbsb.",qui,sep="")]];}
-        lili
-    }
-    lili <- fax(lili,"msi",nwhi);
-    lili <- fax(lili,"min",nwhi);
-    lili <- fax(lili,"mba",nwhi);
-    lili <- fax(lili,"mfa",nwhi);
-    lili <- fax(lili,"mwi",nwhi);
-    lili <- fax(lili,"mfi",nwhi);
-    lili <- fax(lili,"mgr",nwhi);
-    lili <- fax(lili,"ffg",nwhi);
-    lili <- fax(lili,"fpx",nwhi);
-    lili <- fax(lili,"fou",nwhi);
-    lili <- fax(lili,"cpt",nwhi);
-    lili <- fax(lili,"cni",nwhi);
-    lili <- fax(lili,"nlo",nwhi);
-    lili <- fax(lili,"nnu",nwhi);
-    lili <- fax(lili,"nch",nwhi);
-    lili <- fax(lili,"nli",nwhi);
-    lili <- fax(lili,"nfu",nwhi);
-    lili <- fax(lili,"ndf",nwhi);
-    lili <- fax(lili,"nde",nwhi);
-    lili <- fax(lili,"nfa",nwhi);
-    lili <- fax(lili,"smn",nwhi);
-    lili <- fax(lili,"sna",nwhi);
-    lili <- fax(lili,"spr",nwhi);
-    lili <- fax(lili,"snp",nwhi);
-    # exploiting the list
-    if (wha=="cval") { return(lili[[nwhi]]);}
-    if (wha=="list") { return(lili);}
-    if (wha=="print") {
-        for (ii in sjl(lili)) {
-            cat("(((*)))  [",nwhi[ii],"]  --> ",whis[ii],"\n",sep="");
-            print(lili[[nwhi[ii]]]);
-        }
-        return(invisible());
-    }
+             ),pos=".GlobalEnv");
+    assign("rbsb.daf0",new("daf",des=new("des"),
+                                                 what="d",valu="rbsb.dfr0"),pos=".GlobalEnv");
 }
 #
 invisible();
 }
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+###########################################
+###########################################
+########
+#((((((( NEW S4 CLASS des
+########
+###########################################
+###########################################
+
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+valid8des <- function(object)
+#TITLE (00) checks a /des/
+#DESCRIPTION
+#   This function checks a /des/ objects
+#DETAILS
+# It is the validity method for /des/ objects.
+#KEYWORDS classes
+#INPUTS
+#{object} <<The des object to be validated.>>
+#[INPUTS]
+#VALUE
+# TRUE when the object seems acceptable
+# else a character describing the error(s)
+#EXAMPLE
+#REFERENCE
+#SEE ALSO
+#CALLING
+#COMMENT
+#FUTURE
+#AUTHOR J.-B. Denis
+#CREATED 09_08_31
+#REVISED 09_08_31
+#--------------------------------------------
+{
+    res <- character(0);
+    if(length(object@name)!=1) {res <- c(res,"des@name must be a character of length one");}
+    if(length(object@orig)>=2) {res <- c(res,"des@orig must not be a vector");}
+    if(length(object@time)>=2) {res <- c(res,"des@time must not be a vector");}
+    if(length(object@defi)>=2) {res <- c(res,"des@defi must not be a vector");}
+    if(length(object@role)>=2) {res <- c(res,"des@role must not be a vector");}
+    if (length(res)== 0) { res <- TRUE;
+    } else { erreur(res,w=rbsb.mwa);}
+    res;
+}
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+###########################################
+# description
+setClass("des", representation(
+    name="character",    # name of the object being described
+    orig="character",    # scalar giving the origin
+    time="character",    # scalar giving the time of creation/modification
+    defi="character",    # scalar giving the definition
+    role="character",    # scalar giving the role of the structure
+    comm="character"     # free vector, a component = a paragraph
+                         ),
+                prototype=list(
+    name="rbsb",
+    orig=paste("Created by rs0"),
+    time="unknown",
+    defi="undefined",
+    role=character(0),
+    comm=character(0)),
+                validity=valid8des
+        );
+#
+
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+print8des <- function(x,...,quoi="ndr",empha=1)
+#TITLE (00) prints a des object
+#DESCRIPTION
+#   This function prints in a interpreted way a /des/ object.
+#DETAILS
+# Global constant rbsb.mwi is used to justify the paragraphes.
+# It is the generic print for /des/ objects.
+#KEYWORDS classes
+#INPUTS
+#{x} <<The ds object to print.>>
+#[INPUTS]
+#{\dots} <<Further arguments to be passed to the print function.>>
+#{quoi} <<(="dr") the fields to print:
+#          a=all fields,
+#          n=name,
+#          d=definition,
+#          o=origin,
+#          t=time,
+#          r=role,
+#          c=comments.>>
+#{empha} <<(=1) Emphasize level of printing;
+#           between -2 and 5>>
+#VALUE
+# nothing but a print is performed
+#EXAMPLE
+#REFERENCE
+#SEE ALSO
+#CALLING
+#COMMENT
+#FUTURE
+# Add a beginnnig way (giving only the first characters of
+# each slot for not too large reports.
+#AUTHOR J.-B. Denis
+#CREATED 08_08_21
+#REVISED 08_10_15
+#--------------------------------------------
+{
+# some checking
+che <- valid8des(x);
+if (!identical(che,TRUE)) {
+    erreur(che,"/des/ is not valid");
+}
+empha <- round(max(-2,min(5,empha)));
+quoi <- tolower(quoi);
+if (expr3present("a",quoi)) { quoi <- "ndortc";}
+# preparing the titles
+tt <- c("Name","Definition","Origin","Time","Role","Comment(s)");
+# preparing the constant according to the emphasis
+if (empha == -2) {
+    sep=0; ed <- form3repete(" ",2*empha);
+    nbs <- 5; sou <- " ";
+}
+if (empha == -1) {
+    sep=0; ed <- form3repete(" ",2*empha);
+    nbs <- 5; sou <- " ";
+}
+if (empha == 0) {
+    sep=0; ed <- form3repete(" ",2*empha);
+    nbs <- 5; sou <- " ";
+}
+if (empha == 1) {
+    sep=0; ed <- form3repete(" ",2*empha);
+    nbs <- 5; sou <- "-";
+}
+if (empha == 2) {
+    sep=1; ed <- form3repete(" ",2*empha);
+    nbs <- 5; sou <- "==";
+}
+if (empha == 3) {
+    sep=1; ed <- form3repete(" ",2*empha);
+    nbs <- 20; sou <- "==";
+}
+if (empha == 4) {
+    sep=2; ed <- form3repete(" ",2*empha);
+    nbs <- 2; sou <- form3repete(" ",50,FALSE,TRUE);
+}
+if (empha == 5) {
+    sep=2; ed <- form3repete(" ",2*empha);
+    nbs <- 3; sou <- form3repete("=",50,FALSE,TRUE);
+}
+#
+# printing
+if (expr3present("n",quoi)) {
+if (!isempty(x@name)) {
+if (x@name != "") {
+    form3titre(c(tt[1],x@name),empha);
+}}}
+if (expr3present("d",quoi)) {
+if (!isempty(x@defi)) {
+if (x@defi != "") {
+    if (!isempty(x@name)) {
+        tt[2] <- paste("<",tt[2]," of '",x@name,"':>",sep="");
+    }
+    form3paragraphe(c(tt[2],x@defi),empha,
+                    wid=rbsb.mwi,sep=sep,ed=ed);
+}}}
+if (expr3present("o",quoi)) {
+if (!isempty(x@orig)) {
+if (x@orig != "") {
+    form3paragraphe(c(tt[3],x@orig),empha,
+                    wid=rbsb.mwi,sep=sep,ed=ed);
+}}}
+if (expr3present("t",quoi)) {
+if (!isempty(x@time)) {
+if (x@time != "") {
+    form3paragraphe(c(tt[4],x@time),empha,
+                    wid=rbsb.mwi,sep=sep,ed=ed);
+}}}
+if (expr3present("r",quoi)) {
+if (!isempty(x@role)) {
+if (x@role != "") {
+    form3paragraphe(c(tt[5],x@role),empha,
+                    wid=rbsb.mwi,sep=sep,ed=ed);
+}}}
+if (expr3present("c",quoi)) {
+if (!isempty(x@comm)) {
+if ((x@comm[1] != "")|(length(x@comm)>1)) {
+    form3paragraphe(c(tt[6],x@comm),max(0,empha),
+                    wid=rbsb.mwi,sep=sep,ed=ed);
+}}}
+form3repete(sou,nbs,TRUE);
+# returning
+invisible();
+}
+
+setMethod("print",signature(x = "des"), print8des);
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#
+#
+
+
+###########################################
+###########################################
+########
+#((((((( NEW S4 CLASS faux
+########
+###########################################
+###########################################
+
+
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+valid8faux <- function(object)
+#TITLE (00) checks a /faux/
+#DESCRIPTION
+#   This function checks a /faux/ objects
+#DETAILS
+# It is the validity method for /faux/ objects.
+#KEYWORDS error
+#INPUTS
+#{object} <<The faux object to validate.>>
+#[INPUTS]
+#VALUE
+# TRUE when the object seems acceptable
+# else a character describing the error(s)
+#EXAMPLE
+#REFERENCE
+#SEE ALSO
+#CALLING
+#COMMENT
+#FUTURE
+#AUTHOR J.-B. Denis
+#CREATED 09_08_31
+#REVISED 09_09_30
+#--------------------------------------------
+{
+    if ((object@level != 0) & (object@level != 1) & (object@level != 2)) {
+        re1 <- "faux@level must be 0, 1 or 2";
+    } else { re1 <- TRUE;}
+    re2 <- valid8des(as(object,"des"));
+    #
+    res <- character(0);
+    if (!identical(re1,TRUE)) { res <- c(res,re1);}
+    if (!identical(re2,TRUE)) { res <- c(res,re2);}
+    if (identical(res,character(0))) { res <- TRUE;}
+    #
+    res;
+}
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+################################################################################
+setClass("faux",
+         representation(level="numeric"), # level of the error
+         prototype(level=0),
+         contains="des",                 # extension of a description
+         validity=valid8faux
+        );
+################################################################################
+
+
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+print8faux <- function(x,...,print=1)
+#TITLE (00) prints a faux object
+#DESCRIPTION
+#   This function prints in a interpreted way a /faux/ object.
+#DETAILS
+# Global constant rbsb.mwi is used to justify the paragraphes.
+# It is the generic print for /faux/ objects.
+#KEYWORDS error
+#INPUTS
+#{x} <<The faux object to be printed.>>
+#[INPUTS]
+#{\dots} <<Further arguments to be passed to the print function.>>
+#{print} <<(=1) the level of printing
+#          0= only the definition,
+#          1= the origin and the definition
+#          2= everything.
+#VALUE
+# nothing but a print is performed
+#EXAMPLE
+# rs003k("RESET"); # needed only for R checking, to be forgotten
+# print(rbsb.fau1,print=2);
+#REFERENCE
+#SEE ALSO
+#CALLING
+#COMMENT
+#FUTURE
+#AUTHOR J.-B. Denis
+#CREATED 09_01_21
+#REVISED 09_09_29
+#--------------------------------------------
+{
+#
+# printing
+#
+quoi <- "ndo";
+if (print==0) { quoi <- "d";}
+if (print==2) { quoi <- "a";}
+#
+form3titre(paste("/faux/ with a level of",x@level));
+print(as(x,"des"),quoi=quoi);
+# returning
+invisible();
+}
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+setMethod("print",signature(x = "faux"),print8faux);
+
+
+###########################################
+###########################################
+########
+#((((((( NEW S4 CLASS daf
+########
+###########################################
+###########################################
+
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+valid8daf <- function(object)
+#TITLE (00) checks a /daf/
+#DESCRIPTION
+#   This function checks /daf/ objects
+#DETAILS
+# It is the validity method for /daf/ objects.
+#KEYWORDS classes
+#INPUTS
+#{object} <<The daf object to be validated.>>
+#[INPUTS]
+#VALUE
+# TRUE when the object seems acceptable
+# else a character describing the error(s)
+#EXAMPLE
+#REFERENCE
+#SEE ALSO
+#CALLING
+#COMMENT
+#FUTURE
+#AUTHOR J.-B. Denis
+#CREATED 09_10_01
+#REVISED 09_10_01
+#--------------------------------------------
+{
+    res <- character(0);
+    # checking the 'what' parameter
+    #check4tyle(object@what,"character",1,"For /df/ Slot 'what' must be character(1)");
+    if (!(object@what %in% c("t","d","f","c","c2"))) {
+        res <- c(res,paste(object@what,"'what' must be 't', 'd' or 'f'"));
+    }
+    # checking the other fields
+    # to avoid error whe R is checking the package
+  if (!is.null(rbsb.snp)) {  # to prevent R checking harassment
+    rres <- NULL;   # to prevent R checking harassment
+    #check4tyle(object@valu,"character",1,"For /df/ Slot 'valu' must be character(1)");
+    if ((object@what=="t") |
+        (object@what=="c") |
+        (object@what=="c2")) {
+        if (file.access(object@valu)<0) {
+            res <- c(res,paste(object@valu,"No file of this name seems accessible."));
+        }
+    }
+    if (object@what=="d") {
+        if(!exists(object@valu)) {
+            res <- c(res,paste(object@valu,"No data.frame under this name: should be a data.frame"));
+        }
+        coda <- paste("rres <- class(",object@valu,")");
+        eval(parse(text=coda));
+        if (rres!="data.frame") {
+            res <- c(res,paste(list(object@valu,res),"A data.frame was expected under this variable"));
+        }
+    }
+    if (object@what=="f") {
+        if(!exists(object@valu)) {
+            res <- c(res,paste(object@valu,"No object under this name: should be a function"));
+        }
+        coda <- paste("rres <- class(",object@valu,")");
+        eval(parse(text=coda));
+        if (rres!="function") {
+            res <- c(res,paste(list(object@valu,res),"A function was expected under this variable"));
+        }
+    }
+  } # to prevent R checking harassment
+    #
+    if (length(res)== 0) { res <- TRUE;
+    } else { erreur(res,w=rbsb.mwa);}
+    res;
+}
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+
+###########################################
+setClass("daf", representation(
+         des="des", # description of the data frame
+         what="character", # indication about the way the data.frame is
+                           # available. 3 currently ways:
+                           #  't' through a text file to be read
+                           #  'd' through a data.frame itself
+                           #  'f' through a function to be called without argument
+         valu="character"  # the complete path of the text file when what=='t'
+                           # the data.frame name when what=='d'
+                           # the function name when what=='f'
+                            ),
+               prototype(des=new("des",name="rbsb",
+                                 orig=paste("Created by rebastaba"),
+                                 time=date(),
+                                 defi="prototype",
+                                 role=character(0),
+                                 comm=character(0)),
+                         what="d",
+                         valu="rbsb.dfr0"),
+               validity=valid8daf
+        );
+
+
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+print8daf <- function(x,whi=1:10,quoi="nr")
+#TITLE (00) prints a daf object
+#DESCRIPTION
+#   This function prints in a daf object.
+#DETAILS
+#KEYWORDS print
+#PKEYWORDS daf
+#INPUTS
+#{x} <<The daf object.>>
+#[INPUTS]
+#{quoi} <<(="nr"), which part of the description to print
+#                  (see print.ds).>>
+#{whi} <<(=1:10), which rows to print?\cr
+#          when -1: none is printed,\cr
+#          when 0: all are printed,\cr
+#          when a vector: indicates the numbers of rows to print
+#                         (default = the first ten),\cr
+#          when a value: the percentage to be printed
+#                         (50 = half of the rows)
+#       >>
+#VALUE
+#  returns nothing but a printing is performed
+#EXAMPLE
+# rs003k("RESET"); # needed only for R checking, to be forgotten
+# print(new("daf",des=new("des",name="rbsb",
+#                                 orig=paste("Created by rebastaba"),
+#                                 time=date(),
+#                                 defi="prototype",
+#                                 role=character(0),
+#                                 comm=character(0)),
+#                         what="d",
+#                         valu="rbsb.dfr0"));
+#REFERENCE
+#SEE ALSO
+#CALLING
+#COMMENT
+#FUTURE
+#AUTHOR J.-B. Denis
+#CREATED 09_04_23
+#REVISED 10_02_11
+#--------------------------------------------
+{
+# some checks
+if (rbsb.mck) {
+    che <- valid8daf(x);
+    if (!identical(che,TRUE)) {
+        erreur(che,"/daf/ is not valid");
+    }
+    check4tyle(quoi,"character",1,"'quoi' must be character(1)");
+}
+#
+nsou <- 39;
+# dealing with the daf.null case
+if (identical(x,rbsb.daf0)) {
+    form3repete("-",nsou,TRUE);
+    cat("<<< daf.null >>>\n");
+    form3repete("-",nsou,TRUE);
+    return(invisible());
+}
+# loading the data.frame
+values <- get8daf(x);
+# looking for the rows to print
+if (min(whi) < 0) {
+    quelles <- numeric(0);
+} else {
+    nlig <- nrow(values);
+    if ((identical(whi,0))|(nlig==0)) {
+        quelles <- sj(nlig);
+    } else {
+        if (length(whi) == 1) {
+            nli <- min(100,whi);
+            quelles <- seq(1,nlig,length=max(1,round(nlig*nli/100)));
+            quelles <- round(quelles);
+        } else {
+            quelles <- intersect(whi,sj(nlig));
+            if (length(quelles) <= 0) { quelles <- 1:min(10,nlig);}
+        }
+    }
+}
+# printing the description
+form3repete("-",nsou,TRUE);
+print(x@des,quoi);
+#printing the values
+form3repete("-",nsou,TRUE);
+if (length(quelles)>0) {
+    print(values[quelles,]);
+}
+# returning
+form3repete("-",nsou,TRUE);
+invisible();
+}
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+setMethod("print",signature(x = "daf"), print8daf);
+
+
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 sj <- function(nb)
-#TITLE (f0) trick for loops
+#TITLE (00) trick for loops
 #DESCRIPTION
 # returns 1:nb when nb >0 and
 #         numeric(0) otherwise.
@@ -312,7 +714,7 @@ numeric(0);
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 sjl <- function(x)
-#TITLE (f0) trick for loops
+#TITLE (00) trick for loops
 #DESCRIPTION
 # returns 1:length(x) when length(x) >0 and
 #         numeric(0) otherwise.
@@ -352,7 +754,7 @@ form3liste <- function(vcara,none="-",
                        OPA="{",CPA="}",
                        opa="(",cpa=")",sep="+",
                        imp=FALSE,cr=imp)
-#TITLE (f0) returns the formatted list of a series of names
+#TITLE (00) formats a series of names
 # or whatever
 #DESCRIPTION returns a scalar character of the names
 #  surrounded by any kind of parenthesis and
@@ -406,7 +808,7 @@ invisible();
 form3etsil <- function(cara,none="-.-",
                        OPA="{",CPA="}",
                        opa="(",cpa=")",sep="+")
-#TITLE (f0) inverse function of form3liste
+#TITLE (00) inverse function of form3liste
 # or whatever
 #DESCRIPTION returns a vector character of the names
 #  from a character string generated by form3liste. For
@@ -502,7 +904,7 @@ res;
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 expr3extrait <- function(cara,opa="(",cpa=")")
-#TITLE (f0) extracts the contents of parentheses from a character
+#TITLE (00) extracts the contents of parentheses from a character
 #DESCRIPTION returns a vector character with the 
 #  contents of different parentheses.
 #DETAILS
@@ -564,9 +966,9 @@ res;
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 expr3present <- function(sch,ch,exact=FALSE)
-#TITLE (f0) (sch belongs to ch)
+#TITLE (00) (sch belongs to ch)
 #DESCRIPTION
-# When \code{vect} is FALSE, returns TRUE if the 
+# When \code{exact} is FALSE, returns TRUE if the 
 # character string sch is included at least one
 # time into the character string ch.\cr
 # When \code{vect} is TRUE, returns TRUE when one
@@ -576,15 +978,15 @@ expr3present <- function(sch,ch,exact=FALSE)
 #PKEYWORDS
 #KEYWORDS utilities
 #INPUTS
-#{sch} <<the character string to be found.>>
-#{ch}  <<the character string where to look for>>
+#{sch} <<(\code{character(1)}) the character string to be found.>>
+#{ch}  <<(\code{character}) the character string(s) to investgate.>>
 #[INPUTS]
 #{exact} <<(=FALSE) When exact, one component must
 # be strictly identical, if not a subtring is sufficient.
 #VALUE TRUE or FALSE
 #EXAMPLE
 # expr3present('a','non');
-# expr3present('n','non');
+# expr3present('o',c('non','oui'));
 #REFERENCE
 #SEE ALSO
 #CALLING
@@ -614,7 +1016,7 @@ form3justifie <- function(chaine,
                           format=3,
                           tronc=TRUE,
                           carac=" ")
-#TITLE (f0) formats a character string
+#TITLE (00) formats a character string
 #DESCRIPTION
 # The aim of this function is to produce
 # aligned columns lists while printing
@@ -710,7 +1112,7 @@ res;
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 form3repete <- function(cha="-",nb=10,imp=FALSE,cr=imp)
-#TITLE (f0) prints a repeated given string
+#TITLE (00) prints a repeated given string
 #DESCRIPTION
 # Without adding breaking line characters, prints
 # "nb" times a given string of characters
@@ -749,7 +1151,7 @@ invisible();
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 form3encadre <- function(chaine,bef="(*)_",aft="",imp=FALSE,cr=imp)
-#TITLE (f0) surrounds a character string
+#TITLE (00) surrounds a character string
 #DESCRIPTION
 # Adds before and after some characters to a character string
 #DETAILS
@@ -786,7 +1188,7 @@ invisible();
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 form3decadre <- function(chaine,bef=" ",aft=bef)
-#TITLE (f0) remove character before and after a character string
+#TITLE (00) remove character before and after a character string
 #DESCRIPTION
 # remove 'bef's before and 'aft's after a character string.
 #DETAILS
@@ -813,9 +1215,9 @@ form3decadre <- function(chaine,bef=" ",aft=bef)
 #--------------------------------------------
 {
 # checking
-check4tyle(chaine,"character",c(0,1));
-check4tyle(bef,"character",1);
-check4tyle(aft,"character",1);
+check4tyle(chaine,"character",c(0,1),"form3decadre: Vector are not accepted for 'chaine'");
+check4tyle(bef,"character",1,"form3decadre: Vector are not accepted for 'bef'");
+check4tyle(aft,"character",1,"form3decadre: Vector are not accepted for 'aft'");
 # null case
 if (length(chaine) == 0) { return(chaine);}
 # removing at the beginning of the string
@@ -844,9 +1246,9 @@ chaine;
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 form3ind <- function(niv=1,cr=TRUE,ele=" ")
-#TITLE (f0) provides indentation of different levels
+#TITLE (00) provides indentation of different levels
 #DESCRIPTION
-# The level of indentation is given by \code{niv*rbsb3k("min")} times
+# The level of indentation is given by \code{niv*rbsb.min} times
 # the character ele. When cr, a line feed is made at first.
 #DETAILS
 #PKEYWORDS
@@ -859,6 +1261,7 @@ form3ind <- function(niv=1,cr=TRUE,ele=" ")
 #VALUE
 # a scalar string
 #EXAMPLE
+# rs003k("RESET"); # needed only for R checking, to be forgotten
 # cat(form3ind(2),"Bien `a vous","\n");
 #REFERENCE
 #SEE ALSO
@@ -873,14 +1276,15 @@ form3ind <- function(niv=1,cr=TRUE,ele=" ")
 niv <- round(max(min(8,niv),0));
 res <- "";
 if (cr) { res <- paste(res,"\n",sep="");}
-res <- paste(res,form3repete(ele,niv*rbsb3k("min")),sep="");
+res <- paste(res,form3repete(ele,niv*rbsb.min),sep="");
 res;
 }
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-form3names <- function(nbn,nom=character(0),prefix="")
-#TITLE (f0) provides systematic names for nodes
+form3names <- function(nbn,nom=character(0),prefix="",
+                           upca=TRUE,nume=14)
+#TITLE (00) provides systematic names for nodes
 #DESCRIPTION
 # Provides systematic names for nodes according the 
 # number of nodes taking care of not duplicating
@@ -891,15 +1295,26 @@ form3names <- function(nbn,nom=character(0),prefix="")
 #INPUTS
 #{nbn} <<Number of new node names to generate>>
 #[INPUTS]
-#{nom} <<}) Already present names (to avoid identical names).>>
+#{nom} << Already present names (to avoid identical names).>>
 #{prefix} << Systematic prefix of all names to generate. Must
-#                 comprise the dot, if one wants suh a separator
+#                 comprise the dot, if one wants such a separator
 #                 between it and the specific part of the name. 
-#                 Of course can be underscore or whatever else.>>
+#                 Of course can be 'underscore' or whatever else.>>
+#{upca} << Indicates whether the letters constituting the new
+#          names must be uppercase or not.>>
+#{nume} << Its absolute value gives the number of the letter to use
+#          when Letters are not sufficient. When negative, alphabet
+#          is not considered as a first possibility.>>
 #VALUE
 # vector with nbn different strings associated to new names
 #EXAMPLE
+# rs003k("RESET"); # needed only for R checking, to be forgotten
 # form3names(2);
+# form3names(2,nume=-3);
+# form3names(2,prefix="rbsb.");
+# form3names(2,upca=FALSE);
+# form3names(2,"Z");
+# form3names(30);
 #REFERENCE
 #SEE ALSO
 #CALLING
@@ -907,9 +1322,21 @@ form3names <- function(nbn,nom=character(0),prefix="")
 #FUTURE
 #AUTHOR J.-B. Denis
 #CREATED 07_10_19
-#REVISED 08_10_20
+#REVISED 10_02_15
 #--------------------------------------------
 {
+# checking
+if (rbsb.mck) {
+    check4tyle(upca,"logical",1,"Argument 'upca' not accepted");
+    check4tyle(nume,"integer",1,"Argument 'nume' not accepted");
+    if ((abs(nume)<1) | (abs(nume)>26)) {
+        erreur(nume,"'nume' must be comprised between 1 and 26 to indicate a Letter");
+    }
+}
+#
+if (upca) { Letters <- LETTERS;
+} else { Letters <- letters;}
+#
 if (isempty(nbn)) { return(character(0));}
 if (nbn < 1) { return(character(0));
 } else {
@@ -922,15 +1349,15 @@ if (nbn < 1) { return(character(0));
     }
     # looking for the maximum letter in noms
     if ( length(nom) == 0 ) { mama <- 0;
-    } else { mama <- max(1*outer(nom,LETTERS,"==") %*% matrix(1:26,ncol=1));}
-    if (nbn < (27-mama)) {
+    } else { mama <- max(1*outer(nom,Letters,"==") %*% matrix(1:26,ncol=1));}
+    if ((nbn < (27-mama)) & (nume>0)) {
         # adding letters 
-        res <- LETTERS[mama+(1:nbn)];
+        res <- Letters[mama+(1:nbn)];
     } else {
         # adding numbered nodes
         ajou <- 0; nu <- 1; res <- character(0);
         while ( ajou < nbn ) {
-          nono <- paste("N",nu,sep="");
+          nono <- paste(Letters[abs(nume)],nu,sep="");
           if (all(nono != nom)) {
               ajou <- ajou + 1;
               res <- c(res,nono);
@@ -950,7 +1377,7 @@ res;
 form3line <- function(len=50,pat="-_-",wid=3,
                       gind="",pat2="_-_",
                       imp=TRUE)
-#TITLE (f0) print a separator line from a given pattern
+#TITLE (00) print a separator line from a given pattern
 #DESCRIPTION
 # The line can be composite with the width arguement.
 # The pattern can comprise more than one character.
@@ -1012,7 +1439,7 @@ invisible();
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 form3file <- function(chaine,file="",append=TRUE)
-#TITLE (f0) adds a character vector into a file
+#TITLE (00) adds a character vector into a file
 #DESCRIPTION
 # The aim of this function is generate files
 # from a character vector. In the framework
@@ -1053,7 +1480,7 @@ invisible();
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 form3titre <- function(tit,empha=2,indent=2+2*empha,imp=TRUE)
-#TITLE (f0) prints or prepares a title
+#TITLE (00) prints or prepares a title
 #DESCRIPTION
 # prints a character string "tit"
 # with more or less emphasis
@@ -1129,7 +1556,7 @@ form3paragraphe <- function(texte,titre=-1,
                             jus=1,tronc=TRUE,
                             ed="  ",ef="",
                             imp=TRUE)
-#TITLE (f0) prints or prepares paragraphes
+#TITLE (00) prints or prepares paragraphes
 #         from a character vector.
 #         Each component is supposed to be a
 #         paragraph but the first one can be
@@ -1179,6 +1606,7 @@ form3paragraphe <- function(texte,titre=-1,
 #VALUE
 # either nothing or a character string according to imp
 #EXAMPLE
+# rs003k("RESET"); # needed only for R checking, to be forgotten
 # form3paragraphe(c("My Title","My important first sentence.","Last one!"));
 #REFERENCE
 #SEE ALSO
@@ -1253,7 +1681,7 @@ invisible();
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 form3affiche <- function(x,pau=FALSE,cat=FALSE,...)
-#TITLE (f0) displays with its name the object x
+#TITLE (00) displays with its name the object x
 #DESCRIPTION everything is in the title
 #DETAILS
 #PKEYWORDS
@@ -1265,7 +1693,7 @@ form3affiche <- function(x,pau=FALSE,cat=FALSE,...)
 #{cat} << Must the printing be done with 'cat' instead of print?>>
 #{\dots} <<possible arguments for the print function.>>
 #VALUE
-# nothing but a print (or cat) is done
+# a print (or cat) is done and x is returned
 #EXAMPLE
 # uu <- "azerty";
 # form3affiche(uu);
@@ -1276,7 +1704,7 @@ form3affiche <- function(x,pau=FALSE,cat=FALSE,...)
 #FUTURE
 #AUTHOR J.-B. Denis
 #CREATED 08_09_17
-#REVISED 09_03_25
+#REVISED 09_10_12
 #--------------------------------------------
 {
 cat("<< Displaying ",deparse(substitute(x))," >>\n");
@@ -1284,13 +1712,13 @@ if (cat) { cat(x,"\n");
 } else { print(x,...);}
 if (pau) { pause("affichage");}
 # returning
-invisible();
+x;
 }
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 geom3lmargin <- function(x,ma=0.15)
-#TITLE (f0) adds some padding to a range
+#TITLE (00) adds some padding to a range
 #DESCRIPTION
 #   Used for the preparation of graphic outputs:
 #  the range of 'x' is extended of a proportion 
@@ -1324,7 +1752,7 @@ geom3lmargin <- function(x,ma=0.15)
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 geom3xyz2pol <- function(coo)
-#TITLE (f0) transforms cartesian coordinates in polar coordinates
+#TITLE (00) transforms cartesian coordinates in polar coordinates
 #DESCRIPTION Transforms, into R to three, cartesian coordinates
 # in polar coordinates
 #DETAILS
@@ -1361,7 +1789,7 @@ geom3xyz2pol <- function(coo)
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 geom3pol2xyz <- function(poo)
-#TITLE (f0) transforms polar coordinates in cartesian coordinates
+#TITLE (00) transforms polar coordinates in cartesian coordinates
 #DESCRIPTION (in R to the three)
 #DETAILS
 #PKEYWORDS
@@ -1392,7 +1820,7 @@ geom3pol2xyz <- function(poo)
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 geom3pointi <- function(x0,y0,x1,y1,d)
-#TITLE (f0) interpolation in R to the 2
+#TITLE (00) interpolation in R to the 2
 #DESCRIPTION
 # Interpolation in the plane: given two points p0=(x0,y0) and p1=(x1,y1)
 # returns the point p=(x,y) such that
@@ -1430,7 +1858,7 @@ geom3pointi <- function(x0,y0,x1,y1,d)
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 num2disc <- function(val,lim=0,pod=c("-","+"))
-#TITLE (f0) transforms a numeric value into a 
+#TITLE (00) transforms a numeric value into a 
 # categoric value.
 #DESCRIPTION A first step towards the discretization
 # of numeric nodes into n classes
@@ -1449,6 +1877,7 @@ num2disc <- function(val,lim=0,pod=c("-","+"))
 # the factor of the resulting categoric values
 #EXAMPLE
 # set.seed(1234);
+# rs003k("RESET"); # needed only for R checking, to be forgotten
 # num2disc(runif(10)-0.5)
 #REFERENCE
 #SEE ALSO
@@ -1478,26 +1907,26 @@ pod[res];
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 open8graph <- function(prefix=NULL,...) 
-#TITLE (f0) opens the graph device for rebastaba
+#TITLE (00) opens the graph device for rebastaba
 #DESCRIPTION
-# According to the global constant rbsb3k("mfi") a
+# According to the global constant rbsb.mfi a
 # graphical device is open or not.
 # Must be called before plotting something ones want
-# to keep under rbsb3k("mgr") type. This global constant 
+# to keep under rbsb.mgr type. This global constant 
 # can take only value in c("pdf","png").\cr
 #DETAILS
 # The file opened for storing the graph is named with
-# three components separated with dots: rbsb3k("fpx"), prefix 
-# and rbsb3k("mgr"). rbsb3k("fpx") is a prefix to be modified by 
-# the user as convenient. rbsb3k("ffg") is the number of the
-# current figure incremented by this function. rbsb3k("mgr") is
+# three components separated with dots: rbsb.fpx, prefix 
+# and rbsb.mgr. rbsb.fpx is a prefix to be modified by 
+# the user as convenient. rbsb.ffg is the number of the
+# current figure incremented by this function. rbsb.mgr is
 # the suffix associated to the type of graph (either 'pdf'
 # or 'png').
 #PKEYWORDS
 #KEYWORDS IO
 #INPUTS
 #[INPUTS]
-#{prefix} << When NULL the \code{1+rbsb3k("ffg")} numeric is taken
+#{prefix} << When NULL the \code{1+rbsb.ffg} numeric is taken
 #                to give the number of the file with three
 #                digits. If not, it is a character giving
 #                the complete prefix to use before the suffix.>>
@@ -1506,15 +1935,15 @@ open8graph <- function(prefix=NULL,...)
 #         picture sizes, or to get more than one graph into
 #         the file.>>
 #VALUE
-# Nothing but when rbsb3k("mfi") is \code{TRUE} the
+# Nothing but when rbsb.mfi is \code{TRUE} the
 # and \code{is.null(prefix)}, the graphical device is open and the global 
-# constant rbsb3k("ffg") is increased *before* with one.
+# constant "rbsb.ffg" is increased *before* with one.
 #EXAMPLE
-# rbsb3k('*','std');
-# rbsb3k('ffg','print');
+# rs003k("RESET"); # needed only for R checking, to be forgotten
+# print(rbsb.ffg);
 # open8graph();
 # close8graph();
-# rbsb3k('ffg','print');
+# print(rbsb.ffg);
 #REFERENCE
 #SEE ALSO close8graph
 #CALLING
@@ -1522,23 +1951,23 @@ open8graph <- function(prefix=NULL,...)
 #FUTURE
 #AUTHOR J.-B. Denis
 #CREATED 07_10_10
-#REVISED 09_09_18
+#REVISED 09_11_17
 #--------------------------------------------
 {
-if (rbsb3k("mfi")) {
+if (rbsb.mfi) {
     if (is.null(prefix)) {
-        rbsb3k("ffg","nval",rbsb3k("ffg") + 1);
-        prefix <- paste(rbsb3k("fpx"),form3justifie(rbsb3k("ffg"),nbc=4,
+        assign("rbsb.ffg",rbsb.ffg + 1,pos=".GlobalEnv");
+        prefix <- paste(rbsb.fpx,form3justifie(rbsb.ffg,nbc=4,
                                                format=3,tronc=FALSE,
                                                carac="0"),
                         sep=".");
     }
-    fifi <- paste(prefix,rbsb3k("mgr"),sep=".");
+    fifi <- paste(prefix,rbsb.mgr,sep=".");
     gopen <- FALSE;
-    if (rbsb3k("mgr") == "pdf") { pdf(fifi,...); gopen <- TRUE;}
-    if (rbsb3k("mgr") == "png") { png(fifi,...); gopen <- TRUE;}
+    if (rbsb.mgr == "pdf") { pdf(fifi,...); gopen <- TRUE;}
+    if (rbsb.mgr == "png") { png(fifi,...); gopen <- TRUE;}
     if (!gopen) {
-        erreur(rbsb3k("mgr"),
+        erreur(rbsb.mgr,
                "This type of graph is not yet implemented in /rbsb/");
     }
 }
@@ -1547,12 +1976,12 @@ invisible();
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-close8graph <- function(message=rbsb3k("msi")) 
-#TITLE (f0) close the file open by open8graph
+close8graph <- function(message=rbsb.msi) 
+#TITLE (00) close the file open by open8graph
 #DESCRIPTION
 # According
-# to the global constant rbsb3k("mfi") close the file
-# open by open8graph. Also if \code{!rbsb3k("mba")}
+# to the global constant rbsb.mfi close the file
+# open by open8graph. Also if \code{!rbsb.mba}
 #  a pause is issued.
 #DETAILS
 #PKEYWORDS
@@ -1573,8 +2002,8 @@ close8graph <- function(message=rbsb3k("msi"))
 #REVISED 07_10_25
 #--------------------------------------------
 {
-if (rbsb3k("mfi")) { dev.off();}
-if (!rbsb3k("mba")) { pause(message,"pause from close8graph");
+if (rbsb.mfi) { dev.off();}
+if (!rbsb.mba) { pause(message,"pause from close8graph");
 } else { cat("<<<",message,">>>\n");}
 invisible();
 }
@@ -1582,12 +2011,12 @@ invisible();
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 open8text <- function(append=TRUE) 
-#TITLE (f0) opens the standard output text for rebastaba
+#TITLE (00) opens the standard output text for rebastaba
 #DESCRIPTION
-# According to the global constant rbsb3k("mfi") the
+# According to the global constant rbsb.mfi the
 # standard output text of rebastaba is open (in
 # append mode) or not. The name of this file is provided
-# by the constant rbsb3k("fou").
+# by the constant rbsb.fou.
 # Must be called before printing something ones want
 # to keep on file. 
 #DETAILS 
@@ -1595,7 +2024,7 @@ open8text <- function(append=TRUE)
 #KEYWORDS IO
 #INPUTS
 #[INPUTS]
-#{append} << Must the current file rbsb3k("fou") be continued ?>>
+#{append} << Must the current file rbsb.fou be continued ?>>
 #VALUE
 # nothing but the actions indicated in the description field are performed
 #EXAMPLE
@@ -1609,17 +2038,17 @@ open8text <- function(append=TRUE)
 #REVISED 08_08_28
 #--------------------------------------------
 {
-if (rbsb3k("mfi")) { sink(rbsb3k("fou"),append);}
+if (rbsb.mfi) { sink(rbsb.fou,append);}
 invisible();
 }
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-close8text <- function(message=rbsb3k("msi")) 
-#TITLE (f0) pauses (and more) the program until an answer is given
+close8text <- function(message=rbsb.msi) 
+#TITLE (00) pauses (and more) the program until an answer is given
 #DESCRIPTION
-# Closing the output file rbsb3k("fou") according to rbsb3k("mfi"). A pause allowing 
-# to stop the process is issued if rbsb3k("mba") is false.
+# Closing the output file rbsb.fou according to rbsb.mfi. A pause allowing 
+# to stop the process is issued if rbsb.mba is false.
 #DETAILS
 #PKEYWORDS
 #KEYWORDS IO
@@ -1639,8 +2068,8 @@ close8text <- function(message=rbsb3k("msi"))
 #REVISED 07_10_25
 #--------------------------------------------
 {
-if (rbsb3k("mfi")) { sink();}
-if (!rbsb3k("mba")) { pause(message,"pause from close8text");
+if (rbsb.mfi) { sink();}
+if (!rbsb.mba) { pause(message,"pause from close8text");
 } else { cat("<<<",message,">>>\n");}
 invisible();
 }
@@ -1648,7 +2077,7 @@ invisible();
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 depeche <- function(what="???",answer=TRUE) 
-#TITLE (f0) issues a message on the screen [and returns the answer]
+#TITLE (00) issues a message on the screen [and returns the answer]
 #DESCRIPTION
 # This function issues a message and pause if an answer is required.
 #DETAILS
@@ -1686,7 +2115,7 @@ res;
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 pause <- function(what="",where=NULL) 
-#TITLE (f0) pauses the program until an answer is given
+#TITLE (00) pauses the program until an answer is given
 #DESCRIPTION
 # This function issues a pause with a message allowing 
 # to stop the process or to continue it.
@@ -1701,6 +2130,7 @@ pause <- function(what="",where=NULL)
 #VALUE
 # nothing but the actions indicated in the description field are performed
 #EXAMPLE
+# rs003k("RESET"); # needed only for R checking, to be forgotten
 # pause("Time for lunch!");
 #REFERENCE
 #SEE ALSO
@@ -1725,11 +2155,11 @@ invisible();
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 erreur <- function(x,...,w=FALSE)
-#TITLE (f0) issues an error message and concludes accordingly
+#TITLE (00) issues an error message and concludes accordingly
 #DESCRIPTION
 # when called this function prints x, then displays a message before stopping 
 # the process except if it is a warning or if the general constant
-# of rebastaba rbsb3k("mfa") is true.
+# of rebastaba rbsb.mfa is true.
 #DETAILS
 #PKEYWORDS
 #KEYWORDS error
@@ -1743,9 +2173,10 @@ erreur <- function(x,...,w=FALSE)
 #VALUE
 # nothing
 #EXAMPLE
-# ## Not run:
+# rs003k("RESET"); # needed only for R checking, to be forgotten
+# erreur(matrix(1:4,2),"This matrix is not symmetric",w=TRUE)
 # erreur("Are you sure of it?",w=TRUE);
-# ## End(Not run)
+#
 #REFERENCE
 #SEE ALSO
 #CALLING
@@ -1753,7 +2184,7 @@ erreur <- function(x,...,w=FALSE)
 #FUTURE
 #AUTHOR J.-B. Denis
 #CREATED 07_09_03
-#REVISED 08_12_05
+#REVISED 09_10_04
 #--------------------------------------------
 {
 form3repete("~",60,TRUE);
@@ -1770,13 +2201,13 @@ if (!isempty(x)) {
     }
 }
 message <- paste(...);
+print(message);
 if (w) {
-    cat(rbsb3k("msi"),"SIMPLE WARNING:",message,"\n");
+    cat(rbsb.msi,"SIMPLE WARNING:\n");
 } else {
-    cat(rbsb3k("msi"),"ERREUR FATALE\n");
-    cat("      ",message,"\n");
+    cat(rbsb.msi,"ERREUR FATALE\n");
     form3repete("~",60,TRUE);
-    if (rbsb3k("mfa")) { stop("stopped by rebastaba");}
+    if (rbsb.mfa) { stop("stopped by rebastaba");}
 }
 invisible();
 }
@@ -1784,7 +2215,7 @@ invisible();
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 rapport <- function(origine)
-#TITLE (f0) issues an error message when rebastaba fails
+#TITLE (00) issues an error message when rebastaba fails
 #DESCRIPTION
 # Ask the user to send the author a detailed report.
 #DETAILS
@@ -1808,7 +2239,7 @@ rapport <- function(origine)
 #REVISED 09_01_12
 #--------------------------------------------
 {
-    message <- new("ds",
+    message <- new("des",
                    name="rebastaba error",
                    orig=paste(origine,collapse=" "),
                    time=today(),
@@ -1837,7 +2268,7 @@ rapport <- function(origine)
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 expr3cobu <- function(x)
-#TITLE (f0) provides a suitable Bugs transcription for translation into 
+#TITLE (00) provides a suitable Bugs transcription for translation into 
 # Bugs language
 #DESCRIPTION
 # In fact, just removing the quotation for node names
@@ -1870,7 +2301,7 @@ erreur(NULL,"Further on, expr3cobu will be remade. More precisely,",
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 expr3func <- function(gc,tc="")
-#TITLE (f0) provides the generation function from gc and ft
+#TITLE (00) provides the generation function from gc and ft
 #DESCRIPTION
 # From pieces of code usually generated by easyp2code, respectively
 # for generation and transformation, the generation function is 
@@ -1888,6 +2319,7 @@ expr3func <- function(gc,tc="")
 # resulting object function (to be introduced in the @rlks 
 # slot of the bn's
 #EXAMPLE
+# rs003k("RESET"); # needed only for R checking, to be forgotten
 # expr3func("{rnorm(100)}","{abs(Y)}");
 #REFERENCE
 #SEE ALSO
@@ -1925,7 +2357,7 @@ res;
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 isempty <- function(x) 
-#TITLE (f0) to avoid difficulty with is.null
+#TITLE (00) to avoid difficulty with is.null
 #DESCRIPTION
 # returns TRUE is the structure is empty
 #DETAILS
@@ -1938,9 +2370,10 @@ isempty <- function(x)
 # TRUE when the object is considered as empty
 # FALSE if not
 #EXAMPLE
+# rs003k("RESET"); # needed only for R checking, to be forgotten
 # isempty(numeric(0));
 # isempty(NULL);
-# isempty(rbsb3k("nfa"));
+# isempty(rbsb.fau0);
 #REFERENCE
 #SEE ALSO
 #CALLING
@@ -1948,20 +2381,27 @@ isempty <- function(x)
 #FUTURE
 #AUTHOR J.-B. Denis
 #CREATED 07_10_15
-#REVISED 09_09_22
+#REVISED 10_02_11
 #--------------------------------------------
 {
   if (is.null(x))                           { return(TRUE);}
   if (length(x)==0)                         { return(TRUE);}
-  if (identical(x,rbsb3k("nfa")))           { return(TRUE);}
-  if (identical(x,rbsb3k("nde")))           { return(TRUE);}
+  if (identical(x,rbsb.log0))           { return(TRUE);}
+  if (identical(x,rbsb.num0))           { return(TRUE);}
+  if (identical(x,rbsb.cha0))           { return(TRUE);}
+  if (identical(x,rbsb.lis0))           { return(TRUE);}
+  if (identical(x,rbsb.fun0))           { return(TRUE);}
+  if (identical(x,rbsb.dfr0))           { return(TRUE);}
+  if (identical(x,rbsb.fau0))          { return(TRUE);}
+  if (identical(x,rbsb.des0))          { return(TRUE);}
+  if (identical(x,rbsb.daf0))          { return(TRUE);}
   FALSE;
 }
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 today <- function(format=c("red","nor"))
-#TITLE (f0) returns a character giving the present day
+#TITLE (00) returns a character giving the present day
 #DESCRIPTION  returns a character giving the present day
 # The day is given as aa_mm_dd numbers
 #DETAILS
@@ -2003,7 +2443,7 @@ read8list <- function(file,path="./",
                       beg.skip="(START_SKIPPING)",
                       end.skip="(END_SKIPPING)"
                      )
-#TITLE (f0) read a list of lists of characters from a file
+#TITLE (00) read a list of lists of characters from a file
 #DESCRIPTION
 # read from 'file' a list of sublists, each being a character vector.
 # The first level components of the list are detected from the
@@ -2097,8 +2537,10 @@ if (several==unique) {
    erreur(c(several,unique),"unique and several indicators must be different");
 }
 # reading the proposed file
-if (substr(path,nchar(path),nchar(path))!="/") {
-    path <- paste(path,"/",sep="");
+if (path != "") {
+    if (substr(path,nchar(path),nchar(path))!="/") {
+        path <- paste(path,"/",sep="");
+    }
 }
 file <- paste(path,file,sep="");
 lu <- readLines(file);
@@ -2226,7 +2668,7 @@ res;
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 char2vect <- function(cara,sep=" ",wh="C",mat_sep="//")
-#TITLE (f0) transform a single character into a vector 
+#TITLE (00) transform a single character into a vector 
 # (or matrix)
 #DESCRIPTION
 # Just doing a character or numeric vector from a single
@@ -2326,8 +2768,8 @@ res;
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-char2list <- function(cara,tw="",wh="C")
-#TITLE (f0) transform a character into a list
+char2list <- function(cara,tw="",wh="C",nam=NULL)
+#TITLE (00) transform a character into a list
 #DESCRIPTION
 # Just doing a list of single (or not) characters from a
 # a character vector, taking care of the names
@@ -2339,11 +2781,16 @@ char2list <- function(cara,tw="",wh="C")
 #PKEYWORDS
 #KEYWORDS utilities
 #INPUTS
-#{cara} << The vector of characters to transform.>>
+#{cara} << The vector of characters to transform.
+# When is.null(nam) and they exist, the names 
+# of the vector are reported to the list.>>
 #[INPUTS]
 #{tw} <<  Separators for the second step splitting.>>
 #{wh} << Type of conversion: 'C' means character,
 #              'N' means numeric.>>
+#{nam} << Names to be apply to the created list.
+# The exact number is expected, as well as non
+# repeated names.>>
 #VALUE
 # a list of single character with possibly
 # named components
@@ -2362,12 +2809,24 @@ char2list <- function(cara,tw="",wh="C")
 {
 # checking
 check4tyle(cara,"character",-1);
-# extracting the list
-res <- vector("list",length(cara));
-names(res) <- names(cara);
+if (!is.null(nam)) {
+    check4tyle(nam,"character",length(cara));
+    if (length(unique(nam)) != length(nam)) {
+        erreur(sort(nam),"Not all names are different!");
+    }
+}
+# creating the list
+ res <- vector("list",length(cara));
+# naming the list
+if (!is.null(nam)) {
+    names(res) <- nam;
+} else {
+    names(res) <- names(cara);
+}
+# filling the list
 for ( nn in sjl(cara)) {
     recu <- char2vect(cara[nn],tw,wh);
-    if (class(recu)=="faux") {
+    if (is(recu,"faux")) {
         print(recu);
         erreur(cara[nn],"The transformation into vector was refused!");
     } else {
@@ -2381,7 +2840,7 @@ res;
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 pprint <- function(x,fifi="",...)
-#TITLE (f0) double print at the screen and into a text file
+#TITLE (00) double print at the screen and into a text file
 #DESCRIPTION
 # Just doing a double printing (i) on the screen and
 # (ii) appending to the file fifi
@@ -2423,187 +2882,10 @@ if (fifi != "") {
 invisible();
 }
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-easyp2code2 <- function(eas,transfo=FALSE,bugs=FALSE)
-#TITLE (f0) transforms an easyp expression into an R/bugs block
-#DESCRIPTION
-# Numeric values are accepted as easyp expressions. Length(eas)
-# can be greater than one, in that case a matrix comprising
-# as many columns will be returned. Repetition cases is supposed
-# to be already introduced with more than one component.
-# Rounding and transformation are options.\cr
-# The code where Bugs code is constructed must be updated
-#DETAILS
-# In rebastaba perspective, this function must be called to 
-# define the parameters of the standard nodes like "normal",
-# "Bernoulli", "multinomial" and so on... But the analysis
-# of the different types of parents is supposed to be 
-# already done, and eas accordingly prepared. For instance
-# repeated parents are already extended. This gives the opportunity
-# for easyp2code2 to belong to the zero (independent from /rbsb/ 
-# objects) level.\cr
-# Checking of parentship and so on are supposed to be already 
-# done before the calling to easyp2code2. Also is supposed already
-# detected and expanded the necessary repetitions.\cr
-# Notice that the code includes some constant for other uses.
-#PKEYWORDS
-#KEYWORDS utilities
-#INPUTS
-#{eas} <<either a numeric or a rebastaba expression (character).
-#      Its length can be greater than one for repeated standard
-#      scalar distributions or vector parameters of other
-#      distributions.>>
-#[INPUTS]
-#{transfo} << Are rounding and transformation accepted?
-#            In that case, correspond elements are replaced with
-#            Y or Y[,i] according to the length of eas.>>
-#{bugs} << Must the code be bugs or R (default). To
-#         be done.>>
-#VALUE
-# An interpretable character string to be included
-# when generating code (see the following examples).
-#EXAMPLE
-#REFERENCE
-#SEE ALSO easyp2code1
-#CALLING
-#COMMENT
-# the bugs case is to be made.
-#FUTURE
-# later on for the example section
-# easyp2code2(1234)                   # "{cbind(rep(1234,nrow(X)));}" 
-# easyp2code2("1234")                 # "{cbind(rep(1234,nrow(X)));}" 
-# easyp2code2("2*pi")                 # "{cbind(rep(2*pi,nrow(X)));}" 
-# easyp2code2("1+sqrt({{A}})")        # "{cbind(1 + sqrt(X[,'A']))};" 
-# easyp2code2(11:12)                  # "{cbind(rep(11,nrow(X)),rep(12,nrow(X)))}"
-#AUTHOR J.-B. Denis
-#CREATED 08_09_09
-#REVISED 09_03_31
-#--------------------------------------------
-{
-# constants for construction
-opaco <- "cbind(rep("; cpaco <- ",nrow(X)))";
-opapa <- "X[,'"; cpapa <- "']";
-if (bugs) {
-    erreur('easyp2code2',"sorry, this functionality not yet implemented");
-}
-# checking and going to the character style
-check4tyle(eas,c("numeric","character"),-1);
-if (is.numeric(eas)) { eas <- as.character(eas); }
-#
-# dealing with empty easyp code: character(0) or only spaces.
-# Is this possibility relevant?
-if (length(eas) == 0) { return("");}
-RET <- 0;
-for (i in sjl(eas)) {
-    if (eas[i] == paste(rep(" ",nchar(eas[i])),collapse="")) { RET <- RET+1;}
-}
-if (RET == length(eas)) { return("");}
-#
-##########################################
-##########################################
-##########################################
-ax <- function(dd) {
-    # some checkings
-    if (transfo) { admi <- 1:5; # every type
-    } else { admi <- c(2:3,5);} # neither itself nor rounding
-    if (length(dd$blo) == 0) {
-        form3affiche(eas);
-	rapport("An empty easyp expression was not detected by easyp3trouve!");
-    }
-    if ((1 %in% dd$typ) & !transfo) {
-	erreur(eas,"At this level, the node itself is not expected!");
-    }
-    if ((4 %in% dd$typ) & !transfo){
-	erreur(eas,"At this level, no rounding is expected!");
-    }
-    if (length(unique(c(dd$typ,admi))) != length(admi)) {
-	form3affiche(dd);
-        form3affiche(eas);
-	rapport("Check this piece of easyprogramming!");
-    } 
-    # translating
-    nbb <- length(dd$typ);
-    res <- rep("",nbb);
-    vecteur <- FALSE;
-    for ( ip in sj(nbb)) {
-        quoi <- dd$typ[ip];
-        if (quoi == 1) {
-            res[ip] <- "Y"; 
-            vecteur <- TRUE;
-        }
-        if (quoi == 2) {
-            res[ip] <- paste(opapa,dd$blo[ip],cpapa,sep="");
-            vecteur <- TRUE;
-        }
-        if (quoi == 3) {
-            res[ip] <- dd$blo[ip];
-            vecteur <- TRUE;
-        }
-        if (quoi == 4) {
-            res[ip] <- paste("round(Y,",dd$blo[ip],")",sep="");
-            vecteur <- TRUE;
-        }
-        if (quoi == 5) { res[ip] <- dd$blo[ip];}
-    }
-    res <- paste(res,collapse="");
-    if (!vecteur) {
-        # the vector structure must be imposed
-        res <- paste(opaco,res,cpaco,sep="");
-    }
-res;
-}
-##########################################
-##########################################
-##########################################
-# about the eas to be analyzed
-neas <- length(eas);
-#
-#
-# when there is only one component
-if (neas == 1) {
-    # analyzing the expression
-    dd <- easyp3cut(eas);
-    # checking and translating
-    res <- ax(dd);
-    # returning
-    res <- paste(form3ind(2,FALSE),"{",
-                 form3ind(3),res,";",
-                 form3ind(2),"}",
-                 sep="");
-    return(res);
-}
-# preparing the coding of the more than one components
-rres <- rep("",neas);
-# translating each eas component
-for (nn in sj(neas)) {
-    # analyzing the expression under consideration
-    dd <- easyp3cut(eas[nn]);
-    # checking and translating
-    rres[nn] <- ax(dd);
-} # ending the loop over more than one component
-# assembling
-nive <- 2;
-# i.e. surrounding the expression to produce a relevant matrix
-# e.g. {matrix(rep(X[,'A'],4),ncol=4);}
-rr <- paste(form3ind(0+nive,FALSE),"{",
-            form3ind(1+nive),"cbind(",
-            sep="");
-for (nn in sj(neas)) {
-    rr <- paste(rr,form3ind(2+nive),rres[nn],sep="");
-    if (nn < neas) { rr <- paste(rr,",",sep=""); }
-}
-res <- paste(rr,
-             form3ind(1+nive),");",
-             form3ind(0+nive),"}",
-             sep="");
-# returning
-res;
-}
-#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 var3standard <- function(nvar,bef="-",aft="-")
-#TITLE (f0) provides nvar standard names of variables
+#TITLE (00) provides nvar standard names of variables
 #DESCRIPTION
 #   numbering surrounded with 'bef' and 'aft'
 #DETAILS
@@ -2620,6 +2902,7 @@ var3standard <- function(nvar,bef="-",aft="-")
 # names for repetitions. When 'nvar' is one, an empty
 # character is returned.
 #EXAMPLE
+# rs003k("RESET"); # needed only for R checking, to be forgotten
 # var3standard(5);
 #REFERENCE
 #SEE ALSO
@@ -2646,11 +2929,13 @@ paste(bef,sj(nvar),aft,sep="");
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-check4tyle <- function(x,typ,len,message=NULL)
-#TITLE (f0) checks the type and the length
+check4tyle <- function(x,typ,len,
+                       message=NULL,fatal=TRUE,na.rm=FALSE)
+#TITLE (00) checks the type and the length
 # of some standard object
 #DESCRIPTION
-# If not correct, a fatal message is issued
+# If not correct, a fatal message is issued.
+# NA are detected and considered as wrong.
 #DETAILS
 # 'integer' has not got the meaning in is.integer R
 # standard function. 'null' must be understood as
@@ -2660,35 +2945,48 @@ check4tyle <- function(x,typ,len,message=NULL)
 #INPUTS
 #{x} <<object to be checked.>>
 #{typ} <<The list of correct types, among
-# 'null",'integer','numeric','character','list','any','function'.
+# 'null",'integer','numeric','character',
+# 'logical','list','any','function'.
 # As understood, 'any' implies that no
 # check of the type is performed.>>
 #{len} <<If length(len)==1, the exact length
 # to be checked, if not must be of length for
 # the possible range of length(x). When -1,
 # no check on the length is performed.\cr
-# For data.frame, it is the number of columns.>>
+# For data.frame, it is the number of columns.
+# When \code{na.rm} the check is made after
+# removing the NA values.>>
 #[INPUTS]
 #{message} << Some additional message to be
 #            issued before stopping.>>
+#{fatal} << what to do when discovering
+#           an inconsistency ? TRUE: this function prints the message
+#           and stops; FALSE: this function returns
+#           the message as a character.
+#{na.rm} << Must the \code{NA} values be removed before checking?
+#           This implemented only for the type integer, numeric,
+#           character and logical.>>
 #VALUE
-# Nothing but a fatal error is issued when
-# the check fails.
+# When the check is validated returns TRUE.
+# If not, according to \code{fatal} prints the
+# message and stops or returns the message.
 #EXAMPLE
 # check4tyle(letters,c("numeric","character"),c(20,30),"!OK");
 #REFERENCE
 #SEE ALSO
 #CALLING
 #COMMENT
-#FUTURE
+#FUTURE improves the treatment of 'NA's
 #AUTHOR J.-B. Denis
 #CREATED 09_05_02
-#REVISED 09_06_26
+#REVISED 10_02_12
 #--------------------------------------------
 {
-# checking and preparation
-types <- c("integer","numeric","character",
-           "list","function","any",
+# checking the arguments and preparation
+# accepted types by check4tyle
+typena <- c("integer","numeric","character",
+           "logical");
+types <- c(typena,"list","function","any",
            "data.frame","null");
 type <- match(typ,types);
 if (all(is.na(type))) {
@@ -2696,6 +2994,19 @@ if (all(is.na(type))) {
            "CHECK4TYLE: None of the proposed type was in the list!"
           );
 }
+res <- character(0);
+# dealing with possible NAs
+narm <- 0;
+if (na.rm) { if (all(!is.na(match(typ,typena)))) { 
+    nu <- !is.na(x);
+    narm <- length(x) - length(nu);
+    x <- x[nu];
+}}
+#
+if (any(is.na(x))) {
+    res <- c(res,"CHECK4TYLE: 'x' is or comprises 'NA' which were not removed!");
+}
+# possible type for the check
 type <- types[type[!is.na(type)]];
 if (!is.numeric(len)) {
     erreur(len,"CHECK4TYLE: 'len' must be NUMERIC of size one or two");
@@ -2706,13 +3017,13 @@ if ((length(len)==0)|(length(len)>2)) {
 # processing for the length
 if (length(len)==1) {
     if (len>=0) { if (length(x)!=len) {
-        if (!isempty(message)) { form3titre(message);}
-        erreur(list(x,len),"CHECK4TYLE: 'x' is not of length 'len'");
+        if (narm>0) { res <- c(res,paste(narm,"components were removed"));}
+        res <- c(res,"CHECK4TYLE: 'x' is not of length 'len'");
     }}
 } else {
     if ((length(x)<len[1])|(length(x)>len[2])) {
-        if (!isempty(message)) { form3titre(message);}
-        erreur(list(x,len),"CHECK4TYLE: 'x' has got a length outside 'len'");
+        if (narm>0) { res <- c(res,paste(narm,"components were removed"));}
+        res <- c(res,"CHECK4TYLE: 'x' has got a length outside 'len'");
     }
 }
 # processing for the type
@@ -2725,25 +3036,31 @@ if (!("any" %in% type)) {
         if (tt=="numeric")   { if (is.numeric(x))   { ty <- TRUE;}}
         if (tt=="function")  { if (is.function(x))  { ty <- TRUE;}}
         if (tt=="character") { if (is.character(x)) { ty <- TRUE;}}
+        if (tt=="logical")   { if (is.logical(x))   { ty <- TRUE;}}
         if (tt=="list")      { if (is.list(x))      { ty <- TRUE;}}
         if (tt=="data.frame"){ if (is.data.frame(x)){ ty <- TRUE;}}
-        if (tt=="null")      { if (isempty(x))       { ty <- TRUE;}}
+        if (tt=="null")      { if (isempty(x))      { ty <- TRUE;}}
     }
     if (!ty) {
-        if (!isempty(message)) { form3titre(message);}
-        erreur(list(type,x),
-               "CHECK4TYLE: 'x' does not belong to any types of 'type'!"
-              );
+        res <- c(res,paste("Among type = ",paste(type,collapse="/")));
+        res <- c(res,"CHECK4TYLE: 'x' does not belong to any of these!");
     }
 }
 # returning
-return(invisible());
+if (identical(res,character(0))) {
+    res <- TRUE;
+} else {
+    if (!is.null(message)) { res <- c(res,message);}
+    print.default(x);
+    if (fatal) {erreur("From check4tyle:",paste(res));}
+}
+res;
 }
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 list2vect <- function(li,wh="C",name.rm=TRUE)
-#TITLE (f0) transforms a list of scalars into a (named) vector
+#TITLE (00) transforms a list of scalars into a (named) vector
 #DESCRIPTION
 # All components of the list are supposed to be scalars (if not
 # a fatal error is issued. When numeric type is asked and the conversion
@@ -2762,6 +3079,7 @@ list2vect <- function(li,wh="C",name.rm=TRUE)
 # a unique vector concatening all components of the list 
 # with the desired type. 
 #EXAMPLE
+# rs003k("RESET"); # needed only for R checking, to be forgotten
 # list2vect(list(a="AAA",b="BBB"));
 #REFERENCE
 #SEE ALSO
@@ -2813,7 +3131,7 @@ res;
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 listev <- function(liste,ith)
-#TITLE (f0) returns the ith element of a list supposed to be numeric
+#TITLE (00) returns the ith element of a list supposed to be numeric
 #DESCRIPTION
 # as liste[[ith]] but returns numeric(0) if the length of 
 # the list is shorter than ith
@@ -2848,35 +3166,35 @@ else {
 }
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-
-### Les fonctions suivantes ne sont pas encore au point !!!
-
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-easyp3cut <- function(x,opar=c("(","{","["),cpar=c(")","}","]"))
-#TITLE (f0) splits an expression into non nested blocks 
+easyp3cut <- function(x,pth=matrix(c("(","{","[",")","}","]"),3))
+#TITLE (00) splits an expression into non nested blocks 
 #DESCRIPTION
 # x must be a character string which is parsed to 
-#   extracts \code{n} type of blocks where n is \code{length(opar)+1}.
-#   Something in between \code{opar[i]} and \code{cpar[i]} is coded \code{i},
+#   extracts \code{n} types of blocks where n is \code{nrow(pth)+1}.
+#   Something in between \code{pth[i,1]} and \code{pth[i,2]} is coded \code{i},
 #   everything else is coded \code{0}. See the examples.
 #DETAILS
 # The braces can contain more than one character, they must be
-# distinct.
+# distinct. Be aware that no check is done about the possible nesting
+# of the parentheses.
 #PKEYWORDS syntax
 #KEYWORDS utilities
 #INPUTS
 #{x} <<character string to split; must be of length one.>>
 #[INPUTS]
-#{opar} <<character defining the opening parentheses.>>
-#{cpar} <<character defining the closing parentheses (must 
-#         be of length \code{lenght(opar)}.>>
+#{pth} <<character matrix with two columns defining
+# the opening parentheses in the first column and the
+# closing parentheses in the second column.>>
 #VALUE
 # A list of two equal length vectors:
 #{$blo} <<The vector of character strings (braces are taken off)>>
-#{$typ} <<Corresponding codes of the blocks>>
+#{$typ} <<Corresponding codes of the blocks and 0 when outside of
+# any defined block.>>
 #EXAMPLE
+# rs003k("RESET"); # for R checking compliance (useless)
 # easyp3cut("(a+b)^[2]");
-# easyp3cut("abs({{*Y*}})*{{A}}^{{B}}","{{","}}");
+# easyp3cut("abs({{*Y*}})*{{A}}^{{B}}",matrix(c("{{","}}"),1));
 #REFERENCE
 #SEE ALSO
 #CALLING
@@ -2884,35 +3202,45 @@ easyp3cut <- function(x,opar=c("(","{","["),cpar=c(")","}","]"))
 #FUTURE
 #AUTHOR J.-B. Denis
 #CREATED 07_07_11
-#REVISED 09_09_08
+#REVISED 09_11_05
 #--------------------------------------------
 {
-cat("\n\nLes fonctions suivantes doivent etre mises au point !!!\n\n");
 # checking
-check4tyle(   x,"character",1);
-check4tyle(opar,"character",-1);
-ncas <- length(opar);
-check4tyle(cpar,"character",ncas);
-if (sum(outer(opar,opar,"=="))!=ncas) { erreur(opar,"Identical opening parentheses");}
-if (sum(outer(cpar,cpar,"=="))!=ncas) { erreur(cpar,"Identical closing parentheses");}
-# ncas is the number of different possible types of parenthezed blocks
-# going back to the previous algorithm
+if (rbsb.mck) {
+    check4tyle(   x,"character",1);
+    check4tyle(pth,"character",-1);
+    if (!is.matrix(pth)) {
+        erreur(pth,"pth must a character MATRIX with two columns");
+    }
+    if (ncol(pth)!=2) {
+        erreur(pth,"pth must a character matrix with TWO columns");
+    }
+    ncas <- nrow(pth);
+    if (sum(outer(pth[],pth[],"=="))!=2*ncas) { erreur(pth,"ALL tags must be distinct");}
+}
+# going back to the previous arguments
+opar <- pth[,1]; cpar <- pth[,2];
+# ncas is the number of different possible types
+# of parenthezided blocks (can be 0)
+ncas <- nrow(pth);
 ics <- rep(NA,ncas);
 blo <- character(0);
 if (!is.null(x)) { if (length(x)==0) {x <- character(0);}}
 chaine <- x;
-fini <- FALSE;
-nepa <- TRUE;
+fini <- FALSE; # indicates the end of the algorithm
+nepa <- TRUE;  # indicates if no parenthesis is currently open
 if (length(chaine) == 0) { fini <- TRUE;}
-# discovering the blocks
+# a loop to discover the blocks
 while(!fini) {
-    # No parenthesis is currently openned, looking for one to be
-    # and putting the associated closing parenthesis into quoi
-    # ic gives the position of the first one, -1 if no more.
     if (nepa) {
+        # No parenthesis is currently openned, looking for one to be
+        # and putting the associated closing parenthesis into quoi
+        # ic gives the position of the first one, -1 if no more.
         for (jd in 1:ncas) {
+            # looking for the positions of all opening parenthesis
             ics[jd] <- regexpr(opar[jd],chaine,fixed=TRUE)[1];
         }
+        # determining the first one
         if (sum(ics > 0) > 0) {
             ic <- min(ics[ics > 0]);
             qui <- (1:ncas)[ics == ic][1];
@@ -2921,38 +3249,38 @@ while(!fini) {
             # lop/lcp is the length of the opening and closing parentheses
             lop <- nchar(opar[qui]);
             lcp <- nchar(cpar[qui]);
-        }
-        else {ic <- -1;}
-    }
-    # Looking for the closing parenthesis of the presently openned
-    # ic gives its position
-    else {
+        } else {ic <- -1;}
+    } else {
+        # Looking for the closing parenthesis of the presently openned
+        # ic will give its position
         ic <- regexpr(quoi,chaine,fixed=TRUE)[1];
     }
-    # No new block to be identified
+    #
     if ( ic < 0) {
+        # No new block was identified
         blo <- c(blo,chaine);
         fini <- TRUE;
-    }
-    # a block is under discovery
-    else {
-        # the block is just openned (nepa to FALSE)
+    } else {
+        # a block is under discovery
         if (nepa) {
-            blo <- c(blo,substr(chaine,1,ic-lop+1));
-            #blo <- c(blo,substr(chaine,1,ic-lop));
+            # the block is just openned
+            blo <- c(blo,substr(chaine,1,ic-1));
             chaine <- substr(chaine,ic,nchar(chaine));
             nepa <- FALSE;
-        }
-        # the block must be closed (nepa to TRUE)
-        else {
+        } else {
+            # the block must be closed
             blo <- c(blo,substr(chaine,1,ic+lcp-1));
             chaine <- substr(chaine,ic+lcp,nchar(chaine));
             nepa <- TRUE;
         }
     }
-}
+} # while(!fini);
 # at this level the blocks were cutted with their braces...
-# now coding and preparing the codes and removing the braces
+# and some additional empty blocks were introduced
+# (1) suppressing the empty blocks
+bnul <- (blo == "");
+blo <- blo[!bnul];
+# (2) now coding and preparing the codes and removing the braces
 cod <- numeric(0);
 if (length(blo) > 0) {
     # removing empty blocks
@@ -2980,70 +3308,67 @@ list(blo=blo,typ=cod);
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-easyp3stickback <- function(d)
-#TITLE (f0) converse operation of easyp3cut
+easyp3stickback <- function(d,pth=matrix(c("(","{","[",")","}","]"),3))
+#TITLE (00) converse operation of easyp3cut
 #DESCRIPTION
 # d must be a list with $typ and $blo components
 # (see easyp3cut for the details)
 #DETAILS
-# The braces used are defined into the matrix
-# of constants options()$rbsb.cpt. Those used are precised
-# in the local vector quels.\cr
 #PKEYWORDS
 #KEYWORDS utilities
 #INPUTS
 #{d} <<d$typ for the type of components, 
 #      d$blo for the content of each component.>>
 #[INPUTS]
+#{pth} <<character matrix with two columns defining
+# the opening parentheses in the first column and the
+# closing parentheses in the second column.>>
 #VALUE
 # A character(1) of the reconstituted easyprograming
 #EXAMPLE
+# rs003k("RESET"); # for R checking compliance (useless)
+# uu <- easyp3cut("abs({Y})*[A]^(B)");
+# easyp3stickback(uu);
 #REFERENCE
 #SEE ALSO
 #CALLING
 #COMMENT
 #FUTURE
-# examples to be proposed
-# uu <- easyp3cut("abs({{*Y*}})*{{A}}^{{B}}");
-# easyp3stickback(uu);
 #AUTHOR J.-B. Denis
 #CREATED 09_03_31
-#REVISED 09_03_31
+#REVISED 09_11_05
 #--------------------------------------------
 {
-cat("\n\nLes fonctions suivantes doivent etre mises au point !!!\n\n");
 # checking
 if (!("blo" %in% names(d))) {erreur(d,"$blo is missing");}
 if (!("typ" %in% names(d))) {erreur(d,"$typ is missing");}
 if (length(d$typ)!=length(d$blo)) {erreur(d,"$typ & $blo has got != lengths");}
+check4tyle(pth,"character",-1);
+if (!is.matrix(pth)) {
+    erreur(pth,"pth must a character MATRIX with two columns");
+}
+if (ncol(pth)!=2) {
+    erreur(pth,"pth must a character matrix with TWO columns");
+}
+ncas <- nrow(pth);
+if (sum(outer(pth[],pth[],"=="))!=2*ncas) { erreur(pth,"ALL tags must be distinct");}
+# going back to the previous arguments
+opar <- pth[,1]; cpar <- pth[,2];
+# ncas is the number of different possible types of parenthezided blocks (can be 0)
+mncas <- max(d$typ);
+if (mncas > ncas) {
+    erreur(list(opar,d$typ),"Some parentheses are not described into 'opar/cpar' arguments");
+}
 # reconstituting
 nb <- length(d$typ);
 res <- "";
 for (ii in sjl(d$typ)) {
-    tt <- d$typ[ii];
-    if ((tt==1)|(tt==2)) {
-        res <- paste(res,options()$rbsb.cpt["nodes","opening"],
-                         d$blo[ii],
-                         options()$rbsb.cpt["nodes","closing"],
-                     sep="");
+    ty <- d$typ[ii]; bl <- d$blo[ii];
+    if (ty==0) {
+        res <- paste(res,bl,sep="");
+    } else {
+        res <- paste(res,opar[ty],bl,cpar[ty],sep="");
     }
-    if (tt==3) {
-        res <- paste(res,options()$rbsb.cpt["vectors","opening"],
-                         d$blo[ii],
-                         options()$rbsb.cpt["vectors","closing"],
-                     sep="");
-    }
-    if (tt==4) {
-        res <- paste(res,options()$rbsb.cpt["rounding","opening"],
-                         d$blo[ii],
-                         options()$rbsb.cpt["rounding","closing"],
-                     sep="");
-    }
-    if (tt==5) {
-        res <- paste(res,d$blo[ii],
-                     sep="");
-    }
-
 }
 # returning
 res;
@@ -3052,7 +3377,7 @@ res;
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 unex <- function(xv,di,check=TRUE)
-#TITLE (f1) collapsing indices
+#TITLE (00) collapsing indices
 #DESCRIPTION
 #   Transforms multiple indices into a unique index
 #   following the storage order of array elements
@@ -3072,7 +3397,8 @@ unex <- function(xv,di,check=TRUE)
 #VALUE
 # A vector of size N with the unique index values
 #EXAMPLE
-# uu <- data.frame(F1=factor(rep(1:3,each=4)),F2=factor(rep(1:4,3)));
+# rs003k("RESET"); # needed only for R checking, to be forgotten
+# uu <- rbsb.dfr1;
 # print(cbind(uu,unex(uu,3:4)));
 #REFERENCE
 #SEE ALSO
@@ -3108,114 +3434,8 @@ res;
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-stat8corg <- function(xy,nat)
-#TITLE (f1) computes correlations between two variables
-#DESCRIPTION The two common correlation coefficients are computed
-# for two variables.
-# TO BE DONE: the natures of the random variables are taken into
-# account to accept non valued variables.
-#DETAILS
-#PKEYWORDS stat
-#KEYWORDS
-#INPUTS
-#{xy} <<matrix with two columns, containing the
-#       two variables>>
-#{nat} <<the two natures of the two variables>> 
-#[INPUTS]
-#VALUE
-# A vector of two values:
-#    (1) the correlation coefficient of Pearson (on the values)
-#  & (2) the correlation coefficient of Spearman (on the ranks)
-#EXAMPLE
-#REFERENCE
-#SEE ALSO
-#CALLING
-#COMMENT
-#FUTURE
-#AUTHOR J.-B. Denis
-#CREATED 07_07_04
-#REVISED 09_08_22
-#--------------------------------------------
-{
-np <- rbsb3k("snp");
-res <- c(NA,NA);
-if ((var(xy[,1],na.rm=TRUE) > 0) & (var(xy[,2],na.rm=TRUE) > 0)) {
-    if (np[nat[1],"numeric"] & np[nat[2],"numeric"]) {
-        res[1] <- cor.test(xy[,1],xy[,2],method="pearson",exact=FALSE)$estimate;
-    }
-    if (np[nat[1],"ordered"] & np[nat[2],"ordered"]) {
-        res[2] <- cor.test(xy[,1],xy[,2],method="spearman",exact=FALSE)$estimate;
-    }
-}
-res;
-}
-#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-stat3univ <- function(data,nbmin=30)
-#TITLE (f1) computes univariates statistics from a data matrix
-#DESCRIPTION
-# data is a matrix: repetition by rows, variables by columns
-#DETAILS
-#PKEYWORDS statistics
-#KEYWORDS 
-#INPUTS
-#{data} <<Matrix with the data. NA values are possible.>>
-#[INPUTS]
-#{nbmin} <<(=30) Minimum number of observations required to 
-#                compute the statistics.>>
-#VALUE
-# a matrix having a column for each variables and different
-# statistics in rows. Dimnames are sufficient to understand
-# what it is.
-#EXAMPLE
-#REFERENCE
-#SEE ALSO
-#CALLING
-#COMMENT
-#FUTURE
-#AUTHOR J.-B. Denis
-#CREATED 08_10_05
-#REVISED 09_09_22
-#--------------------------------------------
-{
-# checking
-if (!is.matrix(data) &
-    !is.data.frame(data)) {
-    erreur(data,"A data MATRIX or a DATA.FRAME was expected!");
-}
-# preparing the returned matrix
-quoi <- c("number","missing",
-          "mean","std-dev.","min","Q01%","Q05%","Q10%","Q25%",
-          "median","Q75%","Q90%","Q95%","Q99%","MAX");
-if (length(quoi) != 15) {
-    form3affiche(quoi);
-    rapport("MODIFIER LA D'EFINITION DE uu DANS bn2dn ET CE TEST");
-}
-mar <- matrix(NA,length(quoi),ncol(data));
-dimnames(mar) <- list(quoi,dimnames(data)[[2]]);
-#
-for (jd in sj(ncol(mar))) {
-    mar["number", jd] <- sum(!is.na(data[,jd]));
-    mar["missing",jd] <- sum(is.na(data[,jd]));
-    if (mar["number",jd] > nbmin) {
-        mar["mean",jd] <- mean(data[,jd],na.rm=TRUE);
-        mar["std-dev.",jd] <- sqrt(var(data[,jd],na.rm=TRUE));
-        mar["min",jd] <- min(data[,jd],na.rm=TRUE);
-        mar["MAX",jd] <- max(data[,jd],na.rm=TRUE);
-        mar[6:14,jd] <- quantile(data[,jd],
-                      c(0.01,0.05,0.10,0.25,0.50,0.75,0.90,0.95,0.99),
-                      na.rm=TRUE);
-    }
-}
-# returning
-mar;
-}
-#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-list2des <- function(li,name=rbsb3k("nch"))
-#TITLE (f2) transforms a consistent list into a new des object
+list2des <- function(li,name=rbsb.cha0)
+#TITLE (00) transforms a consistent list into a new des object
 #DESCRIPTION
 # Just analyzing the components of the list
 # (consistent names have to be used) which are supposed
@@ -3230,12 +3450,13 @@ list2des <- function(li,name=rbsb3k("nch"))
 #INPUTS
 #{li} <<The list to be transformed into a des object.>>
 #[INPUTS]
-#{name} <<(=rbsb3k("nch")) gives the name of the node
+#{name} <<(=rbsb.cha0) gives the name of the node
 #         when li$name does not exist. If both are absent
 #         then an error is issued.>>
 #VALUE
 # The generated 'des' object
 #EXAMPLE
+# rs003k("RESET"); # needed only for R checking, to be forgotten
 # print(list2des(list(name="A",role="Just to see",comm="Not very interesting")));
 #REFERENCE
 #SEE ALSO
@@ -3256,11 +3477,11 @@ if (is.null(li$name)) {
         li@name <- name;
     }
 }
-if (is.null(li$orig)) { li$orig <- rbsb3k("nch");}
-if (is.null(li$time)) { li$time <- rbsb3k("nch");}
-if (is.null(li$defi)) { li$defi <- rbsb3k("nch");}
-if (is.null(li$role)) { li$role <- rbsb3k("nch");}
-if (is.null(li$comm)) { li$comm <- rbsb3k("nch");}
+if (is.null(li$orig)) { li$orig <- rbsb.cha0;}
+if (is.null(li$time)) { li$time <- rbsb.cha0;}
+if (is.null(li$defi)) { li$defi <- rbsb.cha0;}
+if (is.null(li$role)) { li$role <- rbsb.cha0;}
+if (is.null(li$comm)) { li$comm <- rbsb.cha0;}
 # returning
 new("des",name=li$name,orig=li$orig,time=li$time,
           defi=li$defi,role=li$role,comm=li$comm);
@@ -3269,7 +3490,7 @@ new("des",name=li$name,orig=li$orig,time=li$time,
 
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 char2des <- function(x)
-#TITLE (f1) transforms,if necessary, a single character to a 'des' object
+#TITLE (00) transforms,if necessary, a single character to a 'des' object
 #DESCRIPTION
 # when x is not a character(1) or a 'des' an error is issued
 #DETAILS
@@ -3281,6 +3502,7 @@ char2des <- function(x)
 #VALUE
 # a 'des' object (not modfyied when x was already some one.
 #EXAMPLE
+# rs003k("RESET"); # needed only for R checking, to be forgotten
 # print(char2des("toto"));
 #REFERENCE
 #SEE ALSO
@@ -3295,16 +3517,501 @@ char2des <- function(x)
 # checking
 if ((!is.character(x)) &
     (length(x)!=1)     &
-    (class(x) != "des")) {
+    (!is(x,"des"))) {
     erreur(x,"Must be 'character(1)' or a 'des' object!");
 }
 # returning
-if (class(x)=="des") { res <- x;
+if (is(x,"des")) { res <- x;
 } else {
     res <- new("des",name=x,
-               orig=paste("created by",rbsb3k("msi")),
+               orig=paste("created by",rbsb.msi),
                time=today());
 }
 res;
+}
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+comp3interpolation <- function(values,x,xx=1:x[max(x)])
+#TITLE (00) extrapolation of known values
+#DESCRIPTION From a set values given at known dates (x),
+# interpolation is done for other dates (xx). Extrapolation 
+# is rejected.
+#DETAILS
+#KEYWORDS utilities
+#INPUTS
+#{values}<<values to be interpolated>>
+#{x}<<dates associated to the known values>>
+#[INPUTS]
+#{xx} <<dates for which values must be found by 
+#       linear interpolation.>>
+#VALUE
+# The resulting values (in the same order that xx)
+#EXAMPLE
+#REFERENCE
+#SEE ALSO
+#CALLING
+#COMMENT
+#FUTURE
+#AUTHOR J.-B. Denis
+#CREATED 09_10_08
+#REVISED 09_10_08
+#--------------------------------------------
+{
+# checking
+check4tyle(values,"numeric",c(2,Inf),"argument 'values' not accepted");
+check4tyle(     x,"numeric",c(2,Inf),"argument 'x' not accepted");
+nbv <- length(values);
+if (length(x)!=nbv) {
+    erreur(list(length(values),length(x)),"values and x must have the same lengths");
+}
+check4tyle(xx,"numeric",-1,"argument 'xx' must be numeric");
+if (length(xx)==0) { return(numeric(0));}
+if (!identical(as.numeric(range(x)),as.numeric(range(c(x,xx))))) {
+    erreur(list(range(x),range(xx)),"Only interpolation is possible!");
+}
+# sorting the reference values
+oo <- order(x);
+values <- values[oo];
+x <- x[oo];
+# interpoling
+res <- rep(NA,length(xx));
+nbc <- length(x)-1;
+for (clc in sj(nbc)) {
+    bi <- x[clc]; bs <- x[clc+1];
+    qui <- (bi <= xx) & (xx <= bs);
+    if (length(qui) > 0) {
+        rr <- values[clc] + (values[clc+1]-values[clc]) * (xx[qui] - bi) / (bs - bi);
+        res[qui] <- rr;
+    }
+}
+# returning
+res;
+}
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+get8daf <- function(daf,wh=0,strict=FALSE,check=TRUE)
+#TITLE (00) returns the data frame associated to a /daf/
+#DESCRIPTION
+# The row numbers can be choosen with 'wh'
+#DETAILS
+#KEYWORDS datasets
+#INPUTS
+#{daf} <<The /daf/ to be read.>>
+#[INPUTS]
+#{wh} <<(=0) numeric giving the numbers of the observations
+#           to be read. Zero means all observations.>>
+#{strict} <<(=FALSE) When TRUE a fatal error is issued
+#           if some asked observations does not exist. If
+#           not the present ones are returned.>>
+#{check} <<(=TRUE) Must the 'daf' object be checked?>>
+#VALUE
+# a data frame
+#EXAMPLE
+#REFERENCE
+#SEE ALSO
+#CALLING
+#COMMENT
+#FUTURE
+#AUTHOR J.-B. Denis
+#CREATED 09_05_11
+#REVISED 10_02_11
+#--------------------------------------------
+{
+# checking
+if (check) {if (rbsb.mck) {valid8daf(daf);}}
+check4tyle(wh,"integer",-1,"These are supposed to be the asked row numbers");
+if (min(wh) < 0) { erreur(wh,"Negative row number were asked.");}
+# getting the values
+if (daf@what == "t") {
+    res <- read.table(daf@valu);
+}
+#
+if (daf@what == "c") {
+    res <- read.csv(daf@valu);
+}
+#
+if (daf@what == "c2") {
+    res <- read.csv2(daf@valu);
+}
+#
+if (daf@what == "d") {
+    coda <- paste("res <-",daf@valu);
+    eval(parse(text=coda));
+}
+#
+if (daf@what == "f") {
+    coda <- paste("res <-" ,daf@valu,"()");
+    eval(parse(text=coda));
+}
+# possible observations
+opo <- sj(nrow(res));
+# defining and checking the asked observations
+if (identical(wh,0)) { wh <- opo;}
+prendre <- intersect(wh,opo);
+if (strict) {
+    if (length(prendre) < length(wh)) {
+        erreur(list(opo,wh),"Some asked observations were not found");
+    }
+}
+# selecting the values
+res <- res[prendre,,drop=FALSE];
+# returning
+res;
+}
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+df2ustat <- function(data,nbmin=30)
+#TITLE (00) computes univariate statistics from a data frame
+#DESCRIPTION
+# Data being supposed to be a data frame: observation by rows,
+# variables by columns being numeric or factor; standard univariate
+# statistics are computed for each variable.
+#DETAILS
+#PKEYWORDS statistics
+#KEYWORDS 
+#INPUTS
+#{data} <<Date frame containing the data set. NA values are accepted.>>
+#[INPUTS]
+#{nbmin} <<(\code{numeric(1)}) Minimum number of observations required to 
+#                compute the statistics for each variable.>>
+#VALUE
+# a list with as many components as variables (getting the variable names).
+# For numeric variables it is a named vector with standard statistics.
+# For categoric variables it is a matrix having a column for each category
+# sorted according to the frequencies and four rows: frequencies, rounded 
+# percentages, rounded cumulated percentages in both directions.
+#EXAMPLE
+# rs003k("RESET"); # needed only for R checking, to be forgotten
+# set.seed(1234);
+# don <- matrix(round(runif(100)*100),20);
+# dimnames(don)[[2]] <- LETTERS[1:5];
+# print(df2ustat(as.data.frame(don),5));
+# set.seed(1234);
+# don <- matrix(letters[1+round(runif(100)*10)],20); 
+# dimnames(don)[[2]] <- LETTERS[1:5];
+# print(df2ustat(as.data.frame(don),5));
+#REFERENCE
+#SEE ALSO
+#CALLING
+#COMMENT
+#FUTURE
+#AUTHOR J.-B. Denis
+#CREATED 08_10_05
+#REVISED 09_12_29
+#--------------------------------------------
+{
+# checking
+if (rbsb.mck) {
+    check4tyle(nbmin,"integer",1,"'nbmin' must be integer");
+    nbmin <- abs(nbmin);
+    if (!is.data.frame(data)) {
+        erreur(data,"Must be a data frame!");
+    }
+}
+# preparing the returned list
+nbv <- length(data);
+res <- vector("list",nbv);
+names(res) <- names(data);
+# standard names
+cona <- c("number","missing",
+          "mean","std-dev.","min","Q01%","Q05%","Q10%","Q25%",
+          "median","Q75%","Q90%","Q95%","Q99%","MAX");
+cana <- c("Counts","Percentage","Cum.Per","cuM.per");
+# computing for each variable
+for (vv in sj(nbv)) {
+    if (is.numeric(data[[vv]])) {
+        # continuous case
+        res[[vv]] <- rep(NA,length(cona));
+        names(res[[vv]]) <- cona;
+        res[[vv]]["number"] <- sum(!is.na(data[,vv]));
+        res[[vv]]["missing"] <- sum(is.na(data[,vv]));
+        res[[vv]]["min"] <- min(data[,vv],na.rm=TRUE);
+        res[[vv]]["MAX"] <- max(data[,vv],na.rm=TRUE);
+        if (res[[vv]]["number"] >= nbmin) {
+            res[[vv]]["mean"] <- mean(data[,vv],na.rm=TRUE);
+	    res[[vv]]["std-dev."] <- sqrt(var(data[,vv],na.rm=TRUE));
+	    res[[vv]][6:14] <- quantile(data[,vv],
+		            c(0.01,0.05,0.10,0.25,0.50,0.75,0.90,0.95,0.99),
+			    na.rm=TRUE);
+	}
+    }
+    if (is.factor(data[[vv]])) {
+        # categoric case
+	nbni <- length(levels(data[[vv]]));
+	res[[vv]] <- matrix(0,nbni,4);
+	cou <- sort(table(data[[vv]]));
+	dimnames(res[[vv]]) <- list(names(cou),cana);
+	res[[vv]][,1] <- cou;
+	res[[vv]][,2] <- round(cou*100/sum(cou));
+	res[[vv]][,3] <- round(cumsum(cou*100/sum(cou)));
+	res[[vv]][,4] <- rev(round(cumsum(rev(cou*100/sum(cou)))));
+    }
+}
+# returning
+res;
+}
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+df2bstat <- function(data,nbmin=80)
+#TITLE (00) computes bivariate statistics from a data frame
+#DESCRIPTION
+# Data being supposed to be a data frame: observation by rows,
+# variables by columns being numeric or factor; standard bivariate
+# statistics are computed for each couple of variables.
+#DETAILS
+#PKEYWORDS statistics
+#KEYWORDS 
+#INPUTS
+#{data} <<Date frame containing the data set. NA values are accepted.>>
+#[INPUTS]
+#{nbmin} <<(\code{numeric(1)}) Minimum number of observations required to 
+#                compute the statistics for each variable.>>
+#VALUE
+# a symmetric matrix having rows and columns associated to the variables.
+# When the couple is numeric/numeric: the Pearson correlation; 
+# categoric/categoric: the first eigen values of {n_ij/(n_i+.n_+j)};
+# numeric/categoric: the Pearson correlation giving to the categoric the
+# values of mean of the numeric.
+#EXAMPLE
+# rs003k("RESET"); # needed only for R checking, to be forgotten
+# set.seed(1234);
+# don <- as.data.frame(matrix(round(runif(100)*10),20));
+# names(don) <- LETTERS[1:5];
+# don[[4]] <- as.factor(don[[4]]);
+# don[[5]] <- as.factor(don[[5]]);
+# print(df2bstat(don,5));
+#REFERENCE
+#SEE ALSO
+#CALLING
+#COMMENT
+# The underlying theory for the non standard correlations is
+# to be established
+#FUTURE
+#AUTHOR J.-B. Denis
+#CREATED 09_12_29
+#REVISED 09_12_29
+#--------------------------------------------
+{
+# checking
+if (rbsb.mck) {
+    check4tyle(nbmin,"integer",1,"'nbmin' must be integer");
+    nbmin <- abs(nbmin);
+    if (!is.data.frame(data)) {
+        erreur(data,"Must be a data frame!");
+    }
+}
+# preparing the returned matrix
+nbv <- length(data);
+res <- matrix(NA,nbv,nbv);
+dimnames(res) <- list(names(data),names(data));
+# computing the 'correlations'
+for (v1 in sj(nbv)) { for (v2 in sj(nbv)) {
+    if (v1==v2) { res[v1,v2] <- 1;}
+    if (v1 <v2) {
+        rho <- NA;
+        V1 <- data[[v1]]; V2 <- data[[v2]];
+        ou1 <- !is.na(V1); ou2 <- !is.na(V2);
+        ou <- which(ou1 & ou2);
+        if (length(ou)>=nbmin) {
+            if (is.numeric(V1) & is.numeric(V2)) {
+                rho <- cor(V1[ou],V2[ou]);
+            }
+            if (is.factor(V1) & is.factor(V2)) {
+                NN <- table(V1[ou],V2[ou]);
+                nl <- nrow(NN); nc <- ncol(NN);
+                nn <- sum(NN)*(solve(diag(apply(NN,1,sum),nl,nl)) %*%
+                               NN %*%
+                               solve(diag(apply(NN,2,sum),nc,nc))
+                              );
+                dd <- svd(nn)$d;
+                rho <- dd[1]/sum(dd);
+            }
+            VN <- "non";
+            if (is.numeric(V1) & is.factor(V2)) { VN <- V1[ou]; VF <- V2[ou];}
+            if (is.numeric(V2) & is.factor(V1)) { VN <- V2[ou]; VF <- V1[ou];}
+            if (is.numeric(VN)) {
+                # computing the mean by level
+                scsc <- rep(NA,length(levels(VF)));
+                for (ll in sjl(levels(VF))) {
+                    scsc[ll] <- mean(VN[VF==levels(VF)[ll]],na.rm=TRUE);
+                }
+                # creating the corresponding numerical vector
+                VFN <- scsc[as.numeric(VF)];
+                rho <- cor(VN,VFN);
+            }
+        }
+        res[v1,v2] <- rho;
+        res[v2,v1] <- res[v1,v2];
+    }
+}}
+# returning
+res;
+}
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+check8list <- function(lili,nana)
+#TITLE (00) checks the components of a list
+#DESCRIPTION
+# checks that all \code{nana} are components of
+# the list \code{lili}.
+#DETAILS
+#KEYWORDS misc
+#PKEYWORDS 
+#INPUTS
+#{lili}<<(\code{list}). The list to be checked.>>
+#{nana}<<(\code{character}). The components to be found.>>
+#[INPUTS]
+#VALUE
+# Nothing but an error is issued if the check
+# is not positive.
+#EXAMPLE
+#REFERENCE 
+#SEE ALSO
+#CALLING
+#COMMENT
+#FUTURE
+#AUTHOR J.-B. Denis
+#CREATED 09_11_09
+#REVISED 09_11_09
+#--------------------------------------------
+{
+# checking
+nini <- names(lili);
+for (ii in nana) {
+    if (!expr3present(ii,nini)) {
+        erreur(list(ii,nini),"'ii' was not found in 'names(lili)'");
+    }
+}
+# returning
+invisible();
+}
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+comp3dtriang <- function(ddel,ste=1,pos=TRUE)
+#TITLE (00) develops a delay
+#DESCRIPTION
+# returns a list with the days and proportions
+# to apply to each of them. When \code{ddel} and 
+# \code{ste} are interger, the \code{$xval} are
+# also integer.
+#DETAILS
+# The function \code{seq} is used to compute \code{$xval}.
+#KEYWORDS misc
+#PKEYWORDS 
+#INPUTS
+#{ddel}<<(\code{numeric(3)}) Definition of the delay 
+# (first day, maximum day, last day).>>
+#[INPUTS]
+#{ste} <<(\code{numeric(1)}) Definition of the
+# progression.>>
+#{pos} <<(\code{logical(1)}) When TRUE the window
+# is first expanded of \code{ste} each side to give
+# non null \code{$xval}.>>
+#VALUE
+# A list with two components. \code{$xval} gives
+# the values; \code{prop} gives the proportion
+# to apply to each of them (\code{sum($prop)=1}.
+#EXAMPLE
+#REFERENCE 
+#SEE ALSO
+#CALLING
+#COMMENT
+#FUTURE
+#AUTHOR J.-B. Denis
+#CREATED 09_11_13
+#REVISED 09_11_13
+#--------------------------------------------
+{
+# checking
+if (rbsb.mck) {
+    check4tyle(ddel,"numeric",3,"Bad delay");
+    if (!all(diff(ddel)>=0)) {erreur(ddel,"must be non decreasing");}
+    if (all(diff(ddel)==0)) {erreur(ddel,"cannot be constant");}
+    check4tyle(ste, "numeric",1,"Bad ste");
+    if (ste<0) {erreur(ste,"must not be negative");}
+    check4tyle(pos, "logical",1,"Bad pos");
+}
+# dealing with pos
+if (pos) {
+    ddel[1] <- ddel[1] - ste;
+    ddel[3] <- ddel[3] + ste;
+}
+# computing the xval
+xval <- seq(ddel[1],ddel[3],ste);
+# computing the prop
+if (ddel[1]!=ddel[2]) {
+    asc <- (xval-ddel[1]) / (ddel[2]-ddel[1]);
+} else {
+    asc <- rep(Inf,length(xval));
+}
+if (ddel[3]!=ddel[2]) {
+    des <- (xval-ddel[3]) / (ddel[2]-ddel[3]);
+} else {
+    des <- rep(Inf,length(xval));
+}
+prop <- pmin(asc,des);
+prop <- prop / sum(prop);
+# dealing with pos
+if (pos) {
+    use <- 2:(length(prop)-1);
+    prop <- prop[use];
+    xval <- xval[use];
+}
+# returning
+list(xval=xval,prop=prop);
+}
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+comp3convolu <- function(pro1,pro2=pro1)
+#TITLE (00) computes a convoluted distribution
+#DESCRIPTION
+# From two probability vector associated to
+# sequential integers starting from ZERO,
+# returns the probability of the sum.
+#DETAILS
+#PKEYWORDS helpful
+#KEYWORDS iteration
+#INPUTS
+#{pro1}    <<Probability vector of the first variable.
+# needs not to be normalized.>>
+#[INPUTS]
+#{pro2}    <<Probability vector of the second variable>>
+#VALUE
+# A probability vector of length \code{length(pro1)+length(pro2)-1}.
+#EXAMPLE
+# comp3convolu(1:10);
+# comp3convolu(comp3convolu(0:5),0:5);
+#REFERENCE
+#SEE ALSO
+#CALLING
+#COMMENT
+#FUTURE
+#AUTHOR J.-B. Denis
+#CREATED 10_01_21
+#REVISED 10_01_21
+#--------------------------------------------
+{
+# checking
+if (any(pro1 < 0)) {
+    erreur(pro1,"Probability cannot be negative");
+}
+if (any(pro2 < 0)) {
+    erreur(pro2,"Probability cannot be negative");
+}
+res <- rep(NA,length(pro1)+length(pro2)-1);
+ppro <- outer(pro1,pro2);
+iind <- outer(1:length(pro1),1:length(pro2),"+") - 1;
+for (irr in sjl(res)) {
+    res[irr] <- sum(ppro[iind==irr]);
+}
+# returning
+res/sum(res);
 }
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

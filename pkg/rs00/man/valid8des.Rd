@@ -1,7 +1,7 @@
 \name{valid8des}
 \alias{valid8des}
 \title{
-(f3) checks a /des/
+(00) checks a /des/
 }
 \description{
 This function checks a /des/ objects

@@ -1,7 +1,7 @@
 \name{form3line}
 \alias{form3line}
 \title{
-(f0) print a separator line from a given pattern
+(00) print a separator line from a given pattern
 }
 \description{
 The line can be composite with the width arguement. The pattern can

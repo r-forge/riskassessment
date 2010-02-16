@@ -25,15 +25,16 @@ Class \code{"\linkS4class{des}"}, directly.
 }
 \section{Methods}{
   \describe{
-    \item{print}{\code{signature(x = "faux")}: see \code{print.faux} for more details. }
+    \item{print}{\code{signature(x = "faux")}: see \code{print8faux} for the details. }
 	 }
 }
-\references{ ~put references to the literature/web site here ~ }
+
 \author{ Jean-Baptiste Denis }
 \note{ ~~further notes~~ }
 
 \examples{
 showClass("faux");
+rs003k("reset"); # needed only for R checking, to be forgotten
 print(new("faux",level=0,name="No Error"));
 }
 \keyword{classes}

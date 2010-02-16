@@ -1,7 +1,7 @@
 \name{char2vect}
 \alias{char2vect}
 \title{
-(f0) transform a single character into a vector (or matrix)
+(00) transform a single character into a vector (or matrix)
 }
 \description{
 Just doing a character or numeric vector from a single characters.

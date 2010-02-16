@@ -1,7 +1,7 @@
 \name{today}
 \alias{today}
 \title{
-(f0) returns a character giving the present day
+(00) returns a character giving the present day
 }
 \description{
 returns a character giving the present day The day is given as
