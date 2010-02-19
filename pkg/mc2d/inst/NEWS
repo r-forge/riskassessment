@@ -7,11 +7,13 @@ NEW FEATURES
 
 - The documentation is now a real vignette
 - mcratio, a function to measure variability and uncertainty
+- extractvar and addvar, two utilities for multivariate nodes
 
 IMPROVEMENTS
 
 - Ops.mcnode function is much more efficient and less memory consuming
-- plot.mc propose to fill the enveloppes
+- great improvement for speed in mcstoc for multivariate distributions
+- plot.mc proposes to fill the enveloppes
 - empiricalD is (a little bit) more efficient
 
 BUG FIXES

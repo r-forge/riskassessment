@@ -125,15 +125,15 @@ mcnode. \samp{lsup} should be pairwise strictly greater then
 \code{\link{lhs}}}
 }
 \details{
-Note that arguments after \dots must be matched exactly.
+Note that arguments after \dots must match exactly.
 
 Any function who accepts vectors/matrix as arguments may be used
 (notably: all current random generator of the \samp{stats} package).
-The arguments may be sent classically but it is strongly recommended
+The arguments may be sent classically but it is STRONGLY recommended
 to use consistant \samp{mcnode}s if arguments should be recycled,
-since a complex recycling is handled for \samp{mcnode} and not for
-vectors. The rules for compliance of \samp{mcnode} arguments are as
-following (see below for special functions): 
+since a very complex recycling is handled for \samp{mcnode} and not
+for vectors. The rules for compliance of \samp{mcnode} arguments are
+as following (see below for special functions): 
 
 \describe{
 \item{type="V"}{accepts \samp{"0" mcnode} of dimension \samp{(1 x 1 x

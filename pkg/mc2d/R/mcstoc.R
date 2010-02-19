@@ -30,11 +30,11 @@ mcstoc <- function(func=runif, type=c("V","U","VU","0"), ..., nsv=ndvar(), nsu=n
 #VALUE
 #An \samp{mcnode} object.
 #DETAILS
-#Note that arguments after \dots must be matched exactly.
+#Note that arguments after \dots must match exactly.
 #
 #Any function who accepts vectors/matrix as arguments may be used (notably: all current random generator of the \samp{stats} package).
-#The arguments may be sent classically but it is strongly recommended to use consistant \samp{mcnode}s
-#if arguments should be recycled, since a complex recycling is handled for \samp{mcnode} and not for vectors.
+#The arguments may be sent classically but it is STRONGLY recommended to use consistant \samp{mcnode}s
+#if arguments should be recycled, since a very complex recycling is handled for \samp{mcnode} and not for vectors.
 #The rules for compliance of \samp{mcnode} arguments are as following (see below for special functions):
 #{type="V"}<<accepts \samp{"0" mcnode} of dimension \samp{(1 x 1 x nvariates)} or of dimension \samp{(1 x 1 x 1)} (recycled)
 # and \samp{"V" mcnode} of dimension \samp{(nsv x 1 x nvariates)} or \samp{(nsv x 1 x 1)} (recycled).>>
@@ -174,39 +174,48 @@ mcstoc <- function(func=runif, type=c("V","U","VU","0"), ..., nsv=ndvar(), nsu=n
 
 #### A function to deal mcnodes (including linf and lsup) as arguments
 
-    LAFUNC <- function(argsd,typemc){
-          if(!is.null(typemc)){                                    #mcnode as arguments
+    LAFUNC <- function(argsd,typethismc){
+          if(!is.null(typethismc)){                                    #mcnode as arguments
 
-             if(!(type=="VU" || typemc=="0" || typemc==type)) stop("Incompatible type of nodes") # incompatible node
+            if(!(type=="VU" || typethismc=="0" || typethismc==type)) stop("Incompatible type of nodes") # incompatible node
 
             dimm <- dim(argsd)
-            if( (typemc == "V" && dimm[1] != nsv) ||
-                (typemc == "U" && dimm[2] != nsu) ||
-                (typemc == "VU" && (dimm[1] != nsv || dimm[2] != nsu)))
+            if( (typethismc == "V" && dimm[1] != nsv) ||
+                (typethismc == "U" && dimm[2] != nsu) ||
+                (typethismc == "VU" && (dimm[1] != nsv || dimm[2] != nsu)))
                    stop("Nodes of incompatible dimensions")                      # incompatible dimension
 
-            if(dimm[3] > 1){  #multivariates, need recycling
-              if(typemc=="U")
-                argsd <- apply(argsd, 3, matrix, ncol=nsu, nrow=nsv, byrow=TRUE)  #recycling U as matrix (nsv*nsu)x nvariates
-              else argsd <- apply(argsd, 3 ,matrix, ncol=nsu, nrow=nsv)           #recycling 0, V and VU as matrix (nsv*nsu) x nvariates 
-              }
-            else { dim(argsd) <- NULL
-                   if(typemc=="U") argsd <- rep(argsd, each = nsv)     #recycling U as vector nsv*nsu
-                   else if(typemc=="V") argsd <- rep(argsd, nsu)       #recycling V as vector nsv*nsu
+            if(maxdim3 > 1){  #at least one multivariate node as parameter, need recycling on the third dimension
+              if(typethismc=="U") argsd <- apply(argsd, 3, matrix, nrow=maxdim1, ncol=maxdim2, byrow=TRUE)  # recycling U as matrix (maxdim1*maxdim2) x nvariates
+                else argsd <- apply(argsd, 3 ,matrix, nrow=maxdim1, ncol=maxdim2)                           # recycling 0, V, VU as matrix (maxdim1*maxdim2) x nvariates
+            }                           
+
+            else { dim(argsd) <- NULL    # as vector
+                   if(typethismc == "U" && maxdim1!=1) argsd <- rep(argsd, each = maxdim1)     #recycling U as vector nsv*nsu
                     }
-          }                                                           #V and VU as vector nsv*nsu
-          else {if(is.array(argsd))                                   # not an mcnode
-            stop("Array prohibited in mcstoc as parameter. Use an mcnode instead")
-            }
-      return(unclass(argsd))}
+          }                                                           
+          else if(is.array(argsd)) stop("Array prohibited in mcstoc as parameter. Use an mcnode instead")
+      return(unclass(argsd))
+    }
 
 #### 
 
-    if(largsd != 0){
-      typemc <- lapply(argsd,attr,"type")
-      argsd <- mapply(LAFUNC,argsd,typemc,SIMPLIFY=FALSE)
+      typemc <- lapply(argsd, attr, which = "type")
+      yamc <-   !is.null(unlist(typemc))                                        # At least one mcnode
+      if(yamc){
+            # evaluate the minimal common to build the minimal recycling level...
+            maxdim1 <- unlist(lapply(argsd, function(x) dim(x)[1]))
+            maxdim1 <- ifelse(is.null(maxdim1), 1, max(maxdim1))
+            maxdim2 <- unlist(lapply(argsd, function(x) dim(x)[2]))
+            maxdim2 <- ifelse(is.null(maxdim2), 1, max(maxdim2))
+            maxdim3 <- unlist(lapply(argsd, function(x) dim(x)[3]))
+            maxdim3 <- ifelse(is.null(maxdim3), 1, max(maxdim3))
       }
 
+    if(largsd != 0){
+      argsd <- mapply(LAFUNC, argsd, typemc, SIMPLIFY=FALSE)
+#print(argsd)
+      }
 
   if(lhs || rtrunc){                                             #define good function for the random sampling
     distr <- as.character(match.call()$func)                     #retrieve the name of the function
@@ -224,13 +233,12 @@ mcstoc <- function(func=runif, type=c("V","U","VU","0"), ..., nsv=ndvar(), nsu=n
           lmax <- max(length(linf),length(lsup))
           if(any(rep(linf, length.out = lmax) >= rep(lsup, length.out = lmax))) stop("linf should be < lsup")  #recycle vectors
           argsd$linf <- argsd$lsup <- argsd[[nsample]] <- NULL
-        
+          
           pinf <- do.call(pfun,c(list(q=linf),argsd),quote=TRUE)
           psup <- do.call(pfun,c(list(q=lsup),argsd),quote=TRUE)
-           
 
           if(!lhs) lesp <- runif(nnfin,min=pinf,max=psup)
-          else     lesp <- lhs(distr="runif",nsv=dimf[1],nsu=dimf[2], nvariates=dimf[3], min=pinf, max=psup) 
+          else     lesp <- lhs(distr="runif", nsv=dimf[1], nsu=dimf[2], nvariates=dimf[3], min=pinf, max=psup) 
 
           data <- do.call(qfun,c(list(p=lesp),argsd))
           data[pinf==0 & data > lsup] <- NaN          #ex: rtrunc("lnorm",10,linf=-2,lsup=-1)
@@ -241,29 +249,36 @@ mcstoc <- function(func=runif, type=c("V","U","VU","0"), ..., nsv=ndvar(), nsu=n
     else func <- function(...) {                      # LHS only
           argsd <- list(...)
           argsd[[nsample]] <- NULL
-          lesp <- lhs(distr="runif",nsv=dimf[1],nsu=dimf[2],nvariates=dimf[3],min=0,max=1)
+          lesp <- lhs(distr="runif", nsv=dimf[1], nsu=dimf[2], nvariates=dimf[3], min=0, max=1)
           return(do.call(qfun,c(list(p=lesp),argsd)))}
   }
 
   if(nvariates != 1){                                                 # do a try to test the length if nvariates != 1
     if(largsd != 0) argsdtest <- mapply(function(x,typemc){
-                            if(is.null(typemc)) return(unclass(x))
-                            if(is.matrix(x)) return(x[1,,drop=FALSE])
-                            return(x[1])},argsd, typemc, SIMPLIFY=FALSE)
+                                          if(is.null(typemc)) return(unclass(x))
+                                          if(is.matrix(x))    return(x[1,,drop=FALSE])     # mc (they have been unclassed)
+                                          return(x[1])}, 
+                            argsd, typemc, SIMPLIFY=FALSE)
       else argsdtest <- vector(mode="list",length=0)
+
     argsdtest[[nsample]] <- 1
     dimf <- c(1,1,1)
     data <- do.call(func,argsdtest,quote=TRUE)
     l <- length(data)
-    if(l==nvariates) dimf <- c(nsv,nsu,1)                                       # If it returns a vector
-        else if(l==1) dimf <- c(nsv,nsu,nvariates)                              # if it returns a number
+    if(l == nvariates) dimf <- c(nsv,nsu,1)                                     # If it returns a vector
+        else if(l == 1) dimf <- c(nsv,nsu,nvariates)                            # if it returns a number
           else stop("the function should return a vector of size 1 or nvariates if",nsample,"=1")
     }
 
     argsd[[nsample]] <- prod(dimf)
 
       data <- do.call(func,argsd,quote=TRUE)
-      data <- array(data,dim=c(nsv,nsu,nvariates))
+      
+      #Post Prod
+      if(yamc && maxdim1 == 1 && nsv != 1)                                      # transform an nsu*nsv*nvariates in (nsv,nsu)nvariates
+        data <- aperm(array(data,dim = c(nsu,nsv,nvariates)),  c(2,1,3))
+      else data <- array(data,dim=c(nsv,nsu,nvariates))
+      
       class(data) <- "mcnode"
       attr(data,"type") <- type
       attr(data,"outm") <- outm
