@@ -26,19 +26,22 @@
 
 \begin{document}
 
+\newpage
 \maketitle
+\newpage
 
 This documentation is intended for readers with:
 \begin{itemize}
-\item A medium level of experience in R. Please refer to the Manual An
-Introduction to R available with R distribution if needed;
+\item A medium level of experience in R. Please refer to the Manual \emph{An
+Introduction to R} available with R distribution if needed;
 \item Some knowledge about Monte-Carlo simulation (its basic principles
-and its utility) and about Quantitative Risk Assessment (QRA). 
+and its use) and about Quantitative Risk Assessment (QRA). 
 \end{itemize}
 
 This documentation will not describe all arguments of the functions.
 The definitive reference remains the documentation associated with
-the package. 
+the package. It is recommended to try the examples while reading the 
+explanations. 
 
 \tableofcontents{}
 
@@ -46,21 +49,21 @@ the package.
 \subsection{What is \texttt{mc2d}?}
 
 \texttt{mc2d} means Two-Dimensional Monte-Carlo (\emph{Monte-Carlo
-à Deux Dimensions}). This package :
+à 2 Dimensions}). This package provides:
 \begin{itemize}
-\item provides additional probability distributions;
-\item provides tools to construct One-Dimensional and Two-Dimensional Monte-Carlo
+\item additional probability distributions;
+\item tools to construct One-Dimensional and Two-Dimensional Monte-Carlo
 Simulations;
-\item provides tools to analyse One-Dimensional and Two-Dimensional Monte-Carlo
+\item tools to analyse One-Dimensional and Two-Dimensional Monte-Carlo
 Simulations.
 \end{itemize}
 
 In a previous version, some tools to fit parametric distributions
-to data were included. Because these functions are useful for other
+to data were included. Because these functions can be useful for other
 purposes, they have been moved to a separate package called \texttt{fitdistrplus}.
 
 \texttt{mc2d} was built for QRA in the Food Safety domain but it can
-be used in other QRA domains. 
+be used in other frameworks. 
 
 \subsection{What is Two-Dimensional Monte-Carlo Simulation (briefly)?}
 
@@ -69,9 +72,9 @@ and \cite{POUILLOT-2007} where this method was used. The principal
 reference for Two-Dimensional Monte-Carlo simulation remains \cite{CULLEN-FREY-1999}. 
 
 According to international recommendations, a QRA should reflect the
-variability in the risk and calculate the uncertainty
+variability in the risk and take into account the uncertainty
 associated with the risk estimate. The variability represents
-temporal, geographical and/or individual heterogeneity of the risk
+for instance temporal, geographical and/or individual heterogeneity of the risk
 for a given population. The uncertainty is understood as stemming
 from a lack of perfect knowledge about the QRA model structure and
 associated parameters%
@@ -80,47 +83,48 @@ uncertainty for variability
 and epistemic uncertainty for uncertainty.%
 }.
 
-In order to estimate the natural variability of the risk,
+In order to reflect the natural variability of a modelled risk,
 a Monte-Carlo simulation approach may be useful: the empirical distribution
-of the risk within the population may be estimated from the mathematical
+of the risk within the population may be obtained from the mathematical
 combination of distributions reflecting the variability of parameters
 across the population.
 
 A two-dimensional (or second-order) Monte-Carlo simulation was proposed
-to estimate the uncertainty in the risk estimates stemming
+to superimpose the uncertainty in the risk estimates stemming
 from parameter uncertainty \cite{CULLEN-FREY-1999}. A two-dimensional
 Monte-Carlo simulation is a Monte-Carlo simulation where the distributions
 reflecting variability and the distributions
 representing uncertainty are sampled
 separately in the simulation, so that variability
 and uncertainty in the output may be
-estinated separately. It may be described as following (see Figure
+assessed separately. It may be described as following (see Figure
 \ref{fig:Mc2d}): 
 
 \begin{enumerate}
-\item The parameters of the model should be divided into three categories:
-the parameters whose distributions reflect variability only,
-hereinafter denoted as variable parameters, the parameters
-whose distributions reflect uncertainty only, denoted as uncertain
-parameters and the parameters whose distributions reflect both
-uncertainty and variability. For this latter category, a hierarchical
-structure, using hyper-parameters, should be specified: if
+\item The parameters of the model should be divided into four categories:
+the fix parameters, the parameters whose distributions reflect variability only,
+hereinafter denoted as \emph{variable parameters}, the parameters
+whose distributions reflect uncertainty only, denoted as \emph{uncertain
+parameters} and the parameters whose distributions reflect both
+uncertainty and variability, denoted as \emph{variable and uncertain parameters}.
+For this latter category, a hierarchical
+structure, using hyper-parameters, has to be specified: if
 a parameter is both uncertain and variable, one should be able to
 specify an empirical or parametric distribution representing variability.
-This distribution is conditional upon other parameters for which there
-is some associated uncertainty. As an example, one should be able
+This distribution is conditional upon other parameters to which is
+associated the uncertainty. As an example, one should be able
 to specify a relationship such as
-\[ X\left|a,b\right.\sim N\left(a,b\right) \]
+\[ R\left|a,b\right.\sim N\left(a,b\right) \]
 where the specified normal distribution represents variability in
-$x$ conditional upon parameters $a$ and $b$. Hyperdistributions,
+$r$ conditional upon parameters $a$ and $b$. Hyperdistributions,
 such as
 \[ a\sim Unif\left(l_{a},u_{a}\right) \]
 and
 \[ b\sim Unif\left(l_{b},u_{b}\right) \]
-represent the uncertainty in the parameters $a$ and $b$;
+represent the uncertainty in the parameters $a$ and $b$ with uniform distribution;
 \item A set of uncertain parameters are randomly sampled from their respective
 distributions; 
-\item The QRA is performed using a classical (one-dimensional) Monte-Carlo
+\item The model is evaluated using a classical (one-dimensional) Monte-Carlo
 simulation of size $N_{v}$, treating the uncertain parameters as
 fixed. This QRA takes into account the variability in all variable
 parameters, and leads to an empirical density function reflecting
@@ -129,7 +133,8 @@ upon the uncertain parameters. Various statistics (\emph{e.g.} the
 mean, the standard deviation, percentiles) of the resulting empirical
 density function are evaluated and stored; 
 \item Steps 2) and 3) are performed a large number ($N_{u}$) of times ,
-leading to $N_{u}$ sets of statistics; 
+leading to $N_{u}$ sets of statistics. The uncertain parameters are generated
+with respect to their uncertain distributions; 
 \item As output, the $50^{th}$ percentile (median) of each statistic
 is used as a point estimate of this statistic; the $2.5^{th}$
 and $97.5^{th}$ percentiles of each statistic are used to
@@ -139,7 +144,7 @@ allows us to display a variability cumulative distribution
 via a graph. This curve is surrounded by the 2.5th and 97.5th percentiles
 obtained from the $N_{u}$ estimates of each of the 101 percentiles.
 \end{enumerate}
-%
+
 \begin{figure}
 \noindent \begin{centering}
 \includegraphics[angle=270, width=1\textwidth]{mc2dsaumon}
@@ -152,8 +157,8 @@ Simulation.}
 
 
 \texttt{mc2d} is a set of R functions
-that will help to develop such two-dimensional Monte-Carlo simulations.
-The main difference from the procedure described above is that \texttt{mc2d}
+that will help to implement such two-dimensional Monte-Carlo simulations.
+The main point to understand is that \texttt{mc2d}
 uses arrays of (at least) two dimensions to derive the results: the
 first dimension will reflect variability, the second will reflect
 uncertainty. This document will not develop the method further, but
@@ -166,30 +171,30 @@ a fictitious example.
 \textbf{Quantitative Risk Assessment: \emph{Escherichia coli}
 O157:H7 infection linked to the consumption of frozen ground
 beef in <3 year old children.}
+
+The model is built assuming that:
 \begin{itemize}
-\item We assume that, in a given batch of ground beef, \emph{E. coli} O157:H7
+\item in a given batch of ground beef, \emph{E. coli} O157:H7
 are randomly distributed with a mean concentration of $c=10$ bacteria
 (cfu) per gram of product;
-\item We assume that no bacterial growth occurs in storage, since the product
+\item no bacterial growth occurs in storage, since the product
 is kept frozen until it is cooked, just before consumption;
 \item 2.7\% of consumers cook their beef rare, 37.3\% medium
 and 60.0\% well done; 
 \item The following bacterial inactivation $i$ is associated with these
 cooking practices: 
-
 \begin{itemize}
 \item No inactivation for rare cooking;
 \item 1/5 surviving bacteria for a medium cooking;
 \item 1/50 surviving bacteria for a well done cooking.
 \end{itemize}
-\item The variability in steak serving sizes $s$ for <3 year children was
-estimated in a consumption survey. The best fit to the data
-was a gamma distribution with parameters: $shape=3.93,\: rate=0.0806$.
+\item The variability in steak serving sizes $s$ for <3 year children can 
+be described with a gamma distribution with parameters: $shape=3.93,\: rate=0.0806$.
 \item The dose-response relationship, describing the probability of illness,
 $P,$ according to the dose is a one-hit model. The probability of
 illness per hit $r$ is assumed to be constant with $r=0.001$.
 \end{itemize}
-The question is: \emph{What is the distribution of the risk of
+The question is: \emph{What is the risk of
 illness in the population that consumed the contaminated lot?}
 
 This distribution will be estimated using Monte-Carlo simulations
@@ -208,7 +213,8 @@ c & = & 10.\\
 i & \sim & emp\left(\left\{ 1,1/5,1/50\right\} ,\left\{ 0.027,0.373,0.600\right\} \right)\\
 s & \sim & gamma\left(3.93,0.0806\right)\\
 n & \sim & Poisson\left(c\times i\times s\right)\\
-P & = & 1-\left(1-0.001\right)^{n}
+r & = & 0.001\\
+P & = & 1-\left(1-r\right)^{n}
 \end{eqnarray*}
 
 where $emp\left(X,P\right)$ is an empirical
@@ -224,7 +230,7 @@ set.seed(666)
 %true
 <<sh1, eval=true, echo=true>>=
 library(mc2d)
-ndvar(1000)
+ndvar(1001)
 conc <- 10
 cook <- mcstoc(rempiricalD, values=c(1,1/5,1/50), prob=c(0.027,0.373,0.600))
 serving <- mcstoc(rgamma,shape=3.93,rate=0.0806)
@@ -236,6 +242,21 @@ EC1 <- mc(cook,serving,expo,dose,risk)
 print(EC1)
 summary(EC1)
 @
+
+The \texttt{print} output provides for each \texttt{node}: 
+the \texttt{mode} of the variable (numeric or logical), 
+\texttt{nsv}, the size of the variability dimension (here, 1000), 
+\texttt{nsu}, the size of the uncertainty dimension (here, 1 since no uncertainty is considered),
+\texttt{nva}, the number of variate (here, all the variables are univariate),
+some statistics such as the \texttt{min}imum, the \texttt{mean}, 
+the \texttt{median} and the \texttt{max}imum,
+evaluated after gathering the two dimensions,
+the number of missing data \texttt{Nas}, 
+the \texttt{type} of the variable (\texttt{0} for fix,
+\texttt{V} for variable, \texttt{U} for uncertain or \texttt{VU} for variable
+and uncertain (here, all nodes are variable parameters only)
+and, finally, the level of output \texttt{outm}, for multivariate parameters.
+The \texttt{summary} output proovides additionnal statistics.
 
 This One-Dimensional Monte-Carlo simulation provides an estimate of
 the mean risk (approximately 5\%), as well as some quantiles of the
@@ -266,7 +287,7 @@ P & = & 1-\left(1-r\right)^{n}\end{eqnarray*}
 
 Note that the distributions of $r$ and $c$ represent uncertainty,
 while the distributions of $i$ and $s$ represent variability. $n$,
-which is a function of $c$, $i$ and $s,$ will be both variable
+which is a function of $c$, $i$ and $s,$ will become both variable
 \emph{and} uncertain.
 
 We will use a two-dimensional Monte-Carlo simulation, with 1,000 iterations
@@ -291,9 +312,9 @@ summary(EC2)
 
 Note that the syntax is similar to the earlier model. However, a \texttt{type}
 argument is provided for each distribution, indicating whether the
-parameter distribution represents uncertainty (\texttt{type}=\texttt{U}),
-variability (\texttt{type}=V), or both
-(\texttt{type}=\texttt{VU}).
+parameter distribution represents variability (\texttt{type=V}, by default),
+uncertainty (\texttt{type=U}),
+ or both (\texttt{type=VU}).
 
 The summary provides estimates of the variability distributions (in
 rows) but with a measure of their uncertainty, linked to the uncertainty
@@ -309,8 +330,8 @@ A typical session of R using \texttt{mc2d} is as follows:
 \begin{itemize}
 \item From data, expert knowledge, \emph{etc.} an empirical or parametric
 distribution is chosen for each parent parameter. For developing
-an empirical distribution from data , the \texttt{fitdistrplus}
-package is recommended;
+a parametric distribution from data, the \texttt{fitdistrplus}
+package is a convenient way;
 \item For each parameter, an \texttt{mcnode} object is constructed (key
 functions: \texttt{mcdata, mcstoc}); 
 \item Various \texttt{mcnode} objects are grouped into an \texttt{mc} object
@@ -336,10 +357,14 @@ function (dimension of uncertainty).
 \subsubsection{\texttt{mcnode} Object Structure}
 
 An \texttt{mcnode} object is the basic element of an \texttt{mc} object.
-It is an array of dimension \texttt{nsv} * \texttt{nsu} * \texttt{nvariates}
+An \texttt{mcnode}  is associated to one variable while an \texttt{mc} is 
+a set of associated variables.
+
+An \texttt{mcnode} is an array of dimension \texttt{nsv} * \texttt{nsu} * \texttt{nvariates}
 where $nsv$ is the dimension of variability, $nsu$ is the dimension
 of uncertainty and $nvariates$ is the number of variates of the \texttt{mcnode}%
-\footnote{In this section, we will only consider \texttt{mcnode}s with $nvariates=1$.%
+\footnote{In this section, we will only consider univariate \texttt{mcnode}s,
+that is \texttt{mcnode}s with $nvariates=1$.%
 }. Four types of \texttt{mcnode} exist: 
 \begin{itemize}
 \item \texttt{V} \texttt{mcnode}, for \emph{Variability},
@@ -364,14 +389,14 @@ section \ref{sec:Multivar}).
 %
 \begin{figure}
 \noindent \begin{centering}
-\includegraphics[angle=270, width=.5\textwidth]{Illustration}
+\includegraphics[angle=270, width=.7\textwidth]{Illustration}
 \par\end{centering}
 
 \caption{\label{fig:Structure}Structure of the various \texttt{mcnode} objects.}
 \end{figure}
 
 
-There are 5 ways to construct an \texttt{mcnode} object:
+There are several ways to construct an \texttt{mcnode} object:
 \begin{enumerate}
 \item The \texttt{mcstoc} function constructs an \texttt{mcnode} from random
 number generating functions;
@@ -380,7 +405,8 @@ sets;
 \item \texttt{An mcnode} can be constructed directly from operations on
 \texttt{mcnode} objects;
 \item \texttt{mcprobtree} is a special function that constructs an \texttt{mcnode}
-from other \texttt{mcnodes} using a probability tree;
+from other \texttt{mcnodes} using a  mixture of distribution, called ''probability tree''
+in QRA;
 \item Some functions, such as \texttt{==} or \texttt{>}
 , \texttt{is.na}, \texttt{is.finite} generate a new \texttt{mcnode}
 when applied to an existing \texttt{mcnode}.
@@ -388,17 +414,16 @@ when applied to an existing \texttt{mcnode}.
 
 \subsubsection{\label{sub:mcstoc}The \texttt{\textmd{mcstoc}} function}
 
-The \texttt{mcstoc} function is written as%
-\footnote{as is standard in R, most arguments have logical default values and
-will be infrequently modified.%
-}:
+The \texttt{mcstoc} function \footnote{from \texttt{stoc}hastic)} is written as
+\footnote{as is standard in R, most arguments have default values and
+will be infrequently modified.}:
 
 %\begin{singlespace}
 \noindent \begin{flushleft}
 \texttt{mcstoc(func=runif, type=c(V,
 U, VU,
 0), ..., nsv=ndvar(), nsu=ndunc(), nvariates=1,
-outm=each, nsample=n,
+outm=each, nsample='n',
 seed=NULL, rtrunc=FALSE, linf=-Inf, lsup=Inf, lhs=FALSE)}
 \par\end{flushleft}
 %\end{singlespace}
@@ -412,21 +437,23 @@ used in \texttt{mcstoc};
 \item \ldots{} are the arguments to be passed to the function \texttt{func},
 with the exception of the argument providing the size of the sample.
 This latter is calculated by the function according to \texttt{func},
-\texttt{type}, \texttt{nsv,} \texttt{nsu} and \texttt{nvariates}.
-If the name of the argument specifying the size of the sample is not
-\texttt{n} (\emph{e.g.} functions \texttt{rhyper} and \texttt{rwilcox},
-see table \ref{tab:Distributions}), the name of this parameter should
-be provided in the \texttt{nsample} argument. \emph{Note that all
-of the following arguments should be named};
+\texttt{type}, \texttt{nsv}, \texttt{nsu} and \texttt{nvariates}.
+\emph{Note that all of the following arguments should be named};
 \item \texttt{nsv} and \texttt{nsu} are the number of samples needed in
-the variability and uncertainty dimension, respectively. By default,
+the variability and uncertainty dimensions, respectively. By default,
 these values are the ones provided by \texttt{ndvar()} and \texttt{ndunc()},
 respectively;
-\item \texttt{nvariates} is the desired number of variates in the \texttt{mcnode};
-\item \texttt{outm} is the default output for multivariate nodes;
-\item \texttt{seed} optionally specifies a seed for the random number generator;
+\item \texttt{nvariates} is the desired number of variates in the \texttt{mcnode}. 
+see section \ref{sec:Multivar};
+\item \texttt{outm} is the default output for multivariate nodes. see section \ref{sec:Multivar};
+\item \texttt{nsample} is the name of the argument of \texttt{func} specifying 
+the size of the sample. It is usually \texttt{n}, with the notable exception of
+the \texttt{rhyper} and \texttt{rwilcox} where \texttt{nsample} should be 
+changed in \texttt{nn}.
+\item \texttt{seed} optionally specifies a seed for the random number generator.
+If \texttt{NULL}, the seed is unchanged;
 \item \texttt{rtrunc} allows truncation of a distribution between \texttt{linf}
-and \texttt{lsup}. This function is not valid for every distribution
+and \texttt{lsup}. This option is not valid for every distribution
 (see table \ref{tab:Distributions}). See the \texttt{rtrunc} function
 help for further details;
 \item \texttt{lhs} allows Latin hypercube sampling of the node . This function
@@ -521,7 +548,7 @@ r <- mcstoc(runif,type="U",min=0.0005,max=0.0015)
 A normal distribution with parameters $mean=2$, $sd=3$, truncated
 on the interval {[}1.5, 2{]}, with samples generated via Latin hypercube
 sampling could be written%
-\footnote{Note that the mean and the standard deviation of the untruncatednormal
+\footnote{Note that the mean and the standard deviation of the untruncated normal
 distribution are not preserved in the truncated distribution.%
 }:
 
@@ -537,7 +564,7 @@ the empirical discrete distribution (\texttt{rempiricalD}), the PERT
 distribution (\texttt{rpert})\cite{VOSE-2000}, the triangular distribution
 (\texttt{rtriang}), the Dirichlet distribution (\texttt{rdirichlet})
 and the multivariate normal distribution (\texttt{rmultinormal}).
-The multinomial distribution has been adapted (vectorized): \texttt{rmultinomial}
+The multinomial distribution has been adapted (vectorized) and \texttt{rmultinomial}
 (library \texttt{mc2d}) should be used in place of \texttt{rmultinom}
 (library \texttt{stats}). The empirical discrete (\emph{e.g.} for
 bootstrap), the Dirichlet, the multinomial and the multivariate normal
@@ -547,7 +574,7 @@ multivariate nodes. See section \ref{sec:Multivar}.
 
 \subsubsection{\label{sub:mcnode}The \texttt{\textmd{mcdata}} function}
 
-Another way to construct an \texttt{mcnode} object is \emph{via} the
+Another way to construct a \texttt{mcnode} object is \emph{via} the
 \texttt{mcdata} function, when data are available.
 
 %\begin{singlespace}
@@ -578,35 +605,45 @@ mcdata(tmp,type="U")
 \texttt{mcnode}s can be automatically constructed using operations
 on other \texttt{mcnode}s. Rules are used to transfer uncertainty
 and variability coherently within the model. Logically, the rules
-are as follows (illustrated here with a +)%
-\footnote{These rules are not the standard R rules for recycling.%
-}:
+are as follows (illustrated here with a \texttt{+}, 
+see table \ref{tab:Ops})\footnote{These rules are not the standard R rules for recycling.}:
 \begin{itemize}
-\item \texttt{0} + \texttt{0}
-= \texttt{0};
-\item \texttt{0} + \texttt{V}
-= \texttt{V}
-\item \texttt{0} + \texttt{U}
-= \texttt{U};
-\item \texttt{0} + \texttt{VU}
-= \texttt{VU};
-\item \texttt{V} + \texttt{V}
-= \texttt{V};
-\item \texttt{V} + \texttt{U}
-= \texttt{VU}: the \texttt{U}
+\item \texttt{0} + \texttt{0} = \texttt{0};
+\item \texttt{0} + \texttt{V} = \texttt{V}
+\item \texttt{0} + \texttt{U} = \texttt{U};
+\item \texttt{0} + \texttt{VU}= \texttt{VU};
+\item \texttt{V} + \texttt{V} = \texttt{V};
+\item \texttt{V} + \texttt{U} = \texttt{VU} \footnote{the \texttt{U}
 mcnode is recycled by row, the \texttt{V}
-mcnode is recycled in the standard manner by column;
-\item \texttt{V} + \texttt{VU}
-= \texttt{VU}: the \texttt{V}
-mcnode is recycled in the standard manner by column;
-\item \texttt{U} + \texttt{U}
-= \texttt{U};
-\item \texttt{U} + \texttt{VU}
-= \texttt{VU}: the \texttt{U}
-mcnode is recycled by row;
-\item \texttt{VU} + \texttt{VU}
-= \texttt{VU}
+mcnode is recycled in the standard manner by column.};
+\item \texttt{V} + \texttt{VU} = \texttt{VU} \footnote{the \texttt{V}
+mcnode is recycled in the standard manner by column.};
+\item \texttt{U} + \texttt{U} = \texttt{U};
+\item \texttt{U} + \texttt{VU} = \texttt{VU} \footnote{the \texttt{U}
+mcnode is recycled by row.};
+\item \texttt{VU} + \texttt{VU} = \texttt{VU}
 \end{itemize}
+
+\begin{table}
+\caption{\label{tab:Ops}\texttt{mcnode}s combinations}
+
+\centering{}\begin{tabular}{|c||c|c|c|c|}
+\hline 
+ & 0 & V & U & VU\tabularnewline
+\hline
+\hline 
+0 & 0 & V & U & VU\tabularnewline
+\hline
+V & V & V & VU & VU\tabularnewline
+\hline 
+U & U & VU & U & VU\tabularnewline
+\hline 
+VU & VU & VU & VU & VU\tabularnewline
+\hline
+\end{tabular}
+\end{table}
+
+
 Thus, in our example:
 
 %false
@@ -619,16 +656,16 @@ risk <- 1-(1-r)^dose
 
 \texttt{expo} is a function of a \texttt{U} and two \texttt{V}
 \texttt{mcnode}s: it is a \texttt{VU} \texttt{mcnode} with
-variability in the row dimension and uncertainty in the column dimension
-. \texttt{risk} is a function of a \texttt{U} and a \texttt{VU}
+variability in the row dimension and uncertainty in the column dimension. 
+\texttt{risk} is a function of a \texttt{U} and a \texttt{VU}
 \texttt{mcnode}: it is therefore a \texttt{VU} \texttt{mcnode}.
 
 
 \subsubsection{\label{sub:The-mcprobtree-function}The \texttt{\textmd{mcprobtree}}
 function}
 
-The \texttt{mcprobtree} function can be used if a probability
-tree is needed to construct an \texttt{mcnode}. Assume that the
+The \texttt{mcprobtree} function can be used if a mixture of distribution
+ is needed to construct an \texttt{mcnode}. Assume that the
 distribution representing the uncertainty on \texttt{conc} was not
 itself certain, and that the microbiologists suggest that they are
 75\% sure that $conc\sim N\left(10,2\right)$ but that they are 25\%
@@ -660,7 +697,7 @@ when applied to another \texttt{mcnode}.
 Special functions \texttt{is.na(x)}, \texttt{is.nan(x)}, \texttt{is.finite(x)},
 \texttt{is.infinite(x)} are implemented to test if any values are
 \texttt{NA} (missing data), \texttt{NaN} (\emph{Not A Number}),
-or finite . 
+finite or infinite . 
 
 %true
 <<sh5, echo=true, eval=true>>=
@@ -678,7 +715,7 @@ in QRA. In \texttt{mc2d}, a Spearman rank correlation structure for
 2 or more nodes may be specified with the \texttt{cornode} function.
 This function uses the method of Iman \& Conover to generate correlated
 samples \cite{IMAN-CONOVER-1982}. Assume that a study suggests that
-people who consume rare ground beef alsoconsume larger serving sizes.
+people who consume rare ground beef also consume larger serving sizes.
 We could specify this relation using:
 
 %true
@@ -686,9 +723,9 @@ We could specify this relation using:
 cornode(cook,serving,target=0.5,result=TRUE) 
 @
 
-Note that the resulting correlation (around 0.4) is obviously an approximation
+\footnote{Note that the resulting correlation (around 0.4) is obviously an approximation
 to the desired value of 0.5, because a discrete distribution (\texttt{cook}:
-3 categories) is correlated with a continuous distribution (\texttt{serving}). 
+3 categories) is correlated with a continuous distribution (\texttt{serving}).} 
 
 It is possible to create such correlations between V nodes,
 between  U nodes, between VU nodes, or between one
@@ -765,7 +802,7 @@ The model is then evaluated using the \texttt{evalmcmod} function:
 \texttt{evalmcmod(expr, nsv=ndvar(), nsu=ndunc(), seed=NULL)}
 \par\end{flushleft}
 
-One can re-run the model with various dimensions or random seeds in
+One can re-run the model with different dimensions or random seeds in
 one line:
 
 %false
@@ -777,12 +814,17 @@ EC4 <- evalmcmod(modelEC3,nsv=100,nsu=1000,seed=666)
 
 \subsubsection{The \texttt{mcmodelcut} and the \texttt{evalmccut} Functions}
 
-If evaluating a high-dimensional model, R may exceed its memory limit.
-\texttt{evalmccut} evaluates a 2-dimensional Monte-Carlo model (written
+When evaluating a high-dimensional model, R may exceed its memory limit.
+To overcome this drawback, \texttt{evalmccut} evaluates a 2-dimensional 
+Monte-Carlo model (written
 with the \texttt{mcmodelcut} function) using a loop, and calculates
 and stores statistics in the uncertainty dimension for further analysis.
 Readers should refer to the corresponding documentation for further
-details. Our example would be written as: 
+details. Our example would be written as\footnote{Note that the use of 
+a \texttt{tornado} function in the model should
+be avoided as it slows the \texttt{evalmccut} function considerably.
+The \texttt{tornado} function will be rewritten in the near future
+to improve its performance.}: 
 
 %false
 <<sh12, echo=true, eval=false>>=
@@ -810,10 +852,7 @@ modEC4 <- mcmodelcut({
 evalmccut(modEC4, nsv = 10001, nsu = 101, seed = 666)
 @
 
-Note that the use of a \texttt{tornado} function in the model should
-be avoided as it slows the \texttt{evalmccut} function considerably.
-The \texttt{tornado} function will be rewritten in the near future
-to improve its performance. 
+
 
 
 \subsection{Analysing an \texttt{mc} Object}
@@ -837,8 +876,7 @@ object:
 The mean, the standard deviation and the quantiles provided in the
 \texttt{probs} arguments are evaluated on the variability dimension.
 Then, the median and the quantiles provided in the \texttt{lim} argument
-are evaluated on these statistics. Of course, these arguments should
-be changed if other quantiles are needed.
+are evaluated on these statistics. 
 
 %true
 <<sh14, echo=true, eval=true>>=
@@ -880,12 +918,12 @@ hist(EC2)
 
 \subsubsection{The \texttt{plot} function}
 
-The \texttt{plot} function provides a graph of the empirical distribution
+The \texttt{plot} function provides a graph of the cumulative empirical distribution
 function of the estimate (mean or median) of the quantiles. 
 
 \noindent \begin{flushleft}
 \texttt{plot (x, prec = 0.01, stat = c(median,
-mean), lim = c(0.025,0.975), na.rm =
+mean), lim = c(0.025,0.25, 0.75, 0.975), na.rm =
 TRUE, griddim = NULL, xlab = NULL, ylab = Fn(x),
 main = , draw = TRUE, ...)}
 \par\end{flushleft}
@@ -971,10 +1009,9 @@ object with a \texttt{plot} method
 tornadounc(EC2, output="risk", quant=.99)
 @
 
-The output shows the impact of the uncertain nodes (type U
+The output shows the impact of the uncertain nodes (type \texttt{U}
 nodes) and some statistics (mean, median and, here, the $99^{th}$percentile)
-calculated on the variability dimension (type V
-and type VU nodes) of some output statistics
+calculated on the variability dimension (type \texttt{VU} nodes) of some output statistics
 .
 
 
@@ -991,7 +1028,7 @@ is helpful for extracting an \texttt{mcnode} from an \texttt{mc} object.
 The \texttt{unmc} function removes all attributes, classes, and dimensions
 equal to one, providing a list of vectors, matrices and/or arrays.
 
-Here is a (silly) example building a linear model (in fact \texttt{ndunc()}
+Here is a (silly) example building a linear model (in fact 100
 linear models) between the \texttt{risk} and the \texttt{dose} within
 each uncertainty dimension and estimating some statistics for the
 coefficients. This example is here only to illustrate that the entire
@@ -1041,16 +1078,16 @@ As an example, assume that 3-member families buy 500 g of ground beef.
 The proportions of steak eaten by the baby, his older brother and
 his mother follow a Dirichlet (uncertainty) distribution with (vector)
 parameter $\alpha=(2,3,5)$. We want to derive the distribution (variability)
-of steak eaten by 500 babies sampled from these 500 families.
+of steak masses eaten by 500 babies sampled from such families.
 
 %true
 <<sh20, echo=true, eval=true>>=
-(p <- mcstoc(rdirichlet, type="U", nsu=100, nvariates=3, alpha=c(2,3,5)))
-s <- mcstoc(rmultinomial,type="VU", nsv=500, nsu=100, nvariates=3,size=500, prob=p)
+(p <- mcstoc(rdirichlet, type="U", nvariates=3, alpha=c(2,3,5)))
+s <- mcstoc(rmultinomial,type="VU", nvariates=3, size=500, prob=p)
 summary(s)
 @
 
-Assume that each member of these families eats a normal distribution
+As a second example, assume that each member of these families eats a normal distribution
 (variability) of steak with mean 100, 150 and 250 g. There is a positive
 correlation between the servings of the children, and a negative one
 with the serving of the mother. We want to derive the distribution
@@ -1058,28 +1095,28 @@ with the serving of the mother. We want to derive the distribution
 
 %true
 <<sh21, echo=true, eval=true>>=
+sigma <- matrix(c(10,2,-5,2,10,-5,-5,-5,10), ncol=3)
 (x <- mcstoc(rmultinormal,type="V", nvariates=3, mean=c(100,150,250), 
-                              sigma=c(10,2,-5,2,10,-5,-5,-5,10))) 
+                              sigma=as.vector(sigma))) 
 cor(x[,1,])
 @
 
 In this example, \texttt{mean} could be variable or uncertain, as
-well as \texttt{sigma}%
-\footnote{Caution: the use of a varying \texttt{sigma} can make the analysis
-very slow.%
-}. You could have used, for an uncertain mean:
+well as \texttt{sigma}\footnote{\texttt{rmultinormal} is a vectorized
+version of \texttt{rmvnorm} (library \texttt{mvtnorm}).}. 
+You could have used, for an uncertain mean:
 
 %true
 <<sh21, echo=true, eval=true>>=
 m <- mcdata(c(100,150,250), type="0", nvariates=3)
 mun <- mcstoc(rnorm, type="U", nvariates=3, mean=m, sd=20)
-x <- mcstoc(rmultinormal, type="VU", nvariates=3, mean=mun, sigma=c(10,2,-5,2,10,-5,-5,-5,10))
+x <- mcstoc(rmultinormal, type="VU", nvariates=3, mean=mun, sigma=as.vector(sigma))
 cor(x[,1,])
 @
 
 The correlation is preserved, but the mean of each category is uncertain.
 
-Finally, multivariate nodes may be useful to derive a nonparametric
+As a third example, multivariate nodes may be useful to derive a nonparametric
 bootstrap. Assume that, based on a study, you obtained 6 individuals
 who eat 100 g, 12 individuals who eat 150 g, 6 individuals who eat
 170 g and 6 individuals who eat 200 g of ground beef. You want to
@@ -1087,8 +1124,11 @@ use a nonparametric bootstrap to derive uncertainty \cite{CULLEN-FREY-1999},
 and then select samples from the empirical distribution. 
 
 <<sh22, echo=true, eval=true>>=
-(x <- mcstoc(rempiricalD, type="U", outm=c('min','mean','max'), nvariates=30, 
-              values=c(100,150,170,200),prob=c(6,12,6,6)))
+val <- c(100,150,170,200)
+pr <-  c(6,12,6,6)
+out <- c('min','mean','max')
+(x <- mcstoc(rempiricalD, type="U", outm=out, nvariates=30, 
+              values=val,prob=pr))
 mcstoc(rempiricalD,type="VU", values=x)
 @
 
@@ -1096,7 +1136,7 @@ Printing the statistics of the 30 variates of \texttt{x} is of no
 interest. Instead, we use the \texttt{outm} option, which
 allows us to specify which output we want (\texttt{none} for
 none, \texttt{each}, the default, for a series of statistics
-for each variate, or, as in the example, a vector of functions that
+for each variate, or, as in the example, a vector of function names that
 are applied over all the 30 variates). 
 
 
@@ -1104,7 +1144,7 @@ are applied over all the 30 variates).
 in a Model}
 
 The recycling rules in \texttt{mc2d} regarding the \texttt{nvariate}
-dimension are as follows: the recycling will be done from \texttt{nvariates=1}
+dimension are as follows: if needed, the recycling will be done from \texttt{nvariates=1}
 to \texttt{nvariates=n} with $n>1$. This allows you to use multivariates
 nodes as a third dimension, in case you want to test various alternatives. 
 
@@ -1113,7 +1153,7 @@ distribution representing uncertainty in \texttt{conc} was not certain,
 and that the microbiologists suggest that $conc\sim N\left(10,2\right)$
 is possible, but that $conc\sim U\left(8,12\right)$ is also possible.
 We can \emph{i}) build a bivariate node reflecting these two
-options; ii) transfer these options into the final risk estimate.
+independent options; ii) transfer these options into the final risk estimate.
 We obtain a bivariate node for the risk, one using the first hypothesis,
 the second the second hypothesis. 
 
@@ -1129,7 +1169,7 @@ expo <- conc * cook * serving
 dose <- mcstoc(rpois,type="VU",nvariates=2,lambda=expo)
 r <- mcstoc(runif,type="U",min=0.0005,max=0.0015)
 risk <- 1-(1-r)^dose
-EC5 <- mc(conc,cook,serving,expo,dose,r,risk)
+EC5 <- mc(conc,risk)
 summary(EC5)
 @
 
@@ -1165,7 +1205,7 @@ dose <- mcstoc(rpois,type="VU",nvariates=2,lambda=expo)
 dosetot <- mcapply(dose, margin="variates", fun=sum)
 r <- mcstoc(runif,type="U",min=0.0005,max=0.0015)
 risk <- 1-(1-r)^dosetot
-EC6 <- mc(conc,cook,serving,expo,dose,dosetot,r,risk)
+EC6 <- mc(conc,risk)
 summary(EC6)
 @
 
@@ -1215,8 +1255,7 @@ but we will use the \texttt{fitdistrplus}
 library. \texttt{inca} includes a lot of \texttt{0} nodes, corresponding
 to days when individuals do not drink tap water (possibly they drink
 bottled water on those days). We could try a mixture of distributions,
-with \texttt{0}and non-\texttt{0}
-data. 
+with \texttt{0} and non-\texttt{0} data. 
 
 %true
 <<Crypto4, echo=true, figure=false, eval=true>>=
@@ -1275,7 +1314,7 @@ conso1 <- mcstoc(rlnorm, type="VU", meanlog= Mean_conso, sdlog= Sd_conso)
 But for simplicity, we will not consider uncertainty around the estimates. 
 
 We will use the \texttt{mcprobtree} function to construct a mixture
-of 0and non-0
+of 0 and non-0
 distributions:
 
 <<Crypto8, echo=true, figure=false, eval=true>>=
@@ -1299,7 +1338,8 @@ datDR <- list(   dose=c(30,100,300,500,1000,10000,100000,1000000),
                  ni=c(5,8,3,6,2,3,1,1))
 
 estDR <- function(pos,ref){
-   -glm(cbind(ref$ni-pos,pos) ~ ref$dose + 0, binomial(link="log"))$coefficients}
+   -glm(cbind(ref$ni-pos,pos) ~ ref$dose + 0, 
+    binomial(link="log"))$coefficients}
 
 ml <- 1-exp(-estDR(datDR$pi, datDR) * datDR$dose)
 
@@ -1339,8 +1379,8 @@ P <- 10000 * (1-exp(-r*Or))
 summary(P)
 @ 
 
-This result can be compared (roughly since there is some differences
-in the modelsvariability) to the results shown in Table 2 in \cite{POUILLOT-2004}. 
+This result can be compared (roughly since there are some differences
+in the model variability) to the results shown in Table 2 in \cite{POUILLOT-2004}. 
 
 Improvement: the results for $O_{o}=\left\{ 0,1,2,5,10,20,50,100,1000\right\} $
 can be obtained in one step using: 
@@ -1354,20 +1394,14 @@ Oo <- mcdata(c(0,1,2,5,10,20,50,100,1000),type="0",nvariates=9)
 
 We think and hope that \texttt{mc2d} could help risk assessors
 to constuct and analyse their models, and that it may help in developing
-two-dimensional simulations. Nevertheless,
-\texttt{mc2d} is currently under development:
+two-dimensional simulations. Nevertheless, \texttt{mc2d} is still under 
+development: \emph{please report any bugs you get to rpouillot@yahoo.fr.} 
 
-\noindent \begin{center}
-\emph{CHECK YOUR MODEL CAREFULLY AND EXAMINE RESULTS TO DETECT BUGS}
-\par\end{center}
-
-and, if you would like to improve it, join us at
+If you would like to improve \texttt{mc2d}, join us at
 
 \noindent \begin{center}
 http://riskassessment.r-forge.r-project.org/
 \par\end{center}
-
-Please refer any comments or bugs to rpouillot@yahoo.fr.
 
 \bibliographystyle{plain}
 \bibliography{docmcEnglish}

@@ -1,5 +1,5 @@
 #<<BEGIN>>
-plot.mc <- function(x, prec=0.001, stat = c("median","mean"), lim = c(0.025,0.25, 0.75, 0.975), na.rm=TRUE, griddim = NULL, xlab = NULL, ylab = "Fn(x)", main = "", draw = TRUE, paint=TRUE,...)
+plot.mc <- function(x, prec=0.001, stat = c("median","mean"), lim = c(0.025, 0.25, 0.75, 0.975), na.rm=TRUE, griddim = NULL, xlab = NULL, ylab = "Fn(x)", main = "", draw = TRUE, paint=TRUE,...)
 #TITLE Plots Results of a Monte Carlo Simulation
 #DESCRIPTION
 # Plots the empirical cumulative distribution function of a \samp{mcnode} or a \samp{mc} object ("0" and "V" nodes) or the
@@ -24,8 +24,8 @@ plot.mc <- function(x, prec=0.001, stat = c("median","mean"), lim = c(0.025,0.25
 #\samp{plot.mcnode} is a user-friendly function that send the \samp{mcnode} to \samp{plot.mc}.</>
 #For \samp{"VU"} and \samp{"U"} \samp{mcnode}s, quantiles are calculated using \code{\link{quantile.mc}}
 #within each of the \samp{nsu} simulations (i.e. by columns of each \samp{mcnode}). The medians (but may be
-#the means using \samp{stat="mean"}) calculated from the \samp{nsu} values are plotted. The 0.025 and 0.975 quantiles (default values
-#of \samp{lim}) of these quantiles are used as the enveloppe.
+#the means using \samp{stat="mean"}) calculated from the \samp{nsu} values are plotted. The 0.025 and 0.975 quantiles, 
+#and the 0.25 and 0.75 quantiles (default values of \samp{lim}) of these quantiles are used as the enveloppe.
 #REFERENCE
 #Cullen AC and Frey HC (1999) Probabilistic techniques in exposure assessment. Plenum Press, USA, pp. 81-155. 
 #VALUE

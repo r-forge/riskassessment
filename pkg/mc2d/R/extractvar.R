@@ -9,7 +9,7 @@ extractvar <- function(x, which = 1)
 #INPUTS
 #{x}<<a multivariates \samp{mcnode}.>>
 #[INPUTS]
-#{which}<<which variate should be extracted.>>
+#{which}<<a vector. which variate(s) should be extracted?>>
 #{\dots}<< \samp{mcnode}s to be gathered in a multivariate \samp{mcnode}.
 # These \samp{mcnode}s should be of same type and dimension.>>
 #VALUE
@@ -20,7 +20,7 @@ extractvar <- function(x, which = 1)
 # \code{\link{mcnode}} for \samp{mcnode} objects.
 #EXAMPLE
 #x <- mcdata(0:3,"0",nvariates = 4)
-#y <- extractvar(x, 2) 
+#y <- extractvar(x, c(1,3)) 
 #y
 #addvar(x,y)
 #AUTHOR Regis Pouillot
@@ -29,8 +29,8 @@ extractvar <- function(x, which = 1)
 {
   if(missing(x) || !inherits(x,"mcnode")) stop("extractvar need a mcnode object")
   dimm <- dim(x)
-  if((which > dimm[3]) || (which < 1)) stop("Incorrect value of which")
-  x <- mcdata(x[,,which],type=typemcnode(x),nsv=dimm[1],nsu=dimm[2],nvariates=1)
+  if(any(which > dimm[3]) || (which < 1)) stop("Incorrect value of which")
+  x <- mcdata(x[,,which],type=typemcnode(x),nsv=dimm[1],nsu=dimm[2],nvariates=length(which))
   return(x)
 }
 
