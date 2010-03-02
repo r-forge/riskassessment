@@ -180,14 +180,18 @@ mcstoc <- function(func=runif, type=c("V","U","VU","0"), ..., nsv=ndvar(), nsu=n
             if(!(type=="VU" || typethismc=="0" || typethismc==type)) stop("Incompatible type of nodes") # incompatible node
 
             dimm <- dim(argsd)
-            if( (typethismc == "V" && dimm[1] != nsv) ||
-                (typethismc == "U" && dimm[2] != nsu) ||
-                (typethismc == "VU" && (dimm[1] != nsv || dimm[2] != nsu)))
-                   stop("Nodes of incompatible dimensions")                      # incompatible dimension
+            if ((typethismc == "V" && dimm[1] != nsv) || 
+                (typethismc == "U" && dimm[2] != nsu) || 
+                (typethismc == "VU" && (dimm[1] != nsv || dimm[2] != nsu))) 
+                stop("Nodes of incompatible dimensions")
+ # incompatible dimension
 
             if(maxdim3 > 1){  #at least one multivariate node as parameter, need recycling on the third dimension
               if(typethismc=="U") argsd <- apply(argsd, 3, matrix, nrow=maxdim1, ncol=maxdim2, byrow=TRUE)  # recycling U as matrix (maxdim1*maxdim2) x nvariates
-                else argsd <- apply(argsd, 3 ,matrix, nrow=maxdim1, ncol=maxdim2)                           # recycling 0, V, VU as matrix (maxdim1*maxdim2) x nvariates
+                else {
+                  if(maxdim1 ==1 && maxdim2 ==1) argsd <- matrix(argsd, nrow=1) # Very special case to be added 
+                  else argsd <- apply(argsd, 3, matrix, nrow = maxdim1, ncol = maxdim2)
+                  }        # recycling 0, V, VU as matrix (maxdim1*maxdim2) x nvariates
             }                           
 
             else { dim(argsd) <- NULL    # as vector
@@ -228,14 +232,14 @@ mcstoc <- function(func=runif, type=c("V","U","VU","0"), ..., nsv=ndvar(), nsu=n
        func <- function(...){
           argsd <- list(...)
           nnfin <- argsd[[nsample]]
-          linf <- if(length(argsd$linf) <= nnfin) argsd$linf else rep(argsd$linf, length.out=nnfin)      # solve a problem when linf was multivariate
-          lsup <- if(length(argsd$lsup) <= nnfin) argsd$lsup else rep(argsd$lsup, length.out=nnfin)      # solve a problem when linf was multivariate
+          linf <- if(length(argsd$linf) <= nnfin) as.vector(argsd$linf) else rep(argsd$linf, length.out=nnfin)      # solve a problem when linf was multivariate
+          lsup <- if(length(argsd$lsup) <= nnfin) as.vector(argsd$lsup) else rep(argsd$lsup, length.out=nnfin)      # solve a problem when linf was multivariate
           lmax <- max(length(linf),length(lsup))
           if(any(rep(linf, length.out = lmax) >= rep(lsup, length.out = lmax))) stop("linf should be < lsup")  #recycle vectors
           argsd$linf <- argsd$lsup <- argsd[[nsample]] <- NULL
           
-          pinf <- do.call(pfun,c(list(q=linf),argsd),quote=TRUE)
-          psup <- do.call(pfun,c(list(q=lsup),argsd),quote=TRUE)
+          pinf <- as.vector(do.call(pfun,c(list(q=linf),argsd),quote=TRUE))
+          psup <- as.vector(do.call(pfun,c(list(q=lsup),argsd),quote=TRUE))
 
           if(!lhs) lesp <- runif(nnfin,min=pinf,max=psup)
           else     lesp <- lhs(distr="runif", nsv=dimf[1], nsu=dimf[2], nvariates=dimf[3], min=pinf, max=psup) 
@@ -268,16 +272,31 @@ mcstoc <- function(func=runif, type=c("V","U","VU","0"), ..., nsv=ndvar(), nsu=n
     if(l == nvariates) dimf <- c(nsv,nsu,1)                                     # If it returns a vector
         else if(l == 1) dimf <- c(nsv,nsu,nvariates)                            # if it returns a number
           else stop("the function should return a vector of size 1 or nvariates if",nsample,"=1")
-    }
+        argsd[[nsample]] <- prod(dimf)
+        data <- do.call(func, argsd, quote = TRUE)
+        
+       #Post Production, multivariate
+       if (yamc){
+          if(l==1){ # univariate distribution
+                if(maxdim1 == 1 && maxdim2 == 1) data <- aperm(array(data, dim = c(nvariates, nsv, nsu)), c(2, 3, 1))
+           else if(maxdim1 == 1 && nsv!=1)       data <- aperm(array(data, dim = c(nsu, nvariates, nsv)), c(3, 1, 2))
+           else if(maxdim2 == 1 && nsu!=1)       data <- aperm(array(data, dim = c(nsv, nvariates, nsu)), c(1, 3, 2))
+           else data <- array(data, dim = c(nsv, nsu, nvariates))
+          }
+          else {     # l != 1 : multivariate 
+                if(maxdim1 == 1 && nsv != 1)     data <- aperm(array(data, dim = c(nsu, nsv, nvariates)), c(2, 1, 3))
+           else data <- array(data, dim = c(nsv, nsu, nvariates))
+           }
+        }
+        else data <- array(data, dim = c(nsv, nsu, nvariates))
+      }
+   else{  # univariate
+        argsd[[nsample]] <- prod(dimf)
+        data <- do.call(func, argsd, quote = TRUE)
 
-    argsd[[nsample]] <- prod(dimf)
-
-      data <- do.call(func,argsd,quote=TRUE)
-      
-      #Post Prod
-      if(yamc && maxdim1 == 1 && nsv != 1)                                      # transform an nsu*nsv*nvariates in (nsv,nsu)nvariates
-        data <- aperm(array(data,dim = c(nsu,nsv,nvariates)),  c(2,1,3))
-      else data <- array(data,dim=c(nsv,nsu,nvariates))
+        if (yamc && maxdim1 == 1 && nsv != 1) data <- aperm(array(data, dim = c(nsu, nsv, nvariates)), c(2, 1, 3))
+        else data <- array(data, dim = c(nsv, nsu, nvariates))
+   } 
       
       class(data) <- "mcnode"
       attr(data,"type") <- type

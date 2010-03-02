@@ -16,14 +16,14 @@ addvar(...)
 }
 \examples{
 x <- mcdata(0:3, "0", nvariates = 4)
-y <- extractvar(x, 2) 
+y <- extractvar(x, c(1, 3)) 
 y
 addvar(x, y)
 
 }
 \arguments{
 \item{x}{a multivariates \samp{mcnode}.}
-\item{which}{which variate should be extracted.}
+\item{which}{a vector. which variate(s) should be extracted?}
 \item{\dots}{ \samp{mcnode}s to be gathered in a multivariate
 \samp{mcnode}. These \samp{mcnode}s should be of same type and
 dimension.}

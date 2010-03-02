@@ -18,8 +18,9 @@ empirical cumulative distribution function of the estimate of a
 	  main="", draw=TRUE, paint=TRUE, ...)
 \method{plot}{mcnode}(x, ...)
 \method{plot}{plotmc}(x, ...)
-\method{plot}{mccut}(x, stat=c("median", "mean"), lim=c(0.025, 0.975), griddim=NULL,
-	  xlab=names(x), ylab="Fn(x)", main="", draw=TRUE, ...)
+\method{plot}{mccut}(x, stat=c("median", "mean"), lim=c(0.025, 0.25, 0.75, 0.975),
+	  griddim=NULL, xlab=names(x), ylab="Fn(x)", main="",
+	  draw=TRUE, ...)
 }
 \examples{
 data(total)
@@ -58,9 +59,9 @@ name of the node.}
 calculated using \code{\link{quantile.mc}} within each of the
 \samp{nsu} simulations (i.e. by columns of each \samp{mcnode}). The
 medians (but may be the means using \samp{stat="mean"}) calculated
-from the \samp{nsu} values are plotted. The 0.025 and 0.975 quantiles
-(default values of \samp{lim}) of these quantiles are used as the
-enveloppe.
+from the \samp{nsu} values are plotted. The 0.025 and 0.975
+quantiles, and the 0.25 and 0.75 quantiles (default values of
+\samp{lim}) of these quantiles are used as the enveloppe.
 }
 \value{
 A \samp{plot.mc} object, list of the quantiles used to plot the draw.
