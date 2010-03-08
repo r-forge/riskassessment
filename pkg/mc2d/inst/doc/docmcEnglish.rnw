@@ -19,7 +19,7 @@
 % sweave commands for vignette
 %\VignetteIndexEntry{Tools for Two-Dimensional Monte-Carlo Simulations}
 %\VignettePackage{mc2d}
-%\VignetteDepends{mvtnorm}
+%\VignetteDepends{mvtnorm,fitdistrplus}
 
 \title{The \texttt{mc2d} package.}
 \author{R. POUILLOT, M.-L. DELIGNETTE-MULLER, D.L. KELLY \& J.-B. DENIS}
