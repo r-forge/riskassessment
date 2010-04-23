@@ -4,13 +4,49 @@
 
 === short term ===
 
+22. Add the example published in Busschaert 2010 in the vignette and 
+    in the examples, maybe with the data set in the package (censored microbiological data)
+    
+23. Make it possible, as in fitdistr, to fix some arguments of a density function while
+    estimating the other ones. Not so easy to rapidly implement as it must be repercuted
+    on all the functions that use the result of a fit.
+
+3. put spaces before and after affectations (x <- 3) to make codes easier to read
+    done at least in fitdist and mledist 
+
+12. Split summary.fitdist in two parts : summary.fitdist and print.summary.fitdist
+    done but to STILL TO DO for fitdistcens, bootdist and bootdistcens
+    
+13. Check the values in the data set for censored data to reject a left value greater than a right value
+
+
+=== long term ===
+
+19. Add other gof graphs and stats for fits on censored data (Turnbull, ...) and gof statistics for censored data
+   computed from Turnbull CDF.
+
+11. Add a which argument to plotdist (be careful, only two plots are possible for
+    discrete distributions or when there is only data in the arguments, so not so easy)
+
+15. Enable to enter complete names of distributions as in fitdistr
+
+17. Try to do only one fonction for bootstrap that could be called with on the output of fitdist or fitdistcens
+
+18. Decide if it is possible and desirable to gather fitdist and fitdistcens
+   for the moment we think it is not easy and not desirable
+
+20. Improve moment matching estimation with numerical optimization
+
+21. Start quantile matching estimation
+
+=== recently done or not planned for argumented reasons ===
+
 1. Remove calls to options(digits) in the code
     done everywhere                                     
 
 2. Change print.fitdist and print.fitdistcens in order to give an output ressembling to the one of fitdistr
-
-3. put spaces before and after affectations (x <- 3) to make codes easier to read
-    done in fitdist and mledist 
+    not planned because I prefer to use a more common presentation of parameters (one per row) with standard
+    error in the same row, as in a lm summary for example. But I have added the standard error ofr mle estimations
 
 4. Remove echo in mledist before submission to CRAN 
    done
@@ -21,44 +57,26 @@
 
 6. Split summary.fitdist and print.summary.fitdist which is too long in two parts : 
    summary and gof (for goodness-of-fit results)
-
-7. Change plotdist to use plot(ecdf...)
-
+   done with a new function named "gofstat" instead of gof because there is a package
+   named gof.
+   
 8. Try not to cut the density plot
    done
 
-9. Draw the observed point in color in descdist
-
 10. Add an argument in descdist not to plot the Cullen and Frey graph as in boxplot
-
-11. Add a which argument to plotdist (be careful, only two plots are possible for
-    discrete distributions or when there is only data in the arguments)
-
-12. Split summary.fitdist in two parts : summary.fitdist and print.summary.fitdist
-    done but to STILL TO DO for fitdistcens, bootdist and bootdistcens
-    
-13. Check the values in the data set for censored data to reject a left value greater than a right value
+    done, an argument "graph" added
 
 14. Add a part on how to change le algorithm used to maximize the likelihood in the vignette
     done
 
-
-=== long term ===
-
-1. Enable to enter complete names of distributions as in fitdistr
-
-2. Examine how it is possible to replace plotdist by plot.fitdist 
+16. Examine how it is possible to replace plotdist by plot.fitdist 
 (not so simple as plotdist was written also to plot an observed distribution,
 but it could be be splitted in two parts)
 
-3. Try to do only one fonction for bootstrap that could be called with on the output of fitdist or fitdistcens
+9. Draw the observed point in color in descdist
+    done, two arguments were added in descdist : "obs.col" and "boot.col"
 
-5. Decide if it is possible and desirable to gather fitdist and fitdistcens
-   for the moment we think it is not easy and not desirable
-
-6. Add other gof graphs and stats for fits on censored data (Turnbull, ...).
-Ask to JBD who seemed to have ideas
-
-7. Improve moment matching estimation with numerical optimization
-
-8. Start quantile matching estimation
+7. Change plotdist to use plot(ecdf...)
+    instead of that, I have slightly modified the writing of plotdist in order to 
+    facilitate the personalization of plots using the argument "..." because we sometimes prefer
+    to see only the observed values on the CDF plot, or a linear interpolation than a step function.
