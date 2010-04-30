@@ -1,0 +1,74 @@
+#
+# 10_04_20
+#
+##########################################
+<<Morphological data>>
+[[name]] md
+[[defi]] A Bayesian network with a multivariate node
+[[orig]]  ReBaStaBa documentation
+[[role]] just to show how it works
+[[time]] 10_03_08
+##########################################
+<<SEX>>
+[[defi]] either M (for male) or F (for female)
+[[ltype]] numcat
+#
+[[lpod]]  M F
+#
+#
+[[lpara]]
+((p)) 0.4 0.6
+##########################################
+<<AGE>>
+[[defi]] just to fix on age
+[[ltype]] Dirac
+#
+[[lpod]]  20 85
+#
+#
+[[lpara]]
+((k)) 78
+##########################################
+#(STOP)
+<<DATA>>
+[[defi]] (AGE in years; HEIGHT in cm; WEIGHT in kg)
+[[ltype]] empidata
+[[lparent]] SEX AGE
+[[lvar]]    HEIGHT WEIGHT
+[[lnat]]     conti  conti
+#
+[[lpod]]
+((WEIGHT))  30  150
+((HEIGHT))  130 205
+#
+[[lred]]
+((HEIGHT))  150 195
+((WEIGHT))  40  120
+#
+[[lcod]]
+((HEIGHT))  160 185
+((WEIGHT))  55   90
+#
+#
+[[ldaf]]
+((name)) solito
+((what)) t
+((valu)) rsbn.demo.data.small_population.txt
+#
+#
+[[lwin]]
+((wgt)) 10 1
+((k)) 0
+((di)) 0 1
+((nb)) 1 65
+((ty)) median1 WEIGHT
+##########################################
+<<BMIs>>
+[[ltype]] Dirac
+[[lvar]] 1 2
+[[lpara]]
+((k)) {{DATA[WEIGHT]}}/{{DATA[HEIGHT]}}^2*10000 {{DATA[WEIGHT]}}/{{DATA[HEIGHT]}}*100/1.50
+[[lpod]]
+((1)) 10 50
+((2)) 10 50
+[[ltransfo]] (|1|)
