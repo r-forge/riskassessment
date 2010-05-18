@@ -24,8 +24,17 @@ empirical cumulative distribution function of the estimate of a
 }
 \examples{
 data(total)
+
 plot(xVUM3)
+## only one enveloppe corresponding to quantiles 0.025 and 0.975
+plot(xVUM3, lim=c(0.025, 0.975)) 
+## only one enveloppe not painted
+plot(xVUM3, lim=c(0.025, 0.975), paint=FALSE) 
+
+def.par <- par(no.readonly = TRUE)
+par(mar=c(4, 4, 1, 1))
 plot(total)
+par(def.par)
 
 
 
