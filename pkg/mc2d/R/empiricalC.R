@@ -34,7 +34,7 @@ dempiricalC <- function(x, min, max, values, prob=rep(1,length(values)), log=FAL
 #par(mfrow=c(1,2))
 #curve(dempiricalC(x, min=0, max=6, values, prob), from=-1, to=7, n=1001)
 #curve(pempiricalC(x, min=0, max=6, values, prob), from=-1, to=7, n=1001)
-#AUTHOR Regis Pouillot
+
 #CREATED 08-02-20
 #--------------------------------------------
 {

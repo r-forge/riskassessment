@@ -45,7 +45,7 @@ plot.mc <- function(x, prec=0.001, stat = c("median","mean"), lim = c(0.025, 0.2
 #par(mar=c(4,4,1,1))
 #plot(total)
 #par(def.par)
-#AUTHOR Regis Pouillot
+
 #CREATED 07-08-01
 #REVISED 10-02-10
 #--------------------------------------------
@@ -73,8 +73,8 @@ plot.mc <- function(x, prec=0.001, stat = c("median","mean"), lim = c(0.025, 0.2
 	 ylab <- rep(ylab,n)
 
   if(is.null(griddim)) griddim <- beau(n)
-  if(prod(griddim) < n) op <- par(mfrow=griddim,ask=TRUE)
-     else op <- par(mfrow=griddim )
+  if(prod(griddim) < n) op <- par(mfrow=griddim,ask=TRUE,mar=c(5,4,.2,.2))
+     else op <- par(mfrow=griddim, mar=c(5,4,.2,.2))
 
   try({   #to restore par in case of error
 

@@ -37,7 +37,7 @@ mc <- function(..., name=NULL, devname=FALSE)
 #z <- x * y
 #(m <- mc(x,y,z,name=c('n1','n2','n3')))
 #mc(m,x,devname=TRUE)
-#AUTHOR Regis Pouillot
+
 #CREATED 07-08-01
 #REVISED 07-08-01
 #--------------------------------------------

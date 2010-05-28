@@ -79,9 +79,6 @@ A \samp{plot.mc} object, list of the quantiles used to plot the draw.
 Cullen AC and Frey HC (1999) Probabilistic techniques in exposure
 assessment. Plenum Press, USA, pp. 81-155.
 }
-\author{
-Regis Pouillot
-}
 \seealso{
 \code{\link{ecdf}}, \code{\link{plot}}, \code{\link{quantile.mc}}
 }
