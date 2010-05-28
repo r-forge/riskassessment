@@ -6,6 +6,7 @@ Version 0.1-8
 NEW FEATURES
 
 - pmin.mcnode and pmax.mcnode 
+- a second vignette
 
 IMPROVEMENTS
 
@@ -13,7 +14,7 @@ IMPROVEMENTS
 
 BUG FIXES
 
-- rempiricalC and qempiricalC leads to errors 
+- rempiricalC and qempiricalC lead to errors 
 
 Version 0.1-7
 =============

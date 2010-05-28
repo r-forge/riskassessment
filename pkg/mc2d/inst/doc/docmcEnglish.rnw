@@ -17,7 +17,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 % sweave commands for vignette
-%\VignetteIndexEntry{Tools for Two-Dimensional Monte-Carlo Simulations}
+%\VignetteIndexEntry{A Manual for mc2d: Tools for Two-Dimensional Monte-Carlo Simulations}
 %\VignettePackage{mc2d}
 %\VignetteDepends{mvtnorm,fitdistrplus}
 
@@ -228,6 +228,7 @@ dimensional Monte-Carlo simulation, with 1,001 iterations. Using the
 
 <<sh0, echo=false>>=
 set.seed(666)
+options("width"=100,"digits"=3)
 @
 
 %true
