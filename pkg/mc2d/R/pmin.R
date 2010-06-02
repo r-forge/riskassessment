@@ -1,6 +1,6 @@
 #<<BEGIN>>
 pmin <- function (..., na.rm = FALSE)
-#TITLE Maxima and Minima for \samp{mcnode}s
+#TITLE Maxima and Minima for mcnodes
 #DESCRIPTION
 # Returns the parallel maxima and minima of the input values.
 #KEYWORDS utilities
