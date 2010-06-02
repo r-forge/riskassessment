@@ -6,7 +6,7 @@
 \alias{pmin.mcnode}
 \alias{pmax.mcnode}
 \title{
-Maxima and Minima for \samp{mcnode}s
+Maxima and Minima for mcnodes
 }
 \description{
 Returns the parallel maxima and minima of the input values.

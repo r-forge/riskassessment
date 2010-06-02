@@ -28,7 +28,7 @@
 % Command for Sweave: figure = .5 the text width
 \setkeys{Gin}{width=0.5\textwidth}
 
-\title{Case study: \emph{L.~monocytogenes} in cold-smoked salmon}
+\title{Case study: \emph{L.\ monocytogenes} in cold-smoked salmon}
 \author{R. POUILLOT, M.-L. DELIGNETTE-MULLER, M. CORNU}
 
 \maketitle
@@ -51,7 +51,7 @@ and a part of the data uncertainty.
 \section{The Model}
 
 In this section, no variability nor uncertainty is considered.
-We assess the final level of \emph{L.~monocytogenes} in the product,
+We assess the final level of \emph{L.\ monocytogenes} in the product,
 the exposure and the risk of invasive listeriosis for an ``average'' individual
 of the ``healthy'' French population\footnote{Yes, it makes no sense, but it will help us introducing
 smoothly the model.}.
@@ -86,15 +86,15 @@ We use the models developed and/or used in \cite{POUILLOT-2007}. The data are ad
   If $m_{T} \leq T_{min}$, $N_{1}=N_{0}$.
   \item We will use $T_{ref}=25$\textdegree{}C.
   We have in this section $N_{max}=7.27 \log_{10}(\text{CFU/g})$;
-  \item The model for \emph{L.~monocytogenes} uses $\mu_{ref,Lm}=6.2\: \text{day}^{-1}$ and
+  \item The model for \emph{L.\ monocytogenes} uses $\mu_{ref,Lm}=6.2\: \text{day}^{-1}$ and
   $T_{min,Lm}=-2.9$\textdegree{}C;
   \item  The same model is used for the food flora, with $\mu_{ref,ff}=4.1\: \text{day}^{-1}$ and
   $T_{min,ff}=-4.5$\textdegree{}C;
   \item The growth model for the bacterial competition consider the Jameson effect,
-  i.e.~consider that the bacterial growth of \emph{L.~monocytogenes and} the growth of the food flora
+  i.e.\ consider that the bacterial growth of \emph{L.\ monocytogenes and} the growth of the food flora
   are stopped as soon as one population reaches $N_{max}$.
 \end{itemize}
-  In practice, one will evaluate $d_{Lm}$ and $d_{ff}$, the time needed for \emph{L.~monocytogenes}
+  In practice, one will evaluate $d_{Lm}$ and $d_{ff}$, the time needed for \emph{L.\ monocytogenes}
   or the food flora to reach $N_{max}$, respectively, and model a growth for the
   given stage during an effective duration of $\min(d,d_{Lm},d_{ff})$.
   The time needed to reach $N_{max}$ is evaluated by inverting \eqref{DMS}:
@@ -109,7 +109,7 @@ We use the models developed and/or used in \cite{POUILLOT-2007}. The data are ad
 
 The other assumptions are:
 \begin{itemize}
-  \item  A cold-smoked salmon package is homogeneously contaminated with \emph{L.~monocytogenes}
+  \item  A cold-smoked salmon package is homogeneously contaminated with \emph{L.\ monocytogenes}
   at the end of the production at a level of $0.1$ CFU/g;
   \item  The food flora level at the end of the production is $10^{2.78}$ CFU/g;
   \item  The time-temperature profile is:
@@ -200,7 +200,7 @@ risk
 @
 
 \texttt{modGrowth} is a convenient function for the growth model. Within this function
-\texttt{dLm} is the time needed for \emph{L.~monocytogenes} to reach \texttt{Nmax},
+\texttt{dLm} is the time needed for \emph{L.\ monocytogenes} to reach \texttt{Nmax},
 \texttt{dFF} is the time needed for the food flora to reach \texttt{Nmax} and,
 \texttt{realDuration} is the effective time of growth during the stage. Note that: 
 \begin{itemize}
@@ -229,7 +229,7 @@ ndvar(10001)
 
 \subsection{Specifying Variability Distribution}
 \subsubsection{Initial Contamination}
-For the initial contamination levels in \emph{L.~monocytogenes}, 
+For the initial contamination levels in \emph{L.\ monocytogenes}, 
 we have a set of 62 enumeration data from a representative sample of
 packages of cold smoked salmon positive in detection: 43 samples have less than $0.2$ CFU/g,
 7 samples have $0.2$ CFU/g, 4 samples have $0.4$ CFU/g, 2 samples have $0.6$ CFU/g,
@@ -262,7 +262,7 @@ Distributions are derived from \cite{DELIGNETTE-2006}:
 \item $N_{max}$ follows a normal distribution with mean 7.27 $\log_{10}$ CFU/g
 and standard deviation 0.86 $\log_{10}$ CFU/g;
 \item The specific growth rate at the reference temperature of 25\textdegree{}C
-for \emph{L.~monocytogenes} follows a normal distribution with mean 6.24 $\text{day}^{-1}$ and standard
+for \emph{L.\ monocytogenes} follows a normal distribution with mean 6.24 $\text{day}^{-1}$ and standard
 deviation 0.75 $\text{day}^{-1}$ truncated on $[0,\infty)$. The minimal growth temperature follows a normal distribution with
 mean -2.86\textdegree{}C and standard deviation 1.93\textdegree{}C;
 \item The specific growth rate at the reference temperature of 25\textdegree{}C
@@ -386,7 +386,7 @@ the growth parameters and the prevalence.
 \subsection{Specifying Uncertainty}
 \subsubsection{Initial Contamination}
 
-The uncertainty surrounding the initial contamination levels of the \emph{L.~monocytogenes}
+The uncertainty surrounding the initial contamination levels of the \emph{L.\ monocytogenes}
 will be modeled using a bootstrap procedure, obtained straightforwardly with the help of the \texttt{fitdistrplus}
 package and its \texttt{bootdistcens} function. Before this, we define the number of iterations needed in 
 the uncertainty dimension.
@@ -525,8 +525,8 @@ the uncertainty around the dose-response model
 and parameters. See \cite{POUILLOT-2007,POUILLOT-2009} for a complete analysis.
 The study of the model through a Tornado chart in the variability dimension
 leads to the Figure \ref{fig:TorLm}. 
-It suggests a big impact of the growth rate of \emph{L.~monocytogenes}, of the storage duration
-during the consumer step, and of the initial level of \emph{L.~monocytogenes}. 
+It suggests a big impact of the growth rate of \emph{L.\ monocytogenes}, of the storage duration
+during the consumer step, and of the initial level of \emph{L.\ monocytogenes}. 
 The Tornado chart in the uncertainty dimension
 leads to the Figure \ref{fig:TorLmU} and suggests the impact of the uncertainty around
 $N_{max}$ on the mean risk, and thus the expected number of cases.
@@ -544,7 +544,7 @@ plot(tornunc, stat="mean risk")
 @
 
 \begin{figure}
-\caption{\label{fig:TorLm}Tornado chart for the \emph{L.~monocytogenes} example (Variability).}
+\caption{\label{fig:TorLm}Tornado chart for the \emph{L.\ monocytogenes} example (Variability).}
 \begin{center}
 <<sh3c, echo=false, eval=true, fig=true>>=
 plot(torn)
@@ -553,7 +553,7 @@ plot(torn)
 \end{figure}
 
 \begin{figure}
-\caption{\label{fig:TorLmU}Tornado chart for the \emph{L.~monocytogenes} example (Uncertainty).}
+\caption{\label{fig:TorLmU}Tornado chart for the \emph{L.\ monocytogenes} example (Uncertainty).}
 \begin{center}
 <<sh3d, echo=false, eval=true, fig=true>>=
 plot(tornunc, stat="mean risk")
