@@ -3,23 +3,12 @@
 (order/numbers mean nothing)
 
 === short term ===
-
-22. Add the example published in Busschaert 2010 in the vignette and 
-    in the examples, maybe with the data set in the package (censored microbiological data)
-    
-23. Make it possible, as in fitdistr, to fix some arguments of a density function while
-    estimating the other ones. Not so easy to rapidly implement as it must be repercuted
-    on all the functions that use the result of a fit.
-
 3. put spaces before and after affectations (x <- 3) to make codes easier to read
     done at least in fitdist and mledist 
 
 12. Split summary.fitdist in two parts : summary.fitdist and print.summary.fitdist
-    done but to STILL TO DO for fitdistcens, bootdist and bootdistcens
+    done but STILL TO DO for fitdistcens, bootdist and bootdistcens
     
-13. Check the values in the data set for censored data to reject a left value greater than a right value
-
-
 === long term ===
 
 19. Add other gof graphs and stats for fits on censored data (Turnbull, ...) and gof statistics for censored data
@@ -80,3 +69,13 @@ but it could be be splitted in two parts)
     instead of that, I have slightly modified the writing of plotdist in order to 
     facilitate the personalization of plots using the argument "..." because we sometimes prefer
     to see only the observed values on the CDF plot, or a linear interpolation than a step function.
+    
+23. Make it possible, as in fitdistr, to fix some arguments of a density function while
+    estimating the other ones. Not so easy to rapidly implement as it must be repercuted
+    on all the functions that use the result of a fit.
+    
+13. Check the values in the data set for censored data to reject a left value greater than a right value
+    
+22. Add the example published in Busschaert 2010 in the vignette and 
+    in the examples, maybe with the data set in the package (censored microbiological data)
+    
