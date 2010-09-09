@@ -1,0 +1,109 @@
+char2chars              transforms a single character into a character
+                        vector
+char2des                transforms,if necessary, a single character to
+                        a 'des' object
+char2list               transforms a character into a list
+char2vma                transforms a character into a vector (or
+                        matrix, or array)
+check4tyle              checks the type and the length of some standard
+                        object
+check4valid             checks the returned value of valid8 functions
+check8list              checks the components of a list
+close8graph             closes the file open by open8graph
+close8text              pauses (and more) the program until an answer
+                        is given
+comp3convolu            computes a convoluted distribution
+comp3dtriang            develops a delay
+comp3interpolation      extrapolation of known values
+daf-class               Class "daf" to define a data frame
+daf2list                transforms a /daf/ into a list
+depeche                 issues a message on the screen [and returns the
+                        answer]
+des-class               Class "des" to identify and characterize any
+                        object *by hand* in common language
+des2list                transforms a /des/ object into a list.
+df2bstat                computes bivariate statistics from a data frame
+df2ustat                computes univariate statistics from a data
+                        frame
+easyp3cut               splits an expression into non nested blocks
+easyp3stickback         converse operation of easyp3cut
+erreur                  issues an error message and concludes
+                        accordingly
+explore8list            returns the structure of a list in matrix
+expr3cobu               provides a suitable Bugs transcription for
+                        translation into Bugs language
+expr3extrait            extracts the contents of parentheses from a
+                        character
+expr3func               provides the generation function from gc and ft
+expr3present            does sch belongs to ch?
+faux-class              Class "faux" to handle errors occurring within
+                        functions
+file2list               reads a file and transforms it in a list (of
+                        lists) of characters
+form3affiche            displays with its name the object x
+form3decadre            removes character before and after a character
+                        string
+form3encadre            surrounds a character string
+form3etsil              inverse function of form3liste or whatever
+form3file               adds a character vector into a file
+form3ind                provides indentation of different levels
+form3justifie           formats a character string
+form3line               print a separator line from a given pattern
+form3liste              formats a series of names or whatever
+form3names              provides systematic names for nodes
+form3norma              removes redundant characters into a character
+                        string
+form3paragraphe         prints or prepares paragraphes from a character
+                        vector. Each component is supposed to be a
+                        paragraph but the first one can be considered
+                        as a title.
+form3repete             prints a repeated given string
+form3title              prints or prepares a title
+form3titre              prints or prepares a title
+geom3lmargin            adds some padding to a range
+geom3pointi             interpolation in R to the 2
+geom3pol2xyz            transforms polar coordinates in cartesian
+                        coordinates
+geom3xyz2pol            transforms cartesian coordinates in polar
+                        coordinates
+get8daf                 returns the data frame associated to a /daf/
+get8listcomp            returns components from a list structure
+get8object              returns an object from a character(2) coding
+is8rbsblist             checks whether a list is rbsb-compatible list
+                        or not
+isempty                 to avoid difficulty with is.null
+list2char               transforms a list into a character vector
+list2daf                transforms a list into a /daf/
+list2des                transforms a consistent list into a new des
+                        object
+list2file               transforms a list and write it onto a character
+                        file
+listev                  returns the ith element of a list supposed to
+                        be numeric
+name8list               returns the same list but with names
+now                     returns a character giving the present moment
+num2disc                transforms a numeric value into a categoric
+                        value.
+numero                  returns the positions of identifiers
+open8graph              opens the graph device for rebastaba
+open8text               opens the standard output text for rebastaba
+pause                   pauses the program until an answer is given
+pprint                  double print at the screen and into a text file
+print8daf               prints a daf object
+print8des               prints a des object
+print8faux              prints a faux object
+rapport                 issues an error message when rebastaba fails
+rs003k                  assigns the constants for the rs00 layer
+set8listcomp            modifies one component from a list structure
+sj                      trick for loops
+sjl                     trick for loops
+ss                      sources an R file
+systematic              returns a systematic exploration of a vector
+today                   returns a character giving the present day
+unex                    collapsing indices
+valid8daf               checks a /daf/
+valid8des               checks a /des/
+valid8faux              checks a /faux/
+var3standard            provides nvar standard names of variables
+vma2char                transforms a vector (or matrix, or array) into
+                        a character
