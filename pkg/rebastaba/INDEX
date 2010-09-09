@@ -1,0 +1,260 @@
+Dirac4bn                introduce a Dirac distribution on one
+                        univariate node
+alk-class               Class "alk" to define *a*sked *l*in*k* by the
+                        user
+alk2list                transforms a /alk/ object into a list
+alkvar                  returns the variable names of an /alk/
+and4bn                  adds a new node to a bn object
+and4gn                  adds a series of nodes to a gn object
+and4nom                 adds one node to a /nom/
+anode4bn                very simplified version of and4bn
+arc-class               Class "arc" ~~~
+arc2pam                 constructs the object pam from the object arc
+arc4gn                  adds or remove some arc(s) to or from a gn
+                        object
+bn-class                Class for Bayesian Networks
+bn2alk                  gets an alk from a given bn
+bn2bn                   extracts a bn from a bn (way number 1)
+bn2bugs                 translates a bn into a bugs model
+bn2dn                   simulates data from a bn
+bn2gn                   creates a gn object from a bn object
+bn2jagscript            constructs a Jags script from a bn
+bn2list                 transforms a /bn/ into a list
+bn2model                expresses the model formulae
+bn2nd                   extracts and returns some traits of a node
+                        defined into a bn
+bn2pam                  gets the pam from a /bn/.
+bn2pta                  computes the probability table associated to a
+                        numcat/parcat node
+categ3beta              compute a univariate categ distribution
+categ3beta2             compute a bivariate categ distribution
+categ3betap             compute a p-variable categ distribution
+char2nom                transforms a character into a 'nom' object
+check8alk               checks an /alk/
+children8bn             returns the direct children of a bn
+code4bn                 builds the code for the nk-th node of a /bn/.
+compare8nom             compares two /nom/s
+complete8alk            completes an alk with respect to a given bn
+connect8bgn             determines if a bn/gn is connected
+cycle8bgn               detects if a cycle exists in a bn/gn object
+cycle8pam               detects if a cycle exists from a pam matrix
+cycles4gn               reduces the graph to the portion with cycles
+df2bn                   initializes a bn object from a data frame
+dim8nd                  computes the dimension of a node
+dn-class                Class for data sets associated to bn, most
+                        often simulated
+dn2bstat                Computes the bivariate statistics for the
+                        variables of a /dn/
+dn2csv                  creates a csv file containing dn@df
+dn2score                Computes the individual scores for a /dn/
+dn2ustat                Computes the univariate statistics for the
+                        variables of a /dn/
+draw8Dirichlet          simulates random draws from a Dirichlet
+draw8dist               returns the distances for the selection to be
+                        operated with an empidata node.
+draw8edcg               simulates random draws for a numcat
+                        distribution
+draw8empidata           performs an empidata [multivariate] draw or
+                        prediction
+draw8multinom           simulates random draw from a multinomial
+draw8predg              returns the predicted individuals for an
+                        empidata node.
+draw8predi              returns the predicted individual for an
+                        empidata node.
+draw8sele               returns the candidate individuals for an
+                        empidata node.
+easyp2code              transforms an easyp expression into an R/bugs
+                        block
+easyp2code1             expands an easyp expression
+easyp2code2             transforms an easyp expression into an R/bugs
+                        block
+easyp2dim               returns the dimension of the variable defined
+                        in an easyp character(1)
+easyp3expanded          returns an expanded easyp from an easyp
+easyp3trouve            checks the consistency of the result obtained
+                        after easyp3cut and returns the used
+                        node/variable numbers of nom
+easyps2dim              returns the dimension of the variable defined
+                        with an easyp of any length
+ends8gn                 returns the root and leaf nodes/variables of a
+                        gn
+explore8pam             finds different characteristics of relations
+                        between nodes
+expr3bugs               returns the piece of Bugs code for standard
+                        distributions
+form3nd                 symbolizes the kind of nodes
+geneal4pam              constructs the genealoty of a given node
+gn-class                Class for graphs associated to Bayesian
+                        networks
+gn2bn                   creates a bn object from a gn object
+gn2item                 returns the item names of a /gn/ object
+gn2list                 transforms a /gn/ object into a list
+gn2path                 returns all paths between two nodes
+grappa4check            checks if the provided bn is Grappa-compatible
+help8ltype              provides information about type of links
+ind8bgn                 returns the nodes between two nodes
+ion-class               Class "ion" to define from different viewpoints
+                        a subset of nodes and/or variables of a /nom/.
+isalkrepeatable         indicates if the link is a standard repeatable
+                        link
+isndmulti               indicates if the node is a standard
+                        multidimensional node
+isvide                  to avoid difficulty with is.null
+length8ion              returns the length of a 'ion' object
+length8nom              returns the length of a 'nom' object
+list2alk                transforms a consistent list into a new alk
+list2bn                 transforms a consistent list into a new bn
+                        object
+list2gn                 transforms a consistent list into a new /gn/
+                        object
+list2nom                transforms a list into a /nom/
+list2win                transforms a convenient list into a /win/
+minbar8gn               finds the minimum number of arcs between nodes
+                        of a gn object
+mindis8pam              finds the minimum distance between every pair
+                        of nodes
+mnd4bn                  modifies an existing node into a bn object
+modify4bn               plot an object rbsb to interactively modify its
+                        graph
+modify4gn               interactive modifications of a gn
+nanv                    names of nodes/variables for an bn/gn/dn/nom
+                        object
+nbnv                    number of nodes/variables for an bn/gn/dn/nom
+                        object
+nbrep4alk               determines the number of repetitions of an alk
+nd2bn                   extracts the sub-bn comprising a node and its
+                        direct parents
+neighbours8gn           returns the direct parents (or children) of a
+                        gn nodes
+new8alk                 generates a new alk from user specification
+new8arc                 creates an /arc/ with a specified number of
+                        nodes and arcs
+new8audit               produced a bn of kind 'audit' from a /gn/
+new8noralk              very simplified version of new8alk
+nom-class               Class "nom" to describe the node and variable
+                        names of a /bn/
+nom2char                transforms a /nom/ into a character
+nom2list                transforms a /nom/ into a list
+nom2nom                 transform a /nom/.
+normalize4pta           normalize pt
+nv2ion                  returns the /ion/ of a series of
+                        nodes/variables
+nv2nod                  transforms complete variable names into node
+                        names
+nv2nv                   transforms node[variable] characters into node
+                        and variable characters.
+nv2var                  returns the variable name from a node[variable]
+                        name
+nv3nom                  detects the existence of names into nom
+pam-class               Class "pam" to define parentship matrices
+pam2arc                 from the parentship object pam returns the arcs
+                        object
+pam2gn                  from a pam object generates a gn object
+pam2path                returns all paths between two nodes
+parcours8gn             find the ascendances until blocking
+parents8alk             finds the parents at the variable level of an
+                        /alk/
+parents8bn              returns the direct parents of a bn
+parents8win             finds the parents at the variable level of a
+                        /win/
+part8bgn                classifies a set of nodes according to a subset
+                        of them
+path4gn                 reduces the graph to the portion in between two
+                        node sets
+pgr-class               Class "pgr" to format the plot of /gn/ (mainly
+                        DAG associated to Bayesian networks).
+plan0                   generates values from one node of a bn
+plan1                   generates imposed values to start a simulation
+                        plan on a bn
+plot3D8gn               plots an object gn according to its 3
+                        dimensions
+plot8bn                 plots an object bn
+plot8cgn                draws nodes and arcs of a gn with already
+                        computed xy values
+plot8dn                 Plots the numeric or categoric variables of a
+                        dn object
+plot8dnca               univariate plot for a categoric variable
+plot8dncaca             bivariate plot for two categoric variables
+plot8dnco               univariate plot for a continuous variable
+plot8dncoca             bivariate plot for a continuous and a categoric
+                        variables
+plot8dncoco             bivariate plot for two continuous variables
+plot8gene               plots ancestry [descendants] of node(s) of a
+                        bn/gn
+plot8gn                 plots an object gn
+plot8path               plots separately all paths between two nodes
+porder                  finds a parentship order onto the nodes and
+                        more
+pos-class               Class "pos" to define the projection into $R^2$
+                        of objects into $R^3$
+pos2pos                 returns the equivalent pos object with standard
+                        view
+position4gn             proposes positions for the nodes of a gn object
+print8alk               prints the node-variable names
+print8alkcomp           prints an alk object supposed to be completed
+                        for a bn
+print8alkuse            prints an alk object not supposed to be
+                        completed for a bn
+print8arc               prints an /arc/
+print8bn                prints a bn object
+print8dn                prints a /dn/
+print8gn                prints an object gn
+print8ion               prints a 'ion' object
+print8link              prints an interpretation of one link of a bn
+print8links             prints the interpretation of some links of a bn
+print8nom               prints the node-variable names
+print8pam               prints a /pam/
+print8pgr               prints the node-variable names
+print8pos               prints a /pos/
+print8pt2               prints a pt object of dimension two
+print8pta               prints the node-variable names
+print8win               prints a /win/
+pta-class               Class "pta" to store probability tables
+range8node              returns the variable ranges of a given node
+range8pos               returns the ranges (x,y) for a pos
+rcatbn                  creates a pseudo-random numcat bn object
+read8audit              produced an audit /bn/ from a text file
+read8bn                 produced a /bn/ from a text file
+read8gn                 produced a /gn/ from a text file
+rebastaba               draws some Bayesian networks for illustration
+relation4gn             formats the arc of a gn from a relation matrix
+repartition3dn          scans the repartition of the values of dn@df
+rgn                     creates a pseudo-random gn object
+rmar4gn                 removes a series of arcs from a gn object
+rmnd4gn                 removes a series of nodes from a gn object
+rmnd4nom                removes one node to a /nom/
+rnd4bn                  removes a series of nodes into a bn object
+rnorbn                  creates a pseudo-random normal bn object from a
+                        given bn
+rsba3k                  assigns the rsba constants
+rsbn3k                  assigns the constants for the rsbn layer
+rsdn3k                  assigns the constants for the rsdn layer
+rsgn3k                  assigns the constants for the rsgn layer
+score4dn                Completes a dn with its score
+simulate8bn             simulates a /dn/ from a /bn/
+sort8ion                sorts a 'ion' object
+sort8nom                sorts a /nom/ according to various ways
+study8nd                extracts sub-bn(s) with one parent one child
+                        from a bn
+subn                    finds independent sub-bn in a BN
+uniform4bn              introduces a uniform distribution on one node
+valid8alk               checks an /alk/
+valid8arc               checks a /arc/
+valid8bn                checks a /bn/
+valid8dn                checks a /dn/
+valid8gn                checks a /gn/
+valid8ion               checks a /ion/
+valid8nom               checks a /nom/
+valid8pam               checks a /pam/
+valid8pgr               checks a /pgr/
+valid8pos               checks a /pos/
+valid8pta               checks a /pta/
+valid8win               checks a /win/
+var4alk                 finds the variable names for an alk.
+variables8win           returns all variables involved in a /win/
+win-class               Class "win" to define a node from a data.frame
+win2list                transforms into a list a /win/
+write8bn                writes a /bn/ to a file
+write8gn                writes a /gn/ to file
+x2nom                   returns the "nom" slot of an object
+zero2bn                 starting an empty bn

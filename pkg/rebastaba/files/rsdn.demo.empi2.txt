@@ -1,0 +1,45 @@
+#
+# 10_07_29 10_08_09
+#
+##########################################
+<<empi1>>
+[[defi]] A Bayesian network with a simple empidata node
+[[orig]]  ReBaStaBa documentation
+[[role]] just to show how it works
+[[comm]] Systematic draw from 'empidata' ltype replaces now the former 'popula' ltype.
+[[time]] 10_08_09
+##########################################
+##########################################
+<<positive>>
+[[defi]] randomly generated
+[[ltype]] numcat
+[[lpara]]
+((p)) 0.70 0.30
+#
+[[lpod]] n y
+##########################################
+##########################################
+<<DATA>>
+[[defi]] Some available data base
+[[ltype]] empidata
+#
+[[lpod]]
+((v1))  10 22
+((v2)) -5 5
+#
+#
+[[ldaf]]
+((name)) jj2
+((what)) f
+((valu)) empi2.gen
+#
+#
+[[lwin]]
+((nat))  v1    v2
+       conti conti
+((rty)) * median
+((swg)) positive 1
+((sdi)) 0 5
+((snb)) 1 12
+((skk)) 1
+##########################################

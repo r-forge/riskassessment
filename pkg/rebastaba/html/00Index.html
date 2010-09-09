@@ -1,0 +1,584 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Handling Bayesian networks</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="../../../doc/html/R.css">
+</head><body>
+<h1> Handling Bayesian networks
+<img class="toplogo" src="../../../doc/html/logo.jpg" alt="[R logo]"></h1>
+</h1>
+<hr>
+<div align="center">
+<a href="../../../doc/html/packages.html"><img src="../../../doc/html/left.jpg" alt="[Up]" width="30" height="30" border="0"></a>
+<a href="../../../doc/html/index.html"><img src="../../../doc/html/up.jpg" alt="[Top]" width="30" height="30" border="0"></a>
+</div><h2>Documentation for package &lsquo;rebastaba&rsquo; version 0.3-0</h2>
+
+<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
+<li><a href="../demo">Code demos</a>.  Use <a href="../../utils/help/demo">demo()</a> to run them.</li>
+</ul>
+
+<h2>Help Pages</h2>
+
+
+<p align="center">
+<a href="#A">A</a>
+<a href="#B">B</a>
+<a href="#C">C</a>
+<a href="#D">D</a>
+<a href="#E">E</a>
+<a href="#F">F</a>
+<a href="#G">G</a>
+<a href="#H">H</a>
+<a href="#I">I</a>
+<a href="#L">L</a>
+<a href="#M">M</a>
+<a href="#N">N</a>
+<a href="#P">P</a>
+<a href="#R">R</a>
+<a href="#S">S</a>
+<a href="#U">U</a>
+<a href="#V">V</a>
+<a href="#W">W</a>
+<a href="#X">X</a>
+<a href="#Z">Z</a>
+</p>
+
+
+<h2><a name="A">-- A --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="rsba.alk-class.html">alk-class</a></td>
+<td>Class "alk" to define *a*sked *l*in*k* by the user</td></tr>
+<tr><td width="25%"><a href="alk2list.html">alk2list</a></td>
+<td>transforms a /alk/ object into a list</td></tr>
+<tr><td width="25%"><a href="alkvar.html">alkvar</a></td>
+<td>returns the variable names of an /alk/</td></tr>
+<tr><td width="25%"><a href="and4bn.html">and4bn</a></td>
+<td>adds a new node to a bn object</td></tr>
+<tr><td width="25%"><a href="and4gn.html">and4gn</a></td>
+<td>adds a series of nodes to a gn object</td></tr>
+<tr><td width="25%"><a href="and4nom.html">and4nom</a></td>
+<td>adds one node to a /nom/</td></tr>
+<tr><td width="25%"><a href="anode4bn.html">anode4bn</a></td>
+<td>very simplified version of and4bn</td></tr>
+<tr><td width="25%"><a href="rsba.arc-class.html">arc-class</a></td>
+<td>Class "arc" ~~~</td></tr>
+<tr><td width="25%"><a href="arc2pam.html">arc2pam</a></td>
+<td>constructs the object pam from the object arc</td></tr>
+<tr><td width="25%"><a href="arc4gn.html">arc4gn</a></td>
+<td>adds or remove some arc(s) to or from a gn object</td></tr>
+</table>
+
+<h2><a name="B">-- B --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="rsbn.bn-class.html">bn-class</a></td>
+<td>Class for Bayesian Networks</td></tr>
+<tr><td width="25%"><a href="bn2alk.html">bn2alk</a></td>
+<td>gets an alk from a given bn</td></tr>
+<tr><td width="25%"><a href="bn2bn.html">bn2bn</a></td>
+<td>extracts a bn from a bn (way number 1)</td></tr>
+<tr><td width="25%"><a href="bn2bugs.html">bn2bugs</a></td>
+<td>translates a bn into a bugs model</td></tr>
+<tr><td width="25%"><a href="bn2dn.html">bn2dn</a></td>
+<td>simulates data from a bn</td></tr>
+<tr><td width="25%"><a href="bn2gn.html">bn2gn</a></td>
+<td>creates a gn object from a bn object</td></tr>
+<tr><td width="25%"><a href="bn2jagscript.html">bn2jagscript</a></td>
+<td>constructs a Jags script from a bn</td></tr>
+<tr><td width="25%"><a href="bn2list.html">bn2list</a></td>
+<td>transforms a /bn/ into a list</td></tr>
+<tr><td width="25%"><a href="bn2model.html">bn2model</a></td>
+<td>expresses the model formulae</td></tr>
+<tr><td width="25%"><a href="bn2nd.html">bn2nd</a></td>
+<td>extracts and returns some traits of a node defined into a bn</td></tr>
+<tr><td width="25%"><a href="bn2pam.html">bn2pam</a></td>
+<td>gets the pam from a /bn/.</td></tr>
+<tr><td width="25%"><a href="bn2pta.html">bn2pta</a></td>
+<td>computes the probability table associated to a numcat/parcat node</td></tr>
+</table>
+
+<h2><a name="C">-- C --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="categ3beta.html">categ3beta</a></td>
+<td>compute a univariate categ distribution</td></tr>
+<tr><td width="25%"><a href="categ3beta2.html">categ3beta2</a></td>
+<td>compute a bivariate categ distribution</td></tr>
+<tr><td width="25%"><a href="categ3betap.html">categ3betap</a></td>
+<td>compute a p-variable categ distribution</td></tr>
+<tr><td width="25%"><a href="char2nom.html">char2nom</a></td>
+<td>transforms a character into a 'nom' object</td></tr>
+<tr><td width="25%"><a href="check8alk.html">check8alk</a></td>
+<td>checks an /alk/</td></tr>
+<tr><td width="25%"><a href="children8bn.html">children8bn</a></td>
+<td>returns the direct children of a bn</td></tr>
+<tr><td width="25%"><a href="code4bn.html">code4bn</a></td>
+<td>builds the code for the nk-th node of a /bn/.</td></tr>
+<tr><td width="25%"><a href="compare8nom.html">compare8nom</a></td>
+<td>compares two /nom/s</td></tr>
+<tr><td width="25%"><a href="complete8alk.html">complete8alk</a></td>
+<td>completes an alk with respect to a given bn</td></tr>
+<tr><td width="25%"><a href="connect8bgn.html">connect8bgn</a></td>
+<td>determines if a bn/gn is connected</td></tr>
+<tr><td width="25%"><a href="cycle8bgn.html">cycle8bgn</a></td>
+<td>detects if a cycle exists in a bn/gn object</td></tr>
+<tr><td width="25%"><a href="cycle8pam.html">cycle8pam</a></td>
+<td>detects if a cycle exists from a pam matrix</td></tr>
+<tr><td width="25%"><a href="cycles4gn.html">cycles4gn</a></td>
+<td>reduces the graph to the portion with cycles</td></tr>
+</table>
+
+<h2><a name="D">-- D --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="df2bn.html">df2bn</a></td>
+<td>initializes a bn object from a data frame</td></tr>
+<tr><td width="25%"><a href="dim8nd.html">dim8nd</a></td>
+<td>computes the dimension of a node</td></tr>
+<tr><td width="25%"><a href="Dirac4bn.html">Dirac4bn</a></td>
+<td>introduce a Dirac distribution on one univariate node</td></tr>
+<tr><td width="25%"><a href="rsdn.dn-class.html">dn-class</a></td>
+<td>Class for data sets associated to bn, most often simulated</td></tr>
+<tr><td width="25%"><a href="dn2bstat.html">dn2bstat</a></td>
+<td>Computes the bivariate statistics for the variables of a /dn/</td></tr>
+<tr><td width="25%"><a href="dn2csv.html">dn2csv</a></td>
+<td>creates a csv file containing dn@df</td></tr>
+<tr><td width="25%"><a href="dn2score.html">dn2score</a></td>
+<td>Computes the individual scores for a /dn/</td></tr>
+<tr><td width="25%"><a href="dn2ustat.html">dn2ustat</a></td>
+<td>Computes the univariate statistics for the variables of a /dn/</td></tr>
+<tr><td width="25%"><a href="draw8Dirichlet.html">draw8Dirichlet</a></td>
+<td>simulates random draws from a Dirichlet</td></tr>
+<tr><td width="25%"><a href="draw8dist.html">draw8dist</a></td>
+<td>returns the distances for the selection to be operated with an
+empidata node.</td></tr>
+<tr><td width="25%"><a href="draw8edcg.html">draw8edcg</a></td>
+<td>simulates random draws for a numcat distribution</td></tr>
+<tr><td width="25%"><a href="draw8empidata.html">draw8empidata</a></td>
+<td>performs an empidata [multivariate] draw or prediction</td></tr>
+<tr><td width="25%"><a href="draw8multinom.html">draw8multinom</a></td>
+<td>simulates random draw from a multinomial</td></tr>
+<tr><td width="25%"><a href="draw8predg.html">draw8predg</a></td>
+<td>returns the predicted individuals for an empidata node.</td></tr>
+<tr><td width="25%"><a href="draw8predi.html">draw8predi</a></td>
+<td>returns the predicted individual for an empidata node.</td></tr>
+<tr><td width="25%"><a href="draw8sele.html">draw8sele</a></td>
+<td>returns the candidate individuals for an empidata node.</td></tr>
+</table>
+
+<h2><a name="E">-- E --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="easyp2code.html">easyp2code</a></td>
+<td>transforms an easyp expression into an R/bugs block</td></tr>
+<tr><td width="25%"><a href="easyp2code1.html">easyp2code1</a></td>
+<td>expands an easyp expression</td></tr>
+<tr><td width="25%"><a href="easyp2code2.html">easyp2code2</a></td>
+<td>transforms an easyp expression into an R/bugs block</td></tr>
+<tr><td width="25%"><a href="easyp2dim.html">easyp2dim</a></td>
+<td>returns the dimension of the variable defined in an easyp
+character(1)</td></tr>
+<tr><td width="25%"><a href="easyp3expanded.html">easyp3expanded</a></td>
+<td>returns an expanded easyp from an easyp</td></tr>
+<tr><td width="25%"><a href="easyp3trouve.html">easyp3trouve</a></td>
+<td>checks the consistency of the result obtained after easyp3cut and
+returns the used node/variable numbers of nom</td></tr>
+<tr><td width="25%"><a href="easyps2dim.html">easyps2dim</a></td>
+<td>returns the dimension of the variable defined with an easyp of any
+length</td></tr>
+<tr><td width="25%"><a href="ends8gn.html">ends8gn</a></td>
+<td>returns the root and leaf nodes/variables of a gn</td></tr>
+<tr><td width="25%"><a href="explore8pam.html">explore8pam</a></td>
+<td>finds different characteristics of relations between nodes</td></tr>
+<tr><td width="25%"><a href="expr3bugs.html">expr3bugs</a></td>
+<td>returns the piece of Bugs code for standard distributions</td></tr>
+</table>
+
+<h2><a name="F">-- F --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="form3nd.html">form3nd</a></td>
+<td>symbolizes the kind of nodes</td></tr>
+</table>
+
+<h2><a name="G">-- G --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="geneal4pam.html">geneal4pam</a></td>
+<td>constructs the genealoty of a given node</td></tr>
+<tr><td width="25%"><a href="rsgn.gn-class.html">gn-class</a></td>
+<td>Class for graphs associated to Bayesian networks</td></tr>
+<tr><td width="25%"><a href="gn2bn.html">gn2bn</a></td>
+<td>creates a bn object from a gn object</td></tr>
+<tr><td width="25%"><a href="gn2item.html">gn2item</a></td>
+<td>returns the item names of a /gn/ object</td></tr>
+<tr><td width="25%"><a href="gn2list.html">gn2list</a></td>
+<td>transforms a /gn/ object into a list</td></tr>
+<tr><td width="25%"><a href="gn2path.html">gn2path</a></td>
+<td>returns all paths between two nodes</td></tr>
+<tr><td width="25%"><a href="grappa4check.html">grappa4check</a></td>
+<td>checks if the provided bn is Grappa-compatible</td></tr>
+</table>
+
+<h2><a name="H">-- H --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="help8ltype.html">help8ltype</a></td>
+<td>provides information about type of links</td></tr>
+</table>
+
+<h2><a name="I">-- I --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="ind8bgn.html">ind8bgn</a></td>
+<td>returns the nodes between two nodes</td></tr>
+<tr><td width="25%"><a href="rsba.ion-class.html">ion-class</a></td>
+<td>Class "ion" to define from different viewpoints a subset of nodes and/or variables of a /nom/.</td></tr>
+<tr><td width="25%"><a href="isalkrepeatable.html">isalkrepeatable</a></td>
+<td>indicates if the link is a standard repeatable link</td></tr>
+<tr><td width="25%"><a href="isndmulti.html">isndmulti</a></td>
+<td>indicates if the node is a standard multidimensional node</td></tr>
+<tr><td width="25%"><a href="isvide.html">isvide</a></td>
+<td>to avoid difficulty with is.null</td></tr>
+</table>
+
+<h2><a name="L">-- L --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="rsba.ion-class.html">length-method</a></td>
+<td>Class "ion" to define from different viewpoints a subset of nodes and/or variables of a /nom/.</td></tr>
+<tr><td width="25%"><a href="rsba.nom-class.html">length-method</a></td>
+<td>Class "nom" to describe the node and variable names of a /bn/</td></tr>
+<tr><td width="25%"><a href="length8ion.html">length8ion</a></td>
+<td>returns the length of a 'ion' object</td></tr>
+<tr><td width="25%"><a href="length8nom.html">length8nom</a></td>
+<td>returns the length of a 'nom' object</td></tr>
+<tr><td width="25%"><a href="list2alk.html">list2alk</a></td>
+<td>transforms a consistent list into a new alk</td></tr>
+<tr><td width="25%"><a href="list2bn.html">list2bn</a></td>
+<td>transforms a consistent list into a new bn object</td></tr>
+<tr><td width="25%"><a href="list2gn.html">list2gn</a></td>
+<td>transforms a consistent list into a new /gn/ object</td></tr>
+<tr><td width="25%"><a href="list2nom.html">list2nom</a></td>
+<td>transforms a list into a /nom/</td></tr>
+<tr><td width="25%"><a href="list2win.html">list2win</a></td>
+<td>transforms a convenient list into a /win/</td></tr>
+</table>
+
+<h2><a name="M">-- M --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="minbar8gn.html">minbar8gn</a></td>
+<td>finds the minimum number of arcs between nodes of a gn object</td></tr>
+<tr><td width="25%"><a href="mindis8pam.html">mindis8pam</a></td>
+<td>finds the minimum distance between every pair of nodes</td></tr>
+<tr><td width="25%"><a href="mnd4bn.html">mnd4bn</a></td>
+<td>modifies an existing node into a bn object</td></tr>
+<tr><td width="25%"><a href="modify4bn.html">modify4bn</a></td>
+<td>plot an object rbsb to interactively modify its graph</td></tr>
+<tr><td width="25%"><a href="modify4gn.html">modify4gn</a></td>
+<td>interactive modifications of a gn</td></tr>
+</table>
+
+<h2><a name="N">-- N --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="nanv.html">nanv</a></td>
+<td>names of nodes/variables for an bn/gn/dn/nom object</td></tr>
+<tr><td width="25%"><a href="nbnv.html">nbnv</a></td>
+<td>number of nodes/variables for an bn/gn/dn/nom object</td></tr>
+<tr><td width="25%"><a href="nbrep4alk.html">nbrep4alk</a></td>
+<td>determines the number of repetitions of an alk</td></tr>
+<tr><td width="25%"><a href="nd2bn.html">nd2bn</a></td>
+<td>extracts the sub-bn comprising a node and its direct parents</td></tr>
+<tr><td width="25%"><a href="neighbours8gn.html">neighbours8gn</a></td>
+<td>returns the direct parents (or children) of a gn nodes</td></tr>
+<tr><td width="25%"><a href="new8alk.html">new8alk</a></td>
+<td>generates a new alk from user specification</td></tr>
+<tr><td width="25%"><a href="new8arc.html">new8arc</a></td>
+<td>creates an /arc/ with a specified number of nodes and arcs</td></tr>
+<tr><td width="25%"><a href="new8audit.html">new8audit</a></td>
+<td>produced a bn of kind 'audit' from a /gn/</td></tr>
+<tr><td width="25%"><a href="new8noralk.html">new8noralk</a></td>
+<td>very simplified version of new8alk</td></tr>
+<tr><td width="25%"><a href="rsba.nom-class.html">nom-class</a></td>
+<td>Class "nom" to describe the node and variable names of a /bn/</td></tr>
+<tr><td width="25%"><a href="nom2char.html">nom2char</a></td>
+<td>transforms a /nom/ into a character</td></tr>
+<tr><td width="25%"><a href="nom2list.html">nom2list</a></td>
+<td>transforms a /nom/ into a list</td></tr>
+<tr><td width="25%"><a href="nom2nom.html">nom2nom</a></td>
+<td>transform a /nom/.</td></tr>
+<tr><td width="25%"><a href="normalize4pta.html">normalize4pta</a></td>
+<td>normalize pt</td></tr>
+<tr><td width="25%"><a href="nv2ion.html">nv2ion</a></td>
+<td>returns the /ion/ of a series of nodes/variables</td></tr>
+<tr><td width="25%"><a href="nv2nod.html">nv2nod</a></td>
+<td>transforms complete variable names into node names</td></tr>
+<tr><td width="25%"><a href="nv2nv.html">nv2nv</a></td>
+<td>transforms node[variable] characters into node and variable
+characters.</td></tr>
+<tr><td width="25%"><a href="nv2var.html">nv2var</a></td>
+<td>returns the variable name from a node[variable] name</td></tr>
+<tr><td width="25%"><a href="nv3nom.html">nv3nom</a></td>
+<td>detects the existence of names into nom</td></tr>
+</table>
+
+<h2><a name="P">-- P --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="rsba.pam-class.html">pam-class</a></td>
+<td>Class "pam" to define parentship matrices</td></tr>
+<tr><td width="25%"><a href="pam2arc.html">pam2arc</a></td>
+<td>from the parentship object pam returns the arcs object</td></tr>
+<tr><td width="25%"><a href="pam2gn.html">pam2gn</a></td>
+<td>from a pam object generates a gn object</td></tr>
+<tr><td width="25%"><a href="pam2path.html">pam2path</a></td>
+<td>returns all paths between two nodes</td></tr>
+<tr><td width="25%"><a href="parcours8gn.html">parcours8gn</a></td>
+<td>find the ascendances until blocking</td></tr>
+<tr><td width="25%"><a href="parents8alk.html">parents8alk</a></td>
+<td>finds the parents at the variable level of an /alk/</td></tr>
+<tr><td width="25%"><a href="parents8bn.html">parents8bn</a></td>
+<td>returns the direct parents of a bn</td></tr>
+<tr><td width="25%"><a href="parents8win.html">parents8win</a></td>
+<td>finds the parents at the variable level of a /win/</td></tr>
+<tr><td width="25%"><a href="part8bgn.html">part8bgn</a></td>
+<td>classifies a set of nodes according to a subset of them</td></tr>
+<tr><td width="25%"><a href="path4gn.html">path4gn</a></td>
+<td>reduces the graph to the portion in between two node sets</td></tr>
+<tr><td width="25%"><a href="rsba.pgr-class.html">pgr-class</a></td>
+<td>Class "pgr" to format the plot of /gn/ (mainly DAG associated
+to Bayesian networks).</td></tr>
+<tr><td width="25%"><a href="plan0.html">plan0</a></td>
+<td>generates values from one node of a bn</td></tr>
+<tr><td width="25%"><a href="plan1.html">plan1</a></td>
+<td>generates imposed values to start a simulation plan on a bn</td></tr>
+<tr><td width="25%"><a href="rsbn.bn-class.html">plot-method</a></td>
+<td>Class for Bayesian Networks</td></tr>
+<tr><td width="25%"><a href="rsdn.dn-class.html">plot-method</a></td>
+<td>Class for data sets associated to bn, most often simulated</td></tr>
+<tr><td width="25%"><a href="rsgn.gn-class.html">plot-method</a></td>
+<td>Class for graphs associated to Bayesian networks</td></tr>
+<tr><td width="25%"><a href="plot3D8gn.html">plot3D8gn</a></td>
+<td>plots an object gn according to its 3 dimensions</td></tr>
+<tr><td width="25%"><a href="plot8bn.html">plot8bn</a></td>
+<td>plots an object bn</td></tr>
+<tr><td width="25%"><a href="plot8cgn.html">plot8cgn</a></td>
+<td>draws nodes and arcs of a gn with already computed xy values</td></tr>
+<tr><td width="25%"><a href="plot8dn.html">plot8dn</a></td>
+<td>Plots the numeric or categoric variables of a dn object</td></tr>
+<tr><td width="25%"><a href="plot8dnca.html">plot8dnca</a></td>
+<td>univariate plot for a categoric variable</td></tr>
+<tr><td width="25%"><a href="plot8dncaca.html">plot8dncaca</a></td>
+<td>bivariate plot for two categoric variables</td></tr>
+<tr><td width="25%"><a href="plot8dnco.html">plot8dnco</a></td>
+<td>univariate plot for a continuous variable</td></tr>
+<tr><td width="25%"><a href="plot8dncoca.html">plot8dncoca</a></td>
+<td>bivariate plot for a continuous and a categoric variables</td></tr>
+<tr><td width="25%"><a href="plot8dncoco.html">plot8dncoco</a></td>
+<td>bivariate plot for two continuous variables</td></tr>
+<tr><td width="25%"><a href="plot8gene.html">plot8gene</a></td>
+<td>plots ancestry [descendants] of node(s) of a bn/gn</td></tr>
+<tr><td width="25%"><a href="plot8gn.html">plot8gn</a></td>
+<td>plots an object gn</td></tr>
+<tr><td width="25%"><a href="plot8path.html">plot8path</a></td>
+<td>plots separately all paths between two nodes</td></tr>
+<tr><td width="25%"><a href="porder.html">porder</a></td>
+<td>finds a parentship order onto the nodes and more</td></tr>
+<tr><td width="25%"><a href="rsba.pos-class.html">pos-class</a></td>
+<td>Class "pos" to define the projection into $R^2$ of objects into $R^3$</td></tr>
+<tr><td width="25%"><a href="pos2pos.html">pos2pos</a></td>
+<td>returns the equivalent pos object with standard view</td></tr>
+<tr><td width="25%"><a href="position4gn.html">position4gn</a></td>
+<td>proposes positions for the nodes of a gn object</td></tr>
+<tr><td width="25%"><a href="rsba.alk-class.html">print-method</a></td>
+<td>Class "alk" to define *a*sked *l*in*k* by the user</td></tr>
+<tr><td width="25%"><a href="rsba.arc-class.html">print-method</a></td>
+<td>Class "arc" ~~~</td></tr>
+<tr><td width="25%"><a href="rsba.ion-class.html">print-method</a></td>
+<td>Class "ion" to define from different viewpoints a subset of nodes and/or variables of a /nom/.</td></tr>
+<tr><td width="25%"><a href="rsba.nom-class.html">print-method</a></td>
+<td>Class "nom" to describe the node and variable names of a /bn/</td></tr>
+<tr><td width="25%"><a href="rsba.pam-class.html">print-method</a></td>
+<td>Class "pam" to define parentship matrices</td></tr>
+<tr><td width="25%"><a href="rsba.pgr-class.html">print-method</a></td>
+<td>Class "pgr" to format the plot of /gn/ (mainly DAG associated
+to Bayesian networks).</td></tr>
+<tr><td width="25%"><a href="rsba.pos-class.html">print-method</a></td>
+<td>Class "pos" to define the projection into $R^2$ of objects into $R^3$</td></tr>
+<tr><td width="25%"><a href="rsba.pta-class.html">print-method</a></td>
+<td>Class "pta" to store probability tables</td></tr>
+<tr><td width="25%"><a href="rsba.win-class.html">print-method</a></td>
+<td>Class "win" to define a node from a data.frame</td></tr>
+<tr><td width="25%"><a href="rsbn.bn-class.html">print-method</a></td>
+<td>Class for Bayesian Networks</td></tr>
+<tr><td width="25%"><a href="rsdn.dn-class.html">print-method</a></td>
+<td>Class for data sets associated to bn, most often simulated</td></tr>
+<tr><td width="25%"><a href="rsgn.gn-class.html">print-method</a></td>
+<td>Class for graphs associated to Bayesian networks</td></tr>
+<tr><td width="25%"><a href="print8alk.html">print8alk</a></td>
+<td>prints the node-variable names</td></tr>
+<tr><td width="25%"><a href="print8alkcomp.html">print8alkcomp</a></td>
+<td>prints an alk object supposed to be completed for a bn</td></tr>
+<tr><td width="25%"><a href="print8alkuse.html">print8alkuse</a></td>
+<td>prints an alk object not supposed to be completed for a bn</td></tr>
+<tr><td width="25%"><a href="print8arc.html">print8arc</a></td>
+<td>prints an /arc/</td></tr>
+<tr><td width="25%"><a href="print8bn.html">print8bn</a></td>
+<td>prints a bn object</td></tr>
+<tr><td width="25%"><a href="print8dn.html">print8dn</a></td>
+<td>prints a /dn/</td></tr>
+<tr><td width="25%"><a href="print8gn.html">print8gn</a></td>
+<td>prints an object gn</td></tr>
+<tr><td width="25%"><a href="print8ion.html">print8ion</a></td>
+<td>prints a 'ion' object</td></tr>
+<tr><td width="25%"><a href="print8link.html">print8link</a></td>
+<td>prints an interpretation of one link of a bn</td></tr>
+<tr><td width="25%"><a href="print8links.html">print8links</a></td>
+<td>prints the interpretation of some links of a bn</td></tr>
+<tr><td width="25%"><a href="print8nom.html">print8nom</a></td>
+<td>prints the node-variable names</td></tr>
+<tr><td width="25%"><a href="print8pam.html">print8pam</a></td>
+<td>prints a /pam/</td></tr>
+<tr><td width="25%"><a href="print8pgr.html">print8pgr</a></td>
+<td>prints the node-variable names</td></tr>
+<tr><td width="25%"><a href="print8pos.html">print8pos</a></td>
+<td>prints a /pos/</td></tr>
+<tr><td width="25%"><a href="print8pt2.html">print8pt2</a></td>
+<td>prints a pt object of dimension two</td></tr>
+<tr><td width="25%"><a href="print8pta.html">print8pta</a></td>
+<td>prints the node-variable names</td></tr>
+<tr><td width="25%"><a href="print8win.html">print8win</a></td>
+<td>prints a /win/</td></tr>
+<tr><td width="25%"><a href="rsba.pta-class.html">pta-class</a></td>
+<td>Class "pta" to store probability tables</td></tr>
+</table>
+
+<h2><a name="R">-- R --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="range8node.html">range8node</a></td>
+<td>returns the variable ranges of a given node</td></tr>
+<tr><td width="25%"><a href="range8pos.html">range8pos</a></td>
+<td>returns the ranges (x,y) for a pos</td></tr>
+<tr><td width="25%"><a href="rcatbn.html">rcatbn</a></td>
+<td>creates a pseudo-random numcat bn object</td></tr>
+<tr><td width="25%"><a href="read8audit.html">read8audit</a></td>
+<td>produced an audit /bn/ from a text file</td></tr>
+<tr><td width="25%"><a href="read8bn.html">read8bn</a></td>
+<td>produced a /bn/ from a text file</td></tr>
+<tr><td width="25%"><a href="read8gn.html">read8gn</a></td>
+<td>produced a /gn/ from a text file</td></tr>
+<tr><td width="25%"><a href="rebastaba.html">rebastaba</a></td>
+<td>draws some Bayesian networks for illustration</td></tr>
+<tr><td width="25%"><a href="relation4gn.html">relation4gn</a></td>
+<td>formats the arc of a gn from a relation matrix</td></tr>
+<tr><td width="25%"><a href="repartition3dn.html">repartition3dn</a></td>
+<td>scans the repartition of the values of dn@df</td></tr>
+<tr><td width="25%"><a href="rgn.html">rgn</a></td>
+<td>creates a pseudo-random gn object</td></tr>
+<tr><td width="25%"><a href="rmar4gn.html">rmar4gn</a></td>
+<td>removes a series of arcs from a gn object</td></tr>
+<tr><td width="25%"><a href="rmnd4gn.html">rmnd4gn</a></td>
+<td>removes a series of nodes from a gn object</td></tr>
+<tr><td width="25%"><a href="rmnd4nom.html">rmnd4nom</a></td>
+<td>removes one node to a /nom/</td></tr>
+<tr><td width="25%"><a href="rnd4bn.html">rnd4bn</a></td>
+<td>removes a series of nodes into a bn object</td></tr>
+<tr><td width="25%"><a href="rnorbn.html">rnorbn</a></td>
+<td>creates a pseudo-random normal bn object from a given bn</td></tr>
+<tr><td width="25%"><a href="rsba3k.html">rsba3k</a></td>
+<td>assigns the rsba constants</td></tr>
+<tr><td width="25%"><a href="rsbn3k.html">rsbn3k</a></td>
+<td>assigns the constants for the rsbn layer</td></tr>
+<tr><td width="25%"><a href="rsdn3k.html">rsdn3k</a></td>
+<td>assigns the constants for the rsdn layer</td></tr>
+<tr><td width="25%"><a href="rsgn3k.html">rsgn3k</a></td>
+<td>assigns the constants for the rsgn layer</td></tr>
+</table>
+
+<h2><a name="S">-- S --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="score4dn.html">score4dn</a></td>
+<td>Completes a dn with its score</td></tr>
+<tr><td width="25%"><a href="simulate8bn.html">simulate8bn</a></td>
+<td>simulates a /dn/ from a /bn/</td></tr>
+<tr><td width="25%"><a href="sort8ion.html">sort8ion</a></td>
+<td>sorts a 'ion' object</td></tr>
+<tr><td width="25%"><a href="sort8nom.html">sort8nom</a></td>
+<td>sorts a /nom/ according to various ways</td></tr>
+<tr><td width="25%"><a href="study8nd.html">study8nd</a></td>
+<td>extracts sub-bn(s) with one parent one child from a bn</td></tr>
+<tr><td width="25%"><a href="subn.html">subn</a></td>
+<td>finds independent sub-bn in a BN</td></tr>
+</table>
+
+<h2><a name="U">-- U --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="uniform4bn.html">uniform4bn</a></td>
+<td>introduces a uniform distribution on one node</td></tr>
+</table>
+
+<h2><a name="V">-- V --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="valid8alk.html">valid8alk</a></td>
+<td>checks an /alk/</td></tr>
+<tr><td width="25%"><a href="valid8arc.html">valid8arc</a></td>
+<td>checks a /arc/</td></tr>
+<tr><td width="25%"><a href="valid8bn.html">valid8bn</a></td>
+<td>checks a /bn/</td></tr>
+<tr><td width="25%"><a href="valid8dn.html">valid8dn</a></td>
+<td>checks a /dn/</td></tr>
+<tr><td width="25%"><a href="valid8gn.html">valid8gn</a></td>
+<td>checks a /gn/</td></tr>
+<tr><td width="25%"><a href="valid8ion.html">valid8ion</a></td>
+<td>checks a /ion/</td></tr>
+<tr><td width="25%"><a href="valid8nom.html">valid8nom</a></td>
+<td>checks a /nom/</td></tr>
+<tr><td width="25%"><a href="valid8pam.html">valid8pam</a></td>
+<td>checks a /pam/</td></tr>
+<tr><td width="25%"><a href="valid8pgr.html">valid8pgr</a></td>
+<td>checks a /pgr/</td></tr>
+<tr><td width="25%"><a href="valid8pos.html">valid8pos</a></td>
+<td>checks a /pos/</td></tr>
+<tr><td width="25%"><a href="valid8pta.html">valid8pta</a></td>
+<td>checks a /pta/</td></tr>
+<tr><td width="25%"><a href="valid8win.html">valid8win</a></td>
+<td>checks a /win/</td></tr>
+<tr><td width="25%"><a href="var4alk.html">var4alk</a></td>
+<td>finds the variable names for an alk.</td></tr>
+<tr><td width="25%"><a href="variables8win.html">variables8win</a></td>
+<td>returns all variables involved in a /win/</td></tr>
+</table>
+
+<h2><a name="W">-- W --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="rsba.win-class.html">win-class</a></td>
+<td>Class "win" to define a node from a data.frame</td></tr>
+<tr><td width="25%"><a href="win2list.html">win2list</a></td>
+<td>transforms into a list a /win/</td></tr>
+<tr><td width="25%"><a href="write8bn.html">write8bn</a></td>
+<td>writes a /bn/ to a file</td></tr>
+<tr><td width="25%"><a href="write8gn.html">write8gn</a></td>
+<td>writes a /gn/ to file</td></tr>
+</table>
+
+<h2><a name="X">-- X --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="x2nom.html">x2nom</a></td>
+<td>returns the "nom" slot of an object</td></tr>
+</table>
+
+<h2><a name="Z">-- Z --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="zero2bn.html">zero2bn</a></td>
+<td>starting an empty bn</td></tr>
+</table>
+</body></html>
