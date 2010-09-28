@@ -1,0 +1,32 @@
+#
+# 10_07_29 10_08_09
+#
+##########################################
+<<empi1>>
+[[defi]] A Bayesian network with a simple empidata node
+[[orig]]  ReBaStaBa documentation
+[[role]] just to show how it works
+[[comm]] Systematic draw from 'empidata' ltype replaces now the former 'popula' ltype.
+[[time]] 10_07_29
+##########################################
+##########################################
+<<DATA>>
+[[defi]] Some available data base
+[[ltype]] empidata
+#
+[[lpod]]
+((v0)) 0 10000
+((v1))  10 20
+((v2)) -5 5
+#
+#
+[[ldaf]]
+((name)) jj1
+((what)) f
+((valu)) empi1.gen
+#
+#
+[[lwin]]
+((nat)) v0 v1 v2 conti conti conti
+((rty)) 1 systematic
+##########################################
