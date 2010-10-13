@@ -1,0 +1,37 @@
+chemin <- searchpaths()[grep("rbsb",searchpaths())];
+chemin <- paste(chemin,"/files/",sep="");
+# creating rbsb S4 object
+# 
+# 10_02_11 10_03_10 10_06_16 10_06_22 10_09_13
+# 10_09_14 10_09_22
+#
+#
+
+# from an existing text file
+if (!exists("chemin")) {
+    cat("A file into the private 'files' directory is needed\n");
+    erreur("The package must be installed to run this demo");
+}
+
+############################################################
+form3titre("Reading a simple file in different styles");
+print(file2char(paste(chemin,"rbsb1.demo.file.txt",sep=""),path=""));
+
+
+############################################################
+form3titre("Demonstrating the reading of lists from files");
+
+#
+ttt <- paste(chemin,"rbsb1.demo.list.txt",sep="");
+#
+lili <- file2list(ttt,path="");
+print(lili);
+
+
+############################################################
+form3titre("Demonstrating the writing of lists to files");
+
+list2file(lili,"toto");
+print(readLines("toto"));
+lolo <- file2list("toto");
+print(lolo);
