@@ -5,7 +5,7 @@ citEntry(entry="Manual",
          title = "The mc2d package",
          author = "R. Pouillot, M.-L. Delignette-Muller, D.L. Kelly and J.-B. Denis",
      year = 2010,
-         note = "R package version 0.1-7",
+         note = "R package version 0.1-9",
 
          textVersion =
      paste( "R. Pouillot, M.-L. Delignette-Muller, D.L. Kelly and J.-B. Denis",
