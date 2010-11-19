@@ -8,7 +8,7 @@ rmultinormal <- function(n, mean, sigma , method=c("eigen", "svd", "chol"))
 #It provides a random number generator for the multivariate normal distribution 
 #with varying vectors of means and varying covariance matrixes.
 #INPUTS
-#{n}<<Number of observations.>>
+#{n}<<Number of observations. If \samp{length(n) > 1}, the length is taken to be the number required.>>
 #{mean}<<Vector of means (if unique for all \samp{n}) or array of means (if varying according to \samp{n}).>>
 #{sigma}<<Covariance vector corresponding to the coercion of the covariance matrix into a vector (if unique for all \samp{n}) 
 #or array of covariance vectors (if varying according to \samp{n}).>>
@@ -52,6 +52,8 @@ rmultinormal <- function(n, mean, sigma , method=c("eigen", "svd", "chol"))
 #plot(x)
 #--------------------------------------------
 {
+  if(length(n) == 0) return(n)
+  if(length(n) > 1) n <- length(n)
   if(is.vector(mean))  mean <- matrix(mean,nrow=1)
   nv <- ncol(mean) 
   if(nrow(mean) != n)  mean <- matrix(t(mean), ncol=nv, nrow=n, byrow=TRUE)
