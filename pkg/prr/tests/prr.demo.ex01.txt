@@ -1,0 +1,40 @@
+#
+# A very basic example of a chain
+# (lines starting with an hash are
+#  not considered by /prr/.)
+#
+# 10_09_14
+#
+# The first item is the description of the chain
+<<chain 0>>
+((defi)) This chain is just a very basic example. 
+         A mixture of two Normal variable was
+         chosen for this.
+((role)) To give some insight about the mechanisms involved.
+((comm)) It comprises four variables : p, X1, X2 and XX.
+         "p" is the degree of adherence to population "X1"
+         with respect to "X2". Extreme values are 0 (belongs
+         entirely to "X2") and 1 (belongs entirely to "X1").
+         "X1" is the value for population 1
+         "X2" is the value for population 2
+         "XX" is the value for the mixture,
+         namely "XX = p*X1 + (1-p)*X2"
+#
+#
+# A common portion in another file
+#
+)FILE( prr.demo.ex00.txt
+#
+# Continuing this file
+#
+#
+# Resulting value
+<<X>>
+((family)) normal
+((pafixe)) 0 Inf
+((x))  {{p}}*{{X1}} + (1-{{p}})*{{X2}}
+((cV)) 20
+((cU)) 30
+((format)) 2 0 0
+#
+# and this the end

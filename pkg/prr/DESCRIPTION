@@ -1,0 +1,20 @@
+Package: prr
+Type: Package
+Title: generalized probabilistic range ranker
+Version: 0.1-0
+Date: 2010-12-02
+Author: Laurent Guillier <Laurent.Guillier@Anses.Fr>,
+        Isabelle Albert <Isabelle.Albert@Paris.Inra.Fr> and
+        Jean-Baptiste Denis <Jean-Baptiste.Denis@jouy.inra.fr>
+Maintainer: Jean-Baptiste Denis <Jean-Baptiste.Denis@jouy.inra.fr>
+Description: Emulates the computations proposed by the "Risk Ranger" 
+             software with two kind of possible extensions. First, at each
+             value, coefficients of variability and uncertainty can
+             be added transforming the fixed value into a random
+             variable. Second, different chain structures can be 
+             generated from convenient templates...
+             "prr" for "probabilistic risk ranger" the initial
+             aim of the package.
+License: GPL (>= 2)
+Depends: methods,rbsb,g4n
+Packaged: 2010-12-02 09:38:51 UTC; jbdenis
