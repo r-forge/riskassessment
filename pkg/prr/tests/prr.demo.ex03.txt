@@ -1,0 +1,178 @@
+#
+# 10_09_29
+#
+#---------------------------------------------------
+#---------------------------------------------------
+<<Risk_Ranger>>
+((defi)) This chain is no more that the template
+         to be used to reproduce the Risk Ranger
+         case, of course in a probabilistic view.
+         The different ancestor nodes are described
+         in the comment field.
+((role)) To be copied for further use
+((time)) 2010_11_29
+((orig)) Interpretation of [RR] made by Isabelle Albert and Laurent Guillier
+((comm))/;/v
+   (X1)  [Hazar] it is the hazard severity expressed as a proportion/weight;
+   (X2a) [Susc1] some weight for the probability to be ill;
+   (X2b) [Susc2] fraction of the susceptible part of the population;
+   (X3)  [DCons] frequency of the daily consumption;
+   (X4)  [PCons] studied proportion of the population;
+   (X5)  [Popul] population size;
+   (X6)  [Conta] contamination frequency;
+   (X7)  [Proce] process effect on the contamination (??? But how the increase/decrease can be distinguihed with a strictly positive variable ???)
+   (X8)  [Recon] frequency of contamination after the process;
+   (X9)  [Retai] effect on the contamination of the after process phase;
+   (X10) [Proxi] ??? not that clear for me ???;
+   (X11) [Prepa] effect of the food preparation (cooking) on the ingested contamination;
+   (Y1)  [ProbP] probability that a pathogenic dosis be in a serving;
+   (Y2)  [ProbD] probability of disease of a susceptible consumer per day;
+   (Y3)  [Disea] disease number in the targetted population;
+   (Y4)  [CRisk] comparative risk for the targetted population;
+   (Y5)  [CRank] rank associated to the comparative risk
+#---------------------------------------------------
+#---------------------------------------------------
+<<Hazar>>
+((family)) beta
+((pafixe)) 0 1 0.0001 1
+((x)) 0.001
+((cV)) 20
+((cU)) 50
+((format)) 3 0 0
+#---------------------------------------------------
+<<Susc1>>
+((family)) normal
+((pafixe)) 1 200
+((x)) 10
+((cV)) 20
+((cU)) 50
+((format)) 1 0 0
+#---------------------------------------------------
+<<Susc2>>
+((family)) beta
+((pafixe)) 0 1 0.001 1
+((x)) 0.01
+((cV)) 20
+((cU)) 50
+((format)) 3 0 0
+#---------------------------------------------------
+<<DCons>>
+((family)) beta
+((pafixe)) 0 1 0 1
+((x)) 0.1
+((cV)) 20
+((cU)) 50
+((format)) 2 0 0
+#---------------------------------------------------
+<<PCons>>
+((family)) beta
+((pafixe)) 0 1 0.05 1
+((x)) 0.3
+((cV)) 20
+((cU)) 50
+((format)) 1 0 0
+#---------------------------------------------------
+<<Popul>>
+#((family)) lognormal
+#((pafixe)) 0 1 1 Inf
+((family)) normal
+((pafixe)) 1 Inf
+((x)) 10000
+((cV)) 20
+((cU)) 50
+((format)) 0 0 0
+#---------------------------------------------------
+<<Conta>>
+((family)) beta
+((pafixe)) 0 1 0 1
+((x)) 0.005
+((cV)) 20
+((cU)) 50
+((format)) 3 0 0
+#---------------------------------------------------
+<<Proce>>
+((family)) normal
+((pafixe)) 0 Inf
+((x)) 1
+((cV)) 20
+((cU)) 50
+((format)) 3 0 0
+#---------------------------------------------------
+<<Recon>>
+((family)) beta
+((pafixe)) 0 1 0 1
+((x)) 0.1
+((cV)) 20
+((cU)) 50
+((format)) 2 0 0
+#---------------------------------------------------
+<<Retai>>
+((family)) normal
+((pafixe)) 0 1000
+((x)) 10
+((cV)) 20
+((cU)) 50
+((format)) 0 0 0
+#---------------------------------------------------
+<<Proxi>>
+((family)) beta
+((pafixe)) 0 1 0 1
+((x)) 0.1
+((cV)) 20
+((cU)) 50
+((format)) 2 0 0
+#---------------------------------------------------
+<<Prepa>>
+#((family)) lognormal
+#((pafixe)) 0 1 0 Inf
+((family)) normal
+((pafixe)) 0 Inf
+((x)) 100
+((cV)) 20
+((cU)) 50
+((format)) 0 0 0
+#---------------------------------------------------
+#---------------------------------------------------
+<<ProbP>>
+((family)) beta
+((pafixe)) 0 1 0 1
+((x)) pmin(1,pmax({{Conta}}*{{Proce}},{{Recon}})*{{Retai}}*{{Proxi}}*{{Prepa}})
+((cV)) 20
+((cU)) 50
+((format)) 3 0 0
+#---------------------------------------------------
+<<ProbD>>
+((family)) beta
+((pafixe)) 0 1 0 1
+((x)) pmin(1,{{ProbP}}*{{Susc1}}*{{DCons}})
+((cV)) 20
+((cU)) 50
+((format)) 3 0 0
+#---------------------------------------------------
+<<Disea>>
+((family)) normal
+((pafixe)) 0 Inf
+((x)) 1+365*{{ProbD}}*{{Susc2}}*{{PCons}}*{{Popul}}
+((cV)) 20
+((cU)) 50
+((format)) 0 0 0
+#---------------------------------------------------
+<<CRisk>>
+((family)) normal
+((pafixe)) 0 Inf
+((x)) 1+{{ProbD}}*{{Susc2}}*{{PCons}}*{{Hazar}}
+((cV)) 20
+((cU)) 50
+((format)) 3 0 0
+#---------------------------------------------------
+<<CRank>>
+((family)) normal
+((pafixe)) 0 Inf
+((x)) 1+100*17.56*(log10({{CRisk}})+17.56)*({{CRisk}}>2.75E-18)
+((cV)) 20
+((cU)) 50
+((format)) 3 0 0
+#---------------------------------------------------
+#---------------------------------------------------
+#
+# End of the file

@@ -1,0 +1,8 @@
+prr.demo.chain	 examples of use of /chain/ objects
+prr.demo.distri	 exemples of pseudo-random drawings with /prr/ facilities
+prr.demo.file	 exemples of reading some prepared files
+prr.demo.list	 examples of transformations between list and objects
+prr.demo.nod	 examples of use of /nod/ objects
+prr.demo.plot	 exemples of pseudo-random drawings with /prr/ facilities
+prr.demo.print	 exemples of printing /distri/ objects 
+prr.demo.rr	 probalizing the RR genuine chain
