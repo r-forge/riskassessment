@@ -5,13 +5,15 @@ Version 0.1-9
 
 NEW FEATURES
 
+dmultinormal, a vectorized version of dmvnorm
+
 IMPROVEMENTS
+
+- all p- d- q- r-distributions return numeric(0) if the first argument (x, q, p or n) are numeric(0)  
 
 BUG FIXES
 
 - dmultinomial lead to errors
-- all p- d- q- r-distributions return numeric(0) if the first argument (x, q, p or n) are numeric(0)  
-
 Version 0.1-8
 =============
 
