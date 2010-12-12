@@ -13,7 +13,8 @@ IMPROVEMENTS
 
 BUG FIXES
 
-- dmultinomial lead to errors
+- dmultinomial led to errors
+
 Version 0.1-8
 =============
 
