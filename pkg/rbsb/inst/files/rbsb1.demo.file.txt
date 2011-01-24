@@ -1,0 +1,24 @@
+# comment lines can be defined according to the first position
+##########################################
+# description of this object
+##########################################
+ giving the item names
+ but they can be deduced from the positions
+ or even from the links when no positions
+ are proposed
+ ...
+)FILE( rbsb1.demo.fil2.txt
+# convenient to give each object a name
+/*
+set of lines can be skipped
+A B[1] B[2] C D E[1] E[2] E[3]
+##########################################
+# giving the links
+*/
+((C))     4 3
+((D))     3 1
+.## empty lines are eliminated
+
+((E[1]))  2 4 
+((E[2]))  3 4
+(((E[3]))  4 4
