@@ -31,10 +31,6 @@
 18. Decide if it is possible and desirable to gather fitdist and fitdistcens
    for the moment we think it is not easy and not desirable
 
-20. Improve moment matching estimation with numerical optimization
-
-21. Start quantile matching estimation
-
 === recently done or not planned for argumented reasons ===
 
 1. Remove calls to options(digits) in the code
@@ -86,3 +82,7 @@ but it could be be splitted in two parts)
 22. Add the example published in Busschaert 2010 in the vignette and 
     in the examples, maybe with the data set in the package (censored microbiological data)
     
+
+20. Improve moment matching estimation with numerical optimization
+
+21. Start quantile matching estimation
