@@ -5,14 +5,11 @@
 === short term ===
 24. gather bootdist and bootdistcens
 25. gather fitdist and fitdistcens, adding an output "cens" to facilitate the recognition of
-	fits on censored data for plotting, gofstat ...
+    fits on censored data for plotting, gofstat ...
 26. change the affectation and the use of argument discrete in order to be able to consider
-	as dicrete other distributions than those defined in R (such as zero-inflated Poisson dist)
-27. add Cramer von Mises distance in gofstat, defining three functions CvM, AD and KS and add
-    gofedist for goodness-of-fit estimation by minimising that three same functions
+    as dicrete other distributions than those defined in R (such as zero-inflated Poisson dist)
 3. put spaces before and after affectations (x <- 3) to make codes easier to read
     done at least in fitdist and mledist 
-
 12. Split summary.fitdist in two parts : summary.fitdist and print.summary.fitdist
     done for fitdist and fitdistcens but STILL TO DO for bootdist and bootdistcens
     
@@ -86,3 +83,8 @@ but it could be be splitted in two parts)
 20. Improve moment matching estimation with numerical optimization
 
 21. Start quantile matching estimation
+
+27. Add Cramer von Mises distance in gofstat, defining three functions CvM, AD and KS and add
+    gofedist for goodness-of-fit estimation by minimising that three same functions
+    
+28. Start maximum goodness-of-fit estimation
