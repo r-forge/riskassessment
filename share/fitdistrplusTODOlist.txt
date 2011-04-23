@@ -12,6 +12,8 @@
     done at least in fitdist and mledist 
 12. Split summary.fitdist in two parts : summary.fitdist and print.summary.fitdist
     done for fitdist and fitdistcens but STILL TO DO for bootdist and bootdistcens
+28. add an echo argument useful for debugging or when the optimization does not converge.
+29. allow the possibility to change the moment order in mmedist.
     
 === long term ===
 
