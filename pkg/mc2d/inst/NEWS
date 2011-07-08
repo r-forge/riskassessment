@@ -3,6 +3,10 @@
 Version 0.1-10
 =============
 
+NEW FEATURES
+
+- dempiricalC is now vectorized and improved
+
 BUG FIXES
 
 - major correction: dbetagen and dpert led to wrong values
