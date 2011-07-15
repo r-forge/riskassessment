@@ -26,7 +26,7 @@ curve(pempiricalC(x, min=0, max=6, values, prob), from=-1, to=7, n=1001)
 
 ## Varying values
 (values <- matrix(1:10, ncol=5))
-## the first x apply to the first row
+## the first x apply to the first row 
 ## the second x to the second one
 dempiricalC(c(1, 1), values, min=0, max=11)
 

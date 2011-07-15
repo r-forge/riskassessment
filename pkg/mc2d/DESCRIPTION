@@ -2,7 +2,7 @@ Package: mc2d
 Type: Package
 Title: Tools for Two-Dimensional Monte-Carlo Simulations
 Version: 0.1-10
-Date: 2011-06-3
+Date: 2011-7-7
 Author: Regis Pouillot <rpouillot@yahoo.fr>, Marie Laure Delignette-Muller <ml.delignette@vetagro-sup.fr> and Jean-Baptiste 
 	Denis <jbdenis@jouy.inra.fr>
 Maintainer: Regis Pouillot <rpouillot@yahoo.fr>

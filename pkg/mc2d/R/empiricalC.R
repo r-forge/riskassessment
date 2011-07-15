@@ -42,8 +42,8 @@ dempiricalC <- function(x, min, max, values, prob=NULL, log=FALSE)
 #
 ### Varying values
 #(values <- matrix(1:10,ncol=5))
-### the first x apply to the first row : p = 0.2
-### the second x to the second one: p = 0
+### the first x apply to the first row 
+### the second x to the second one
 #dempiricalC(c(1,1),values,min=0, max=11)
 #
 #
@@ -281,7 +281,7 @@ rempiricalC <- function(n, min, max, values, prob=NULL)
   if(is.vector(values) && length(values) > n) values <- values[1:n] 
   else if(is.matrix(values) && nrow(values) > n)   values <- values[1:n,]
   if(is.vector(prob) && length(prob) > n) prob <- prob[1:n]
-  else if(is.matrix(prob) && nrow(values) > n)   prob <- prob[1:n,]
+  else if(is.matrix(prob) && nrow(prob) > n)   prob <- prob[1:n,]
   
   r <- qempiricalC(runif(n), min=min, max=max, values=values, prob=prob, lower.tail = TRUE, log.p = FALSE)
   return(r)
