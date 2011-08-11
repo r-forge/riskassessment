@@ -14,6 +14,8 @@
     done for fitdist and fitdistcens but STILL TO DO for bootdist and bootdistcens
 28. add an echo argument useful for debugging or when the optimization does not converge.
 29. allow the possibility to change the moment order in mmedist.
+30. if fixed arguments are used, add the fixed argument values in the result.
+31. ... dots argument seem not to work for plotdistcens. 
     
 === long term ===
 
@@ -30,7 +32,7 @@
 18. Decide if it is possible and desirable to gather fitdist and fitdistcens
    for the moment we think it is not easy and not desirable
 
-=== recently done or not planned for argumented reasons ===
+=== "recently" done or not planned for argumented reasons ===
 
 1. Remove calls to options(digits) in the code
     done everywhere                                     
