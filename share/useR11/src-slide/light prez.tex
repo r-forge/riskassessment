@@ -64,6 +64,8 @@
 	     \insertframenumber/\inserttotalframenumber
 	     \hspace{0.5cm}	%you can use different horizontal spacing!
 	     \insertshortdate
+	     \hspace{0.5cm}
+	     useR! 2011
 	     \hfill
 	\end{beamercolorbox}
   	}%--
@@ -154,7 +156,7 @@
 
 %---- date
 \date[12/08/2011] % (optional, should be abbreviation of conference name)
-{\includegraphics[height=1cm]{img/useR-middle2} \Huge{2011}}
+{\includegraphics[height=1.5cm]{img/useR-middle2} } %\Huge{2011}}
 % Either use conference name or its abbreviation.
 % Not really informative to the audience, more for people (including
 % yourself) who are reading the slides online
@@ -228,27 +230,49 @@ $$
 \theta_{\text{MLE}} = \underset{\theta \in \Theta}{\arg\max}~ \mathcal L(\theta, x_1, \dots, x_n ) .
 $$
 
-Example %> library(fitdistrplus)
-%> x1 <- c(6.4,13.3,4.1,1.3,14.1,10.6,9.9,9.6,15.3,22.1,13.4, ...
-%+ 13.2,8.4,6.3,8.9,5.2,10.9,14.4)
-%$optim.function
-%[1] "optim"
+Example 
+\begin{columns}
+
+\begin{column}{0.5\textwidth}
 \begin{scriptsize}
 \begin{verbatim}
+> library(fitdistrplus)
+> 
+> x1 <- c(6.4,13.3,4.1,1.3,14.1,
++ 10.6,9.9,9.6,15.3,22.1,13.4,
++ 13.2,8.4,6.3,8.9,5.2,10.9,14.4)
+> 
 > (f1 <- mledist(x1,"norm"))
 $estimate
      mean        sd 
 10.411111  4.747033 
+
 $convergence
 [1] 0
+\end{verbatim}
+\end{scriptsize}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\begin{scriptsize}
+\begin{verbatim}
 $loglik
 [1] -53.57625
+
 $hessian
           mean       sd
 mean 0.7987816 0.000000
 sd   0.0000000 1.597564
+
+$optim.function
+[1] "optim"
+
+> 
 \end{verbatim}
 \end{scriptsize}
+\end{column}
+
+\end{columns}
 
 
 \end{frame}
