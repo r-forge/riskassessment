@@ -16,6 +16,8 @@
 29. allow the possibility to change the moment order in mmedist.
 30. if fixed arguments are used, add the fixed argument values in the result.
 31. ... dots argument seem not to work for plotdistcens. 
+32. add weights in optimization method, weighted MLE, weighted MME,É
+33. test the use of a scaling matrix before the optimization if parameters are close to 0 and very (> 10^6)
     
 === long term ===
 
