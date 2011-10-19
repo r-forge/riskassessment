@@ -30,6 +30,10 @@
 
 18. Decide if it is possible and desirable to gather fitdist and fitdistcens
    for the moment we think it is not easy and not desirable (see point 25)
+   
+32.add weights in optimization method, weighted MLE, weighted MME,?
+
+33. test the use of a scaling matrix before the optimization if parameters are close to 0 and very (> 10^6)
 
 === "recently" done or not planned for argumented reasons ===
 
