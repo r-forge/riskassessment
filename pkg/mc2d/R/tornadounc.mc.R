@@ -1,4 +1,16 @@
-tornadounc <- function(mc,...) UseMethod("tornadounc")
+#<<BEGIN>>
+tornadounc <- function(mc,...) 
+#ISALIAS tornadounc.mc
+#--------------------------------------------
+ UseMethod("tornadounc")
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+#<<BEGIN>>
+tornadounc.default <- function(mc,...) 
+#ISALIAS tornadounc.mc
+#--------------------------------------------
+ tornadounc.mc(mc,...)
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 #<<BEGIN>>
 tornadounc.mc <- function(mc,output = length(mc), quant=c(0.5,0.75,0.975),use = "all.obs",	method=c("spearman","kendall","pearson"),...)
