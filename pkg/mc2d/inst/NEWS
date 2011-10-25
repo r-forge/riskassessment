@@ -1,5 +1,13 @@
 === mc2d ===
 
+Version 0.1-12
+=============
+
+NEW FEATURES
+
+- creation of a NAMESPACE for R.2.14 compliance 
+- additionnal xlim and ylim arguments in plot.mc
+
 Version 0.1-11
 =============
 
@@ -13,7 +21,6 @@ Version 0.1-10
 NEW FEATURES
 
 - dempiricalC is now vectorized and improved
-- additionnal xlim argument in plot.mc
 - better control of limit cases in distributions
 
 BUG FIXES
