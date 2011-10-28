@@ -316,11 +316,11 @@ d1V <- mcstoc(rexp, rate = 1/1.1)
 mT1V <- mcstoc(rnorm, mean = 3.2, sd = 2.2, rtrunc = TRUE, linf = -3, lsup = 25)
 sdT1V <- sqrt(mcstoc(rgamma, shape = 1.16, scale=4.61))
 
-d2V <- mcstoc(rexp, rate = 1/4.7, rtrunc=TRUE, lsup=28-d1)
+d2V <- mcstoc(rexp, rate = 1/4.7, rtrunc=TRUE, lsup=28-d1V)
 mT2V <- mcstoc(rnorm, mean = 5.5, sd = 2.2, rtrunc = TRUE, linf = -3, lsup = 25)
 sdT2V <- sqrt(mcstoc(rgamma, shape = 0.65, scale=2.09))
 
-d3V <- mcstoc(rexp, rate = 1/4.3, rtrunc=TRUE, lsup=28-(d1+d2))
+d3V <- mcstoc(rexp, rate = 1/4.3, rtrunc=TRUE, lsup=28-(d1V+d2V))
 mT3V <- mcstoc(rnorm, mean = 8.2, sd = 3.8, rtrunc = TRUE, linf = -3, lsup = 25)
 sdT3V <- sqrt(mcstoc(rgamma, shape = 0.35, scale=19.7))
 @
@@ -534,10 +534,10 @@ $N_{max}$ on the mean risk, and thus the expected number of cases.
 <<sh3, echo=true, eval=true, figure=false>>=
 torn <- tornado(Lm2)
 torn
-tornunc <- tornadounc.mc(Lm2, quant=NULL)
+tornunc <- tornadounc(Lm2, quant=.975)
 tornunc
 @
-\texttt{quant=NULL} request an analysis only on the mean risk, and not on some qunatiles.
+
 <<sh3b, echo=true, eval=false, figure=false>>=
 plot(torn)
 plot(tornunc, stat="mean risk")
