@@ -3,6 +3,10 @@
 Version 0.1-12
 =============
 
+BUG FIX
+
+- a bug in the definition of d2V and d3V in the mc2dLmEnglish vignette
+
 NEW FEATURES
 
 - creation of a NAMESPACE for R.2.14 compliance 
