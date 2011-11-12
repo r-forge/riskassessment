@@ -153,7 +153,7 @@ tornadounc.mc <- function(mc,output = length(mc), quant=c(0.5,0.75,0.975),use = 
       tmp <- lapply(node,function(x) x[1,,])
     else {
       tmp <- lapply(node,function(x)
-                              apply(x,2,function(x) c(mean=mean(x,na.rm=TRUE),sd=sd(x,na.rm=TRUE),
+                              apply(x,c(2,3),function(x) c(mean=mean(x,na.rm=TRUE),sd=sd(x,na.rm=TRUE), # Compliance with the deprecation of sd(<matrix>)
                                               quantile(x,na.rm=TRUE,prob=quant))))
                                               }
       node <- lapply(tmp,matrix,nrow=nco,byrow=TRUE)
