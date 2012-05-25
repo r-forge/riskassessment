@@ -64,8 +64,8 @@ pbetagen <- function(q,shape1,shape2,min=0,max=1,ncp=0,lower.tail = TRUE, log.p 
   p <- pbeta(q2,shape1=shape1,shape2=shape2, ncp=ncp, lower.tail=lower.tail, log.p=log.p)
   options(ow)
   # If min = max = q -> should return 1
-  quel <- mapply(function(x, y) isTRUE(all.equal(x, y)), q, min) & 
-          mapply(function(x, y) isTRUE(all.equal(x, y)), q, max)  #if min == max == q
+  quel <- (abs(q - min) < (.Machine$double.eps^0.5)) & 
+          (abs(q - max) < (.Machine$double.eps^0.5))  #if min == max == q
   p[quel] <- if(lower.tail) 1 else 0 
   if(log.p) p[quel] <- log(p[quel]) 
     
