@@ -31,6 +31,9 @@ dtriang <- function(x, min=-1, mode=0, max=1, log=FALSE)
 #--------------------------------------------
 {
 	if(length(x) == 0) return(numeric(0))
+	min <- as.vector(min)
+	mode <- as.vector(mode)
+	max <- as.vector(max)
 	
 	# quel: x < mode or x = mode = max 
 	xmaxmode <- (abs(x-max) < (.Machine$double.eps^0.5)) & (abs(max-mode) < (.Machine$double.eps^0.5)) 
@@ -57,6 +60,9 @@ ptriang <- function(q,min=-1,mode=0,max=1,lower.tail = TRUE, log.p = FALSE)
 {
 	if(length(q) == 0) return(numeric(0))
 	# quel: q < mode or q = mode = max 
+	min <- as.vector(min)
+	mode <- as.vector(mode)
+	max <- as.vector(max)
 	qmaxmode <- (abs(q-max) < (.Machine$double.eps^0.5)) & (abs(max-mode) < (.Machine$double.eps^0.5)) 
 	quel <- (q < mode) | qmaxmode  
 	p <- ifelse(quel,
@@ -80,6 +86,9 @@ qtriang <- function(p, min=-1, mode=0, max=1, lower.tail=TRUE, log.p=FALSE)
 #--------------------------------------------
 {
 	if(length(p) == 0) return(numeric(0))
+	min <- as.vector(min)
+	mode <- as.vector(mode)
+	max <- as.vector(max)
     if(log.p) p <- exp(p)
 	if(!lower.tail) p <- 1-p
 	quel <- p <= (mode-min)/(max-min)
@@ -109,7 +118,7 @@ rtriang <- function(n, min=-1, mode=0, max=1)
   ow <- options(warn=-1)
   q <- qtriang(U,	min=min,
 					mode=mode,
-					max=max,lower.tail = TRUE, log.p = FALSE)
+					max=max, lower.tail = TRUE, log.p = FALSE)
   options(ow)
   if(any(is.na(q))) warning("NaN in rtriang")
    

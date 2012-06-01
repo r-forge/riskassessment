@@ -47,6 +47,10 @@ dpert <- function(x,min=-1,mode=0,max=1,shape=4,log=FALSE)
 #--------------------------------------------
 {
 	if(length(x) == 0) return(numeric(0))
+	min <- as.vector(min)
+	mode <- as.vector(mode)
+	max <- as.vector(max)
+	shape <- as.vector(shape)
 	
 	mu <- (min+max+shape*mode)/(shape+2)
 	a1 <- ifelse((abs(mu-mode)) < (.Machine$double.eps^0.5),
@@ -71,6 +75,10 @@ ppert <- function(q,min=-1,mode=0,max=1,shape=4,lower.tail = TRUE, log.p = FALSE
 #--------------------------------------------
 {
 	if(length(q) == 0) return(numeric(0))
+	min <- as.vector(min)
+	mode <- as.vector(mode)
+	max <- as.vector(max)
+	shape <- as.vector(shape)
 	
 	mu <- (min + max + shape*mode)/(shape + 2)
 	a1 <- ifelse((abs(mu-mode)) < (.Machine$double.eps^0.5),
@@ -95,6 +103,10 @@ qpert <- function(p,min=-1,mode=0,max=1,shape=4,lower.tail=TRUE,log.p=FALSE)
 #--------------------------------------------
 {
   if(length(p) == 0) return(numeric(0))
+	min <- as.vector(min)
+	mode <- as.vector(mode)
+	max <- as.vector(max)
+	shape <- as.vector(shape)
   if(log.p) p <- exp(p)
   if(!lower.tail) p <- 1 - p
 	mu <- (min+max+shape*mode)/(shape+2)
@@ -125,7 +137,11 @@ rpert <- function(n,min=-1,mode=0,max=1,shape=4)
   if(n < 0) stop("integer(n) can not be negative in rpert")
   
   oldw <- options(warn = -1)
-  r <- qpert(runif(n),min=min,mode=mode,max=max,shape=shape,lower.tail=TRUE,log.p=FALSE)
+  r <- qpert(runif(n),  min=min,
+						mode=mode,
+						max=max,
+						shape=shape,
+						lower.tail=TRUE,log.p=FALSE)
   options(warn = oldw$warn)
   if(any(is.na(r))) warning("NaN in rpert")
   return(r)
