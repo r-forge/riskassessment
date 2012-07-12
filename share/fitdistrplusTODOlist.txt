@@ -3,11 +3,10 @@
 (order/numbers mean nothing)
 
 === short term ===
+36. add an example for SSD and HCx in ecotox
+35. produce denscomp and qqcomp to produce nice plots in density or qqplot to compare fits
+    of various distributions on the same dataset (functions built as cdfcomp and cdfcompcens)
 30. if fixed arguments are used,  add the fixed argument values in the result.
-32. Add argplot1, argplot2, argplot3 and argplot4  arguments for the four plots of plotdist
-24. gather bootdist and bootdistcens
-25. gather fitdist and fitdistcens, adding an output "cens" to facilitate the recognition of
-    fits on censored data for plotting, gofstat ...
 26. change the affectation and the use of argument discrete in order to be able to consider
     as dicrete other distributions than those defined in R (such as zero-inflated Poisson dist)
 3. put spaces before and after affectations (x <- 3) to make codes easier to read
@@ -18,20 +17,16 @@
     
 === long term ===
 
+38. offer a function to do prior elicitation from quantiles
+
+37. add the Wasserstein distance in mge and gofstat
+
 19. Add other gof graphs and stats for fits on censored data (Turnbull, ...) and gof statistics for censored data
    computed from Turnbull CDF(partially done : Turnbull plot).
 
-11. Add a which argument to plotdist (be careful, only two plots are possible for
-    discrete distributions or when there is only data in the arguments, so not so easy)
-
 15. Enable to enter complete names of distributions as in fitdistr
 
-17. Try to do only one fonction for bootstrap that could be called with on the output of fitdist or fitdistcens
-
-18. Decide if it is possible and desirable to gather fitdist and fitdistcens
-   for the moment we think it is not easy and not desirable (see point 25)
-   
-32.add weights in optimization method, weighted MLE, weighted MME,?
+32. add weights in optimization method, weighted MLE, weighted MME,?
 
 33. test the use of a scaling matrix before the optimization if parameters are close to 0 and very (> 10^6)
 
@@ -100,3 +95,21 @@ but it could be be splitted in two parts)
 
 31. ... dots argument seem not to work for plotdistcens. Bug fixed, but not easy to use. It is better
 to use the new function cdfcompcens to personalize such a graph.
+
+24. gather bootdist and bootdistcens (after discussion we think that it is better to separate functions for
+censored data from functions for non-censored data)
+
+25. gather fitdist and fitdistcens, adding an output "cens" to facilitate the recognition of
+    fits on censored data for plotting, gofstat ...
+    NO, better to separate functions
+
+34. Add argplot1, argplot2, argplot3 and argplot4  arguments for the four plots of plotdist
+    NO, ABANDONED, TOO DIFFICULT. We prefer to define functions dedicated to produce nice plots (cdfcomp, qqcomp, denscomp)
+
+11. Add a which argument to plotdist (be careful, only two plots are possible for
+    discrete distributions or when there is only data in the arguments, so not so easy)
+    NO, ABANDONED, TOO DIFFICULT. We prefer to define functions dedicated to produce nice plots (cdfcomp, qqcomp, denscomp)
+
+18. Decide if it is possible and desirable to gather fitdist and fitdistcens
+   for the moment we think it is not easy and not desirable (see point 25)
+   
