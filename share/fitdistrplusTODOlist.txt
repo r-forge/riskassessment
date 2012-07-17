@@ -3,7 +3,6 @@
 (order/numbers mean nothing)
 
 === short term ===
-36. add an example for SSD and HCx in ecotox
 35. produce denscomp and qqcomp to produce nice plots in density or qqplot to compare fits
     of various distributions on the same dataset (functions built as cdfcomp and cdfcompcens)
 30. if fixed arguments are used,  add the fixed argument values in the result.
@@ -112,4 +111,6 @@ censored data from functions for non-censored data)
 
 18. Decide if it is possible and desirable to gather fitdist and fitdistcens
    for the moment we think it is not easy and not desirable (see point 25)
-   
+
+36. add an example for SSD and HCx in ecotox (done)
+  
