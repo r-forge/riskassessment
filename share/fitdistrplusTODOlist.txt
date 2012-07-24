@@ -3,22 +3,16 @@
 (order/numbers mean nothing)
 
 === short term ===
-35. produce denscomp and qqcomp to produce nice plots in density or qqplot to compare fits
-    of various distributions on the same dataset (functions built as cdfcomp and cdfcompcens)
-30. if fixed arguments are used,  add the fixed argument values in the result.
 26. change the affectation and the use of argument discrete in order to be able to consider
     as dicrete other distributions than those defined in R (such as zero-inflated Poisson dist)
-3. put spaces before and after affectations (x <- 3) to make codes easier to read
-    done at least in fitdist and mledist 
-12. Split summary.fitdist in two parts : summary.fitdist and print.summary.fitdist
-    done for fitdist and fitdistcens but STILL TO DO for bootdist and bootdistcens
-28. add an echo argument useful for debugging or when the optimization does not converge.
+
+41. update vignette files and create vignette directory
     
 === long term ===
 
-38. offer a function to do prior elicitation from quantiles
+39. offer a function to do prior elicitation from quantiles
 
-37. add the Wasserstein distance in mge and gofstat
+38. add the Wasserstein distance in mge and gofstat
 
 19. Add other gof graphs and stats for fits on censored data (Turnbull, ...) and gof statistics for censored data
    computed from Turnbull CDF(partially done : Turnbull plot).
@@ -28,6 +22,8 @@
 32. add weights in optimization method, weighted MLE, weighted MME,?
 
 33. test the use of a scaling matrix before the optimization if parameters are close to 0 and very (> 10^6)
+
+40. multivariate distribution fitting, in particular copula fitting
 
 === "recently" done or not planned for argumented reasons ===
 
@@ -113,4 +109,21 @@ censored data from functions for non-censored data)
    for the moment we think it is not easy and not desirable (see point 25)
 
 36. add an example for SSD and HCx in ecotox (done)
+
+35. produce denscomp, ppcomp, qqcomp to produce nice plots in density or qqplot to compare fits
+    of various distributions on the same dataset (functions built as cdfcomp and cdfcompcens)
   
+28. add an echo argument useful for debugging or when the optimization does not converge. 
+	(when error, print(opttryerror))
+
+37. provide test files for all functions based on man page examples.
+
+36. provide man page for denscomp, ppcomp, qqcomp.
+
+3. put spaces before and after affectations (x <- 3) to make codes easier to read
+    done at least in fitdist and mledist
+ 
+12. Split summary.fitdist in two parts : summary.fitdist and print.summary.fitdist
+    done for fitdist and fitdistcens but STILL TO DO for bootdist and bootdistcens
+
+30. if fixed arguments are used,  add the fixed argument values in the result.
