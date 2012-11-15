@@ -1,12 +1,32 @@
 %%
 %% This is file `jss.cls',
-\def\fileversion{2.1}
-\def\filename{jss}
-\def\filedate{2012/06/07}
+%% generated with the docstrip utility.
 %%
-%% Package `jss' to use with LaTeX2e for JSS publications (http://www.jstatsoft.org/)
-%% License: GPL-2
-%% Copyright: (C) Achim Zeileis
+%% The original source files were:
+%%
+%% jss.dtx  (with options: `class')
+%% 
+%% IMPORTANT NOTICE:
+%% 
+%% For the copyright see the source file.
+%% 
+%% Any modified versions of this file must be renamed
+%% with new filenames distinct from jss.cls.
+%% 
+%% For distribution of the original source see the terms
+%% for copying and modification in the file jss.dtx.
+%% 
+%% This generated file may be distributed as long as the
+%% original source files, as listed above, are part of the
+%% same distribution. (The sources need not necessarily be
+%% in the same archive or directory.)
+\def\fileversion{1.8}
+\def\filename{jss}
+\def\filedate{2008/04/07}
+%%
+%% Package `jss' to use with LaTeX2e for JSS publications
+%%   http://www.jstatsoft.org/
+%% Copyright (C) 2004 Achim Zeileis
 %% Please report errors to Achim.Zeileis@R-project.org
 %%
 \NeedsTeXFormat{LaTeX2e}
@@ -19,9 +39,6 @@
 \newif\if@review
 \newif\if@shortnames
 \newif\if@nojss
-\newif\if@notitle
-\newif\if@noheadings
-\newif\if@nofooter
 
 \@articletrue
 \@codesnippetfalse
@@ -30,9 +47,6 @@
 \@reviewfalse
 \@shortnamesfalse
 \@nojssfalse
-\@notitlefalse
-\@noheadingsfalse
-\@nofooterfalse
 
 \DeclareOption{article}{\@articletrue%
   \@codesnippetfalse \@bookreviewfalse \@softwarereviewfalse}
@@ -44,9 +58,6 @@
   \@codesnippetfalse \@bookreviewfalse \@softwarereviewtrue}
 \DeclareOption{shortnames}{\@shortnamestrue}
 \DeclareOption{nojss}{\@nojsstrue}
-\DeclareOption{notitle}{\@notitletrue}
-\DeclareOption{noheadings}{\@noheadingstrue}
-\DeclareOption{nofooter}{\@nofootertrue}
 
 \ProcessOptions
 \LoadClass[11pt,a4paper,twoside]{article}
@@ -231,11 +242,7 @@
     \end{samepage}
   \fi
 }
-\if@nofooter
-  %% \AtEndDocument{\makefooter}
-\else
-  \AtEndDocument{\makefooter}
-\fi
+\AtEndDocument{\makefooter}
 %% required packages
 \RequirePackage{hyperref}
 %% new \maketitle
@@ -294,18 +301,13 @@
      \@maketitle \@thanks
    \endgroup
    \setcounter{footnote}{0}
-
-   \if@noheadings
-    %% \markboth{\centerline{\@Shorttitle}}{\centerline{\@Hypersubject}}
+   \thispagestyle{empty}
+    \if@nojss
+      \markboth{\centerline{\@Shorttitle}}{\centerline{\@Hyperauthor}}
     \else
-     \thispagestyle{empty}
-      \if@nojss
-        \markboth{\centerline{\@Shorttitle}}{\centerline{\@Hyperauthor}}
-      \else
-        \markboth{\centerline{\@Shorttitle}}{\centerline{\@Hypersubject}}
-      \fi
-     \pagestyle{myheadings}
-   \fi
+      \markboth{\centerline{\@Shorttitle}}{\centerline{\@Hypersubject}}
+    \fi
+   \pagestyle{myheadings}
 
    \let\maketitle\relax \let\@maketitle\relax
    \gdef\@thanks{}\gdef\@author{}\gdef\@title{}\let\thanks\relax
@@ -450,23 +452,17 @@
     }
   }
 \fi
-\if@notitle
-  %% \AtBeginDocument{\maketitle}
-\else
-  \AtBeginDocument{\maketitle}
-\fi
+\AtBeginDocument{\maketitle}
 %% commands
+\makeatletter
 \newcommand\code{\bgroup\@makeother\_\@makeother\~\@makeother\$\@codex}
 \def\@codex#1{{\normalfont\ttfamily\hyphenchar\font=-1 #1}\egroup}
+\makeatother
 %%\let\code=\texttt
 \let\proglang=\textsf
 \newcommand{\pkg}[1]{{\fontseries{b}\selectfont #1}}
 \newcommand{\email}[1]{\href{mailto:#1}{\normalfont\texttt{#1}}}
-\ifx\csname urlstyle\endcsname\relax
-  \newcommand\@doi[1]{doi:\discretionary{}{}{}#1}\else
-  \newcommand\@doi{doi:\discretionary{}{}{}\begingroup
-\urlstyle{tt}\Url}\fi
-\newcommand{\doi}[1]{\href{http://dx.doi.org/#1}{\normalfont\texttt{\@doi{#1}}}}
+\newcommand{\doi}[1]{\href{http://dx.doi.org/#1}{\normalfont\texttt{doi:#1}}}
 \newcommand{\E}{\mathsf{E}}
 \newcommand{\VAR}{\mathsf{VAR}}
 \newcommand{\COV}{\mathsf{COV}}

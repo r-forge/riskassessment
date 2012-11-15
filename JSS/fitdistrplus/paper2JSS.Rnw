@@ -1,3 +1,5 @@
+\documentclass[article]{jss}
+
 %%%
 %%% TITLE:       fitdistrplus: an R Package for Distribution Fitting Methods
 %%% AUTHORS:     Marie Laure Delignette Muller*, Christophe Dutang
@@ -12,23 +14,23 @@
 %%%
 
 
-\documentclass[article]{jss}
 
 \usepackage{amsmath,amsthm}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-
-\usepackage{color, wrapfig, subfig}
-\usepackage[a4paper, textwidth=18cm, textheight=27cm]{geometry}
-
-
 %% need no \usepackage{Sweave.sty}
+
+\usepackage{wrapfig, subfig}
+%\usepackage[a4paper, textwidth=18cm, textheight=27cm]{geometry}
+
+
+
   
 \author{ Marie Laure Delignette-Muller \\ Université Claude Bernard Lyon 1 \And
-    Christophe Dutang \\ Université Claude Bernard Lyon 1}
-\title{\pkg{fitdistrplus}: An \proglang{R} Package for Distribution Fitting Methods}
-
+    Christophe Dutang \\ Université de Strasbourg}
 \Plainauthor{Marie Laure Delignette-Muller}
+
+\title{\pkg{fitdistrplus}: An \proglang{R} Package for Distribution Fitting Methods}
 \Plaintitle{fitdistrplus: an R Package for Distribution Fitting Methods}
 
 \Abstract{%
@@ -57,20 +59,48 @@
 }
 
 
+\newcommand{\Sconcordance}[1]{%
+  \ifx\pdfoutput\undefined%
+  \csname newcount\endcsname\pdfoutput\fi%
+  \ifcase\pdfoutput\special{#1}%
+  \else%
+   \begingroup%
+     \pdfcompresslevel=0%
+     \immediate\pdfobj stream{#1}%
+     \pdfcatalog{/SweaveConcordance \the\pdflastobj\space 0 R}%
+   \endgroup%
+  \fi}
+
+
 \begin{document}
+\SweaveOpts{concordance=TRUE, prefix.string=figs/jss}
+
+
 
 %% include your article here, just as usual
 %% Note that you should use the \pkg{}, \proglang{} and \code{} commands.
 
 
 
-essai
+This manuscript reviews the various features of version 1.0-0 of \pkg{fitdistrplus}. The package
+is available from the Comprehensive \proglang{R} Archive Network at \url{http://cran.r-project.org/package=fitdistrplus}.
+The development version of the package is located at \proglang{R}-forge as one the packages of the 
+project ``Risk Assessment with R''
+(\url{http://r-forge.r-project.org/projects/riskassessment/})
+The following command will load the package.
+%%% R code set default options for all R schunks
+<<par4vignette, echo=FALSE, results=hide>>=
+options(digits=4, SweaveHooks=list(fig=function() par(mar=c(5.1, 4.1, 1.1, 2.1))) )
+@
+%%% R code
+<<pkgload1, results=hide>>=
+library(fitdistrplus)
+@
 
 
+%\section*{Acknowledgments}
 
-\section*{Acknowledgments}
-
-\bibliography{fitdistrplus}
+%\bibliography{fitdistrplus}
 
 
  
