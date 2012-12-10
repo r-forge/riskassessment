@@ -358,7 +358,7 @@ The other proposed estimation methods are described in Section~\ref{Alternatives
 
 Function \code{fitdist} returns the results of the fit of any parametric distribution 
 to a dataset as an S3 class object that may be easily printed, 
-summarized or plotted (see Figure~\ref{plotcontfit} in Section~\ref{GOF:plots}). 
+summarized or plotted (see Section~\ref{GOF:plots}). 
 The parametric distribution must be a classically defined \proglang{R} distributions,
 with at least d, p and q functions respectively for the density, cumulative distribution and quantile functions
 (for example \code{dnorm}, \code{pnorm} and \code{qnorm} for the normal distribution).
@@ -415,86 +415,89 @@ manual~\cite{fitdistrplus} for examples).
 \label{GOF:plots}
 %%%%%%%%%%
 The plot of an object of class \code{"fitdist"} provides 
-four goodness-of-fit plots : a draw of pdf curve and histogram together (density plot), an cdf plot
-of both empirical and theoretical distributions, a Q-Q plot
-(plot of the quantiles of the theoretical fitted distribution (x-axis) against the empirical quantiles of the data (y-axis))
-and a P-P plot (i.e. for each value of the dataset, plot of the cumulative density function of the fitted distribution
-(x-axis) against the empirical cumulative density function (y-axis)) are also given \cite{Cullen99}.
-For all these four plots, the probability plotting position is defined as recommended by Blom \cite{Blom},
-by a call to Function \code{ppoints} from the \pkg{stats} package with its default arguments.
-If the density plot and the cdf plot are the most classical goodness-of-fits plots, the two other plots
-are complementary and can be very informative in some cases.
-The Q-Q plot emphasizes the lack-of-fit at the distribution tails while the P-P plot emphasizes
-the lack-of-fit at the distribution center.
-As an example, let us look at the plot of the previous fit of a Weibull distribution to the \code{groundbeef} dataset
-(Figure~\ref{plotcontfit}). The fit is not perfect,
-especially in the center of the distribution, but seems correct when looking at the tails.
-%%% R code
-<<fitgroundbeef.weibull.echo, echo=TRUE, fig=FALSE, eval=FALSE>>=
-plot(fw)
-@
+four classical goodness-of-fit plots \cite{Cullen99}: 
+\begin{itemize}
+\item a density plot representing the pdf curve of the fitted distribution 
+juxtaposed with the histogram of the empirical distribution, 
+\item a cumulative distribution function (cdf) plot 
+of both the empirical distribution and the fitted distribution, 
+\item a Q-Q plot
+representing the empirical quantiles (y-axis) against the quantiles of the theoretical fitted distribution (x-axis)
+\item and a P-P plot representing the empirical distribution function evaluated at each data point (y-axis)
+against the fitted distribution function (x-axis).
+\end{itemize}
 
-
-\setkeys{Gin}{width=0.65\textwidth} %default
-
-\begin{figure}[htb]
-  \centering
-  %%% R code
-<<fitgroundbeefweibullplot, echo=FALSE, fig=TRUE, width=7, height=7, eps=FALSE>>=
-plot(fw)
-@
-  \caption{Plot of the fit of a continuous distribution (a Weibull
-  distribution fitted to serving sizes from the \code{groundbeef} dataset)}
-  \label{plotcontfit}
-\end{figure}
-
-
-
-
-\subsubsection{Plots to compare multiple fits}
-\label{multfit:plots}
 Functions \code{denscomp}, \code{cdfcomp},
-\code{qqcomp} and \code{ppcomp}, enable the visual comparison
-of the empirical and various theoretical distributions fitted
-on a same dataset, using one of the four plots
-provided by \code{plotdist}. These functions must be called with a first argument 
+\code{qqcomp} and \code{ppcomp}, enable to separately plot each
+of these four plots, in order to compare the empirical and various theoretical distributions fitted
+on a same dataset. These functions must be called with a first argument 
 corresponding to a list of objects of class \code{fitdist}, and optionaly
 further arguments to customize the plot (see the reference 
 manual~\cite{fitdistrplus} for lists of arguments that may be changed
 for each plot), as in the following example comparing the fit of
-Weibull, lognormal and gamma distributions to \code{groundbeef} dataset.
-On Figure~\ref{groundbeef:comp}, we compare density, quantile, distribution and
-probability functions.
+Weibull, lognormal and gamma distributions to \code{groundbeef} dataset (Figure~\ref{groundbeef:comp}).
 %%% R code
-<<fitgroundbeef.poisnbinom.echo, echo=TRUE, fig=FALSE>>=
+<<fitgroundbeef.echo, echo=TRUE, fig=FALSE>>=
 fg <- fitdist(groundbeef$serving,"gamma")
 fln <- fitdist(groundbeef$serving,"lnorm")
 par(mfrow=c(2, 2))
 denscomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"),
-  xlab="serving sizes (g)", lwd=2)
-qqcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"),
-	xlab="theo. quantiles", lwd=2, line01=FALSE, fitcol=2:4, ylim=c(0,300))
-cdfcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"),
-  xlab="serving sizes (g)", lwd=2)
-ppcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"),
-  xlab="theo. prob.", lwd=2, line01=FALSE, fitcol=2:4)
+  xlab="serving sizes (g)")
+qqcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
+cdfcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
+ppcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
 @
 
 \begin{figure}[htb!]
   \centering
-<<fitgroundbeefpoisnbinomplot, echo=FALSE, fig=TRUE, width=7, height=7, eps=FALSE>>=
+<<fitgroundbeef, echo=FALSE, fig=TRUE, width=7, height=7, eps=FALSE>>=
 fg <- fitdist(groundbeef$serving,"gamma")
 fln <- fitdist(groundbeef$serving,"lnorm")
 par(mfrow=c(2, 2))
-denscomp(list(fw,fln,fg), legendtext=c("Weibull","lognormal","gamma"),
-  xlab="serving sizes (g)", lwd=2)
-qqcomp(list(fw,fln,fg), legendtext=c("Weibull","lognormal","gamma"),
-  xlab="theo. quantiles", lwd=2, line01=FALSE, fitcol=2:4, ylim=c(0,300))
-cdfcomp(list(fw,fln,fg), legendtext=c("Weibull","lognormal","gamma"),
-  xlab="serving sizes (g)", lwd=2)
-ppcomp(list(fw,fln,fg), legendtext=c("Weibull","lognormal","gamma"),
-  xlab="theo. prob.", lwd=2, line01=FALSE, fitcol=2:4)
+denscomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"),
+  xlab="serving sizes (g)")
+qqcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
+cdfcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
+ppcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
 @  
+
+For cdf, Q-Q and P-P plots, the probability plotting position is defined as recommended by Blom \cite{Blom},
+by default using the Hazen's rule, with probability points of the empirical distribution defined as
+ \code{(1:n - 0.5)/n}. This plotting
+position can be easily changed using arguments \code{use.ppoints} and \code{a.ppoints}. When \code{use.ppoints = TRUE}, 
+the argument \code{a.ppoints} is passed to Function \code{ppoints} from the \pkg{stats} package to define the 
+probability points of the empirical distribution as \code{(1:n - a.ppoints)/(n - 2a.ppoints + 1)}. 
+When \code{use.ppoints = FALSE}, the probability points are simply defined as \code{1:n / n}.
+
+
+If the density plot and the cdf plot are the most classical goodness-of-fits plots, the two other plots
+are complementary and can be very informative in some cases.
+The Q-Q plot emphasizes the lack-of-fit at the distribution tails while the P-P plot emphasizes
+the lack-of-fit at the distribution center.
+As an example in Figure~\ref{groundbeef:comp}, none of the three fitted distributions describes
+the center of the distribution rather better than the two others, but the Weibull and gamma distributions 
+should be prefered for their better description of the right tail of the empirical distribution, especially
+if the weight of this tail is important in the use of the fitted distribution.
+%%% R code
+%<<fitgroundbeef.weibull.echo, echo=TRUE, fig=FALSE, eval=FALSE>>=
+%plot(fw)
+%@
+%\setkeys{Gin}{width=0.65\textwidth} %default
+%\begin{figure}[htb]
+%  \centering
+%  %%% R code
+%<<fitgroundbeefweibullplot, echo=FALSE, fig=TRUE, width=7, height=7, eps=FALSE>>=
+%plot(fw)
+%@
+%  \caption{Plot of the fit of a continuous distribution (a Weibull
+%  distribution fitted to serving sizes from the \code{groundbeef} dataset)}
+%  \label{plotcontfit}
+%\end{figure}
+
+
+%\subsubsection{Plots to compare multiple fits}
+%\label{multfit:plots}
+
 %\subfloat[Densities]{ 
 % %%% R code
 %<<fittoxocarapoisnbinomplot, echo=FALSE, fig=TRUE, width=4, height=4, eps=FALSE>>=
@@ -533,13 +536,9 @@ ppcomp(list(fw,fln,fg), legendtext=c("Weibull","lognormal","gamma"),
 %\texttt{xlogscale} to \texttt{TRUE} in the call to \texttt{cdfcomp}.
 % completer avec tout ce qu'on peut changer dans cdfcomp : PAS FORCEMENT UTILE
 
-
-\mytodo{COMMENT THEM, ESPECIALLY THE QQPLOT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!}
-
-
 \clearpage
 
-\subsubsection{Measures of goodness-of-fit}
+\subsubsection{Goodness-of-fit statistics}
 \label{GOF:measures}
 %%%%%%%%%%
 The purpose of goodness-of-fit statistics aims to measure the distance beetween
@@ -549,10 +548,9 @@ When fitting continuous distributions, three  goodness-of-fit statistics are cla
 Cramer-von Mises, Kolmogorov-Smirnov and Anderson-Darling statistics.
 They can be computed using the function \code{gofstat}
 as defined by Stephens \cite{Stephens86}.
-Table \ref{tabKSCvMAD} gives the definition and their empirical estimate.
-
-
-\mytodo{check formula in Table 1}
+Naming $x_{i}$ the $n$ observations of a continuous variable $x$ arranged in an ascending order,
+Table \ref{tabKSCvMAD} gives the definition and the empirical estimate of the three considered 
+goodness-of-fit statistics.
 
 \begin{table}[htb!]
   \begin{center}
@@ -572,7 +570,7 @@ Table \ref{tabKSCvMAD} gives the definition and their empirical estimate.
 % cvm <- 1/(12*n) + sum( ( theop - (2 * seq(1:n) - 1)/(2 * n) )^2 )
     \hline
       Anderson-Darling  & n $\int_{-\infty}^{\infty}\frac{(F_{n}(x) - F(x))^2}{F(x) (1 - F(x))} dx$
-      & $-n -\frac{1}{n}\sum\limits_{i=1}^n \left((2i-1)\log(F(x_{i})+\log(1-F(x_{n+1-i})) )\right)$ \\
+      & $-n -\frac{1}{n}\sum\limits_{i=1}^n \left((2i-1)(\log(F(x_{i}))+\log(1-F(x_{n+1-i})) )\right)$ \\
       (AD) &    & \\
 % ad <- - n - mean( (2 * seq(1:n) - 1) * (log(theop) + log(1 - rev(theop))) )
     \hline
@@ -607,11 +605,12 @@ ADD A PART ON THE DRAWBACKS OF EACH GOFSTAT AND THE PREFERABLE USE OF AIC AND BI
 FITS ESPECIALLY WHEN THE NUMBER OF PARAMETERS CHARACTERIZING THE DISTRIBUTIONS DIFFERS 
 }
 
-\subsubsection{Goodness-of-fit tests}
-\label{GOF:tests}
+%\subsubsection{Goodness-of-fit tests}
+%\label{GOF:tests}
 %%%%%%%%%%
-\mytodo{TO BE REMOVED AT LEAST IN THE JSS VERSION}
-
+\mytodo{
+ADD AN INTRODUCTION ABOUT TESTS AN ARTICULATION WITH THE PREVIOUS PART 
+}
 For continuous distributions, an approximate Kolmogorov-Smirnov test is 
 performed by assuming the distribution parameters known. The critical value defined by Stephens~\cite{Stephens86} 
 for a completely specified distribution is used to reject or not the 
