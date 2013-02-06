@@ -9,14 +9,39 @@ options(digits=3)
 
 #### 2.1/ Choice of candidate distributions
 
+data(groundbeef)
+str(groundbeef)
+plotdist(groundbeef$serving)
+descdist(groundbeef$serving, boot=1000)
+
+
+
+
+#### 2.2/ Fit of distributions by MLE and comparison of fits
+
+fw <- fitdist(groundbeef$serving, "weibull")
+summary(fw)
+fg <- fitdist(groundbeef$serving,"gamma")
+fln <- fitdist(groundbeef$serving,"lnorm")
+x11()
+par(mfrow=c(2, 2))
+denscomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"),
+         xlab="serving sizes (g)")
+qqcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
+cdfcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
+ppcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
+
+
 data(endosulfan)
+str(endosulfan)
 ATV <-endosulfan$ATV
-plotdist(ATV) # pas sûr que celui-là soit très intéressant sur cet exemple
+# plotdist(ATV) 
+# pas sûr que celui-là soit très intéressant sur cet exemple
 # mais on n'est pas obligé de mettre toutes les figures
 # ---
 # oui c'est pas hyper intéressant sur cet exemple
 
-descdist(ATV,boot=1000)
+# descdist(ATV,boot=1000)
 # sur celle-là je commenterais le fait qu'en général les écotoxicologues
 # ajustent soit une lognormale soit une loglogistique sur ce type de données
 # mais qu'il semble qu'ici la skewness soit plus forte qu'attendue 
@@ -36,32 +61,29 @@ descdist(ATV,boot=1000)
 # pour les fonctions utilisés ci dessus, je pense groundbeef est mieux que ATV. 
 # car les graphes sont plus démonstratifs et facilement commentable.
 
-
-#### 2.2/ Fit of distributions by MLE and comparison of fits
-
-fln <- fitdist(ATV, "lnorm")
-summary(fln)
-gofstat(fln)
+fendo.ln <- fitdist(ATV, "lnorm")
+# summary(fendo.ln)
+# gofstat(fendo.ln)
 
 # use of plotdist to find good reasonable initial values for parameters
-plotdist(ATV, "llogis", para=list(shape=1,scale=500))
-fll <- fitdist(ATV, "llogis", start=list(shape=1,scale=500))
+# plotdist(ATV, "llogis", para=list(shape=1,scale=500))
+fendo.ll <- fitdist(ATV, "llogis", start=list(shape=1,scale=500))
 
 # use of plotdist to find good reasonable initial values for parameters
-plotdist(ATV, "pareto", para=list(shape=1,scale=500))
-fP <- fitdist(ATV, "pareto", start=list(shape=1,scale=500))
+# plotdist(ATV, "pareto", para=list(shape=1,scale=500))
+fendo.P <- fitdist(ATV, "pareto", start=list(shape=1,scale=500))
 
 # definition of the initial values from the fit of the Pareto
 # as the Burr distribution is the Pareto when shape2 == 1
-fB <- fitdist(ATV, "burr", start=list(shape1=0.3,shape2=1,rate=1))
+fendo.B <- fitdist(ATV, "burr", start=list(shape1=0.3,shape2=1,rate=1))
 
 x11() #pourquoi l'utiliser?
-par(mfrow=c(2,2), mar=c(4, 4, 2, 1)) 
+par(mfrow=c(1,2), mar=c(4, 4, 2, 1)) 
 #en modifiant les marges on a deja qqch de mieux. il faut aussi jouer sur la taille de la fenetre.
 
-cdfcomp(list(fln,fll,fP,fB),xlogscale=TRUE,
+cdfcomp(list(fendo.ln,fendo.ll,fendo.P,fendo.B),xlogscale=TRUE,
           legendtext = c("lognormal","loglogistic","Pareto","Burr"))
-qqcomp(list(fln,fll,fP,fB),xlogscale=TRUE,ylogscale=TRUE,
+qqcomp(list(fendo.ln,fendo.ll,fendo.P,fendo.B),xlogscale=TRUE,ylogscale=TRUE,
        legendtext = c("lognormal","loglogistic","Pareto","Burr"))
 # A partir de ce QQplot, on peut bien expliquer le fait que si l'on veut
 # utiliser ensuite l'ajustement pour estimer un quantile extrême (ex.
@@ -70,8 +92,8 @@ qqcomp(list(fln,fll,fP,fB),xlogscale=TRUE,ylogscale=TRUE,
 # il est mieux d'utiliser la loi de Burr ou la limite celle de Pareto
 # ---
 # oui
-ppcomp(list(fln,fll,fP,fB),xlogscale=TRUE,ylogscale=TRUE,
-       legendtext = c("lognormal","loglogistic","Pareto","Burr"))
+#ppcomp(list(fln,fll,fP,fB),xlogscale=TRUE,ylogscale=TRUE,
+#       legendtext = c("lognormal","loglogistic","Pareto","Burr"))
 
 # ci-dessous deux versions de denscomp : du fait qu'on ne peut pas mettre d'argument
 # log="x" dans la fonction hist et donc pas non plus dans denscomp qui appelle hist
@@ -84,29 +106,26 @@ ppcomp(list(fln,fll,fP,fB),xlogscale=TRUE,ylogscale=TRUE,
 # oui. je ne me souviens plus pourquoi je n'avais pas mis l'option log=x (au moins, log=y parait plus complique)?
 # ça vaudrait le coup que j'essaie car les relecteurs vont trouver ça bizarre de ne pas fournir log="x"!
 
-denscomp(list(fln,fll,fP,fB),
-         legendtext = c("lognormal","loglogistic","Pareto","Burr"),
-         breaks=seq(0,40000,5),xlim=c(0.001,200),ylim=c(0,0.1)) # without great interest as hist does accept argument log="x"
-denscomp(list(fln,fll,fP,fB),
-         legendtext = c("lognormal","loglogistic","Pareto","Burr"),
-         breaks=exp(seq(-3,11,1)),xlim=c(0.001,100),ylim=c(0,0.3)) # without great interest as hist does accept argument log="x"
+#denscomp(list(fln,fll,fP,fB),
+#         legendtext = c("lognormal","loglogistic","Pareto","Burr"),
+#         breaks=seq(0,40000,5),xlim=c(0.001,200),ylim=c(0,0.1)) # without great interest as hist does accept argument log="x"
+#denscomp(list(fln,fll,fP,fB),
+#         legendtext = c("lognormal","loglogistic","Pareto","Burr"),
+#        breaks=exp(seq(-3,11,1)),xlim=c(0.001,100),ylim=c(0,0.3)) # without great interest as hist does accept argument log="x"
 
 # ---
 #le deuxième est un peu mieux mais ça vaut pas un log=x
          
+(HC5 <- quantile(fendo.B,probs = 0.05))
 
-summary(fln)$aic
-summary(fll)$aic
-summary(fP)$aic
-summary(fB)$aic
-
-gofstat(fln)
-gofstat(fll)
-gofstat(fP)
-gofstat(fB)
-
-# ---
-#il faudrait pas faire un tableau 4 par 4 avec toutes ces infos?
+# A remplacer par le print de gofstat
+# avec la nouvelle version de fitdistrplus
+cbind(
+  ln = c(aic=summary(fendo.ln)$aic,bic=summary(fendo.ln)$bic, unlist(gofstat(fendo.ln)[c("cvm","ks","ad")])),
+  ll = c(aic=summary(fendo.ll)$aic, bic=summary(fendo.ll)$bic, unlist(gofstat(fendo.ll)[c("cvm","ks","ad")])),
+  P = c(aic=summary(fendo.P)$aic, bic=summary(fendo.P)$bic, unlist(gofstat(fendo.P)[c("cvm","ks","ad")])),
+  B = c(aic=summary(fendo.B)$aic, bic=summary(fendo.B)$bic, unlist(gofstat(fendo.B)[c("cvm","ks","ad")]))
+)
 
 
 # Discussion à partir des summary et des gofstat des méthodes de comparaison
