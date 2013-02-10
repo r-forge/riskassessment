@@ -120,6 +120,9 @@ qqcomp(list(fendo.ln,fendo.ll,fendo.P,fendo.B),xlogscale=TRUE,ylogscale=TRUE,
 
 # A remplacer par le print de gofstat
 # avec la nouvelle version de fitdistrplus
+
+gofstat(list(fendo.ln, fendo.ll, fendo.P, fendo.B))
+
 cbind(
   ln = c(aic=summary(fendo.ln)$aic,bic=summary(fendo.ln)$bic, unlist(gofstat(fendo.ln)[c("cvm","ks","ad")])),
   ll = c(aic=summary(fendo.ll)$aic, bic=summary(fendo.ll)$bic, unlist(gofstat(fendo.ll)[c("cvm","ks","ad")])),
