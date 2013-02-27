@@ -25,6 +25,11 @@
 
 40. multivariate distribution fitting, in particular copula fitting
 
+42. add an argument analytical (default to FALSE) in order to compute MLE or MME by
+an analytical formula (close-form) rather than by a numeric optimization. Then in MME for base distributions,
+we could fit a two-parameter distribution on E(X) and E(X^2) rather than E(X) and Var(X) through
+the memp argument. One could also consider limited expected values.
+
 === "recently" done or not planned for argumented reasons ===
 
 1. Remove calls to options(digits) in the code
