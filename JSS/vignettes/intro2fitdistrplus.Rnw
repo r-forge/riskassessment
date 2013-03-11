@@ -93,7 +93,7 @@ Outputs objects of \code{fitdist} and \code{fitdistcens} functions are S3 object
 which kind generic methods are provided, including \code{summary}, \code{plot} and
 \code{quantile}. 
 Finally, this package can also handle bootstraps of parameter estimates.
-Detailed examples are given in ecotoxicology and insurance contexts. 
+Detailed examples are given in food risk assessment, ecotoxicology and insurance contexts. 
 \\
 \HRuleBottom
 
@@ -228,6 +228,8 @@ plotdist(groundbeef$serving)
   (serving size from the \code{groundbeef} dataset)}
   \label{plotdistcont}
 \end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%% JE NE COMPRENDS PAS POURQUOI CETTE FIGURE NE SORT PAS A LA MEME TAILLE QUE LA FIGURE 1
 
 
 In addition to empirical plots, descriptive statistics may help to choose good candidates to describe a distribution
@@ -1208,7 +1210,7 @@ A data set may thus contain right, left, or interval censored data, or may be a 
 of these categories, possibly with different upper and lower bounds.
 Censored data are sometimes excluded from the data analysis or replaced by a fixed value, which
 in both cases may lead to biased results. A more recommended approach to correctly model
-such data is based upon maximum likelihood (see e.g. \cite{kleinmoeschberger03}). 
+such data is based upon maximum likelihood (see e.g. \cite{kleinmoeschberger03,helsel05}). 
 We chose to use this approach in our package.
 
 Censored data may thus contain left censored, right censored and interval censored values, 
@@ -1403,24 +1405,24 @@ data(toxocara)
 str(toxocara)
 @
 
-In some cases a discrete variable may be plotted as a continuous one, for example for a large dataset
-from a binomial distribution converging to a normal one, but
-The \code{plotdist} function also proposes specific plots in density and in cdf
-for discrete variables (Figure~\ref{plotdistdisc}):
+%In some cases a discrete variable may be plotted as a continuous one, for example for a large dataset
+%from a binomial distribution converging to a normal one, but
+%The \code{plotdist} function also proposes specific plots in density and in cdf
+%for discrete variables (Figure~\ref{plotdistdisc}):
 %%% R code
-<<figtoxocara.echo, echo=TRUE, fig=FALSE, eval=FALSE>>=
-plotdist(toxocara$number, discrete = TRUE)
-@
-\begin{figure}[htb!]
-  \centering
+%<<figtoxocara.echo, echo=TRUE, fig=FALSE, eval=FALSE>>=
+%plotdist(toxocara$number, discrete = TRUE)
+%@
+%\begin{figure}[htb!]
+%  \centering
   %%% R code
-<<figtoxocaraplot, echo=FALSE, fig=TRUE, width=12, height=6, eps=FALSE>>=
-plotdist(toxocara$number, discrete = TRUE)
-@
-  \caption{Density and cdf plots of an empirical distribution for a discrete variable
-  (number of \emph{Toxocara cati} parasites from the \code{toxocara} dataset)}
-  \label{plotdistdisc}
-\end{figure}
+%<<figtoxocaraplot, echo=FALSE, fig=TRUE, width=12, height=6, eps=FALSE>>=
+%plotdist(toxocara$number, discrete = TRUE)
+%@
+%  \caption{Density and cdf plots of an empirical distribution for a discrete variable
+%  (number of \emph{Toxocara cati} parasites from the \code{toxocara} dataset)}
+%  \label{plotdistdisc}
+%\end{figure}
 
 As for continuous non-censored data (see Section~\ref{fitnoncenscont})
 the \code{descdist} function can be used, but with the argument \code{discrete}
@@ -1434,7 +1436,7 @@ normal distribution, to which discrete distributions may converge.
 
 %Looking at the skewness-kurtosis plot (Figure~\ref{Cullenplotdisc}) obtained
 %for the number of \emph{Toxocara cati} parasites from 
-%the ``Toxacara'' dataset, one could try the fit of Poisson and negative-binomial distributions.
+%the ``Toxacara'' dataset, one could try the fit of Poisson and negative-binomial %distributions.
 
 %<<echo=TRUE, fig=FALSE>>=
 %descdist(toxocara$number,discrete = TRUE,boot=1000)
@@ -1463,16 +1465,31 @@ negative distributions can be easily fitted.
 
 For discrete distributions, the plot of an object of class \code{"fitdist"} simply provides
 two goodness-of-fit plots comparing empirical and theoretical distributions
-in pdf and in cdf. Function \code{cdfcomp} can also be used to compare several plots
-to the same data set, as follows for the previous fits. 
-
-<<fittoxocara.poisnbinom.echo, echo=TRUE, fig=FALSE>>=
-cdfcomp(list(ftoxo.P,ftoxo.nb))
+in pdf and in cd f(Figure~\ref{plotdiscfitP}). Function \code{cdfcomp} can also be used to compare several plots
+to the same data set, as follows for the previous fits (Figure~\ref{plotdiscfit}). 
+<<fittoxocara.pois.echo, echo=TRUE, fig=FALSE>>=
+plot(ftoxo.P)
 @
 \begin{figure}[htb]
   \centering
-<<fittoxocarapoisnbinomplot, echo=FALSE, results=hide, fig=TRUE, width=12, height=6, eps=FALSE>>=
-cdfcomp(list(ftoxo.P,ftoxo.nb))
+<<fittoxocarapois, echo=FALSE, results=hide, fig=TRUE, width=10, height=5, eps=FALSE>>=
+plot(ftoxo.P)
+@
+  \caption{Plot of the fit of a discrete distribution (Poisson distribution
+  fitted to numbers of \emph{Toxocara cati} parasites from the \code{toxocara} dataset)}
+  \label{plotdiscfitP}
+\end{figure}
+
+
+
+
+<<fittoxocara.poisnbinom.echo, echo=TRUE, fig=FALSE>>=
+cdfcomp(list(ftoxo.P,ftoxo.nb),legendtext=c("Poisson", "negative binomial"))
+@
+\begin{figure}[htb]
+  \centering
+<<fittoxocarapoisnbinomplot, echo=FALSE, results=hide, fig=TRUE, width=4, height=4, eps=FALSE>>=
+cdfcomp(list(ftoxo.P,ftoxo.nb),legendtext=c("Poisson", "negative binomial"))
 @
   \caption{Plot of the fit of a discrete distribution (a negative binomial distribution
   fitted to numbers of \emph{Toxocara cati} parasites from the \code{toxocara} dataset)}
