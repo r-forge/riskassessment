@@ -85,15 +85,19 @@ censored data using the \proglang{R} package \pkg{fitdistrplus}}
 
 
 \HRuleTop\\
-The package \pkg{fitdistrplus} provides procedures for fitting univariate distribution
-on different types of data (continuous, discreted and censored data) and allowing
-different estimaiton methods (maximum likelihood, moment matching, quantile matching
-and goodness-of-fit estimation).
-Outputs objects of \code{fitdist} and \code{fitdistcens} functions are S3 objects, for
+The package \pkg{fitdistrplus} provides functions for fitting univariate distributions
+on different types of data (continuous censored or non-censored data and discrete data) and allowing
+different estimation methods (maximum likelihood, moment matching, quantile matching
+and maximum goodness-of-fit estimation).
+Outputs of \code{fitdist} and \code{fitdistcens} functions are S3 objects, for
 which kind generic methods are provided, including \code{summary}, \code{plot} and
 \code{quantile}. 
-Finally, this package can also handle bootstraps of parameter estimates.
+This package also provides various functions to compare the fit of several distributions to a same data set 
+and can handle bootstrap of parameter estimates.
 Detailed examples are given in food risk assessment, ecotoxicology and insurance contexts. 
+\\
+\textit{Keywords}: probability distribution fitting, bootstrap, censored data, maximum likelihood, moment matching, 
+quantile matching, maximum goodness-of-fit.
 \\
 \HRuleBottom
 
@@ -122,28 +126,29 @@ fitting routine for the parameter estimation step in \proglang{R} \cite{R12}. Ot
 the process may be developed using \proglang{R}, e.g. \cite{Ricci05}. 
 In this paper, we present our \proglang{R} package \pkg{fitdistrplus} (\cite{fitdistrplus})
 implementing several methods of fitting univariate parametric distribution.
-
 Our first objective by developping this package was to provide \proglang{R} 
 users a set of functions dedicated to help this overall process.
+
 The \code{fitdistr} function estimates distribution parameters by maximizing the log-likelihood
 using the \code{optim} function. 
 In some cases, other estimation methods could be prefered, 
 such as maximum goodness-of-fit estimation (also called minimum distance estimation), and
 proposed in the \proglang{R} package \pkg{actuar} with three different goodness-of-fit distances, 
 see \cite{actuarJSS}. 
-
-While developping  the \pkg{fitdistrplus} package, our second objective  was to extend function \code{fitdistr} 
+While developping  the \pkg{fitdistrplus} package, our second objective  was thus to extend function \code{fitdistr} 
 by providing various estimation methods in addition to maximum likelihood estimation (MLE). Functions
 were developped to enable moment matching estimation (MME), quantile matching estimation (QME), and 
 maximum goodness-of-fit estimation (MGE) using eight different distances.
 Moreover, the \pkg{fitdistrplus} package offers the possibility to specify a user-supplied function
 for optimization, 
-useful in cases when classical optimization techniques not included in \code{optim} are more adequate.
+useful in cases where classical optimization techniques not included in \code{optim} are more adequate.
 
-In applied statistics, it is frequent to have to fit distributions to censored data. 
+In applied statistics, it is frequent to have to fit distributions to censored data \cite{kleinmoeschberger03,
+helsel05,busschaertetal10,lehaetal11,commeauetal12}. 
 The \pkg{MASS} \code{fitdistr} function 
-does not enable maximum likelihood estimation from this type data. Some packages 
-deal with censored data, especially survival data \cite{survival}, e.g. \cite{hiranoetal94}, \cite{jordan05},
+does not enable maximum likelihood estimation with this type data. Some packages 
+deal with censored data, especially survival data \cite{survival} (see \cite{hiranoetal94,jordan05}
+for examples),
 but those packages generally focused on specific models, enabling the fit of only one distribution or a 
 restricted family of distributions. 
 Our third objective was thus to provide \proglang{R} users a function 
@@ -159,14 +164,14 @@ Few packages on \sigle{CRAN} provide estimation procedures for a general distrib
 The \pkg{distrMod} package of \cite{distrModJSS} provides an object-oriented (S4) 
 implementation of probability models 
 and includes distribution fitting procedures for a given minimization criterion.
-In \pkg{fitdistrplus}, we use the standard S3 class system, we believe, simpler than the full object-oriented S4 model for most \proglang{R} users.
+In \pkg{fitdistrplus}, we use the standard S3 class system, we believe simpler than the full object-oriented S4 model for most \proglang{R} users.
 Furthermore, the \pkg{distrMod} package does not allow to fit censored data.
 The \code{mle} function of \pkg{stats4} package provides a procedure for maximum likelihood estimation whose output has class \code{"mle"}.
 Many generic methods are implemented for this type of object, e.g. \code{confint}, \code{logLik},...
 When designing the \pkg{fitdistrplus} package, we also take this into account.
 Finally, various other packages provide functions to estimate the mode, the moments or the L-moments of a distribution, see the reference manuals of  \pkg{modeest}, \pkg{lmomco} and \pkg{Lmoments} packages.
 
-This manuscript reviews the various features of version 1.0-0 of \pkg{fitdistrplus}. The package
+This manuscript reviews the various features of version 1.0-1 of \pkg{fitdistrplus}. The package
 is available from the Comprehensive \proglang{R} Archive Network at \url{http://cran.r-project.org/package=fitdistrplus}.
 The development version of the package is located at \proglang{R}-forge as one the packages of the 
 project ``Risk Assessment with R''
@@ -190,11 +195,11 @@ estimation methods and other types of data, before Section \ref{ccl} concludes.
 \subsection{Choice of candidate distributions}
 \label{Choice}
 For illustrating the use of various functions of the \pkg{fitdistrplus} package 
-to continuous data, we   first use
-a dataset named \code{groundbeef} which is included in our package.
-This dataset contains pointwise values of
+with continuous non-censored data, we   first use
+a data set named \code{groundbeef} which is included in our package.
+This data set contains pointwise values of
 serving sizes in grams, collected in a French survey, for ground beef patties consumed by 
-children under 5 years old, and is used in a quantitative risk assessment 
+children under 5 years old. It was used in a quantitative risk assessment 
 published in the international journal of food microbiology journal \cite{Delignette08}.
 %%% R code
 <<datgroundbeef, echo=TRUE>>=
@@ -205,13 +210,13 @@ str(groundbeef)
 Before fitting one or more distributions to a data set, it is generally
 necessary to choose good candidates among a predefined family of distributions.
 This choice may be guided by the knowledge of stochastic processes governing
-the modelled variable, but also by the observation of the empirical distribution.
+the modelled variable, but also by the observation of its empirical distribution.
 To help the user in this choice, we developed functions to plot and
 characterise the empirical distribution.
 
 First of all, the empirical distribution  function and the histogram may be plotted using the 
 classical \proglang{R} functions \code{ecdf} and \code{hist}, 
-or simply by using the \code{plotdist} function.
+or by using the \code{plotdist} function of the \pkg{fitdistrplus} package.
 This function provides two plots (see Figure 1): the left-hand graph is the histogram (on a density level) 
 and the right-hand graph plots the empirical cumulative distribution function (CDF).
 %%% R code
@@ -225,11 +230,10 @@ plotdist(groundbeef$serving)
 plotdist(groundbeef$serving)
 @
   \caption{Histogram and CDF plots of an empirical distribution for a continuous variable 
-  (serving size from the \code{groundbeef} dataset)}
+  (serving size from the \code{groundbeef} data set)}
   \label{plotdistcont}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%% JE NE COMPRENDS PAS POURQUOI CETTE FIGURE NE SORT PAS A LA MEME TAILLE QUE LA FIGURE 1
 
 
 In addition to empirical plots, descriptive statistics may help to choose good candidates to describe a distribution
@@ -245,7 +249,7 @@ the kurtosis equals 3.
 %Distributions with a higher kurtosis are said to be leptokurtic, with heavier tails, such as the 
 %logistic distribution, while distributions with a smaller kurtosis are said platykurtic, with lighter 
 %tails, such as the uniform distribution.
-The skewness and kurtosis with their corresponding unbiased estimator of a sample 
+The skewness and kurtosis and their corresponding unbiased estimator from a sample 
 $(X_i)_i \stackrel{\text{i.i.d.}}{\sim} X$ with observations $(x_i)_i$ are given by
   \begin{equation}
     \label{skewness}
@@ -263,15 +267,15 @@ $m_{r}=\frac{1}{n}\sum_{i=1}^n(x_{i}-\overline{x})^{r}$, with
 $x_{i}$ the $n$ observations of variable $x$ and $\overline{x}$ their mean value.
 
 The  \code{descdist} function provides calculations of classical descriptive statistics
-(minimum, maximum, median, mean, standard deviation), skewness and Pearsons's kurtosis. By default, 
+(minimum, maximum, median, mean, standard deviation), skewness and kurtosis. By default, 
 unbiased estimations of the three last statistics are provided. But, the argument \code{method}
 may be used to obtain  them without correction for bias. 
 A skewness-kurtosis plot such as the one proposed by \cite{Cullen99} is  provided by 
 the function \code{descdist} for the empirical distribution 
-(see Figure~\ref{Cullenplotcont} for the \code{groundbeef} dataset). 
+(see Figure~\ref{Cullenplotcont} for the \code{groundbeef} data set). 
 On this plot, values for common distributions are displayed in order 
 to help the choice of distributions to fit to data. For some distributions (normal, uniform,
-logistic, exponential for example), there is only one possible value for the skewness and the kurtosis.
+logistic, exponential), there is only one possible value for the skewness and the kurtosis.
  Thus, the distribution is represented by a single point on the plot. For other distributions, 
 areas of possible values are represented, consisting in lines (as for gamma and lognormal distributions), 
 or larger areas (as for beta distribution).
@@ -280,10 +284,10 @@ Skewness and kurtosis are known not to be robust. In order to take into account 
 of the estimated values of kurtosis and skewness from data, a bootstrap procedure can be performed
 by fixing the argument \code{boot} to an integer above 10.
 Bootstrap samples of the same size of the original data set
-are then constructed by random sampling with replacement from that original dataset.
+are then constructed by random sampling with replacement from that original data set.
 Values of skewness and kurtosis are computed on that bootstrap samples and reported on the 
 skewness-kurtosis plot. Below is a call to the \code{descdist} function to describe the distribution 
-of the serving size from the \code{groundbeef} dataset and to draw the corresponding skewness-kurtosis
+of the serving size from the \code{groundbeef} data set and to draw the corresponding skewness-kurtosis
 plot (see Figure~\ref{Cullenplotcont}). Looking at the results on this example
 with a positive skewness and a kurtosis not far from 3,
 the fit of three common right-skewed distributions could be considered, Weibull, gamma and 
@@ -294,6 +298,7 @@ descdist(groundbeef$serving, boot=1000)
 @
 %pourquoi boot=100 ne suffirait pas?
 
+% pourquoi changer ces parametres en cours de route?
 \setkeys{Gin}{width=0.5\textwidth}
 
 \begin{figure}[htb]
@@ -318,7 +323,7 @@ Having chosen good candidates for the distribution, we turn to the fit of distri
 \subsection{Fit of distributions by maximum likelihood estimation}
 \label{FIT}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Once selected, one or more parametric distributions $f(.\vert \theta)$ may be fitted to the dataset, 
+Once selected, one or more parametric distributions $f(.\vert \theta)$ may be fitted to the data set, 
 one at a time, using the \code{fitdist} function. 
 Under the i.i.d. sample assumption, distribution parameters $\theta$ are by default estimated by maximizing the
 likelihood defined as:
@@ -331,7 +336,7 @@ parametric distribution.
 The other proposed estimation methods are described in Section~\ref{Alternatives}. 
 
 The \code{fitdist} function returns the results of the fit of any parametric distribution 
-to a dataset as an S3 class object that may be easily printed, 
+to a data set as an S3 class object that may be easily printed, 
 summarized or plotted. 
 In order to be used in \code{fitdist}, a distribution \code{dist} must be defined by
 the \code{d}, \code{p}, \code{q} functions, standing respectively for the density, 
@@ -341,11 +346,10 @@ The name of the fitted distribution is specified in the first argument by its cl
 abbreviation \code{dist} used in the \code{d}, \code{p}, \code{q} functions, e.g. \code{"norm"}
 for the normal distribution. Numerical results returned by the \code{fitdist} function are 
 (1) the parameter estimates, (2) the estimated standard errors (computed from the estimate
-of the Hessian matrix at the maximum likelihood solution), (3) the correlation matrix
-between parameter estimates, (4) the loglikelihood, and (5) Akaike and Schwarz information criteria 
-(the so-called AIC and BIC).
+of the Hessian matrix at the maximum likelihood solution), (3) the loglikelihood, (4) Akaike and Schwarz information criteria (the so-called AIC and BIC), and (5) the correlation matrix
+between parameter estimates.
 Below is a call to the \code{fitdist} function to fit a Weibull distribution 
-to the serving size in the \code{groundbeef} dataset.
+to the serving size from the \code{groundbeef} data set.
 %%% R code
 <<fitgroundbeef.weibull, echo = TRUE, fig = FALSE>>=
 fw <- fitdist(groundbeef$serving, "weibull")
@@ -367,23 +371,21 @@ against the fitted distribution function (x-axis).
 Unlike \code{plot.fitdist}, the \code{denscomp}, \code{cdfcomp},
 \code{qqcomp} and \code{ppcomp} functions enable to separately plot each
 of these four plots, in order to compare the empirical and multiple theoretical distributions fitted
-on a same dataset. These functions must be called with a first argument 
+on a same data set. These functions must be called with a first argument 
 corresponding to a list of objects of class \code{fitdist}, and optionaly
 further arguments to customize the plot (see the reference 
 manual~\cite{fitdistrplus} for lists of arguments that may be changed
 for each plot). 
 In the following example, we compare the fit of
-a Weibull, a lognormal and a gamma distributions to \code{groundbeef} dataset (Figure~\ref{groundbeef:comp}).
+a Weibull, a lognormal and a gamma distributions to the \code{groundbeef} data set (Figure~\ref{groundbeef:comp}).
 %%% R code
 <<fitgroundbeef.echo, echo=TRUE, fig=FALSE>>=
 fg <- fitdist(groundbeef$serving,"gamma")
 fln <- fitdist(groundbeef$serving,"lnorm")
 par(mfrow=c(2, 2))
-denscomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"),
-  xlab="serving sizes (g)")
+denscomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
 qqcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
-cdfcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"),
-  xlab="serving sizes (g)")
+cdfcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
 ppcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
 @
 
@@ -393,15 +395,14 @@ ppcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
 fg <- fitdist(groundbeef$serving,"gamma")
 fln <- fitdist(groundbeef$serving,"lnorm")
 par(mfrow=c(2, 2))
-denscomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"),
-  xlab="serving sizes (g)")
+denscomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
 qqcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
 cdfcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
 ppcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
 @ 
   \caption{Four Goodness-of-fit plots for various distributions fitted on continuous data
   (Weibull, gamma and lognormal
-  distributions fitted to serving sizes from the \code{groundbeef} dataset)}
+  distributions fitted to serving sizes from the \code{groundbeef} data set)}
 \label{groundbeef:comp}  
 \end{figure}
 
@@ -414,18 +415,19 @@ the argument \code{a.ppoints} is passed to the \code{ppoints} function from the 
 probability points of the empirical distribution as \code{(1:n - a.ppoints)/(n - 2a.ppoints + 1)}. 
 When \code{use.ppoints = FALSE}, the probability points are simply defined as \code{1:n / n}.
 
-In addition to the density plot and the CDF plot, the most classical goodness-of-fits plots, the two other plots
+The density plot and the CDF plot are the most classical goodness-of-fits plots. The two other plots
 are complementary and can be very informative in some cases.
 The Q-Q plot emphasizes the lack-of-fit at the distribution tails while the P-P plot emphasizes
 the lack-of-fit at the distribution center.
 As an example in Figure~\ref{groundbeef:comp}, none of the three fitted distributions describes
 the center of the distribution rather better than the two others, but the Weibull and gamma distributions 
 should be prefered for their better description of the right tail of the empirical distribution, especially
-if the weight of this tail is important in the use of the fitted distribution.
+if the weight of this tail is important in the use of the fitted distribution, as it is in the context of
+food risk assessment.
 
 
-To illustrate other features of the \pkg{fitdistrplus} package, we  now use another
-data set named  \code{endosulfan}, which is included in our package. This dataset contains
+To illustrate other features of the \pkg{fitdistrplus} package, we will now use another
+data set named  \code{endosulfan}, which is included in our package. This data set contains
 acute toxicity values for the organochlorine pesticide endosulfan
 (geometric mean of LC50 ou EC50 values in $\mu g.L^{-1}$),
 tested on Australian and non-Australian laboratory-species 
@@ -441,13 +443,13 @@ to characterize the species sensitivity distribution (SSD) for a pollutant. A lo
 of the fitted distribution, generally the 5$\%$ percentile, is calculated and named the hazardous concentration 5$\%$ (HC5).
 It is interpreted as the value of the
 pollutant concentration protecting 95$\%$ of the species.
-But the fit of a lognormal or a loglogistic distribution to the whole \code{endosulfan} dataset is rather bad,
+But the fit of a lognormal or a loglogistic distribution to the whole \code{endosulfan} data set is rather bad,
 especially due to a minority of very high values. We can try to fit this data set by the Pareto distribution or the three-parameter Burr distribution which is an extension
 of both the loglogistic and the Pareto distribution. Pareto and Burr distributions
 are provided in package \pkg{actuar}. 
-Until here, we implicity define starting values (in the optimization process) 
-for distributions defined in \proglang{R} packages
-and for some few other distributions (see the help of \code{fitdist} for details).
+Until here, we did not have to implicity define starting values (in the optimization process)
+as reasonable starting values are defined within function \code{fitdist}
+for most of the distributions defined in \proglang{R} packages (see the help of \code{fitdist} for details).
 For other distributions like the Pareto and the Burr distribution, we have to supply initial 
 values for the distribution parameters in the argument \code{start} when using the maximum likelihood method.
 \code{start} must be a named list  with initial values for each parameter (as they appear in the \code{d},
@@ -457,7 +459,7 @@ in argument \code{para}. It can thus help to find correct initial values for
 the distribution parameters in non trivial cases, by iterative calls if necessary (see the reference 
 manual~\cite{fitdistrplus} for examples).
 }, we can fit various distributions and graphically
-compare their fits. On this example, the use of Functions \code{cdfcomp} and
+compare their fits. On this example, the use of functions \code{cdfcomp} and
 \code{qqcomp} is especially interesting to evaluate the goodness-of-fit on the tail of
 interest while defining an $HC5$ value.
 
@@ -487,7 +489,7 @@ qqcomp(list(fendo.ln,fendo.ll,fendo.P,fendo.B),xlogscale=TRUE,ylogscale=TRUE,
 @  
   \caption{CDF and Q-Q plots to compare the fit of four distributions to
   acute toxicity values of various organisms for the organochlorine pesticide endosulfan
-  (``endosulfan'' dataset)}
+  (\code{endosulfan} data set)}
 \label{endo:comp}  
 \end{figure}
 
@@ -496,10 +498,12 @@ describes the right tail observed in the data set.
 But  the left tail seems to be better described by the Burr distribution. Its use could then be considered
 to estimate the $HC5$ value as the $5\%$ quantile of the distribution. This can be 
 easily done using the \code{quantile} generic function defined for an object 
-of class \code{"fitdist"}. 
+of class \code{"fitdist"}. Below is this calculation together with the calculation of the 
+empirical quantile for comparison.
 %%% R code
 <<quantilefitdist, echo=TRUE, fig=FALSE>>=
-c(Burr=quantile(fendo.B, probs = 0.05), empirical=quantile(ATV, probs = 0.05))
+quantile(fendo.B, probs = 0.05)
+quantile(ATV, probs = 0.05)
 @
 
 % A ENLEVER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -507,7 +511,7 @@ c(Burr=quantile(fendo.B, probs = 0.05), empirical=quantile(ATV, probs = 0.05))
 % Keep only for the vignette
 %For a pedagogic purpose, here is a fit of a user-supplied distribution. 
 %We fit the Gumbel distribution 
-%(also named the extreme value distribution) on the \code{groundbeef} dataset.
+%(also named the extreme value distribution) on the \code{groundbeef} data set.
 %<<fitdanish1, echo=TRUE, fig=FALSE>>=
 %dgumbel<-function(x,a,b) 1/b*exp((a-x)/b)*exp(-exp((a-x)/b))
 %pgumbel<-function(q,a,b) exp(-exp((a-q)/b))
@@ -537,7 +541,7 @@ c(Burr=quantile(fendo.B, probs = 0.05), empirical=quantile(ATV, probs = 0.05))
 %plot(fw)
 %@
 %  \caption{Plot of the fit of a continuous distribution (a Weibull
-%  distribution fitted to serving sizes from the \code{groundbeef} dataset)}
+%  distribution fitted to serving sizes from the \code{groundbeef} data set)}
 %  \label{plotcontfit}
 %\end{figure}
 
@@ -551,7 +555,7 @@ c(Burr=quantile(fendo.B, probs = 0.05), empirical=quantile(ATV, probs = 0.05))
 %\label{compdens}}
 %  \caption{Comparison of density plots of various distributions fitted on continuous data
 %  (Weibull, gamma and lognormal
-%  distributions fitted to serving sizes from the ``ground beef'' dataset)}
+%  distributions fitted to serving sizes from the ``ground beef'' data set)}
 %  \label{compdens}
 %\end{figure}
 %
@@ -630,7 +634,7 @@ this statistics is often used to select the best distribution among those fitted
 Nevertheless, this statistics should be used cautiously when comparing fits of various distributions. 
 We must keep in mind that the weighting of each CDF quadratic difference 
 depends on the theoretical distribution in its definition, see Table \ref{tabKSCvMAD}.
-Anderson-Darling statistics computed for several distributions fitted on the same data set
+Anderson-Darling statistics computed for several distributions fitted on a same data set
 are thus theoretically difficult to compare. Moreover, such a statistic, as Cramer-von Mises and
 Kolmogorov-Smirnov ones, does not take into account the complexity of the model. It is not
 a problem when compared distributions are characterized by the same number of parameters, but
@@ -651,10 +655,10 @@ manual~\cite{fitdistrplus} for examples).
 %performed by assuming the distribution parameters known. The critical value defined by Stephens~\cite{Stephens86} 
 %for a completely specified distribution is used to reject or not the 
 %distribution at the significance level 0.05. Because of this approximation, the result of the test
-%(decision of rejection of the distribution or not) is returned only for datasets with more 
+%(decision of rejection of the distribution or not) is returned only for data sets with more 
 %than 30 observations. Note that this approximate test may be too conservative. 
 
-%For datasets with more than 5 observations and for continuous distributions for 
+%For data sets with more than 5 observations and for continuous distributions for 
 %which the test is described by Stephens~\cite{Stephens86} for maximum likelihood
 %estimations (exponential, Cauchy, gamma and Weibull),
 %the Cramer-von Mises and Anderson-darling tests are performed as described by Stephens~\cite{Stephens86}. 
@@ -673,13 +677,13 @@ manual~\cite{fitdistrplus} for examples).
 %test, the non reject of the null hypothesis dose not imply its acceptation. However, this
 %misinterpretation of p-values is very common and comes from the wrong assumption that
 %absence of evidence is evidence of absence ~\cite{Altman96}.
-%On the contrary, in some cases, especially on very big datasets, 
+%On the contrary, in some cases, especially on very big data sets, 
 %even if the null hypothesis is rejected, a fitted distribution may be 
 %chosen as the best one among simple distributions to describe an empirical distribution, if the goodness-of-fit
 %plots do not show strong differences between empirical and theoretical distributions.
 
 %Now let us look at the Chi-squared test results for the fit of a negative binomial distribution 
-%to ``toxocara'' dataset :
+%to ``toxocara'' data set :
 %<<echo=TRUE,fig=FALSE>>=
 %gofstat(fnb,print.test = TRUE)
 %@
@@ -693,7 +697,7 @@ manual~\cite{fitdistrplus} for examples).
 
 %From goodness-of-fit graphs, Chi-squared statistics, AIC and BIC values,
 %it seems better to choose the fit of a negative binomial distribution
-%for this dataset even it has one more parameter than the Poisson one. This was not obvious while
+%for this data set even it has one more parameter than the Poisson one. This was not obvious while
 %looking at the skewness-kurtosis graph. This graph must be used cautiously especially for continuous 
 %distributions far from the normal distribution or for discrete distributions. It is only indicative.
 
@@ -720,7 +724,7 @@ The plot of an object of class \code{"bootdist"}
 of the bootstrapped values of parameters providing
 a representation of the joint uncertainty distribution of the fitted parameters (see Figure~\ref{fig:bootstrap}).
 Below is an example of the use of the \code{bootdist} function with the previous fit of the Burr distribution to the
-\code{endosulfan} dataset. 
+\code{endosulfan} data set. 
 %%% R code
 <<fitBurr.boot.echo, echo=TRUE, fig=FALSE>>=
 bendo.B <- bootdist(fendo.B, niter=1001)
@@ -728,7 +732,7 @@ summary(bendo.B)
 plot(bendo.B)
 @
 
-%Then we fit the three-parameter distribution of Burr on \code{danishuni} dataset.
+%Then we fit the three-parameter distribution of Burr on \code{danishuni} data set.
 %As when fitting the Pareto type II distribution, we have to use a lower bound when
 %carrying out the optimization.
 %Otherwise \code{optim} do not converge.
@@ -760,7 +764,7 @@ plot(bendo.B)
 %@
 %}
   \caption{Bootstrappped values of parameters for a fit of the Burr distribution
-characterized by three parameters (example on the \code{endosulfan} dataset)}
+characterized by three parameters (example on the \code{endosulfan} data set)}
   \label{fig:bootstrap}
 \end{figure}
 
@@ -786,7 +790,7 @@ For this purpose, a generic \code{quantile} function is provided for class \code
 By default $95\%$ bootstrap confidence intervals of quantiles are provided.
 Going back to the previous example from ecotoxicolgy, this function can be used to 
 estimate the uncertainty associated to the HC5 estimation, for example from the previously fitted
-Burr distribution to the \code{endosulfan} dataset.
+Burr distribution to the \code{endosulfan} data set.
  %%% R code
 <<fitATV.lnorm.quantile, echo=TRUE>>=
 quantile(bendo.B, probs = 0.05)
@@ -861,12 +865,12 @@ to \code{"mge"} in the call to \code{fitdist} and to specify the argument \code{
 coding for the chosen goodness-of-fit distance. 
 % Character string coding for the eight 
 % proposed goodness-of-fit distances are given in Table~\ref{MGEdist}.
-This function is intended to be used only with continuous variables and distributions.
+This function is intended to be used only with continuous non-censored data.
 %It may be useful to fit distributions for which maximum likelihood does not provide
 %good estimations, such as the uniform distribution (\cite{Luceno06}).
 
 
-%Below an example of estimation on the \code{danishuni} dataset with the three classical 
+%Below an example of estimation on the \code{danishuni} data set with the three classical 
 %goodness-of-fit distances.
 %We compare the fitting methods with the distribution function.
 %%% R code
@@ -907,7 +911,7 @@ fit the empirical distribution especially on its left tail, one could
 consider the fit of the classical lognormal distribution, but minimizing a
 goodness-of-fit distance giving more weight to the left tail of the empirical distribution,
 so as to correctly estimate the 5$\%$ percentile. 
-In the following example of \code{endosulfan} dataset, we use left tail 
+In the following example of \code{endosulfan} data set, we use left tail 
 Anderson-Darling distances of first or second order
 (see Figure~\ref{plotfitMGE}).
 
@@ -921,10 +925,12 @@ legendtext = c("MLE",
 "Left-tail AD", "Left-tail AD 2nd order"),cex=0.7,
 xlegend = "bottomright")
 @
+
+
 \begin{figure}[htb!]
   \centering
   %%% R code
-<<mgegofcompplot, echo=FALSE, fig=TRUE, width=4, height=4, eps=FALSE>>=
+<<mgegofcompplot, echo=FALSE, fig=TRUE, width=6, height=6, eps=FALSE>>=
 cdfcomp(list(fendo.ln, fendo.ln.ADL, fendo.ln.AD2L),
 xlogscale = TRUE, main = "Fitting a lognormal distribution",
 legendtext = c("MLE",
@@ -932,7 +938,7 @@ legendtext = c("MLE",
 xlegend = "bottomright")
 @
   \caption{Comparison of a lognormal distribution fitted by MLE
-  and by MGE using  two different goodness-of-fit distances (example on the \code{endosulfan} dataset)}
+  and by MGE using  two different goodness-of-fit distances : left-tail Anderson-Darling and left-tail Anderson Darling of seond order (example on the \code{endosulfan} data set)}
   \label{plotfitMGE}
 \end{figure}
 
@@ -950,7 +956,7 @@ enables to approach the value obtained by fitting the Burr distribution by MLE.
 %@
 %%% R code
 <<quantilefitdist, echo=TRUE, fig=FALSE>>=
-( estimate <- cbind(empirical = as.numeric(quantile(ATV, probs = 0.05)),
+( HC5.estimates <- cbind(empirical = as.numeric(quantile(ATV, probs = 0.05)),
       Burr = as.numeric(quantile(fendo.B,probs = 0.05)$quantiles),
       lognormal_MLE = as.numeric(quantile(fendo.ln,probs = 0.05)$quantiles),
       lognormal_AD2 = as.numeric(quantile(fendo.ln.ADL,probs = 0.05)$quantiles),
@@ -960,15 +966,15 @@ enables to approach the value obtained by fitting the Burr distribution by MLE.
 %\subsubsection{Moment matching estimation}
 %\label{MME}
 %%%%%%%%%%
-Another method commonly used to fit parametric distribution is the moment matching estimation (MME)
-and consists in finding the value of the parameter $\theta$  that equalize the first theoretical 
+Another method commonly used to fit parametric distribution is the moment matching estimation (MME). 
+It consists in finding the value of the parameter $\theta$  that equalizes the first theoretical 
 raw moments of the parametric distribution  to the empirical moments (Equation~\ref{moments})
   \begin{equation}
     \label{moments}
     E(X^{k}|\theta)=\frac{1}{n}\sum_{i=1}^{n}x_{i}^{k} ,
   \end{equation}
 for $k=1,\ldots,p$, with $p$ the number of parameters to estimate and
- $x_{i}$ the $n$ observations of variable $x$.
+ $x_{i}$ the $n$ observations of variable $X$.
 For moments of order greater or equal than 2, it may  also be relevant to match centered moments as
 given by Equation (\ref{centmoments}).
   \begin{equation}
@@ -989,67 +995,109 @@ sum of squared differences between observed and theoretical moments (see the \pk
 manual~\cite{fitdistrplus}
 for technical details).
 
-To illustrate this method, we  use a classical dataset 
+To illustrate this method, we  use a classical data set 
 from the Danish insurance industry published in \cite{mcneil97}.
-In \pkg{fitdistrplus}, the dataset is stored in \code{danishuni} and \code{danishmulti} for the univariate and
-multivariate versions, respectively.
+In \pkg{fitdistrplus}, the data set is stored in \code{danishuni} for the univariate version.
+
+\mytodo{mettre deux mots sur les objectifs par rapport a ce type de jeu de donnees pour qu'on comprenne tes choix de lois, 
+notamment de la Pareto qui globalement decrit moins bien le jeu de donnees dans sa totalite que la lognormale (cf. un goftstat), mais decrit peut-être mieux la queue de distribution a droite. 
+Dire alors d'emblee qu'on va s'interesser plus a cette queue de distribution a droite et pourquoi}
+
 <<danish.data, echo=TRUE, fig=FALSE>>=
 data(danishuni)
 str(danishuni)
-data(danishmulti)
-str(danishmulti)
 @
-Our first example of fitting a lognormal distribution on \code{danish} dataset uses a closed-form formula.
-Comparing the two fitted distributions functions, we observe on Figure \ref{fig:danish:mme} 
+We can first fit a lognormal distribution on \code{danishuni} data set by matching moments using a closed-form formula.
+By comparison to the lognormal distribution fitted by maximum likelihood, we observe on the left part of Figure \ref{fig:danish:mme} 
 that the moment matching estimation is far more conservative than the maximum likelihood estimation
 (overestimate the right tail of the distribution)
+
+\mytodo{pour moi le terme conservative utilise ainsi n'est pas habituel. Est-ce classique
+en stat independamment du domaine d'application? Si non il faut le modifier ou l'expliquer mieux. Et je ne suis pas convaincue de comprendre quel ajustement tu preferes au final ici.
+Faudrait aussi a mon sens commentez les ajustements}
+
 %%% R code
 <<danish.mme, echo=TRUE, fig=FALSE>>=
-flndanishMLE <- fitdist(danishuni$Loss, "lnorm")
-flndanishMME <- fitdist(danishuni$Loss, "lnorm", method="mme", order=1:2)
-cdfcomp(list(flndanishMME, flndanishMLE), 
-        legend=c("MME", "MLE"), main="Fitting lognormal distribution",
+fdanish.ln.MLE <- fitdist(danishuni$Loss, "lnorm")
+fdanish.ln.MME <- fitdist(danishuni$Loss, "lnorm", method="mme", order=1:2)
+cdfcomp(list(fdanish.ln.MLE, fdanish.ln.MME), 
+        legend=c("lognormal MLE", "lognormal MME"), main="Fitting a lognormal distribution",
         xlogscale=TRUE, datapch="*")
 @
 
 
-\begin{figure}[htb!]
-  \centering
-  %%% R code
-<<danishmmeplot, echo=FALSE, fig=TRUE, width=4, height=4, eps=FALSE>>=
-cdfcomp(list(flndanishMME, flndanishMLE), 
-        legend=c("MME", "MLE"), main="Fitting a lognormal distribution",
-        xlogscale=TRUE, datapch="*")
-@
-\caption{Comparison between MME and MLE when fitting lognormal distribution on \code{danishuni}}
-\label{fig:danish:mme}
-\end{figure}
+In a second time we can fit a Pareto type II distribution.
 
+\mytodo{Explique pourquoi ce choix. Quel interet? Qu'en attends-tu?}
 
-Our second example is the fitting of a Pareto type II distribution.
 We use the implementation of the \pkg{actuar} package providing moments and limited expected value
 for that distribution (in addition to \code{d}, \code{p}, \code{q} and \code{r} functions,
 see \cite{actuar12}).
 Fitting a heavy-tailed distribution for which the first and the second moments do not exist for
 certain values of the shape parameter requires some cautiousness.
-This is carried out by providing a lower and an upper bounds for the optimization process.
+This is carried out by providing for the optimization process 
+a lower and an upper bound for each parameter.
 Our call below immediately calls the L-BFGS-B optimization method in \code{optim}, since this quasi-Newton
-allows box constraints\footnote{That's what the B stands for.}.
-We also observe that the fitting is relatively good when comparing empirical and fitted moments.
+allows box constraints\footnote{That is what the B stands for.}.
 Note that we have to pass a function for computing the empirical raw moment to \code{fitdist}, 
-since the use may choose either (\ref{moments}) and (\ref{centmoments}).
+since the user may choose either (\ref{moments}) and (\ref{centmoments}).
+
 <<danish.mme.pareto, echo=TRUE, fig=FALSE>>=
 library(actuar)
+fdanish.P.MLE <- fitdist(danishuni$Loss, "pareto",start=c(shape=10, scale=10), 
+      optim.method="L-BFGS-B",lower=2+1e-6, upper=Inf)
 memp <- function(x, order) ifelse(order == 1, mean(x), sum(x^order)/length(x))
-fparedanishMME <- fitdist(danishuni$Loss, "pareto", method="mme", order=1:2, 
-      memp="memp", start=c(shape=10, scale=10), lower=2+1e-6, upper=Inf)
-c(theo = mpareto(1, fparedanishMME$estimate[1], fparedanishMME$estimate[2]),
-emp = memp(danishuni$Loss, 1))  
-c(theo = mpareto(2, fparedanishMME$estimate[1], fparedanishMME$estimate[2]),
-emp = memp(danishuni$Loss, 2))
+fdanish.P.MME <- fitdist(danishuni$Loss, "pareto", method="mme", order=1:2, 
+      memp="memp", start=c(shape=10, scale=10), 
+      optim.method="L-BFGS-B",lower=c(2+1e-6,2+1e-6), upper=c(Inf,Inf))
+cdfcomp(list(fdanish.P.MLE, fdanish.P.MME), 
+        legend=c("Pareto MLE", "Pareto MME"), main="Fitting a Pareto distribution",
+        xlogscale=TRUE, datapch="*")
 @
 
-    
+\setkeys{Gin}{width=0.8\textwidth} %default
+
+\begin{figure}[htb!]
+  \centering
+  %%% R code
+<<danishmmeplot, echo=FALSE, fig=TRUE, width=7, height=3.5, eps=FALSE>>=
+par(mfrow=c(1, 2))
+cdfcomp(list(fdanish.ln.MLE, fdanish.ln.MME), 
+        legend=c("lognormal MLE", "lognormal MME"), main="Fitting a lognormal distribution",
+        xlogscale=TRUE, datapch="*")
+cdfcomp(list(fdanish.P.MLE, fdanish.P.MME), 
+        legend=c("Pareto MLE", "Pareto MME"), main="Fitting a Pareto distribution",
+        xlogscale=TRUE, datapch="*")
+@
+\caption{Comparison between MME and MLE when fitting a lognormal or a Pareto distribution to loss data from the \code{danishuni} data set}
+\label{fig:danish:mme}
+\end{figure}
+
+
+% Je ne vois pas l'interet de comparer les moments. 
+% S'ils n'etaient pas egaux cela voudrait dire que le methode ne marche pas
+% pas que l'ajustement est mauvais
+% c'est pouruqoi je propose de remplacer par une figure a cote de l'autre
+% et un commentaire a ajouter
+% c(theo = mpareto(1, fparedanishMME$estimate[1], fparedanishMME$estimate[2]),
+% emp = memp(danishuni$Loss, 1))  
+% c(theo = mpareto(2, fparedanishMME$estimate[1], fparedanishMME$estimate[2]),
+% emp = memp(danishuni$Loss, 2))
+
+\mytodo{Faudrait peut-etre conclure sur l'interet de la methode des moments. Ou 
+au contraire une remarque de prudence par rapport a cette methode qui est parfois 
+la seule utilisee dans certains logiciels. Enfin il faut conclure quelque chose
+en tout cas. Voici un essai ci-dessous mais tu as certainement d'autres choses a dire
+et/ou un autre point de vue}
+
+We can see on Figure \ref{fig:danish:mme} that matching moments and maximum likelihood fits
+are far less distant for the Pareto distribution than for the lognormal distribution on 
+this data set. Maximum likelihood and moment matching are certainly the most commonly used method for fitting distributions. But one should keep in mind that these two methods may give very different results. When choosing the matching moment method, the user should be aware 
+of its great sensitivity to outliers. This may be seen as an advantage in our example if the
+objective is to better describe the right tail of the distribution, but it may be seen as a
+drawback if the objective is different.
+
+  
 
 %\subsubsection{Quantile matching estimation}
 %\label{QME}
@@ -1078,33 +1126,35 @@ by minimizing the
 sum of squared differences between observed and theoretical quantiles.
 %%% R code
 <<danish.qme.echo, echo=TRUE, fig=FALSE>>=
-flndanishQME1 <- fitdist(danishuni$Loss, "lnorm", method="qme", probs=c(1/3, 2/3))
-flndanishQME2 <- fitdist(danishuni$Loss, "lnorm", method="qme", probs=c(3/4, 4/5))
-cdfcomp(list(flndanishQME1, flndanishQME2, flndanishMLE), 
-        legend=c("QME(1/3, 2/3)", "QME(3/4, 4/5)", "MLE"), main="Fitting a lognormal distribution",
+fdanish.ln.QME1 <- fitdist(danishuni$Loss, "lnorm", method="qme", probs=c(1/3, 2/3))
+fdanish.ln.QME2 <- fitdist(danishuni$Loss, "lnorm", method="qme", probs=c(3/4, 4/5))
+cdfcomp(list(fdanish.ln.MLE, fdanish.ln.QME1, fdanish.ln.QME2), 
+        legend=c("MLE", "QME(1/3, 2/3)", "QME(3/4, 4/5)"), main="Fitting a lognormal distribution",
         xlogscale=TRUE, datapch="*")
 @
-Above is an example of fitting of a lognormal distribution to \code{danishuni} dataset 
+Above is an example of fitting of a lognormal distribution to \code{danishuni} data set 
 by matching probabilities $(p_1= 1/3, p_2=2/3)$ and $(p_1= 3/4, p_2=4/5)$.
 As expected, the second QME fit is more conservative when looking at the tail of the distributions.
 Compared to the maximum likelihood estimation, the second QME fit is also more conservative, whereas
 the first QME fit is less conservative.
 The quantile matching estimation is of particular interest when we need a focus 
-around particular quantiles, e.g. $p=99.5\%$ in the Solvency II insurance context.
+around particular quantiles, e.g. $p=99.5\%$ in the Solvency II insurance context or
+$p=5\%$ for the HC5 estimation in the ecotoxicology context.
 
 
 
+\setkeys{Gin}{width=0.5\textwidth} %default
 
 
 \begin{figure}[htb!]
   \centering
   %%% R code
 <<danishqmeplot, echo=FALSE, fig=TRUE, width=4, height=4, eps=FALSE>>=
-cdfcomp(list(flndanishQME1, flndanishQME2, flndanishMLE), 
-        legend=c("QME(1/3, 2/3)", "QME(3/4, 4/5)", "MLE"), main="Fitting lognormal distribution",
-        xlogscale=TRUE, datapch=".")
+cdfcomp(list(fdanish.ln.MLE, fdanish.ln.QME1, fdanish.ln.QME2), 
+        legend=c("MLE", "QME(1/3, 2/3)", "QME(3/4, 4/5)"), main="Fitting a lognormal distribution",
+        xlogscale=TRUE, datapch="*")
 @
-\caption{Comparison between QME and MLE when fitting lognormal distribution on the \code{danishuni} dataset}
+\caption{Comparison between QME and MLE when fitting a lognormal distribution to loss data from the \code{danishuni} data set}
 \label{fig:danish:qme}
 \end{figure}
 
@@ -1117,24 +1167,28 @@ cdfcomp(list(flndanishQME1, flndanishQME2, flndanishMLE),
 Each time a numerical minimization (or maximization) is carried out using \code{fitdist}, 
 the \code{optim} function of the \pkg{stats} package  is used by default with the 
 \code{"Nelder-Mead"} method for distributions characterized by more than one parameter and
-the \code{"BFGS"} method for distributions characterized by only one parameter 
-Sometimes the default algorithm fails to converge. It may then
-be interesting to change some options of the \code{optim} function or to use another optimization
+the \code{"BFGS"} method for distributions characterized by only one parameter.
+Sometimes the default algorithm fails to converge. It is then
+interesting to change some options of the \code{optim} function or to use another optimization
 function than \code{optim} to maximize the likelihood or to minimize a squared difference.
+The argument \code{optim.method} can be used in the call to \code{fitdist} or
+\code{fitdistcens}. It will internally be passed to \code{mledist} and to \code{optim}
+(see the help page of \code{optim} from the package \pkg{stats} for details about the different
+algorithms available proposed by \code{optim}).
 
-The argument \code{optim.method} may be used in the call to \code{fitdist} or
-\code{fitdistcens}. It will internally be passed to \code{mledist} and to \code{optim}.
-This argument may be fixed to \code{"Nelder-Mead"} (the robust derivative-free Nelder and Mead method), 
-\code{"BFGS"} (the BFGS quasi-Newton method), \code{"CG"} (the conjugate gradient hessian-free method), 
-\code{"SANN"} (a variant of (stochastic) simulated annealing) or \code{"L-BFGS-B"} (a modification of the BFGS 
-quasi-Newton method which enables box constraints optimization and limited-memory usage). 
-For the use of the last method the 
-arguments \code{lower} and/or \code{upper} also have to be passed. More details on these optimization
-functions may be found in the help page of \code{optim} from the package \pkg{stats}.
+%This argument may be fixed to \code{"Nelder-Mead"} (the robust derivative-free Nelder and Mead method), 
+%\code{"BFGS"} (the BFGS quasi-Newton method), \code{"CG"} (the conjugate gradient hessian-free method), 
+%\code{"SANN"} (a variant of (stochastic) simulated annealing) or \code{"L-BFGS-B"} (a modification of the BFGS 
+%quasi-Newton method which enables box constraints optimization and limited-memory usage). 
+%For the use of the last method the 
+%arguments \code{lower} and/or \code{upper} also have to be passed. 
+%More details on these optimization
+%functions may be found in the help page of \code{optim} from the package \pkg{stats}.
 
 
-Here are examples of fits of a gamma distribution $\mathcal{G}(\alpha, \lambda)$ to 
-the \code{groundbeef} dataset with various algorithms. Note that the conjugate gradient algorithm needs far more 
+Below are examples of fits of a gamma distribution $\mathcal{G}(\alpha, \lambda)$ to 
+the \code{groundbeef} data set with various algorithms. Note that the conjugate gradient algorithm
+(\code{"CG"}) needs far more 
 iterations to converge (around 2500 iterations)
 compared to other algorithms (converging in less than 100 iterations).
 %%% R code
@@ -1149,10 +1203,9 @@ if(class(fCG) == "try-error")
 @
 
 
-You may also want to use another function than \code{optim} to maximize the likelihood.
-This optimization function has to be specified by the argument \code{custom.optim} 
-in the call to \code{fitdist} or
-\code{fitdistcens}. But before that, it may be necessary to customize this optimization function to meet
+It is also possible to use another function than \code{optim} to maximize the likelihood.
+This optimization function must be specified by the argument \code{custom.optim} 
+in the call to \code{fitdist}. But before that, it may be necessary to customize this optimization function to meet
 the following requirements. (1) \code{custom.optim} function must have (at least) the following arguments:
 \code{fn} for the function to be optimized and \code{par} for the initialized parameters. 
 (2) \code{custom.optim} should carry out a MINIMIZATION and must return
@@ -1172,15 +1225,15 @@ mygenoud <- function(fn, par, ...)
 }
 @
 
-The customized optimization function may then be passed as the argument \code{custom.optim} 
+The customized optimization function can then be passed as the argument \code{custom.optim} 
 in the call to \code{fitdist}
-or \code{fitdistcens}. The following code may for example be used to fit a gamma distribution to the
-\code{groundbeef} dataset. Note that in this example various arguments are also passed from \code{fitdist} 
+or \code{fitdistcens}. The following code can for example be used to fit a gamma distribution to the
+\code{groundbeef} data set. Note that in this example various arguments are also passed from \code{fitdist} 
 to \code{genoud} :
 \code{nvars}, \code{Domains}, \code{boundary.enforcement}, 
 \code{print.level} and \code{hessian}.
-The code below compare all the parameter estimates by the different algorithms:
-shape and rate parameters are relatively the same.
+The code below compares all the parameter estimates by the different algorithms:
+shape and rate parameters are relatively similar on this example.
 %%% R code
 <<optimmethod.customgenoud.fitdist, echo=TRUE, eval=TRUE>>=
 fgenoud <- mledist(groundbeef$serving, "gamma", custom.optim= mygenoud, nvars=2, 
@@ -1192,8 +1245,10 @@ SANN = fSANN$estimate,
 CG = fCG$estimate,
 fgenoud = fgenoud$estimate)
 @
-On the \code{groundbeef} dataset, we observe that algorithms provide reasonably the same value of
-parameter estimate $\hat\theta=(\hat\alpha, \hat\lambda)$.
+
+% redondant avec ce qui est ecrit precedemment
+%On the \code{groundbeef} data set, we observe that algorithms provide reasonably the same value of
+%parameter estimate $\hat\theta=(\hat\alpha, \hat\lambda)$.
 
 
 \subsection{Fitting distributions to other types of data}
@@ -1210,10 +1265,10 @@ A data set may thus contain right, left, or interval censored data, or may be a 
 of these categories, possibly with different upper and lower bounds.
 Censored data are sometimes excluded from the data analysis or replaced by a fixed value, which
 in both cases may lead to biased results. A more recommended approach to correctly model
-such data is based upon maximum likelihood (see e.g. \cite{kleinmoeschberger03,helsel05}). 
-We chose to use this approach in our package.
+such data is based upon maximum likelihood \cite{kleinmoeschberger03,helsel05}. 
+We chose this approach in our package.
 
-Censored data may thus contain left censored, right censored and interval censored values, 
+Censored data can thus contain left censored, right censored and interval censored values, 
 with several lower and upper bounds. Before using the \pkg{fitdistrplus} package,
 such data must be coded into a dataframe with two columns,
  respectively named \code{left} 
@@ -1232,7 +1287,7 @@ of riverine macro-invertebrates taxa from the southern Murray-Darling Basin in
 Central Victoria, Australia
 (see \cite{kefford07}). 
 
-%The \code{smokedfish} dataset, included in the package,
+%The \code{smokedfish} data set, included in the package,
 %corresponds to the observation of a continuous censored variable, 
 %the \emph{Listeria monocytogenes} microbial concentration, on a random
 %sample of smoked fish distributed on the Belgian market in the period
@@ -1262,12 +1317,29 @@ str(salinity)
 %\label{censored:graph}
 %%%%%%%%%%
 
-Using censored data such as those coded in the \code{salinity} dataset,
-the empirical distribution may be plotted using the \code{plotdistcens} function.
+Using censored data such as those coded in the \code{salinity} data set,
+the empirical distribution can be plotted using the \code{plotdistcens} function.
 By default, this function uses the Expectation-Maximization approach of Turnbull \cite{Turnbull74} to compute the overall
-empirical cdf curve with confidence intervals, by calls to \code{survfit}
-and \code{plot.survfit} functions from the \pkg{survival} package.
-Let us see such a plot for \code{salinity} dataset(Figure~\ref{plotdistcens}).
+empirical cdf curve with optional confidence intervals, by calls to \code{survfit}
+and \code{plot.survfit} functions from the \pkg{survival} package 
+(Figure~\ref{cdfcompcens} shows the Turnbull plot of data together with two fitted distributions). 
+A less rigorous
+but sometimes more illustrative plot to see the real nature of censored data can be 
+obtained by fixing the argument \code{Turnbull} to \code{FALSE} in the call to \code{plotdistcens}
+(see Figure~\ref{plotdistcens} for an example and the help page of Function
+\code{plotdistcens} for details).
+
+%%% R code
+%<<plotsalinity.echo, echo=TRUE, fig=FALSE>>=
+%plotdistcens(salinity)
+%@
+
+
+
+%%% R code
+<<plotsalinity2.echo, echo=TRUE, fig=FALSE>>=
+plotdistcens(salinity,Turnbull = FALSE)
+@
 
 % ------------------ previous method -----------------------------
 %Data are reported directly as segments for interval, left and right censored data, 
@@ -1285,11 +1357,7 @@ Let us see such a plot for \code{salinity} dataset(Figure~\ref{plotdistcens}).
 %with an y-value equal to r/n, r being the rank of each observation in the global ordering
 %previously described.
 
-% VIRER? non
-%%% R code
-<<plotsalinity.echo, echo=TRUE, fig=FALSE>>=
-plotdistcens(salinity)
-@
+
 
 
 \setkeys{Gin}{width=0.5\textwidth} %default
@@ -1297,11 +1365,12 @@ plotdistcens(salinity)
 \begin{figure}[htb!]
   \centering
   %%% R code
-<<plotsmokedfishplot, echo=FALSE, fig=TRUE, width=4, height=4, eps=FALSE, result=hide>>=
-plotdistcens(salinity)
+<<plotsalinity, echo=FALSE, fig=TRUE, width=4, height=4, eps=FALSE, result=hide>>=
+plotdistcens(salinity,Turnbull = FALSE)
 @
-  \caption{CDF plot of censored data (72-hour acute salinity tolerance of riverine macro-invertebrates from 
-   the \code{salinity} dataset)}
+  \caption{Simple plot of censored data (72-hour acute salinity tolerance of riverine macro-invertebrates from 
+   the \code{salinity} data set) as ordered points 
+   and intervals}
   \label{plotdistcens}
 \end{figure}
 
@@ -1313,7 +1382,7 @@ plotdistcens(salinity)
 %%%%%%%%%%
 
 As for non censored data, one or more parametric distributions can
-be fitted to the censored dataset, one at a time, but using in this case
+be fitted to the censored data set, one at a time, but using in this case
 the \code{fitdistcens} function. This function estimates the vector of distribution parameters $\theta$
 by maximizing the likelihood for censored data defined as:
   \begin{equation}
@@ -1330,9 +1399,9 @@ $[x^{lower}_{m} ; x^{upper}_{m}]$ the intervals defining the $N_{intC}$ interval
 and F the cumulative distribution function of the parametric distribution.
 
 As \code{fitdist}, \code{fitdistcens} returns the results of the fit of any parametric distribution
-to a dataset as an S3 class object that may be easily printed,
+to a data set as an S3 class object that can be easily printed,
 summarized or plotted.
-For the \code{salinity} dataset, a lognormal distribution or a loglogistic can be fitted 
+For the \code{salinity} data set, a lognormal distribution or a loglogistic can be fitted 
 as commonly done in ecotoxicology for such data. 
 As with \code{fitdist}, for some distributions (see \cite{fitdistrplus} for details), 
 it is necessary to specify initial 
@@ -1350,16 +1419,19 @@ summary(fsal.ll)
 Computations of goodness-of-fit statistics have not yet been 
 developed for fits using censored data but the quality of fit 
 can be judged using Akaike and Schwarz information criteria (AIC and BIC) and the goodness-of-fit CDF plot, 
-respectively provided when summarizing or printing an object of class \code{"fitdistcens"}. 
+respectively provided when summarizing or plotting an object of class \code{"fitdistcens"}. 
 Function \code{cdfcompcens} can also be used to compare the fit of various
-distributions to the same censored dataset. Its call is similar to the one of \code{cdfcomp}. Below is
-an example of comparison of the two fitted distributions to the \code{salinity} dataset (see Figure~\ref{cdfcompcens}).
+distributions to the same censored data set. Its call is similar to the one of \code{cdfcomp}. Below is
+an example of comparison of the two fitted distributions to the \code{salinity} data set (see Figure~\ref{cdfcompcens}).
 
 %%% R code
 <<fitsalinity.cdfcomp.echo, echo=TRUE, fig=FALSE, eval=FALSE>>=
 cdfcompcens(list(fsal.ln, fsal.ll),
     legendtext=c("lognormal", "loglogistic "))
 @
+
+
+\setkeys{Gin}{width=0.5\textwidth} %default
 \begin{figure}[htb!]
   \centering
   %%% R code
@@ -1367,13 +1439,17 @@ cdfcompcens(list(fsal.ln, fsal.ll),
 cdfcompcens(list(fsal.ln, fsal.ll),
     legendtext=c("lognormal", "loglogistic "))
 @
-  \caption{Goodness-of-fit CDF plot for fits of continuous distributions
-  to censored data (Comparison of lognormal and loglogistic distributions fitted to LC50 values from 
-   the \code{salinity} dataset)}
+  \caption{Goodness-of-fit CDF plot for fits of a lognormal and a loglogistic distribution
+  to censored data: LC50 values from 
+   the \code{salinity} data set}
   \label{cdfcompcens}
 \end{figure}
 
-
+Function \code{bootdistcens} is the equivalent of \code{bootdist} for censored data, except that it 
+only proposes nonparametric bootstrap, as it is not obvious to simulate censoring within a parametric 
+bootstrap resampling procedure. The generic function \code{quantile} can also be applied, as for 
+continuous non-censored data,
+to an object of class \code{"fitdistcens"} or \code{"bootdistcens"}.
 
 %<<echo=TRUE, fig=FALSE>>=
 %plot(flog10C)
@@ -1385,16 +1461,22 @@ cdfcompcens(list(fsal.ln, fsal.ll),
 %@
 %  \caption{Goodness-of-fit CDF plot for a fit of a continuous distribution
 %  on censored data (a lognormal distribution fitted to microbial counts from 
-%   the ``smoked fish'' dataset)}
+%   the ``smoked fish'' data set)}
 %  \label{plotfitdistcens}
 %\end{figure}
 
 
 In addition to the fit of distributions to censored or non censored continuous data, our package
-can also accomodate discrete variables, such as count numbers. Specific distributions such as 
-the Poisson distribution or the negative binomial distribution can be fitted with the same functions
-used for continuous non-censored data. These functions will provide somewhat different graphs
+can also accomodate discrete variables, such as count numbers, using the functions 
+developped for continuous non-censored data. 
+%Specific distributions such as 
+%the Poisson distribution or the negative binomial distribution can be fitted with the same functions
+%used for continuous non-censored data. 
+These functions will provide somewhat different graphs
 and statistics, taking into account the discrete type of the modeled variable.
+The discrete nature of the variable is automatically recognized when a classical distribution is fitted to data
+(binomial, negative binomial, geometric, hypergeometric and Poisson distributions) but must 
+be indicated by fixing argument \code{discrete} to \code{TRUE} in the call to functions in other cases.
 The \code{toxocara} data set included in the package corresponds to the observation of such a discrete variable. 
 It reports numbers of \emph{Toxocara cati} parasites present in digestive tract,
 from a random sampling of feral cats living on Kerguelen island (\cite{Fromont01}). We  use it 
@@ -1405,7 +1487,7 @@ data(toxocara)
 str(toxocara)
 @
 
-%In some cases a discrete variable may be plotted as a continuous one, for example for a large dataset
+%In some cases a discrete variable may be plotted as a continuous one, for example for a large data set
 %from a binomial distribution converging to a normal one, but
 %The \code{plotdist} function also proposes specific plots in density and in cdf
 %for discrete variables (Figure~\ref{plotdistdisc}):
@@ -1420,23 +1502,24 @@ str(toxocara)
 %plotdist(toxocara$number, discrete = TRUE)
 %@
 %  \caption{Density and cdf plots of an empirical distribution for a discrete variable
-%  (number of \emph{Toxocara cati} parasites from the \code{toxocara} dataset)}
+%  (number of \emph{Toxocara cati} parasites from the \code{toxocara} data set)}
 %  \label{plotdistdisc}
 %\end{figure}
 
-As for continuous non-censored data (see Section~\ref{fitnoncenscont})
-the \code{descdist} function can be used, but with the argument \code{discrete}
-fixed to \code{TRUE}. This function will especially 
-compute skewness and kurtosis values, and plot them in a skewness-kurtosis plot 
- with skewness and kurtosis values or set of values of 
-Poisson and negative binomial
+% FAUT-IL LE METTRE ???????????????????????
+%As for continuous non-censored data (see Section~\ref{fitnoncenscont})
+%the \code{descdist} function can be used, but with the argument \code{discrete}
+%fixed to \code{TRUE}. This function will especially 
+%compute skewness and kurtosis values, and plot them in a skewness-kurtosis plot 
+% with skewness and kurtosis values or set of values of 
+%Poisson and negative binomial
 %(Figure~\ref{Cullenplotdisc}), 
-together with values for the
-normal distribution, to which discrete distributions may converge. 
+%together with values for the
+%normal distribution, to which discrete distributions may converge. 
 
 %Looking at the skewness-kurtosis plot (Figure~\ref{Cullenplotdisc}) obtained
 %for the number of \emph{Toxocara cati} parasites from 
-%the ``Toxacara'' dataset, one could try the fit of Poisson and negative-binomial %distributions.
+%the ``Toxacara'' data set, one could try the fit of Poisson and negative-binomial %distributions.
 
 %<<echo=TRUE, fig=FALSE>>=
 %descdist(toxocara$number,discrete = TRUE,boot=1000)
@@ -1447,7 +1530,7 @@ normal distribution, to which discrete distributions may converge.
 %descdist(toxocara$number,discrete = TRUE,boot=1000)
 %@
 %  \caption{Skewness-kurtosis plot for a discrete variable
-%  (number of \emph{Toxocara cati} parasites from the ``Toxocara'' dataset)}
+%  (number of \emph{Toxocara cati} parasites from the ``Toxocara'' data set)}
 %  \label{Cullenplotdisc}
 %\end{figure}
 
@@ -1455,7 +1538,7 @@ normal distribution, to which discrete distributions may converge.
 The fit of a discrete distribution to discrete data by maximum
 likelihood estimation requires the same procedure as for continuous non-censored data. 
 As an example, 
-using the \code{toxocara} dataset, Poisson and
+using the \code{toxocara} data set, Poisson and
 negative distributions can be easily fitted.
 %%% R code
 <<fittoxocara.poisnbinom, echo = TRUE, fig = FALSE>>=
@@ -1470,45 +1553,49 @@ to the same data set, as follows for the previous fits (Figure~\ref{plotdiscfit}
 <<fittoxocara.pois.echo, echo=TRUE, fig=FALSE>>=
 plot(ftoxo.P)
 @
+
+\setkeys{Gin}{width=0.8\textwidth} %default
+
 \begin{figure}[htb]
   \centering
 <<fittoxocarapois, echo=FALSE, results=hide, fig=TRUE, width=10, height=5, eps=FALSE>>=
 plot(ftoxo.P)
 @
   \caption{Plot of the fit of a discrete distribution (Poisson distribution
-  fitted to numbers of \emph{Toxocara cati} parasites from the \code{toxocara} dataset)}
+  fitted to numbers of \emph{Toxocara cati} parasites from the \code{toxocara} data set)}
   \label{plotdiscfitP}
 \end{figure}
-
-
 
 
 <<fittoxocara.poisnbinom.echo, echo=TRUE, fig=FALSE>>=
 cdfcomp(list(ftoxo.P,ftoxo.nb),legendtext=c("Poisson", "negative binomial"))
 @
+
+\setkeys{Gin}{width=0.5\textwidth} %default
+
 \begin{figure}[htb]
   \centering
 <<fittoxocarapoisnbinomplot, echo=FALSE, results=hide, fig=TRUE, width=4, height=4, eps=FALSE>>=
 cdfcomp(list(ftoxo.P,ftoxo.nb),legendtext=c("Poisson", "negative binomial"))
 @
-  \caption{Plot of the fit of a discrete distribution (a negative binomial distribution
-  fitted to numbers of \emph{Toxocara cati} parasites from the \code{toxocara} dataset)}
+  \caption{Comparison of the fits of a negative binomial and a Poisson distribution
+   to numbers of \emph{Toxocara cati} parasites from the \code{toxocara} data set)}
   \label{plotdiscfit}
 \end{figure}
 
 
 When fitting discrete distributions, the Chi-squared statistic is computed by 
-Function \code{gofstat} using cells defined 
+the \code{gofstat} function using cells defined 
 by the argument \code{chisqbreaks} or cells automatically defined from the data in order 
 to reach roughly the same number of observations per cell, roughly equal to the argument
 \code{meancount}, or sligthly more if there are some ties. 
-The choice to define cells from the empirical distribution (data) and not from the
-theoretical distribution was done to enable the comparison of Chi-squared values obtained
-with different distributions fitted on a same dataset.
+The choice to define cells from the empirical distribution (data), and not from the
+theoretical distribution, was done to enable the comparison of Chi-squared values obtained
+with different distributions fitted on a same data set.
 If arguments \code{chisqbreaks} and \code{meancount} 
 are both omitted, \code{meancount} is fixed in order to obtain roughly $(4n)^{2/5}$ cells, 
-with $n$ the length of the dataset~\cite{Vose10}. Using this default option with 
-the fits of the Poisson and the negative binomial distribution to \code{toxocara} dataset 
+with $n$ the length of the data set~\cite{Vose10}. Using this default option with 
+the fits of the Poisson and the negative binomial distribution to \code{toxocara} data set 
 are compared as follows, 
 giving the preference
 to the negative binomial distribution, from both Chi-squared statistics and information criteria:
@@ -1531,7 +1618,7 @@ gofstat(list(ftoxo.P,ftoxo.nb))
 %%%%%%%%%%
 
 In this paper, we present the \proglang{R} statistical package \pkg{fitdistrplus} for distribution fitting and demonstrate its use and usefulness. 
-This package is already used a lot by practionners and academics for simple MLE fits in \cite{kohlruckdeschel10,jaloustreetal11,saketal11,wilson12,kochetal12,marquetouxetal12,nordan12,
+This package is already used a lot by practionners and academics for simple MLE fits in \cite{distrModJSS,jaloustreetal11,saketal11,wilson12,kochetal12,marquetouxetal12,nordan12,
 scholletal12,suuronenetal12,varoetal12,mandletal13}, for MLE fits and goodness-of-fit statistics in \cite{garcia12,tarnczi11,bagariaetal12,benavidesetal12,breitbach12,poduje12,pouillotetal10}, for MLE fits and bootstrap in  \cite{croucheretal12,meheustetal12,orellanoetal12,telloetal12,hoelzeretal12}, for MLE fits, bootstrap and goodness-of-fit statistics in \cite{rebuge12}, for MME fit in \cite{luangkesornetal12}, for censored MLE and bootstrap in \cite{lehaetal11,poulliotetal12,jongenburgeretal12,commeauetal12,pouillotetal11}, for graphic analysing in \cite{anandetal12,rosa12}, for grouped-data fitting methods in  \cite{fusteinercostafreda12} and more generally in  \cite{eling12,busschaertetal10,brooksetal11,aktassjostrand11,eikhermann12,bakos11}.
 Many extensions of this package are planned in the future: multivariate distribution fitting, extensions of advanced fitting methods for censored data, possibility to specify new types of moments (e.g. limited expected values) for MME.
 In future versions of our package, we plan to implement other estimation methods for censored-data, support of truncated data, and  multivariate distribution fitting.
