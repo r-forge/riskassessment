@@ -936,10 +936,6 @@ a special focus on the right-tail of the distribution.
 In this numerical experiment, we consider first the lognormal distribution and then the Pareto type II distribution, 
 see e.g. \cite{Klugmanetal09}.
 
-\mytodo{mettre deux mots sur les objectifs par rapport a ce type de jeu de donnees pour qu'on comprenne tes choix de lois, 
-notamment de la Pareto qui globalement decrit moins bien le jeu de donnees dans sa totalite que la lognormale (cf. un goftstat), mais decrit peut-?tre mieux la queue de distribution a droite. 
-Dire alors d'emblee qu'on va s'interesser plus a cette queue de distribution a droite et pourquoi}
-
 <<danish.data, echo=TRUE, fig=FALSE>>=
 data(danishuni)
 str(danishuni)
