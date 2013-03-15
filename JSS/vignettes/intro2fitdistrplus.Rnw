@@ -320,7 +320,8 @@ Having chosen good candidates for the distribution, we turn to the fit of distri
 \subsection{Fit of distributions by maximum likelihood estimation}
 \label{FIT}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Once selected, one or more parametric distributions $f(.\vert \theta)$ may be fitted to the data set, 
+Once selected, one or more parametric distributions $f(.\vert \theta)$ 
+(with parameter $\theta\in\mathbb{R}^d$) may be fitted to the data set, 
 one at a time, using the \code{fitdist} function. 
 Under the i.i.d. sample assumption, distribution parameters $\theta$ are by default estimated by maximizing the
 likelihood defined as:
@@ -904,7 +905,7 @@ raw moments of the parametric distribution  to the empirical moments (Equation~\
     \label{moments}
     E(X^{k}|\theta)=\frac{1}{n}\sum_{i=1}^{n}x_{i}^{k} ,
   \end{equation}
-for $k=1,\ldots,p$, with $p$ the number of parameters to estimate and
+for $k=1,\ldots,d$, with $d$ the number of parameters to estimate and
  $x_{i}$ the $n$ observations of variable $X$.
 For moments of order greater or equal than 2, it may  also be relevant to match centered moments as
 given by Equation (\ref{centmoments}).
@@ -928,10 +929,15 @@ for technical details).
 
 To illustrate this method, we  use a classical data set 
 from the Danish insurance industry published in \cite{mcneil97}.
-In \pkg{fitdistrplus}, the data set is stored in \code{danishuni} for the univariate version.
+In \pkg{fitdistrplus}, the data set is stored in \code{danishuni} for the univariate version and contains
+the losse amounts collected at Copenhagen Reinsurance between 1980 and 1990.
+In actuarial science, it is standard to consider positive heavy-tailed distribution and have 
+a special focus on the right-tail of the distribution.
+In this numerical experiment, we consider first the lognormal distribution and then the Pareto type II distribution, 
+see e.g. \cite{Klugmanetal09}.
 
 \mytodo{mettre deux mots sur les objectifs par rapport a ce type de jeu de donnees pour qu'on comprenne tes choix de lois, 
-notamment de la Pareto qui globalement decrit moins bien le jeu de donnees dans sa totalite que la lognormale (cf. un goftstat), mais decrit peut-être mieux la queue de distribution a droite. 
+notamment de la Pareto qui globalement decrit moins bien le jeu de donnees dans sa totalite que la lognormale (cf. un goftstat), mais decrit peut-?tre mieux la queue de distribution a droite. 
 Dire alors d'emblee qu'on va s'interesser plus a cette queue de distribution a droite et pourquoi}
 
 <<danish.data, echo=TRUE, fig=FALSE>>=
@@ -939,13 +945,11 @@ data(danishuni)
 str(danishuni)
 @
 We can first fit a lognormal distribution on \code{danishuni} data set by matching moments using a closed-form formula.
-By comparison to the lognormal distribution fitted by maximum likelihood, we observe on the left part of Figure \ref{fig:danish:mme} 
-that the moment matching estimation is far more conservative than the maximum likelihood estimation
-(overestimate the right tail of the distribution)
-
-\mytodo{pour moi le terme conservative utilise ainsi n'est pas habituel. Est-ce classique
-en stat independamment du domaine d'application? Si non il faut le modifier ou l'expliquer mieux. Et je ne suis pas convaincue de comprendre quel ajustement tu preferes au final ici.
-Faudrait aussi a mon sens commentez les ajustements}
+On the left-hand graph of Figure \ref{fig:danish:mme}, we compare the fitted distribution function between
+ MME and MLE method.
+We observe that the moment matching estimation provides a more cautious of the insurance risk 
+as the MME-fitted distribution function (resp. MLE-fitted) underestimates (overestimates) 
+the empirical distribution function for large values of claim amounts.
 
 %%% R code
 <<danish.mme, echo=TRUE, fig=FALSE>>=
@@ -953,15 +957,18 @@ fdanish.ln.MLE <- fitdist(danishuni$Loss, "lnorm")
 fdanish.ln.MME <- fitdist(danishuni$Loss, "lnorm", method="mme", order=1:2)
 cdfcomp(list(fdanish.ln.MLE, fdanish.ln.MME), 
         legend=c("lognormal MLE", "lognormal MME"), main="Fitting a lognormal distribution",
-        xlogscale=TRUE, datapch="*")
+        xlogscale=TRUE, datapch=".")
 @
 
 
-In a second time we can fit a Pareto type II distribution.
+In a second time, we choose to fit a Pareto type-II distribution, which gives more weight to 
+the right-tail of the distribution.
+As the lognormal distribution, the Pareto type-II has two parameters, which
+allows a fair comparison.
+The Burr distribution (with its three parameters) would lead to a better fit.
 
-\mytodo{Explique pourquoi ce choix. Quel interet? Qu'en attends-tu?}
 
-We use the implementation of the \pkg{actuar} package providing moments and limited expected value
+We use the implementation of the \pkg{actuar} package providing raw and centered moments
 for that distribution (in addition to \code{d}, \code{p}, \code{q} and \code{r} functions,
 see \cite{actuar12}).
 Fitting a heavy-tailed distribution for which the first and the second moments do not exist for
@@ -970,20 +977,21 @@ This is carried out by providing for the optimization process
 a lower and an upper bound for each parameter.
 Our call below immediately calls the L-BFGS-B optimization method in \code{optim}, since this quasi-Newton
 allows box constraints\footnote{That is what the B stands for.}.
-Note that we have to pass a function for computing the empirical raw moment to \code{fitdist}, 
-since the user may choose either (\ref{moments}) and (\ref{centmoments}).
+Note that we have to pass a function (called \code{memp} in our example) 
+for computing the empirical raw moment to \code{fitdist}, 
+since the user may choose either Equation (\ref{moments}) or (\ref{centmoments}).
 
 <<danish.mme.pareto, echo=TRUE, fig=FALSE>>=
 library(actuar)
 fdanish.P.MLE <- fitdist(danishuni$Loss, "pareto",start=c(shape=10, scale=10), 
-      optim.method="L-BFGS-B",lower=2+1e-6, upper=Inf)
+      lower=2+1e-6, upper=Inf)
 memp <- function(x, order) ifelse(order == 1, mean(x), sum(x^order)/length(x))
 fdanish.P.MME <- fitdist(danishuni$Loss, "pareto", method="mme", order=1:2, 
-      memp="memp", start=c(shape=10, scale=10), 
-      optim.method="L-BFGS-B",lower=c(2+1e-6,2+1e-6), upper=c(Inf,Inf))
+      memp="memp", start=c(shape=10, scale=10), lower=c(2+1e-6,2+1e-6), upper=c(Inf,Inf))
 cdfcomp(list(fdanish.P.MLE, fdanish.P.MME), 
         legend=c("Pareto MLE", "Pareto MME"), main="Fitting a Pareto distribution",
-        xlogscale=TRUE, datapch="*")
+        xlogscale=TRUE, datapch=".")
+gofstat(list(fdanish.ln.MLE, fdanish.P.MLE, fdanish.ln.MME, fdanish.P.MME))
 @
 
 \setkeys{Gin}{width=0.8\textwidth} %default
@@ -995,24 +1003,28 @@ cdfcomp(list(fdanish.P.MLE, fdanish.P.MME),
 par(mfrow=c(1, 2))
 cdfcomp(list(fdanish.ln.MLE, fdanish.ln.MME), 
         legend=c("lognormal MLE", "lognormal MME"), main="Fitting a lognormal distribution",
-        xlogscale=TRUE, datapch="*")
+        xlogscale=TRUE, datapch=".")
 cdfcomp(list(fdanish.P.MLE, fdanish.P.MME), 
         legend=c("Pareto MLE", "Pareto MME"), main="Fitting a Pareto distribution",
-        xlogscale=TRUE, datapch="*")
+        xlogscale=TRUE, datapch=".")
 @
 \caption{Comparison between MME and MLE when fitting a lognormal or a Pareto distribution to loss data from the \code{danishuni} data set}
 \label{fig:danish:mme}
 \end{figure}
 
-\mytodo{Faudrait peut-etre conclure sur l'interet de la methode des moments. Ou 
-au contraire une remarque de prudence par rapport a cette methode qui est parfois 
-la seule utilisee dans certains logiciels. Enfin il faut conclure quelque chose
-en tout cas. Voici un essai ci-dessous mais tu as certainement d'autres choses a dire
-et/ou un autre point de vue}
-
 We can see on Figure \ref{fig:danish:mme} that matching moments and maximum likelihood fits
-are far less distant for the Pareto distribution than for the lognormal distribution on 
-this data set. Maximum likelihood and moment matching are certainly the most commonly used method for fitting distributions. But one should keep in mind that these two methods may give very different results. When choosing the matching moment method, the user should be aware 
+are far less distant (when looking at the right-tail) for the Pareto distribution than for the lognormal distribution on 
+this data set. 
+Furthermore for these two distributions, the MME method better fits the
+right-tail of the distribution, which seems logical since empirical moments 
+are influenced by large observed values.
+In the previous traces, we give the values of goodness-of-fit statistics.
+Whatever the statistic considered, the MLE-fitted lognormal always provides the best fit 
+to the observed data.
+
+Maximum likelihood and moment matching (the default on many softwares) estimations are certainly the most commonly 
+used method for fitting distributions. But one should keep in mind that these two 
+methods may give very different results. When choosing the matching moment method, the user should be aware 
 of its great sensitivity to outliers. This may be seen as an advantage in our example if the
 objective is to better describe the right tail of the distribution, but it may be seen as a
 drawback if the objective is different.
@@ -1074,17 +1086,18 @@ of the parametric distributions (for specified probabilities) against the empiri
 Equation (\ref{quantiles}) below is thus very similar to Equations (\ref{moments}) and (\ref{centmoments})
   \begin{equation}
     \label{quantiles}
-    F^{-1}(p^{k}|\theta)=Q_{n,p_{k}} 
+    F^{-1}(p_{k}|\theta)=Q_{n,p_{k}} 
   \end{equation}
-for $k=1,\ldots,p$, with $p$ the number of parameters to estimate (dimension of $\theta$ if there is
+for $k=1,\ldots,d$, with $d$ the number of parameters to estimate (dimension of $\theta$ if there is
 no fixed parameters) and
  $Q_{n,p_{k}}$ the empirical quantiles calculated from data for specified probabilities $p_{k}$.
 
-Quantile matching is performed by setting the argument \code{method}
+Quantile matching estimation is performed by setting the argument \code{method}
 to \code{"qme"} in the call to \code{fitdist} and adding an argument \code{probs}
 defining the probabilities for which the quantile matching is performed.
 The length of this vector must be equal
-to the number of parameters to estimate. Empirical quantiles are computed using the
+to the number of parameters to estimate (as the vector of moment orders for MME).
+Empirical quantiles are computed using the
 \code{quantile} function of the \pkg{stats} package using the \texttt{type} 
 argument  equal to 7 by default, but the type of quantile
 can be easily changed by using the \texttt{qty} argument in the call to the \texttt{qme} function.   
@@ -1094,14 +1107,15 @@ sum of squared differences between observed and theoretical quantiles.
 %%% R code
 <<danish.qme.echo, echo=TRUE, fig=FALSE>>=
 fdanish.ln.QME1 <- fitdist(danishuni$Loss, "lnorm", method="qme", probs=c(1/3, 2/3))
-fdanish.ln.QME2 <- fitdist(danishuni$Loss, "lnorm", method="qme", probs=c(3/4, 4/5))
+fdanish.ln.QME2 <- fitdist(danishuni$Loss, "lnorm", method="qme", probs=c(8/10, 9/10))
 cdfcomp(list(fdanish.ln.MLE, fdanish.ln.QME1, fdanish.ln.QME2), 
-        legend=c("MLE", "QME(1/3, 2/3)", "QME(3/4, 4/5)"), main="Fitting a lognormal distribution",
-        xlogscale=TRUE, datapch="*")
+        legend=c("MLE", "QME(1/3, 2/3)", "QME(8/10, 9/10)"), 
+        main="Fitting a lognormal distribution", xlogscale=TRUE, datapch=".")
 @
 Above is an example of fitting of a lognormal distribution to \code{danishuni} data set 
-by matching probabilities $(p_1= 1/3, p_2=2/3)$ and $(p_1= 3/4, p_2=4/5)$.
-As expected, the second QME fit is more conservative when looking at the tail of the distributions.
+by matching probabilities $(p_1= 1/3, p_2=2/3)$ and $(p_1= 8/10, p_2=9/10)$.
+As expected, the second QME fit gives more weight to the right-tail of the distribution, despite
+we do not choose the Pareto type-II distribution.
 Compared to the maximum likelihood estimation, the second QME fit is also more conservative, whereas
 the first QME fit is less conservative.
 The quantile matching estimation is of particular interest when we need a focus 
@@ -1118,8 +1132,8 @@ $p=5\%$ for the HC5 estimation in the ecotoxicology context.
   %%% R code
 <<danishqmeplot, echo=FALSE, fig=TRUE, width=4, height=4, eps=FALSE>>=
 cdfcomp(list(fdanish.ln.MLE, fdanish.ln.QME1, fdanish.ln.QME2), 
-        legend=c("MLE", "QME(1/3, 2/3)", "QME(3/4, 4/5)"), main="Fitting a lognormal distribution",
-        xlogscale=TRUE, datapch="*")
+        legend=c("MLE", "QME(1/3, 2/3)", "QME(8/10, 9/10)"), main="Fitting a lognormal distribution",
+        xlogscale=TRUE, datapch=".")
 @
 \caption{Comparison between QME and MLE when fitting a lognormal distribution to loss data from the \code{danishuni} data set}
 \label{fig:danish:qme}
@@ -1200,8 +1214,9 @@ or \code{fitdistcens}. The following code can for example be used to fit a gamma
 to \code{genoud} :
 \code{nvars}, \code{Domains}, \code{boundary.enforcement}, 
 \code{print.level} and \code{hessian}.
-The code below compares all the parameter estimates by the different algorithms:
-shape and rate parameters are relatively similar on this example.
+The code below compares all the parameter estimates ($\hat\alpha$, $\hat\lambda$) by the different algorithms:
+shape $\alpha$ and rate $\lambda$ parameters are relatively similar on this 
+example, roughly 4.00 and 0.05, respectively.
 %%% R code
 <<optimmethod.customgenoud.fitdist, echo=TRUE, eval=TRUE>>=
 fgenoud <- mledist(groundbeef$serving, "gamma", custom.optim= mygenoud, nvars=2, 
