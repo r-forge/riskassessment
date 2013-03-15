@@ -1617,11 +1617,16 @@ gofstat(list(ftoxo.P,ftoxo.nb))
 \label{ccl}
 %%%%%%%%%%
 
-In this paper, we present the \proglang{R} statistical package \pkg{fitdistrplus} for distribution fitting and demonstrate its use and usefulness. 
-This package is already used a lot by practionners and academics for simple MLE fits in \cite{distrModJSS,jaloustreetal11,saketal11,wilson12,kochetal12,marquetouxetal12,nordan12,
+In this paper, we present the \proglang{R} statistical package \pkg{fitdistrplus} for distribution fitting and demonstrate its use and usefulness. Our main objective while developing this package was to provide tools for helping \proglang{R} users to fit distributions to data. We have been encouraged to pursue our work by feedbacks 
+from users of our package in various areas as food or environmental risk assessment, epidemiology, ecology, molecular biology, genomics, bioinformatics, hydraulics, mechanics, financial mathematics or operations research. Indeed, this package is already used a lot by practionners and academics for simple MLE fits in \cite{distrModJSS,jaloustreetal11,saketal11,wilson12,kochetal12,marquetouxetal12,nordan12,
 scholletal12,suuronenetal12,varoetal12,mandletal13}, for MLE fits and goodness-of-fit statistics in \cite{garcia12,tarnczi11,bagariaetal12,benavidesetal12,breitbach12,poduje12,pouillotetal10}, for MLE fits and bootstrap in  \cite{croucheretal12,meheustetal12,orellanoetal12,telloetal12,hoelzeretal12}, for MLE fits, bootstrap and goodness-of-fit statistics in \cite{rebuge12}, for MME fit in \cite{luangkesornetal12}, for censored MLE and bootstrap in \cite{lehaetal11,poulliotetal12,jongenburgeretal12,commeauetal12,pouillotetal11}, for graphic analysing in \cite{anandetal12,rosa12}, for grouped-data fitting methods in  \cite{fusteinercostafreda12} and more generally in  \cite{eling12,busschaertetal10,brooksetal11,aktassjostrand11,eikhermann12,bakos11}.
-Many extensions of this package are planned in the future: multivariate distribution fitting, extensions of advanced fitting methods for censored data, possibility to specify new types of moments (e.g. limited expected values) for MME.
-In future versions of our package, we plan to implement other estimation methods for censored-data, support of truncated data, and  multivariate distribution fitting.
+Many extensions of this package are planned in the future: 
+we plan to extend to censored data some methods for the moment only available for non-censored data, especially concerning goodness-of-fit evaluation and fitting methods. We also plan enlarge the choice of fitting methods for non-censored data, by proposing new goodness-of-fit distances (e.g. distances based on quantiles) for maximum goodness-of-fit estimation 
+and new types of moments (e.g. limited expected values) for moment matching estimation. At last, we plan consider multivariate distribution fitting.
+
+%%%%%%%%%%%%%%%% redondant avec ce qui precede me semble-t-il
+% et je ne comprends pas bien la notion de donnees tronquees (distributions tronquees OK mais donnees?)
+%In future versions of our package, we plan to implement other estimation methods for censored-data, support of %truncated data, and  multivariate distribution fitting.
 
 
 \bibliographystyle{plain}
