@@ -103,6 +103,13 @@ quantile matching, maximum goodness-of-fit.
 \HRuleBottom
 
 
+% A enlever dans version JSS !
+%\tableofcontents
+
+
+%\newpage
+
+
 \section{Introduction}
 \label{Introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -234,6 +241,15 @@ are useful for this purpose. A non-zero skewness reveals a lack of symmetry of t
 while the kurtosis value quantifies the weight of tails in comparison to the normal distribution for which
 the kurtosis equals 3.
 
+% pour VIGNETTE
+%The concept of skewness relates to deviations from symmetry of the distribution is defined as
+%The normal distribution has a skewness of zero. 
+%A positive (resp. negative) skewness indicates 
+%that the right (resp. left) tail of the distribution is more extended than the left (resp. right) one.
+% The concept of kurtosis relates to the tail weight. The normal distribution has a kurtosis of 3.
+%Distributions with a higher kurtosis are said to be leptokurtic, with heavier tails, such as the 
+%logistic distribution, while distributions with a smaller kurtosis are said platykurtic, with lighter 
+%tails, such as the uniform distribution.
 
 The skewness and kurtosis and their corresponding unbiased estimator from a sample 
 $(X_i)_i \stackrel{\text{i.i.d.}}{\sim} X$ with observations $(x_i)_i$ are given by
@@ -492,6 +508,79 @@ quantile(fendo.B, probs = 0.05)
 quantile(ATV, probs = 0.05)
 @
 
+ 
+% Keep only for the VIGNETTE
+%For a pedagogic purpose, here is a fit of a user-supplied distribution. 
+%We fit the Gumbel distribution 
+%(also named the extreme value distribution) on the \code{groundbeef} data set.
+%<<fitdanish1, echo=TRUE, fig=FALSE>>=
+%dgumbel<-function(x,a,b) 1/b*exp((a-x)/b)*exp(-exp((a-x)/b))
+%pgumbel<-function(q,a,b) exp(-exp((a-q)/b))
+%qgumbel<-function(p,a,b) a-b*log(-log(p))
+%summary(fitdist(groundbeef$serving, "gumbel", start=list(a=5, b=10)))
+%@
+
+%\begin{figure}[htb]
+%  \centering
+%<<echo=FALSE, results=hide, fig=TRUE>>=
+%plotdist(x1,"gumbel",para=list(a=10,b=5))
+%@
+%  \caption{Preliminar plot of a distribution against data to find initial values for parameters}
+%  \label{plotdist}
+%\end{figure}
+
+
+%%% R code
+%<<fitgroundbeef.weibull.echo, echo=TRUE, fig=FALSE, eval=FALSE>>=
+%plot(fw)
+%@
+%\setkeys{Gin}{width=0.65\textwidth} %default
+%\begin{figure}[htb]
+%  \centering
+%  %%% R code
+%<<fitgroundbeefweibullplot, echo=FALSE, fig=TRUE, width=7, height=7, eps=FALSE>>=
+%plot(fw)
+%@
+%  \caption{Plot of the fit of a continuous distribution (a Weibull
+%  distribution fitted to serving sizes from the \code{groundbeef} data set)}
+%  \label{plotcontfit}
+%\end{figure}
+
+
+%\subfloat[Densities]{ 
+% %%% R code
+%<<fittoxocarapoisnbinomplot, echo=FALSE, fig=TRUE, width=4, height=4, eps=FALSE>>=
+%    denscomp(list(fw,fln,fg),legendtext=c("Weibull","lognormal","gamma"),
+%    xlab="serving sizes (g)",lwd=2)
+%@
+%\label{compdens}}
+%  \caption{Comparison of density plots of various distributions fitted on continuous data
+%  (Weibull, gamma and lognormal
+%  distributions fitted to serving sizes from the ``ground beef'' data set)}
+%  \label{compdens}
+%\end{figure}
+%
+%\begin{figure}[htb]
+%  \centering
+  
+%  \subfloat[CDFs]{ 
+%  %%% R code
+%<<fittoxocarapoisnbinomcdfcomp, echo=FALSE, fig=TRUE, width=4, height=4, eps=FALSE>>=
+%    cdfcomp(list(fw,fln,fg), legendtext=c("Weibull","lognormal","gamma"),
+%    	xlab="serving sizes (g)", lwd=2)
+%@
+%\label{compcdf} }
+
+
+%\setkeys{Gin}{width=0.8\textwidth} %default
+
+
+%In such a plot, data may be represented in a log scale when required, by just fixing the argument
+%\texttt{xlogscale} to \texttt{TRUE} in the call to \texttt{cdfcomp}.
+% completer avec tout ce qu'on peut changer dans cdfcomp : PAS FORCEMENT UTILE
+
+%\clearpage
+
 
 To go further in the comparison of various distributions, we propose
 the calculation of different goodness-of-fit statistics in our package.
@@ -562,6 +651,58 @@ Even if specifically recommended for discrete distributions, the Chi-squared sta
 continuous distributions (see Section~\ref{otherdata} and the reference 
 manual~\cite{fitdistrplus} for examples).
 
+% concerning tests !!!!!!!!!!!!!!!!!!!
+%For continuous distributions, an approximate Kolmogorov-Smirnov test is 
+%performed by assuming the distribution parameters known. The critical value defined by Stephens~\cite{Stephens86} 
+%for a completely specified distribution is used to reject or not the 
+%distribution at the significance level 0.05. Because of this approximation, the result of the test
+%(decision of rejection of the distribution or not) is returned only for data sets with more 
+%than 30 observations. Note that this approximate test may be too conservative. 
+
+%For data sets with more than 5 observations and for continuous distributions for 
+%which the test is described by Stephens~\cite{Stephens86} for maximum likelihood
+%estimations (exponential, Cauchy, gamma and Weibull),
+%the Cramer-von Mises and Anderson-darling tests are performed as described by Stephens~\cite{Stephens86}. 
+%Those tests take into 
+%account the fact that the parameters are not known but estimated from the data. The result is the 
+%decision to reject or not the distribution at the significance level 0.05. Both tests are available
+%only for maximum likelihood estimations.
+
+%When the Chi-squared statistic is computed (for discrete or optionnaly continuous distributions), 
+%and if the degree of freedom (nb of cells - nb of parameters - 1)  of the corresponding distribution 
+%is strictly positive, the p-value of the Chi-squared test is returned.
+
+%The results of the tests are not printed, unless the argument \code{print.test}
+%is set to \code{TRUE}. We chose not to print their results by default, as 
+%goodness-of-fit tests are often misused. As for any null-hypothesis significance
+%test, the non reject of the null hypothesis dose not imply its acceptation. However, this
+%misinterpretation of p-values is very common and comes from the wrong assumption that
+%absence of evidence is evidence of absence ~\cite{Altman96}.
+%On the contrary, in some cases, especially on very big data sets, 
+%even if the null hypothesis is rejected, a fitted distribution may be 
+%chosen as the best one among simple distributions to describe an empirical distribution, if the goodness-of-fit
+%plots do not show strong differences between empirical and theoretical distributions.
+
+%Now let us look at the Chi-squared test results for the fit of a negative binomial distribution 
+%to ``toxocara'' data set :
+%<<echo=TRUE,fig=FALSE>>=
+%gofstat(fnb,print.test = TRUE)
+%@
+
+%A warning message appears as one of the theoretical counts is under 5 using the default breaks 
+%(see Section~\ref{GOF:measures}). In order to solve this problem, one may specify breaks 
+%more adapted for the realization of the test.
+%<<echo=TRUE,fig=FALSE>>=
+%gofstat(fnb,chisqbreaks=c(0,1,4,8,20),print.test=TRUE)$chisqtable
+%@
+
+%From goodness-of-fit graphs, Chi-squared statistics, AIC and BIC values,
+%it seems better to choose the fit of a negative binomial distribution
+%for this data set even it has one more parameter than the Poisson one. This was not obvious while
+%looking at the skewness-kurtosis graph. This graph must be used cautiously especially for continuous 
+%distributions far from the normal distribution or for discrete distributions. It is only indicative.
+
+%\clearpage
 
 \subsection{Uncertainty in parameter estimates}
 \label{Uncertainty}
@@ -618,6 +759,9 @@ risk assessment.
 
 Bootstrap can also be used to calculate confidence intervals on quantiles of the fitted distribution.
 For this purpose, a generic \code{quantile} function is provided for class \code{bootdist}. 
+%It must be called with a first argument corresponding
+%to an object of class \code{bootdist} or \code{fitdistcens}, and as a second argument the vector of probabilities
+%at which the quantiles of the fitted distribution must be estimated. 
 By default $95\%$ bootstrap confidence intervals of quantiles are provided.
 Going back to the previous example from ecotoxicolgy, this function can be used to 
 estimate the uncertainty associated to the HC5 estimation, for example from the previously fitted
@@ -881,6 +1025,53 @@ of its great sensitivity to outliers. This may be seen as an advantage in our ex
 objective is to better describe the right tail of the distribution, but it may be seen as a
 drawback if the objective is different.
 
+% essai avec Burr
+%Then we fit the three-parameter distribution of Burr on \code{danishuni} data set.
+%As when fitting the Pareto type II distribution, we have to use a lower bound when
+%carrying out the optimization.
+%Otherwise \code{optim} do not converge.
+%<<fitdanish.burr.boot.echo, echo=TRUE, fig=FALSE>>=
+%fdan <- fitdist(danishuni$Loss, "burr", method="mle", 
+%  start=c(shape1=5, shape2=5, rate=10), lower=1e-1)
+%bdan <- bootdist(fdan,  bootmethod="param", niter=101)
+%summary(bdan)
+%plot(bdan)
+%@
+
+% autres essais sur danishuni
+%Below an example of estimation on the \code{danishuni} data set with the three classical 
+%goodness-of-fit distances.
+%We compare the fitting methods with the distribution function.
+%%% R code
+%<<danish.mge, echo=TRUE, fig=FALSE>>=
+%data(danishuni)
+%flndanishAD <- fitdist(danishuni$Loss, "lnorm", method="mge", gof="AD")
+%flndanishAD2L <- fitdist(danishuni$Loss, "lnorm", method="mge", gof="AD2L")
+%flndanishKS <- fitdist(danishuni$Loss, "lnorm", method="mge", gof="KS")
+%flndanishCvM <- fitdist(danishuni$Loss, "lnorm", method="mge", gof="CvM")
+%flndanishMLE <- fitdist(danishuni$Loss, "lnorm", method="mle")
+%cdfcomp(list(flndanishAD, flndanishAD2L, flndanishKS, flndanishCvM, flndanishMLE), 
+%        legend=c("AD", "AD2L", "KS", "CvM", "MLE"), main="Fitting lognormal distribution",
+%        xlogscale=TRUE, datapch="*")
+%@
+
+%As plotted \ref{fig:danish:mge}, the lognormal distribution is not appropriate to model heavy-tailed datae, but
+%this is not the purpose here.
+%The second-order Anderson-Darling distance provides the least conservative fit for high quantiles, whereas the
+%(classic)  Anderson-Darling distance is the most conservative fit among goodness-of-fit distances.
+
+%\begin{figure}[htb!]
+%  \centering
+%%% R code
+%<<danishmgeplot, echo=FALSE, fig=TRUE, eps=FALSE, width=4, height=4>>=
+%cdfcomp(list(flndanishAD, flndanishAD2L, flndanishKS, flndanishCvM, flndanishMLE), 
+%        legend=c("AD", "AD2L", "KS", "CvM", "MLE"), main="Fitting lognormal distribution",
+%        xlogscale=TRUE, datapch="*")
+%@
+%\caption{Comparison of statistical distance when fitting lognormal distribution on \code{danishuni}}
+%\label{fig:danish:mge}
+%\end{figure}
+
 
 
 %\subsubsection{Quantile matching estimation}
@@ -961,6 +1152,16 @@ The argument \code{optim.method} can be used in the call to \code{fitdist} or
 \code{fitdistcens}. It will internally be passed to \code{mledist} and to \code{optim}
 (see the help page of \code{optim} from the package \pkg{stats} for details about the different
 algorithms available proposed by \code{optim}).
+
+% pour VIGNETTE
+%This argument may be fixed to \code{"Nelder-Mead"} (the robust derivative-free Nelder and Mead method), 
+%\code{"BFGS"} (the BFGS quasi-Newton method), \code{"CG"} (the conjugate gradient hessian-free method), 
+%\code{"SANN"} (a variant of (stochastic) simulated annealing) or \code{"L-BFGS-B"} (a modification of the BFGS 
+%quasi-Newton method which enables box constraints optimization and limited-memory usage). 
+%For the use of the last method the 
+%arguments \code{lower} and/or \code{upper} also have to be passed. 
+%More details on these optimization
+%functions may be found in the help page of \code{optim} from the package \pkg{stats}.
 
 
 Below are examples of fits of a gamma distribution $\mathcal{G}(\alpha, \lambda)$ to 
@@ -1060,6 +1261,26 @@ of riverine macro-invertebrates taxa from the southern Murray-Darling Basin in
 Central Victoria, Australia
 (see \cite{kefford07}). 
 
+% another example
+%The \code{smokedfish} data set, included in the package,
+%corresponds to the observation of a continuous censored variable, 
+%the \emph{Listeria monocytogenes} microbial concentration, on a random
+%sample of smoked fish distributed on the Belgian market in the period
+%2005 to 2007 (\cite{Busschaert10}).
+%Censored data are coded within 2 columns named left and right, describing
+%each observed value of \emph{Listeria monocytogenes} concentration 
+%(in $CFU.g^{-1}$) as an interval. 
+%The left column contains either \code{NA} for
+%left censored observations, the left bound of the interval for interval censored
+%observations, or the observed value for non-censored observations. The right
+%column contains either \code{NA} for right censored observations, the right bound of
+%the interval for interval censored observations, or the observed value for noncensored
+%observations.
+%%% R code
+%<<datsmokedfish, echo=TRUE>>=
+%data(smokedfish)
+%str(smokedfish)
+%@
 
 %%% R code
 <<datsalinity, echo=TRUE>>=
@@ -1095,6 +1316,49 @@ obtained by fixing the argument \code{Turnbull} to \code{FALSE} in the call to \
 plotdistcens(salinity,Turnbull = FALSE)
 @
 
+% pour vignette
+%Data are reported directly as segments for interval, left and right censored data, 
+%and as points for non-censored data. Before plotting, observations are ordered and a rank r
+%is associated to each of them. Left censored observations are ordered
+%first, by their right bounds. Interval censored and non censored observations
+%are then ordered by their mid-points and, at last, right censored observations are
+%ordered by their left bounds. If argument \texttt{leftNA} (resp. \texttt{rightNA}) is finite,
+%left censored (resp. right censored) observations are considered as interval censored
+%observations and ordered by mid-points with non-censored and interval censored data.
+%It is sometimes necessary to fix \texttt{leftNA} or \texttt{rightNA} to a realistic 
+%extreme value, even if not exactly known, to obtain a reasonable global ranking of 
+%observations. After ranking, each of the n observations is plotted as a point (one x-value) 
+%or a segment (an interval of possible x-values),
+%with an y-value equal to r/n, r being the rank of each observation in the global ordering
+%previously described.
+
+
+
+%%%%%%%%%%%%%%%%%%% ESSAI avec  UN SUBFLOAT qui ne marche pas
+% le schunck n'est pas reconnu : faudrait faire sans utiliser sweave
+% faudrait creer les pdf d'abord et les inserer ensuite.
+% mais est-ce tres propre? Et comment on va gerer les dimensions
+% et echelle des figures?
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\setkeys{Gin}{width=0.8\textwidth} 
+%\begin{figure}[htb!]
+%  \centering
+%  \subfloat{
+%    <<plotsalinity2a, echo=FALSE, fig=TRUE, width=3.5, height=3.5, eps=FALSE>>=
+%    plotdistcens(salinity)
+%    @
+%  }
+%
+%  \subfloat{
+%    <<plotsalinity2b, echo=FALSE, fig=TRUE, width=3.5, height=3.5, eps=FALSE>>=
+%    plotdistcens(salinity,Turnbull = FALSE)
+%    @
+%  }
+%  \caption{Plot of censored data (72-hour acute salinity tolerance of riverine macro-invertebrates from 
+%   the \code{salinity} data set) using Turnbull algorithm or simply as ordered points 
+%   and intervals}
+%  \label{plotdistcens}
+%\end{figure}
 
 
 \setkeys{Gin}{width=0.5\textwidth} 
@@ -1188,6 +1452,21 @@ bootstrap resampling procedure. The generic function \code{quantile} can also be
 continuous non-censored data,
 to an object of class \code{"fitdistcens"} or \code{"bootdistcens"}.
 
+% ex smokedfish
+%<<echo=TRUE, fig=FALSE>>=
+%plot(flog10C)
+%@
+%\begin{figure}[htb]
+%  \centering
+%<<echo=FALSE, results=hide, fig=TRUE>>=
+%plot(flog10C)
+%@
+%  \caption{Goodness-of-fit CDF plot for a fit of a continuous distribution
+%  on censored data (a lognormal distribution fitted to microbial counts from 
+%   the ``smoked fish'' data set)}
+%  \label{plotfitdistcens}
+%\end{figure}
+
 
 In addition to the fit of distributions to censored or non censored continuous data, our package
 can also accomodate discrete variables, such as count numbers, using the functions 
@@ -1207,6 +1486,34 @@ data(toxocara)
 str(toxocara)
 @
 
+
+% pour vignette
+%As for continuous non-censored data (see Section~\ref{fitnoncenscont})
+%the \code{descdist} function can be used, but with the argument \code{discrete}
+%fixed to \code{TRUE}. This function will especially 
+%compute skewness and kurtosis values, and plot them in a skewness-kurtosis plot 
+% with skewness and kurtosis values or set of values of 
+%Poisson and negative binomial
+%(Figure~\ref{Cullenplotdisc}), 
+%together with values for the
+%normal distribution, to which discrete distributions may converge. 
+
+%Looking at the skewness-kurtosis plot (Figure~\ref{Cullenplotdisc}) obtained
+%for the number of \emph{Toxocara cati} parasites from 
+%the ``Toxacara'' data set, one could try the fit of Poisson and negative-binomial %distributions.
+
+%<<echo=TRUE, fig=FALSE>>=
+%descdist(toxocara$number,discrete = TRUE,boot=1000)
+%@
+%\begin{figure}[htb]
+%  \centering
+%<<echo=FALSE, results=hide, fig=TRUE>>=
+%descdist(toxocara$number,discrete = TRUE,boot=1000)
+%@
+%  \caption{Skewness-kurtosis plot for a discrete variable
+%  (number of \emph{Toxocara cati} parasites from the ``Toxocara'' data set)}
+%  \label{Cullenplotdisc}
+%\end{figure}
 
 
 The fit of a discrete distribution to discrete data by maximum
