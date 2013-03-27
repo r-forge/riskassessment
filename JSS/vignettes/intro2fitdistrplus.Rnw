@@ -170,9 +170,9 @@ distributions to classic non-censored data. Section \ref{advtopic} deals with ot
 estimation methods and other types of data, before Section \ref{ccl} concludes.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Fitting distributions to continuous non-censored data\label{fitnoncenscont}}
+\section[Fitting distributions]{Fitting distributions to continuous non-censored data\label{fitnoncenscont}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Choice of candidate distributions}
+\subsection[Choice of distributions]{Choice of candidate distributions}
 \label{Choice}
 For illustrating the use of various functions of the \pkg{fitdistrplus} package 
 with continuous non-censored data, we   first use
@@ -296,7 +296,7 @@ descdist(groundbeef$serving, boot=1000)
 \end{figure}
 
 
-\subsection{Fit of distributions by maximum likelihood estimation}
+\subsection[Maximum likelihood]{Fit of distributions by maximum likelihood estimation}
 \label{FIT}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Once selected, one or more parametric distributions $f(.\vert \theta)$ 
@@ -579,7 +579,7 @@ Even if specifically recommended for discrete distributions, the Chi-squared sta
 continuous distributions (see Section~\ref{otherdata} and the reference 
 manual~\cite{fitdistrplus} for examples).
 
-\subsection{Uncertainty in parameter estimates}
+\subsection[Uncertainty]{Uncertainty in parameter estimates}
 \label{Uncertainty}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -650,7 +650,7 @@ quantile(bendo.B, probs = 0.05)
 \section{Advanced topics\label{advtopic}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Alternative methods for parameter estimation}
+\subsection[Alternative estimation]{Alternative methods for parameter estimation}
 \label{Alternatives}
 
 This subsection focuses on alternative estimation methods.
@@ -965,7 +965,7 @@ cdfcomp(list(fdanish.ln.MLE, fdanish.ln.QME1, fdanish.ln.QME2),
 
 
 
-\subsection{Customization of the optimization algorithm}
+\subsection[Customizing optimization]{Customization of the optimization algorithm}
 \label{Customization}
 %%%%%%%%%%
 Each time a numerical minimization (or maximization) is carried out in the \code{fitdistrplus} package, 
@@ -1043,7 +1043,7 @@ fgenoud = fgenoud$estimate)
 
 %%%%%%%%%%%%% J'EN SUIS LA !!!!!!!!!!!!!!
 
-\subsection{Fitting distributions to other types of data}
+\subsection[Other types of data]{Fitting distributions to other types of data}
 \label{otherdata}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Analytical methods often lead to semi-quantitative results which are referred to as
