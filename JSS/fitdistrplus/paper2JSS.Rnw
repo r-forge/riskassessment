@@ -30,8 +30,8 @@
 
 
   
-\author{ Marie Laure Delignette-Muller \\ Université Claude Bernard Lyon 1 \And
-    Christophe Dutang \\ Université de Strasbourg}
+\author{ Marie Laure Delignette-Muller \\ Universit\'e de Lyon \And
+    Christophe Dutang \\ Universit\'e de Strasbourg}
 \Plainauthor{Marie Laure Delignette-Muller}
 
 \title{\pkg{fitdistrplus}: An \proglang{R} Package for Distribution Fitting Methods}
@@ -65,7 +65,9 @@ quantile matching, maximum goodness-of-fit, distributions, R}
 
 \Address{
     Marie Laure Delignette-Muller \\
-    VetAgro Sup Campus Vétérinaire de Lyon \\
+    Universit\'e de Lyon\\
+    Universit\'e Lyon 1, CNRS, UMR5558, Laboratoire de Biom\'etrie et Biologie \'evolutive\\
+    VetAgro Sup, Campus V\'et\'erinaire de Lyon \\
     1, avenue Bourgelat \\
     69820 MARCY L'ETOILE\\
     France \\
@@ -1336,7 +1338,7 @@ his very valuable comments on the first version of this paper.
 
 
 %\bibliographystyle{plain}
-\bibliography{../vignettes/fitdistrplus,../vignettes/paperscitingfitdistrplus}
+\bibliography{fitdistrplus,paperscitingfitdistrplus}
 
 
 
