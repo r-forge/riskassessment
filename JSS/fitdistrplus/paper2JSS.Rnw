@@ -181,7 +181,7 @@ children under 5 years old. It was used in a quantitative risk assessment
 published in the International Journal of Food Microbiology \cite{Delignette08}.
 %%% R code set default options for all R schunks
 <<par4vignette, echo=FALSE, results=hide>>=
-options(digits=4, SweaveHooks=list(fig=function() par(mar=c(5.1, 4.1, 1.1, 2.1))) )
+options(digits=4, SweaveHooks=list(fig=function() par(mar=c(5.1, 4.1, 1.1, 2.1))))
 set.seed(1234)
 @
 %%% R code
@@ -425,9 +425,13 @@ acute toxicity values for the organochlorine pesticide endosulfan
 (geometric mean of LC50 ou EC50 values in $\mu g.L^{-1}$),
 tested on Australian and non-Australian laboratory-species 
 (arthropods, fish or nonarthropod invertebrates, see \cite{Hose04}). 
-<<datendosulfan, echo=TRUE>>=
+<<datendosulfan, echo=TRUE, eval=FALSE>>=
 data(endosulfan)
 str(endosulfan)
+@
+<<datendosulfan2, echo=FALSE, eval=TRUE>>=
+data(endosulfan)
+str(endosulfan, width = 70, strict.width = "cut")
 @
 
 In ecotoxicology, a
@@ -467,7 +471,8 @@ fendo.ll <- fitdist(ATV, "llogis", start=list(shape=1, scale=500))
 fendo.P <- fitdist(ATV, "pareto", start=list(shape=1, scale=500))
 fendo.B <- fitdist(ATV, "burr", start=list(shape1=0.3, shape2=1, rate=1))
 cdfcomp(list(fendo.ln, fendo.ll, fendo.P, fendo.B), xlogscale = TRUE,
-        ylogscale = TRUE,legendtext = c("lognormal","loglogistic","Pareto","Burr"))
+      ylogscale = TRUE, legendtext = 
+          c("lognormal", "loglogistic", "Pareto", "Burr"))
 @
 % qqcomp(list(fendo.ln, fendo.ll, fendo.P, fendo.B), xlogscale=TRUE, ylogscale=TRUE,
 %       legendtext = c("lognormal","loglogistic","Pareto","Burr"))
@@ -476,7 +481,7 @@ cdfcomp(list(fendo.ln, fendo.ll, fendo.P, fendo.B), xlogscale = TRUE,
 
 \begin{figure}[htb!]
   \centering
-<<fitendo, echo=FALSE, fig=TRUE, width=6, height=4, eps=FALSE>>=
+<<fitendo, echo=FALSE, fig=TRUE, width=4, height=4, eps=FALSE>>=
 cdfcomp(list(fendo.ln, fendo.ll, fendo.P, fendo.B), xlogscale = TRUE,
         ylogscale = TRUE,legendtext = c("lognormal","loglogistic","Pareto","Burr"))
 @
@@ -516,6 +521,9 @@ Cramer-von Mises, Kolmogorov-Smirnov and Anderson-Darling statistics \cite{Steph
 Naming $x_{i}$ the $n$ observations of a continuous variable $X$ arranged in an ascending order,
 Table \ref{tabKSCvMAD} gives the definition and the empirical estimate of the three considered 
 goodness-of-fit statistics.
+They can be computed using the function \code{gofstat}
+as defined by Stephens \cite{Stephens86}.
+
 
 \begin{table}[htb!]
   \begin{center}
@@ -526,30 +534,31 @@ goodness-of-fit statistics.
     \hline
       Kolmogorov-Smirnov   & $\sup|F_{n}(x) - F(x)|$ &
       $\max(D^{+},D^{-})$ with\\
-      (KS)&& $D^{+}=\max\limits_{i=1,\dots,n}\left(\frac{i}{n} - F(x_{i})\right)
-      ;D^{-}=\max\limits_{i=1,\dots,n}\left(F(x_{i})-\frac{i-1}{n}\right)$ \\
+      (KS) & &  $D^{+}=\max\limits_{i=1,\dots,n}\left(\frac{i}{n} - F_i\right)$ \\
+           & &  $D^{-}=\max\limits_{i=1,\dots,n}\left(F_{i}-\frac{i-1}{n}\right)$ \\
     \hline
       Cramer-von Mises  & n $\int_{-\infty}^{\infty}(F_{n}(x) - F(x))^2 dx$ &
-        $\frac{1}{12n} + \sum\limits_{i=1}^n \left(F(x_{i})-\frac{2i-1}{2n} \right)^{2}$\\
+        $\frac{1}{12n} + \sum\limits_{i=1}^n \left(F_i-\frac{2i-1}{2n} \right)^{2}$\\
       (CvM)&&\\
 % cvm <- 1/(12*n) + sum( ( theop - (2 * seq(1:n) - 1)/(2 * n) )^2 )
     \hline
       Anderson-Darling  & n $\int_{-\infty}^{\infty}\frac{(F_{n}(x) - F(x))^2}{F(x) (1 - F(x))} dx$
-      & $-n -\frac{1}{n}\sum\limits_{i=1}^n \left((2i-1)(\log(F(x_{i}))+\log(1-F(x_{n+1-i})) )\right)$ \\
+      & $-n -\frac{1}{n}\sum\limits_{i=1}^n (2i-1)\log(F_i(1-F_{n+1-i}))$ \\
       (AD) &    & \\
 % ad <- - n - mean( (2 * seq(1:n) - 1) * (log(theop) + log(1 - rev(theop))) )
     \hline
+     where $F_i\stackrel{\triangle}{=} F(x_i)$
     \end{tabular}
     \label{tabKSCvMAD}
   \end{center}
 \end{table}
 
-They can be computed using the function \code{gofstat}
-as defined by Stephens \cite{Stephens86}.
 
 <<fendo.gof.print, echo=TRUE, fig=FALSE>>=
 gofstat(list(fendo.ln, fendo.ll, fendo.P, fendo.B))
 @
+
+\newpage
 As giving  more weight to distribution tails, 
 Anderson-Darling statistics is of special interest when it matters to equally 
 emphasize the tails as well as the main body of a distribution.
@@ -673,25 +682,26 @@ weights by using second order Anderson-Darling Statistics.
       Statistic  & General formula & Computational formula\\
     \hline
       Right-tail AD  & $\int_{-\infty}^{\infty}\frac{(F_{n}(x) - F(x))^2 }{1 - F(x)}  dx$
-      & $\frac{n}{2} -2\sum_{i}F(x_{i}) -\frac{1}{n}\sum_{i}((2i-1)ln(1-F(x_{n+1-i})))$ \\
+      & $\frac{n}{2} -2\sum\limits_{i=1}^nF_i -\frac{1}{n}\sum\limits_{i=1}^n(2i-1)ln(\overline F_{n+1-i})$ \\
       (ADR) &  &\\
     \hline
       Left-tail AD  & $\int_{-\infty}^{\infty}\frac{(F_{n}(x) - F(x))^2 }{(F(x))}  dx$
-      & $-\frac{3n}{2} +2\sum_{i}F(x_{i}) -\frac{1}{n}\sum_{i}((2i-1)ln(F(x_{i})))$ \\
+      & $-\frac{3n}{2} +2\sum\limits_{i=1}^nF_i -\frac{1}{n}\sum\limits_{i=1}^n(2i-1)ln(F_i)$ \\
       (ADL) &  &\\
     \hline
       Right-tail AD  & $ad2r=\int_{-\infty}^{\infty}\frac{(F_{n}(x) - F(x))^2 }{(1 - F(x))^{2}}  dx$
-      & $ad2r=2\sum_{i}ln(1-F(x_{i})) +\frac{1}{n}\sum_{i} \frac{2i-1}{1-F(x_{n+1-i})}$ \\
+      & $ad2r=2\sum\limits_{i=1}^nln(\overline F_i) +\frac{1}{n}\sum\limits_{i=1}^n \frac{2i-1}{\overline F_{n+1-i}}$ \\
       2nd order (AD2R) &  &\\
     \hline
       Left-tail AD  & $ad2l=\int_{-\infty}^{\infty}\frac{(F_{n}(x) - F(x))^2 }{(F(x))^{2}}  dx$
-      & $ad2l=2\sum_{i}ln(F(x_{i})) +\frac{1}{n}\sum_{i}\frac{2i-1}{F(x_{i})}$ \\
+      & $ad2l=2\sum\limits_{i=1}^nln(F_i) +\frac{1}{n}\sum\limits_{i=1}^n\frac{2i-1}{F_i}$ \\
       2nd order (AD2L) &  &\\
     \hline
     AD 2nd order & $ad2r+ad2l$
       & $ad2r+ad2l$ \\
     (AD2) &  &\\
     \hline
+    where $F_i\stackrel{\triangle}{=} F(x_{i})$; & $\overline F_i\stackrel{\triangle}{=}1-F(x_{i})$
     \end{tabular}
     \label{modifiedAD}
   \end{center}
@@ -731,7 +741,7 @@ legendtext = c("MLE","Left-tail AD", "Left-tail AD 2nd order"))
 \begin{figure}[htb!]
   \centering
   %%% R code
-<<mgegofcompplot, echo=FALSE, fig=TRUE, width=6, height=4, eps=FALSE>>=
+<<mgegofcompplot, echo=FALSE, fig=TRUE, width=4, height=4, eps=FALSE>>=
 cdfcomp(list(fendo.ln, fendo.ln.ADL, fendo.ln.AD2L),
 xlogscale = TRUE, ylogscale = TRUE,
 main = "Fitting a lognormal distribution",
@@ -752,11 +762,12 @@ Anderson-Darling distances of first or second order
 enables to approach the value obtained by fitting the Burr distribution by MLE. 
 %%% R code
 <<quantilefitdist, echo=TRUE, fig=FALSE>>=
-( HC5.estimates <- cbind(empirical = as.numeric(quantile(ATV, probs = 0.05)),
-      Burr = as.numeric(quantile(fendo.B,probs = 0.05)$quantiles),
-      lognormal_MLE = as.numeric(quantile(fendo.ln,probs = 0.05)$quantiles),
-      lognormal_AD2 = as.numeric(quantile(fendo.ln.ADL,probs = 0.05)$quantiles),
-      lognormal_AD2L = as.numeric(quantile(fendo.ln.AD2L,probs = 0.05)$quantiles)) )
+(HC5.estimates <- c(
+empirical = as.numeric(quantile(ATV, probs=0.05)),
+Burr = as.numeric(quantile(fendo.B, probs=0.05)$quantiles),
+lognormal_MLE = as.numeric(quantile(fendo.ln, probs=0.05)$quantiles),
+lognormal_AD2 = as.numeric(quantile(fendo.ln.ADL, probs=0.05)$quantiles),
+lognormal_AD2L = as.numeric(quantile(fendo.ln.AD2L,probs=0.05)$quantiles)))
 @
 
 %\subsubsection{Moment matching estimation}
@@ -815,7 +826,8 @@ str(danishuni)
 fdanish.ln.MLE <- fitdist(danishuni$Loss, "lnorm")
 fdanish.ln.MME <- fitdist(danishuni$Loss, "lnorm", method="mme", order=1:2)
 cdfcomp(list(fdanish.ln.MLE, fdanish.ln.MME), 
-        legend=c("lognormal MLE", "lognormal MME"), main="Fitting a lognormal distribution",
+        legend=c("lognormal MLE", "lognormal MME"), 
+        main="Fitting a lognormal distribution",
         xlogscale=TRUE, datapch=".")
 @
 
@@ -842,18 +854,19 @@ since the user may choose either Equation (\ref{moments}) or (\ref{centmoments})
 
 <<danish.mme.pareto, echo=TRUE, fig=FALSE>>=
 library(actuar)
-fdanish.P.MLE <- fitdist(danishuni$Loss, "pareto",start=c(shape=10, scale=10), 
-      lower=2+1e-6, upper=Inf)
-memp <- function(x, order) ifelse(order == 1, mean(x), sum(x^order)/length(x))
+fdanish.P.MLE <- fitdist(danishuni$Loss, "pareto", 
+start=c(shape=10, scale=10), lower=2+1e-6, upper=Inf)
+memp <- function(x, order) sum(x^order)/length(x)
 fdanish.P.MME <- fitdist(danishuni$Loss, "pareto", method="mme", order=1:2, 
-      memp="memp", start=c(shape=10, scale=10), lower=c(2+1e-6,2+1e-6), upper=c(Inf,Inf))
+memp="memp", start=c(shape=10, scale=10), lower=c(2+1e-6,2+1e-6), 
+upper=c(Inf,Inf))
 cdfcomp(list(fdanish.P.MLE, fdanish.P.MME), 
-        legend=c("Pareto MLE", "Pareto MME"), main="Fitting a Pareto distribution",
-        xlogscale=TRUE, datapch=".")
+legend=c("Pareto MLE", "Pareto MME"), main="Fitting a Pareto distribution",
+xlogscale=TRUE, datapch=".")
 gofstat(list(fdanish.ln.MLE, fdanish.P.MLE, fdanish.ln.MME, fdanish.P.MME))
 @
 
-\setkeys{Gin}{width=0.8\textwidth} %default
+\setkeys{Gin}{width=0.9\textwidth} %default
 
 \begin{figure}[htb!]
   \centering
@@ -927,11 +940,13 @@ The quantile matching is carried out numerically,
 by minimizing the sum of squared differences between observed and theoretical quantiles.
 %%% R code
 <<danish.qme.echo, echo=TRUE, fig=FALSE>>=
-fdanish.ln.QME1 <- fitdist(danishuni$Loss, "lnorm", method="qme", probs=c(1/3, 2/3))
-fdanish.ln.QME2 <- fitdist(danishuni$Loss, "lnorm", method="qme", probs=c(8/10, 9/10))
+fdanish.ln.QME1 <- fitdist(danishuni$Loss, "lnorm", method="qme", 
+probs=c(1/3, 2/3))
+fdanish.ln.QME2 <- fitdist(danishuni$Loss, "lnorm", method="qme", 
+probs=c(8/10, 9/10))
 cdfcomp(list(fdanish.ln.MLE, fdanish.ln.QME1, fdanish.ln.QME2), 
-        legend=c("MLE", "QME(1/3, 2/3)", "QME(8/10, 9/10)"), 
-        main="Fitting a lognormal distribution", xlogscale=TRUE, datapch=".")
+legend=c("MLE", "QME(1/3, 2/3)", "QME(8/10, 9/10)"), 
+main="Fitting a lognormal distribution", xlogscale=TRUE, datapch=".")
 @
 Above is an example of fitting of a lognormal distribution to \code{danishuni} data set 
 by matching probabilities $(p_1= 1/3, p_2=2/3)$ and $(p_1= 8/10, p_2=9/10)$.
@@ -988,7 +1003,8 @@ data(groundbeef)
 fNM <- fitdist(groundbeef$serving, "gamma", optim.method="Nelder-Mead")
 fBFGS <- fitdist(groundbeef$serving, "gamma", optim.method="BFGS") 
 fSANN <- fitdist(groundbeef$serving, "gamma", optim.method="SANN")
-fCG <- try(fitdist(groundbeef$serving, "gamma", optim.method="CG", control=list(maxit=10000)))
+fCG <- try(fitdist(groundbeef$serving, "gamma", optim.method="CG", 
+    control=list(maxit=10000)))
 if(class(fCG) == "try-error")
   fCG <- list(estimate=NA)
 @
@@ -1028,9 +1044,9 @@ shape $\alpha$ and rate $\lambda$ parameters are relatively similar on this
 example, roughly 4.00 and 0.05, respectively.
 %%% R code
 <<optimmethod.customgenoud.fitdist, echo=TRUE, eval=TRUE>>=
-fgenoud <- mledist(groundbeef$serving, "gamma", custom.optim= mygenoud, nvars=2, 
-    max.generations=10, Domains=cbind(c(0,0), c(10,10)), boundary.enforcement=1, 
-    hessian=TRUE, print.level=0, P9=10)
+fgenoud <- mledist(groundbeef$serving, "gamma", custom.optim= mygenoud, 
+    nvars=2, max.generations=10, Domains=cbind(c(0,0), c(10,10)), 
+    boundary.enforcement=1, hessian=TRUE, print.level=0, P9=10)
 cbind(NM = fNM$estimate,
 BFGS = fBFGS$estimate,
 SANN = fSANN$estimate,
@@ -1120,7 +1136,7 @@ plotdistcens(salinity,Turnbull = FALSE)
 \begin{figure}[htb!]
   \centering
   %%% R code
-<<plotsalinity, echo=FALSE, fig=TRUE, width=6, height=4, eps=FALSE, result=hide>>=
+<<plotsalinity, echo=FALSE, fig=TRUE, width=6, height=6, eps=FALSE, result=hide>>=
 plotdistcens(salinity,Turnbull = FALSE)
 @
   \caption{Simple plot of censored raw data (72-hour acute salinity tolerance of riverine macro-invertebrates from 
@@ -1192,7 +1208,7 @@ cdfcompcens(list(fsal.ln, fsal.ll),
 \begin{figure}[htb!]
   \centering
   %%% R code
-<<fitsalinitycdfcompplot, echo=FALSE, fig=TRUE, width=6, height=4, eps=FALSE>>=
+<<fitsalinitycdfcompplot, echo=FALSE, fig=TRUE, width=6, height=6, eps=FALSE>>=
 cdfcompcens(list(fsal.ln, fsal.ll),
     legendtext=c("lognormal", "loglogistic "))
 @
@@ -1248,7 +1264,7 @@ to the same data set, as follows for the previous fits (Figure~\ref{plotdiscfit}
 plot(ftoxo.P)
 @
 
-\setkeys{Gin}{width=0.8\textwidth} %default
+\setkeys{Gin}{width=0.9\textwidth} %default
 
 \begin{figure}[htb]
   \centering
@@ -1269,7 +1285,7 @@ cdfcomp(list(ftoxo.P,ftoxo.nb),legendtext=c("Poisson", "negative binomial"))
 
 \begin{figure}[htb]
   \centering
-<<fittoxocarapoisnbinomplot, echo=FALSE, results=hide, fig=TRUE, width=6, height=4, eps=FALSE>>=
+<<fittoxocarapoisnbinomplot, echo=FALSE, results=hide, fig=TRUE, width=4, height=4, eps=FALSE>>=
 cdfcomp(list(ftoxo.P,ftoxo.nb),legendtext=c("Poisson", "negative binomial"))
 @
   \caption{Comparison of the fits of a negative binomial and a Poisson distribution
