@@ -902,7 +902,7 @@ Maximum likelihood and moment matching
 %(the default on many softwares)
 % si on ne trouve pas de references on l'enleve?
 estimations are 
-certainly the most commonly used method for fitting distributions. 
+certainly the most commonly used method for fitting distributions (\cite{Cullen99}). 
 Keeping in mind that these two methods may produce very different results,
 the user should be aware of its great sensitivity to outliers
 when choosing the matching moment estimation (MME). This may be seen as an advantage in our example if the
@@ -916,7 +916,7 @@ drawback if the objective is different.
 %\label{QME}
 %%%%%%%%%%
 Fitting of a parametric distribution may also be done by matching theoretical quantiles
-of the parametric distributions (for specified probabilities) against the empirical quantiles.
+of the parametric distributions (for specified probabilities) against the empirical quantiles (\cite{Tse2009}).
 Equation (\ref{quantiles}) below is thus very similar to Equations (\ref{moments}) and (\ref{centmoments})
   \begin{equation}
     \label{quantiles}
@@ -1327,9 +1327,9 @@ We have been encouraged to pursue our work by feedbacks
 from users of our package in various areas as food or environmental risk assessment, epidemiology, ecology, 
 molecular biology, genomics, bioinformatics, hydraulics, mechanics, financial and actuarial mathematics 
 or operations research. Indeed, this package is already used a lot by practionners and academics 
-for simple MLE fits in \cite{distrModJSS,jaloustreetal11,saketal11,wilson12,kochetal12,marquetouxetal12,nordan12,
+for simple MLE fits in \cite{distrModJSS,jaloustreetal11,saketal11,kochetal12,marquetouxetal12,nordan12,
 scholletal12,suuronenetal12,varoetal12,mandletal13}, for MLE fits and goodness-of-fit statistics in 
-\cite{garcia12,tarnczi11,bagariaetal12,benavidesetal12,breitbach12,poduje12,pouillotetal10}, for MLE fits 
+\cite{garcia12,tarnczi11,bagariaetal12,benavidesetal12,breitbach12,poduje12,Pouillot10}, for MLE fits 
 and bootstrap in  \cite{croucheretal12,meheustetal12,orellanoetal12,telloetal12,hoelzeretal12}, for MLE fits, 
 bootstrap and goodness-of-fit statistics in \cite{rebuge12}, for MME fit in \cite{luangkesornetal12}, for 
 censored MLE and bootstrap in \cite{lehaetal11,poulliotetal12,jongenburgeretal12,commeauetal12,pouillotetal11}, 
