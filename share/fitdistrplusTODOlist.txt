@@ -30,6 +30,22 @@ an analytical formula (close-form) rather than by a numeric optimization. Then i
 we could fit a two-parameter distribution on E(X) and E(X^2) rather than E(X) and Var(X) through
 the memp argument. One could also consider limited expected values.
 
+43. for all plot (in particular cdfcomp) adapt the plot to deal with a huge number of data (>=10000) : no plot at all 
+or just a subset of data
+
+44. defensive programing for the function pxxxx, dxxx, qxxx, to check that arguments have the same name as in R base.
+
+45. for discrete data, think about passing observed frequencies to fitdist rather than observations to speed up the
+ fit for large-scale data.
+
+46. descdist has a problem with argument obs.col. see
+data(toxocara)
+descdist(toxocara$number, obs.col="red", discrete=TRUE)
+
+47. descdist could have ... dot argument or obs.pch argument ?
+
+48. descdist use the cat function (directly) no print.descdist. should take care of this printing. 
+
 === "recently" done or not planned for argumented reasons ===
 
 1. Remove calls to options(digits) in the code
