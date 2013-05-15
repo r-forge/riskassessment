@@ -651,11 +651,11 @@ Burr distribution to the \code{endosulfan} data set.
 <<fitATV.lnorm.quantile, echo=TRUE,results=hide>>=
 quantile(bendo.B, probs = 0.05)
 @
-\begin{footnotesize}
+\begin{small}
 <<fitATV.lnorm.quantileb, echo=FALSE>>=
 quantile(bendo.B, probs = 0.05)
 @
-\end{footnotesize}
+\end{small}
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1336,7 +1336,8 @@ giving the preference
 to the negative binomial distribution, from both Chi-squared statistics and information criteria:
 %%% R code
 <<fittoxocara.poisnbinom.gof, echo=TRUE, fig=FALSE>>=
-gofstat(list(ftoxo.P,ftoxo.nb),fitnames = c("Poisson","negative binomial"))
+gofstat(list(ftoxo.P,ftoxo.nb),
+        fitnames = c("Poisson","negative binomial"))
 @
 
 
