@@ -38,6 +38,7 @@ library("actuar")
 fendo.ll <- fitdist(ATV, "llogis", start=list(shape=1, scale=500))
 fendo.P <- fitdist(ATV, "pareto", start=list(shape=1, scale=500))
 fendo.B <- fitdist(ATV, "burr", start=list(shape1=0.3, shape2=1, rate=1))
+par(mfrow=c(1, 1))
 cdfcomp(list(fendo.ln, fendo.ll, fendo.P, fendo.B), xlogscale = TRUE,
         ylogscale = TRUE, legendtext = 
           c("lognormal", "loglogistic", "Pareto", "Burr"))
@@ -92,7 +93,7 @@ memp <- function(x, order) sum(x^order)/length(x)
 fdanish.P.MME <- fitdist(danishuni$Loss, "pareto", method="mme", order=1:2, 
                          memp="memp", start=c(shape=10, scale=10), lower=c(2+1e-6,2+1e-6), 
                          upper=c(Inf,Inf))
-par(mfrow=c(1, 2))
+par(mfrow=c(1,2))
 cdfcomp(list(fdanish.ln.MLE, fdanish.ln.MME), 
         legend=c("lognormal MLE", "lognormal MME"), main="Fitting a lognormal distribution",
         xlogscale=TRUE, datapch=20)
@@ -101,12 +102,13 @@ cdfcomp(list(fdanish.P.MLE, fdanish.P.MME),
         xlogscale=TRUE, datapch=20)
 
 #17
+par(mfrow=c(1, 1))
 cdfcomp(list(fdanish.P.MLE, fdanish.P.MME), 
         legend=c("Pareto MLE", "Pareto MME"), 
         main="Fitting a Pareto distribution", xlogscale=TRUE, datapch=".")
 gofstat(list(fdanish.ln.MLE, fdanish.P.MLE, 
              fdanish.ln.MME, fdanish.P.MME),
-        fitnames = c("lnorm.mle","Pareto.mle","lnorm.mle","Pareto.mme"))
+        fitnames = c("lnorm.mle","Pareto.mle","lnorm.mme","Pareto.mme"))
 
 #18
 fdanish.ln.QME1 <- fitdist(danishuni$Loss, "lnorm", method="qme", 
@@ -174,6 +176,7 @@ str(toxocara)
 #28
 (ftoxo.P <- fitdist(toxocara$number, "pois"))
 (ftoxo.nb <- fitdist(toxocara$number, "nbinom"))
+plot(ftoxo.P)
 
 #29
 cdfcomp(list(ftoxo.P,ftoxo.nb),

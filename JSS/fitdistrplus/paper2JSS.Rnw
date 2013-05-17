@@ -905,7 +905,7 @@ legend=c("Pareto MLE", "Pareto MME"),
 main="Fitting a Pareto distribution", xlogscale=TRUE, datapch=".")
 gofstat(list(fdanish.ln.MLE, fdanish.P.MLE, 
 fdanish.ln.MME, fdanish.P.MME),
-fitnames = c("lnorm.mle","Pareto.mle","lnorm.mle","Pareto.mme"))
+fitnames = c("lnorm.mle","Pareto.mle","lnorm.mme","Pareto.mme"))
 @
 
 As shown on Figure~\ref{fig:danish:mme}, MME and MLE fits
