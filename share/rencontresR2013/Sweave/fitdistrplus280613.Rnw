@@ -1,13 +1,14 @@
-\documentclass{beamer}
+\documentclass[9pt, hide notes]{beamer}
 
 \mode<presentation>
 {
-  %\usetheme{Boadilla}
- % \setbeamercovered{transparent}
-  %\setbeamertemplate{navigation symbols}{} 
+  
+ 
+  
    
     %---- themes
   	\usetheme{Antibes}
+    %\usetheme{Boadilla}
   	%\usetheme{Singapore}
   	%\usetheme{Warsaw}
 	
@@ -40,12 +41,12 @@
 	%What do you want in your header? by default, there is the current subsection
 	
 	%if you want to insert a complete navigation	
-	%	\setbeamertemplate{headline}
-	%	{%--
-	%		\begin{beamercolorbox}{section in head/foot}
-	%			\vskip2pt\insertnavigation{\paperwidth}\vskip2pt
-	%		\end{beamercolorbox}
-	%	}%--
+		\setbeamertemplate{headline}
+		{%--
+			\begin{beamercolorbox}{section in head/foot}
+				\vskip2pt\insertnavigation{\paperwidth}\vskip2pt
+			\end{beamercolorbox}
+		}%--
 	
 	%---- footline	
 	%add frame number and logo
@@ -60,6 +61,7 @@
 	     \hspace{0.5cm}
 	     Rencontres R 2013
 	     \hfill
+       M.L. Delignette-Muller et C. Dutang
 	\end{beamercolorbox}
   	}%--
   
@@ -73,14 +75,13 @@
   %\setbeamercovered{transparent}
   % or whatever (possibly just delete it)
   
-
 }
 
 
 
 \usepackage[francais]{babel}
 \usepackage[latin1]{inputenc}
-\usepackage{beamerthemesplit}
+%\usepackage{beamerthemesplit}
 \usepackage{graphicx}
 \usepackage{verbatim}
 \usepackage{pdfcolmk}
@@ -93,22 +94,22 @@
 \usepackage{amsmath,amsfonts,amssymb,latexsym,qsymbols}
 \usepackage{multirow}
 
-\title[fitdistrplus : nouvelles fonctionnalités]% 
-{Nouvelles fonctionnalités du package \texttt{fitdistrplus}}
+\title[fitdistrplus : nouvelles fonctionnalit\'es]% 
+{Nouvelles fonctionnalit\'es du package \texttt{fitdistrplus}}
 
 \author[M.L. Delignette-Muller et C. Dutang]
-{\textbf{Marie Laure Delignette-Muller}\\Université de Lyon \\
-UMR CNRS 5558, Laboratoire de Biométrie et Biologie Evolutive\\
-VetAgro Sup, Campus vétérinaire de Lyon\\et\\
-           \textbf{Christophe Dutang} \\Université de Strasbourg \\
-           UMR CNRS 7501, Institut de Recherche Mathématique Avancée}
+{\textbf{Marie Laure Delignette-Muller}\\ Universit\'e de Lyon \\
+UMR CNRS 5558, Laboratoire de Biom\'etrie et Biologie Evolutive\\
+VetAgro Sup, Campus v\'et\'erinaire de Lyon\\et\\
+           \textbf{Christophe Dutang} \\ Universit\'e de Strasbourg \\
+           UMR CNRS 7501, Institut de Recherche Math\'ematique Avanc\'ee}
 
-\date[26_27 juin 2013]{Deuxièmes rencontres R, Lyon, 27-28 juin 2013}
+\date[26-27 juin 2013]{Deuxi\`emes rencontres R, Lyon, 27-28 juin 2013}
 
 \begin{document}
 \SweaveOpts{concordance=TRUE}
 \setkeys{Gin}{width=0.5\textwidth}
-% une valeur inférieure au 0.8 par défaut réduit la taille des figures
+% une valeur inf?rieure au 0.8 par d?faut r?duit la taille des figures
 
 \begin{frame}[fragile]
 \titlepage
@@ -119,62 +120,62 @@ VetAgro Sup, Campus vétérinaire de Lyon\\et\\
 
   %DIA 2
 \begin{frame}[fragile]
-\frametitle{Présentation du package \texttt{fitdistrplus}}
+\frametitle{Pr\'esentation du package \texttt{fitdistrplus}}
 \begin{center}
 \url{http://cran.r-project.org/package=fitdistrplus}\\
 \url{http://riskassessment.r-forge.r-project.org/}
 \end{center}
 Package pour \textbf{l'ajustement de distributions
-paramétriques à des données univariées},\\ proposant diverses fonctions pour :
+param\'etriques \`a des donn\'ees univari\'ees},\\ proposant diverses fonctions pour :
   \begin{itemize}
-\item le choix de distributions candidates pour décrire les données,
-\item l'ajustement de chacune des distributions candidates aux données,
-\item la comparaison des ajustements en vue de choisir la distribution la plus adaptée,
-\item le calcul, par bootstrap, de l'incertitude sur les paramètres estimés de la distribution choisie.
+\item le choix de distributions candidates pour d\'ecrire les donn\'ees,
+\item l'ajustement de chacune des distributions candidates aux donn\'ees,
+\item la comparaison des ajustements en vue de choisir la distribution la plus adapt\'ee,
+\item le calcul, par bootstrap, de l'incertitude sur les param\`etres estim\'es de la distribution choisie.
 \end{itemize}
 \end{frame}
 
 % DIA 3
 \begin{frame}
-\frametitle{Quelques spécificités du package}
+\frametitle{Quelques sp\'ecificit\'es du package}
 \begin{itemize}
-\item \textbf{Différentes méthodes d'estimation des paramètres} sont proposées :
+\item \textbf{Diff\'erentes m\'ethodes d'estimation des param\`etres} sont propos\'ees :
   \begin{itemize}
-  \item méthode du \textcolor{blue}{maximum de vraisemblance (MLE)}, 
-  \item méthode des \textcolor{blue}{moments (MME)}, 
-  \item méthode des \textcolor{blue}{quantiles (QME)}, 
-  \item méthode de \textcolor{blue}{minimisation d'une statistique d'ajustement (MGE)} (8 distances proposées).
+  \item m\'ethode du \textcolor{blue}{maximum de vraisemblance (MLE)}, 
+  \item m\'ethode des \textcolor{blue}{moments (MME)}, 
+  \item m\'ethode des \textcolor{blue}{quantiles (QME)}, 
+  \item m\'ethode de \textcolor{blue}{minimisation d'une statistique d'ajustement (MGE)} (8 distances propos\'ees).
   \end{itemize}
 \item Prise en compte 
     \begin{itemize}
-  \item des données discrètes 
-    \item et des \textbf{données censurées} quel que
-soit le type de censures \\(à droite, à gauche ou par intervalle).
+  \item des donn\'ees discr\`etes 
+    \item et des \textbf{donn\'ees censur\'ees} quel que
+soit le type de censures \\(\`a droite, \`a gauche ou par intervalle).
   \end{itemize}
-\item Possibilité de modifier l'algorithme d'optimisation \\(par défaut \texttt{optim}).
+\item Possibilit\'e de modifier l'algorithme d'optimisation \\(par d\'efaut \texttt{optim}).
 \end{itemize}
 \end{frame}
               
 % DIA 4
 \begin{frame}
 \frametitle{Utilisation actuelle du package}
-\textbf{Package développé initialement pour l'appréciation quantitative du risque}\\ 
+\textbf{Package d\'evelopp\'e initialement pour l'appr\'eciation quantitative du risque}\\ 
 %(projet Rforge
 %\url{http://riskassessment.r-forge.r-project.org/})\\
 notamment pour permettre
-la caractérisation hiérarchique de la variabilité et de l'incertitude dans le cadre de simulations de 
-Monte carlo à deux dimensions (package \texttt{mc2d}).\\
-\textbf{Package généraliste simple à utiliser}, \\utilisé dans des domaines variés :
+la caract\'erisation hi\'erarchique de la variabilit\'e et de l'incertitude dans le cadre de simulations de 
+Monte carlo \`a deux dimensions (package \texttt{mc2d}).\\
+\textbf{Package g\'en\'eraliste simple \`a utiliser}, \\utilis\'e dans des domaines vari\'es :
 \begin{itemize}
 \item risque alimentaire, 
-\item épidémiologie, 
-\item biologie moléculaire, 
-%\item génomique, 
+\item \'epid\'emiologie, 
+\item biologie mol\'eculaire, 
+%\item g\'enomique, 
 \item bioinformatique, 
-\item mathématiques financières et actuarielles, \dots
+\item math\'ematiques financi\`eres et actuarielles, \dots
 \end{itemize}
-\textcolor{blue}{$\rightarrow$ les retours des utilisateurs nous ont incité à développer de 
-\textbf{nouvelles fonctionnalités}}.
+\textcolor{blue}{$\rightarrow$ les retours des utilisateurs nous ont incit\'e \`a d\'evelopper de 
+\textbf{nouvelles fonctionnalit\'es}}.
 \end{frame}
 
 % DIA 5
@@ -212,7 +213,7 @@ cdfcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"),
 
 % DIA 6
 \begin{frame}[fragile]
-\frametitle{Comparaison visuelle de plusieurs ajustements : \\représentation en densité de probabilité (\texttt{denscomp})}
+\frametitle{Comparaison visuelle de plusieurs ajustements : \\repr\'esentation en densit\'e de probabilit\'e (\texttt{denscomp})}
 \begin{footnotesize}
 \setkeys{Gin}{width=0.9\textwidth}
 <<densgroundbeefecho, echo=TRUE, fig=FALSE>>=
@@ -284,11 +285,11 @@ qqcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"),
 
 % DIA 9
 \begin{frame}[fragile]
-\frametitle{Comparaison numérique de plusieurs ajustements}
+\frametitle{Comparaison num\'erique de plusieurs ajustements}
 \begin{itemize}
 \item \textbf{Statistiques d'ajustement}, \\
-Kolmogorov-Smirnov, Cramér-von Mises et Anderson-Darling,\\
-\item et \textbf{critères d'information} , AIC et BIC.
+Kolmogorov-Smirnov, Cram\'er-von Mises et Anderson-Darling,\\
+\item et \textbf{crit\`eres d'information} , AIC et BIC.
 \end{itemize}
 \begin{footnotesize}
 \setkeys{Gin}{width=0.9\textwidth}
@@ -301,7 +302,7 @@ gofstat(list(fw,fln,fg),
 
 % DIA 10 
 \begin{frame}[fragile]
-\frametitle{Calcul de quantiles à partir d'une loi ajustée : \\ exemple sur données censurées en écotoxicologie}
+\frametitle{Calcul de quantiles \`a partir d'une loi ajust\'ee : \\ exemple sur donn\'ees censur\'ees en \'ecotoxicologie}
 \begin{footnotesize}
 <<salinityecho, echo=TRUE, fig=FALSE>>=
 data(salinity)
@@ -376,13 +377,13 @@ text((q$quantCI[1,70]+q$quantCI[2,70])/2,probs[70],"IC 95%",col="red",pos=3)
 \frametitle{Perspectives}
 Nous envisageons 
 \begin{itemize}
-\item d'\textbf{étendre aux données censurées certaines méthodes} disponibles
-actuellement sur les données non censurées,
-\item d'\textbf{élargir le choix de distances} utilisables pour l'ajustement par minimisation de ces distances et pour l'évaluation de la qualité de l'ajustement \\(distances basées sur les quantiles),
-\item d'\textbf{élargir le choix des moments} pour l'ajustement par la méthode des moments \\(``L-moment'' et ``TL-moment''),
-\item aborder l'\textbf{ajustement de distributions multivariées}.
+\item d'\textbf{\'etendre aux donn\'ees censur\'ees certaines m\'ethodes} disponibles
+actuellement sur les donn\'ees non censur\'ees,
+\item d'\textbf{\'elargir le choix de distances} utilisables pour l'ajustement par minimisation de ces distances et pour l'\'evaluation de la qualit\'e de l'ajustement \\(distances bas\'ees sur les quantiles),
+\item d'\textbf{\'elargir le choix des moments} pour l'ajustement par la m\'ethode des moments \\(``L-moment'' et ``TL-moment''),
+\item aborder l'\textbf{ajustement de distributions multivari\'ees}.
 \end{itemize}
-\textcolor{blue}{N'hésitez pas à nous envoyer vos retours ou idées en vue de l'amélioration de ce package.}
+\textcolor{blue}{N'h\'esitez pas ? nous envoyer vos retours ou id\'ees en vue de l'am\'elioration de ce package.}
 \end{frame}
 
 
