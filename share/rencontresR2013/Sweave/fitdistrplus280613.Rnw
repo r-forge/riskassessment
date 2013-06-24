@@ -144,7 +144,8 @@ param\'etriques \`a des donn\'ees univari\'ees},\\ proposant diverses fonctions 
   \item m\'ethode du \textcolor{blue}{maximum de vraisemblance (MLE)}, 
   \item m\'ethode des \textcolor{blue}{moments (MME)}, 
   \item m\'ethode des \textcolor{blue}{quantiles (QME)}, 
-  \item m\'ethode de \textcolor{blue}{minimisation d'une statistique d'ajustement (MGE)} (8 distances propos\'ees).
+  \item m\'ethode de \textcolor{blue}{minimisation d'une statistique d'ajustement (MGE)} 
+  \\(8 distances propos\'ees).
   \end{itemize}
 \item Prise en compte 
     \begin{itemize}
@@ -383,7 +384,7 @@ actuellement sur les donn\'ees non censur\'ees,
 \item d'\textbf{\'elargir le choix des moments} pour l'ajustement par la m\'ethode des moments \\(``L-moment'' et ``TL-moment''),
 \item aborder l'\textbf{ajustement de distributions multivari\'ees}.
 \end{itemize}
-\textcolor{blue}{N'h\'esitez pas ? nous envoyer vos retours ou id\'ees en vue de l'am\'elioration de ce package.}
+\textcolor{blue}{N'h\'esitez pas \`a nous envoyer vos retours ou id\'ees en vue de l'am\'elioration de ce package.}
 \end{frame}
 
 
