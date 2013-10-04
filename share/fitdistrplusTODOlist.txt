@@ -7,8 +7,11 @@
     as dicrete other distributions than those defined in R (such as zero-inflated Poisson dist)
 
 41. update vignette files and create vignette directory
-    
+ 
+43. exploration of the error message obtained by Ajay Kumar with gofstat   
 === long term ===
+44. improvement of the Cullen-Frey graph (problem with the lognormal line) 
+42. implementation of the likelihood surface
 
 39. offer a function to do prior elicitation from quantiles
 
