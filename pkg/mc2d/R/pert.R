@@ -144,6 +144,11 @@ rpert <- function(n,min=-1,mode=0,max=1,shape=4)
 { if(n < 0) stop("integer(n) can not be negative in rpert")
   #other pathologic cases for n treated in rbeta
   
+  min <- as.vector(min)
+  mode <- as.vector(mode)
+  max <- as.vector(max)
+  shape <- as.vector(shape)
+  
   a1 <- 1+shape*(mode-min)/(max-min)  
   a2 <- 1+shape*(max-mode)/(max-min)
   
