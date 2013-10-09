@@ -74,7 +74,7 @@ generates random deviates.
 }
 \references{
 Vose D. Risk Analysis - A Quantitative Guide (John Wiley and Sons,
-2000). The equations used in these functions are from
+2000). The formulas used in these functions are from
 \href{http://www.vosesoftware.com/ModelRiskHelp/Distributions/Continuous_distributions/Modified_PERT_equations.htm}{Vose software}.
 }
 \author{

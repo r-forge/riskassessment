@@ -36,7 +36,7 @@ dpert <- function(x,min=-1,mode=0,max=1,shape=4,log=FALSE)
 #of the min, max and mode of a random variable in a smooth parametric distribution. 
 #REFERENCE
 #Vose D. Risk Analysis - A Quantitative Guide (John Wiley and Sons, 2000).  
-#The equations used in these functions are from 
+#The formulas used in these functions are from 
 #\href{http://www.vosesoftware.com/ModelRiskHelp/Distributions/Continuous_distributions/Modified_PERT_equations.htm}{Vose software}.
 #AUTHOR Regis Pouillot and Matthew Wiener
 #EXAMPLE
