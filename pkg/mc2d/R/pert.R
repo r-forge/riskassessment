@@ -30,14 +30,12 @@ dpert <- function(x,min=-1,mode=0,max=1,shape=4,log=FALSE)
 #
 #If \eqn{\mu=mode}{mu=mode}, \eqn{\alpha_{1}}{shape1} is set to \eqn{1+\nu/2}{1+shape/2}.
 #
-#Vose (See reference) proposed a modified PERT distribution with a shape parameter different from 4. 
+#David Vose (See reference) proposed a modified PERT distribution with a shape parameter different from 4. 
 #
 #The PERT distribution is frequently used (with the \link{triangular} distribution) to translate expert estimates
 #of the min, max and mode of a random variable in a smooth parametric distribution. 
 #REFERENCE
-#Vose D. Risk Analysis - A Quantitative Guide (John Wiley and Sons, 2000).  
-#The formulas used in these functions are from 
-#\href{http://www.vosesoftware.com/ModelRiskHelp/Distributions/Continuous_distributions/Modified_PERT_equations.htm}{Vose software}.
+#Vose D. Risk Analysis - A Quantitative Guide (2nd and 3rd editions, John Wiley and Sons, 2000, 2008).  
 #AUTHOR Regis Pouillot and Matthew Wiener
 #EXAMPLE
 #curve(dpert(x,min=3,mode=5,max=10,shape=6), from = 2, to = 11, lty=3)

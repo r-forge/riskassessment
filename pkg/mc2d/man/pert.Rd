@@ -60,7 +60,7 @@ mode-min-max)/((mode-mu)*(max - min))}
 If \eqn{\mu=mode}{mu=mode}, \eqn{\alpha_{1}}{shape1} is set to
 \eqn{1+\nu/2}{1+shape/2}.
 
-Vose (See reference) proposed a modified PERT distribution with a
+David Vose (See reference) proposed a modified PERT distribution with a
 shape parameter different from 4. 
 
 The PERT distribution is frequently used (with the \link{triangular}
@@ -73,9 +73,8 @@ function, \samp{qpert} gives the quantile function, and \samp{rpert}
 generates random deviates.
 }
 \references{
-Vose D. Risk Analysis - A Quantitative Guide (John Wiley and Sons,
-2000). The formulas used in these functions are from
-\href{http://www.vosesoftware.com/ModelRiskHelp/Distributions/Continuous_distributions/Modified_PERT_equations.htm}{Vose software}.
+Vose D. Risk Analysis - A Quantitative Guide (2nd and 3rd editions,
+John Wiley and Sons, 2000, 2008).  
 }
 \author{
 Regis Pouillot and Matthew Wiener
