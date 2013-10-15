@@ -1,6 +1,8 @@
 \name{mccut}
 \alias{mccut}
 \alias{evalmccut}
+\alias{print.mccut}
+\alias{mcmodelcut}
 \title{
 Evaluates a Two-Dimensional Monte Carlo Model in a Loop.
 }
@@ -16,6 +18,8 @@ to \samp{evalmccut}.
 }
 \usage{
 evalmccut(model, nsv=ndvar(), nsu=ndunc(), seed=NULL, ind="index")
+\method{print}{mccut}(x, lim=c(0.025, 0.975), digits=3, ...)
+mcmodelcut(x, is.expr=FALSE)
 }
 \examples{
 modEC3 <- mcmodelcut({
@@ -52,6 +56,7 @@ modEC3 <- mcmodelcut({
 
 x <- evalmccut(modEC3, nsv = 101, nsu = 101, seed = 666)
 summary(x)
+
 }
 \arguments{
 \item{model}{a \samp{mcmodelcut} object obtained using
