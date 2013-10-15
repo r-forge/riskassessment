@@ -745,7 +745,7 @@ finite or infinite .
 %true
 <<sh5, echo=true, eval=true>>=
 cook < 1
-tmp <- log(mcstoc(runif,min=-1,max=1))
+suppressWarnings(tmp <- log(mcstoc(runif,min=-1,max=1)))
 tmp
 is.na(tmp)
 @
@@ -1397,8 +1397,9 @@ datDR <- list(   dose=c(30,100,300,500,1000,10000,100000,1000000),
                  ni=c(5,8,3,6,2,3,1,1))
 
 estDR <- function(pos,ref){
-   -glm(cbind(ref$ni-pos,pos) ~ ref$dose + 0, 
-    binomial(link="log"))$coefficients}
+   suppressWarnings(
+	-glm(cbind(ref$ni-pos,pos) ~ ref$dose + 0, 
+		binomial(link="log"))$coefficients)}
 
 ml <- 1-exp(-estDR(datDR$pi, datDR) * datDR$dose)
 
