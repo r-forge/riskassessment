@@ -122,6 +122,9 @@ users a set of functions dedicated to help this overall process.
 
 The \code{fitdistr} function estimates distribution parameters by maximizing the likelihood
 function using the \code{optim} function. 
+No distinction between parameter role (e.g. a scale %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+parameter) is made, as our talk focus 
+on parameter estimation from a general point-of-view. %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 In some cases, other estimation methods could be prefered, 
 such as maximum goodness-of-fit estimation (also called minimum distance estimation), as
 proposed in the \proglang{R} package \pkg{actuar} with three different goodness-of-fit distances
@@ -146,12 +149,18 @@ to estimate univariate distribution parameters from right-, left- and interval-c
 
 Few packages on \sigle{CRAN} provide estimation procedures for any user-supplied parametric distribution 
 and support different types of data. 
-The \pkg{distrMod} package \citep{distrModJSS} provides an object-oriented (S4) 
-implementation of probability models for non-censored data
-and includes distribution fitting procedures for a given minimization criterion.
-This package is based on the \proglang{R}-shipped function \code{mle} of the \pkg{stats4} package
-producing S4 objects of class \code{"mle"} for which generic methods are 
-implemented, e.g., \code{confint} and \code{logLik}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The \pkg{distrMod} package \citep{distrModJSS} provides an object-oriented (S4)  
+implementation of probability models and includes distribution fitting procedures  
+for a given minimization criterion. 
+This criterion is a user-supplied function 
+which is sufficiently flexible to handle censored data, yet not in a trivial way,
+see Example M4 of the \pkg{distrMod} vignette.
+The fitting functions \code{MLEstimator} and \code{MDEstimator} return an S4 class 
+for which a coercion method to class mle is provided so that the respective 
+functionalities (e.g. \code{confint} and \code{logLik}) from package \pkg{stats4} 
+are available, too.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 In \pkg{fitdistrplus}, we chose to use the standard S3 class system for its understanding by most \proglang{R} users.
 When designing the \pkg{fitdistrplus} package, we did not forget to implement
 generic functions also available for S3 classes.
@@ -509,7 +518,11 @@ empirical quantile for comparison.
 quantile(fendo.B, probs = 0.05)
 quantile(ATV, probs = 0.05)
 @
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In addition to the ecotoxicology context, the \code{quantile} generic function is also attractive in
+the actuarial--financial context. In fact, the value-at-risk $VAR_\alpha$ is defined as the $1-\alpha$-quantile
+of the loss distribution and can be computed with \code{quantile} on a \code{"fitdist"} object.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 The computation of different goodness-of-fit statistics is proposed in the \pkg{fitdistrplus} package
@@ -820,8 +833,9 @@ In \pkg{fitdistrplus}, the data set is stored in \code{danishuni} for the univar
 the loss amounts collected at Copenhagen Reinsurance between 1980 and 1990.
 In actuarial science, it is standard to consider positive heavy-tailed distributions and have 
 a special focus on the right-tail of the distributions.
-In this numerical experiment,  the lognormal distribution is first considered and then the Pareto type II 
-distribution \citep{Klugmanetal09}.
+In this numerical experiment, we choose classic actuarial 
+distributions for loss modelling: the lognormal distribution and the Pareto type II 
+distribution, see e.g. \citep{Klugmanetal09}. 
 
 The lognormal distribution is 
 fitted to \code{danishuni} data set by matching moments implemented as a closed-form formula.
@@ -911,8 +925,9 @@ fitnames = c("lnorm.mle","Pareto.mle","lnorm.mme","Pareto.mme"))
 As shown on Figure~\ref{fig:danish:mme}, MME and MLE fits
 are far less distant (when looking at the right-tail) for the Pareto distribution 
 than for the lognormal distribution on this data set. 
-Furthermore, for these two distributions, the MME method better fits the
-right-tail of the distribution, which seems logical since empirical moments 
+Furthermore, for these two distributions, the MME method better fits the 
+right-tail of the distribution from a visual point of view. 
+This seems logical since empirical moments 
 are influenced by large observed values.
 In the previous traces, we gave the values of goodness-of-fit statistics.
 Whatever the statistic considered, the MLE-fitted lognormal always provides the best fit 
@@ -975,7 +990,7 @@ As expected, the second QME fit gives more weight to the right-tail of the distr
 %, despite we do not choose the Pareto type-II distribution.
 Compared to the maximum likelihood estimation, the second QME fit best suits the right-tail
 of the distribution, whereas the first QME fit best models the body of the distribution.
-The quantile matching estimation is of particular interest when we need a focus 
+The quantile matching estimation is of particular interest when we need to focus 
 around particular quantiles, e.g., $p=99.5\%$ in the Solvency II insurance context or
 $p=5\%$ for the HC5 estimation in the ecotoxicology context.
 
@@ -1009,6 +1024,13 @@ The argument \code{optim.method} can be used in the call to \code{fitdist} or
 \code{fitdistcens}. It will internally be passed to \code{mledist},
 \code{mmedist}, \code{mgedist} or \code{qmedist}, and to \code{optim}
 (see \code{?optim} for details about the different algorithms available).
+
+Even if no error is raised when computing the optimization, changing the algorithm 
+is of particular interest to enforce bounds on some parameters. For instance, a 
+volatility parameter $\sigma$ is strictly positive $\sigma>0$ and a probability 
+ parameter $p$ lies in $p\in [0,1]$. This is possible by using arguments \code{lower} 
+ and/or \code{upper}, for which their use automatically forces 
+ \code{optim.method="L-BFGS-B"}. 
 
 
 Below are examples of fits of a gamma distribution $\mathcal{G}(\alpha, \lambda)$ to 
@@ -1353,19 +1375,26 @@ We have been encouraged to pursue our work by feedbacks
 from users of our package in various areas as food or environmental risk assessment, epidemiology, ecology, 
 molecular biology, genomics, bioinformatics, hydraulics, mechanics, financial and actuarial mathematics 
 or operations research. Indeed, this package is already used by a lot of practionners and academics 
-for simple MLE fits \citep{distrModJSS,jaloustreetal11,saketal11,kochetal12,marquetouxetal12,nordan12,
-scholletal12,suuronenetal12,varoetal12,mandletal13}, for MLE fits and goodness-of-fit statistics 
-\citep{garcia12,tarnczi11,bagariaetal12,benavidesetal12,breitbach12,poduje12,Pouillot10}, 
-for MLE fits 
-and bootstrap \citep{croucheretal12,meheustetal12,orellanoetal12,telloetal12,hoelzeretal12}, 
-for MLE fits, 
-bootstrap and goodness-of-fit statistics \citep{rebuge12}, 
-for MME fit \citep{luangkesornetal12}, 
-for 
-censored MLE and bootstrap \citep{lehaetal11,poulliotetal12,jongenburgeretal12,commeauetal12,pouillotetal11}, 
+for simple MLE fits \citep{jaloustreetal11,saketal11,kochetal12,marquetouxetal12,nordan12,
+scholletal12,suuronenetal12,varoetal12,mandletal13,mala2013,mala2013publi,nadarajahbakar2013,simoetal13,
+westphalfitch13,wayland13,vianaetal13,wu13,staggeetal13,fiorellietal13,mukhopadhyay13,tikoleetal13,
+voigtetal14}, 
+for MLE fits and goodness-of-fit statistics 
+\citep{tarnczi11,garcia12,bagariaetal12,benavidesetal12,breitbach12,poduje12,Pouillot10,vaninsky13}, 
+for MLE fits and bootstrap \citep{croucheretal12,meheustetal12,orellanoetal12,telloetal12,hoelzeretal12,
+prosseretal13,Zhang2013,lebaut13,Rigaux2014}, 
+for MLE fits, bootstrap and goodness-of-fit statistics \citep{rebuge12,larrasetal13}, 
+for MME fit \citep{luangkesornetal12,callauetal13,satoetal13}, 
+for censored MLE and bootstrap \citep{lehaetal11,pouillotetal11,poulliotetal12,jongenburgeretal12,
+commeauetal12,Kingetal2013,contrerasetal2013,duarte13,feng13}, 
 for graphic analysing in \citep{anandetal12,rosa12}, 
 for grouped-data fitting methods \citep{fusteinercostafreda12} 
-or more generally \citep{eling12,busschaertetal10,brooksetal11,aktassjostrand11,eikhermann12,bakos11}.
+or more generally \citep{busschaertetal10,brooksetal11,aktassjostrand11,bakos11,eling12,eikhermann12,
+sosaetal2013,srinivasanetal2013,meyeretal13,Guillier2013471,Daelmanetal13,gustafssonetal13,
+eiketal13,Wu2:2013,drakeetal2014}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The \pkg{fitdistrplus} package is also complementary with the \pkg{distrMod} package, \citep{distrModJSS}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Many extensions of this package are planned in the future: 
 we target to extend to censored data some methods for the moment only available for non-censored data, 
 especially concerning goodness-of-fit evaluation and fitting methods. We will also enlarge the choice of 
@@ -1380,8 +1409,10 @@ consider the case of multivariate distribution fitting.
 The package would not have been at this stage without the stimulating contribution of R\'egis Pouillot  and 
 Jean-Baptiste Denis, especially for its conceptualization. We also want to thank R\'egis Pouillot for 
 his very valuable comments on the first version of this paper.
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The authors gratefully acknowledges the two anonymous referees and the Editor for useful and constructive
+comments. The remaining errors, of course, should be attributed to the authors alone.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %\bibliographystyle{plain}
