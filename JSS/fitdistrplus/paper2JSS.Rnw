@@ -122,9 +122,9 @@ users a set of functions dedicated to help this overall process.
 
 The \code{fitdistr} function estimates distribution parameters by maximizing the likelihood
 function using the \code{optim} function. 
-No distinction between parameter role (e.g. a scale %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-parameter) is made, as our talk focus 
-on parameter estimation from a general point-of-view. %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+No distinction between parameters with different roles (e.g. main parameter and nuisance parameter)
+is made, as our talk focuses 
+on parameter estimation from a general point-of-view. 
 In some cases, other estimation methods could be prefered, 
 such as maximum goodness-of-fit estimation (also called minimum distance estimation), as
 proposed in the \proglang{R} package \pkg{actuar} with three different goodness-of-fit distances
@@ -142,9 +142,9 @@ helsel05,busschaertetal10,lehaetal11,commeauetal12}.
 The \pkg{MASS} \code{fitdistr} function 
 does not enable maximum likelihood estimation with this type of data. Some packages 
 can be used to work with censored data, especially survival data \citep{survival,hiranoetal94,jordan05},
-but those packages generally focused on specific models, enabling the fit of  a 
+but those packages generally focus on specific models, enabling the fit of  a 
 restricted set of distributions. 
-A third objective was thus to provide \proglang{R} users a function 
+A third objective is thus to provide \proglang{R} users a function 
 to estimate univariate distribution parameters from right-, left- and interval-censored data. 
 
 Few packages on \sigle{CRAN} provide estimation procedures for any user-supplied parametric distribution 
@@ -166,7 +166,7 @@ When designing the \pkg{fitdistrplus} package, we did not forget to implement
 generic functions also available for S3 classes.
 Finally, various other packages provide functions to estimate the mode, the moments or the L-moments of a distribution, see the reference manuals of  \pkg{modeest}, \pkg{lmomco} and \pkg{Lmoments} packages.
 
-This manuscript reviews the various features of version 1.0-1 of \pkg{fitdistrplus}. The package
+This manuscript reviews the various features of version 1.0-2 of \pkg{fitdistrplus}. The package
 is available from the Comprehensive \proglang{R} Archive Network at \url{http://cran.r-project.org/package=fitdistrplus}.
 The development version of the package is located at \proglang{R}-forge as one package of the 
 project ``Risk Assessment with R''
@@ -210,12 +210,14 @@ To help the user in this choice, we developed functions to plot and
 characterize the empirical distribution.
 
 First of all, it is common to start with plots of the empirical distribution 
-function and the histogram, which can be obtained with the \code{plotdist} function of the \pkg{fitdistrplus} package.
-This function provides two plots (see Figure~\ref{plotdistcont}): the left-hand plot is the histogram (on a density scale) 
+function and the histogram (or density plot), which can be obtained with the \code{plotdist} function of the \pkg{fitdistrplus} package.
+This function provides two plots (see Figure~\ref{plotdistcont}): the left-hand plot is by default the histogram 
+on a density scale
+(or density plot of both, according to values of arguments \code{histo} and \code{demp})
 and the right-hand  plot the empirical cumulative distribution function (CDF).
 %%% R code
 <<figgroundbeef.echo, echo=TRUE, fig=FALSE, eval=FALSE>>=
-plotdist(groundbeef$serving)
+plotdist(groundbeef$serving, histo = TRUE, demp = TRUE)
 @
 
 \setkeys{Gin}{width=0.8\textwidth}
@@ -224,7 +226,7 @@ plotdist(groundbeef$serving)
   \centering
   %%% R code
 <<figgroundbeefplot, echo=FALSE, fig=TRUE, width=10, height=5, eps=FALSE>>=
-plotdist(groundbeef$serving)
+plotdist(groundbeef$serving, histo = TRUE, demp = TRUE)
 @
   \caption{Histogram and CDF plots of an empirical distribution for a continuous variable 
   (serving size from the \code{groundbeef} data set) as provided by the \code{plotdist} function.}
@@ -277,6 +279,7 @@ procedure \citep{efrontibshirani94} can be performed by using the argument \code
 Values of skewness and kurtosis are computed on bootstrap samples (constructed by 
 random sampling with replacement from the original data set) and reported on the 
 skewness-kurtosis plot. 
+Nevertheless, the user needs to know that skewness and kurtosis,  like all higher moments, have a very high variance. This is a problem which cannot be completely solved by the use of bootstrap. The skewness-kurtosis plot should then be regarded as indicative only.
 The properties of the random variable should be considered, notably its expected value and its range,
 as a complement to the use of the \code{plotdist} and \code{descdist} functions. 
 Below is a call to the \code{descdist} function to describe the distribution 
@@ -433,15 +436,14 @@ acute toxicity values for the organochlorine pesticide endosulfan
 tested on Australian and non-Australian laboratory-species 
 %(arthropods, fish or nonarthropod invertebrates)
 \citep{Hose04}. 
-<<datendosulfan, echo=TRUE, eval=FALSE>>=
-data("endosulfan")
-str(endosulfan)
-@
-<<datendosulfan2, echo=FALSE, eval=TRUE>>=
-data("endosulfan")
-str(endosulfan, width = 70, strict.width = "cut")
-@
-
+%<<datendosulfan, echo=TRUE, eval=FALSE>>=
+%data("endosulfan")
+%str(endosulfan)
+%@
+%<<datendosulfan2, echo=FALSE, eval=TRUE>>=
+%data("endosulfan")
+%str(endosulfan, width = 70, strict.width = "cut")
+%@
 In ecotoxicology, a
 lognormal or a loglogistic distribution is often fitted to such a data set in order
 to characterize the species sensitivity distribution (SSD) for a pollutant. A low percentile
@@ -472,6 +474,7 @@ interest while defining an HC5 value (Figure~\ref{endo:comp}).
 
 %%% R code
 <<fitendo.echo, echo=TRUE, fig=FALSE>>=
+data("endosulfan")
 ATV <-endosulfan$ATV
 fendo.ln <- fitdist(ATV, "lnorm")
 library("actuar")
@@ -1392,10 +1395,14 @@ for grouped-data fitting methods \citep{fusteinercostafreda12}
 or more generally \citep{busschaertetal10,brooksetal11,aktassjostrand11,bakos11,eling12,eikhermann12,
 sosaetal2013,srinivasanetal2013,meyeretal13,Guillier2013471,Daelmanetal13,gustafssonetal13,
 eiketal13,Wu2:2013,drakeetal2014}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The \pkg{fitdistrplus} package is complementary with the \pkg{distrMod} package \citep{distrModJSS}. 
+\pkg{distrMod} provides an even more flexible way to estimate distribution parameters but its use requires
+a greater initial investment to learn how to manipulate the \texttt{S4} classes and methods
+developed in the \texttt{distr}-family packages.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-The \pkg{fitdistrplus} package is also complementary with the \pkg{distrMod} package, \citep{distrModJSS}.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Many extensions of this package are planned in the future: 
+Many extensions of the \pkg{fitdistrplus} package are planned in the future: 
 we target to extend to censored data some methods for the moment only available for non-censored data, 
 especially concerning goodness-of-fit evaluation and fitting methods. We will also enlarge the choice of 
 fitting methods for non-censored data, by proposing new goodness-of-fit distances (e.g., distances 
