@@ -1371,6 +1371,7 @@ gofstat(list(ftoxo.P,ftoxo.nb),
 \label{ccl}
 %%%%%%%%%%
 
+
 The \proglang{R}  package \pkg{fitdistrplus} allows to easily fit distributions. 
 Our main objective while developing this package was to provide tools for helping 
 \proglang{R} users to fit distributions to data. 
@@ -1378,22 +1379,22 @@ We have been encouraged to pursue our work by feedbacks
 from users of our package in various areas as food or environmental risk assessment, epidemiology, ecology, 
 molecular biology, genomics, bioinformatics, hydraulics, mechanics, financial and actuarial mathematics 
 or operations research. Indeed, this package is already used by a lot of practionners and academics 
-for simple MLE fits \citep{jaloustreetal11,saketal11,kochetal12,marquetouxetal12,nordan12,
-scholletal12,suuronenetal12,varoetal12,mandletal13,mala2013,mala2013publi,nadarajahbakar2013,simoetal13,
-westphalfitch13,wayland13,vianaetal13,wu13,staggeetal13,fiorellietal13,mukhopadhyay13,tikoleetal13,
+for simple MLE fits \citep{jaloustreetal11,saketal11,kochetal12,marquetouxetal12,
+scholletal12,suuronenetal12,varoetal12,mandletal13,mala2013publi,nadarajahbakar2013,simoetal13,
+westphalfitch13,wayland13,vianaetal13,wu13,staggeetal13,fiorellietal13,tikoleetal13,
 voigtetal14}, 
 for MLE fits and goodness-of-fit statistics 
-\citep{tarnczi11,garcia12,bagariaetal12,benavidesetal12,breitbach12,poduje12,Pouillot10,vaninsky13}, 
+\citep{tarnczi11,bagariaetal12,benavidesetal12,breitbach12,Pouillot10,vaninsky13}, 
 for MLE fits and bootstrap \citep{croucheretal12,meheustetal12,orellanoetal12,telloetal12,hoelzeretal12,
-prosseretal13,Zhang2013,lebaut13,Rigaux2014}, 
-for MLE fits, bootstrap and goodness-of-fit statistics \citep{rebuge12,larrasetal13}, 
+prosseretal13,Zhang2013,Rigaux2014}, 
+for MLE fits, bootstrap and goodness-of-fit statistics \citep{larrasetal13}, 
 for MME fit \citep{luangkesornetal12,callauetal13,satoetal13}, 
-for censored MLE and bootstrap \citep{lehaetal11,pouillotetal11,poulliotetal12,jongenburgeretal12,
-commeauetal12,Kingetal2013,contrerasetal2013,duarte13,feng13}, 
-for graphic analysing in \citep{anandetal12,rosa12}, 
+for censored MLE and bootstrap \citep{lehaetal11,poulliotetal12,jongenburgeretal12,
+commeauetal12,contrerasetal2013}, 
+for graphic analysing in \citep{anandetal12}, 
 for grouped-data fitting methods \citep{fusteinercostafreda12} 
-or more generally \citep{busschaertetal10,brooksetal11,aktassjostrand11,bakos11,eling12,eikhermann12,
-sosaetal2013,srinivasanetal2013,meyeretal13,Guillier2013471,Daelmanetal13,gustafssonetal13,
+or more generally \citep{busschaertetal10,eling12,
+sosaetal2013,srinivasanetal2013,meyeretal13,Guillier2013471,Daelmanetal13,
 eiketal13,Wu2:2013,drakeetal2014}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
