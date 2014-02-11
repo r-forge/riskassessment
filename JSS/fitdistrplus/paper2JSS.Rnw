@@ -838,7 +838,7 @@ In actuarial science, it is standard to consider positive heavy-tailed distribut
 a special focus on the right-tail of the distributions.
 In this numerical experiment, we choose classic actuarial 
 distributions for loss modelling: the lognormal distribution and the Pareto type II 
-distribution, see e.g. \citep{Klugmanetal09}. 
+distribution \citep{Klugmanetal09}. 
 
 The lognormal distribution is 
 fitted to \code{danishuni} data set by matching moments implemented as a closed-form formula.
