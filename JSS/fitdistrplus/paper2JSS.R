@@ -9,7 +9,7 @@ data("groundbeef")
 str(groundbeef)
 
 #3
-plotdist(groundbeef$serving)
+plotdist(groundbeef$serving, histo = TRUE, demp = TRUE)
 
 #4
 descdist(groundbeef$serving, boot=1000)
@@ -29,9 +29,6 @@ ppcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
 
 #7
 data("endosulfan")
-str(endosulfan)
-
-#8
 ATV <-endosulfan$ATV
 fendo.ln <- fitdist(ATV, "lnorm")
 library("actuar")
@@ -43,23 +40,23 @@ cdfcomp(list(fendo.ln, fendo.ll, fendo.P, fendo.B), xlogscale = TRUE,
         ylogscale = TRUE, legendtext = 
           c("lognormal", "loglogistic", "Pareto", "Burr"))
 
-#9
+#8
 quantile(fendo.B, probs = 0.05)
 quantile(ATV, probs = 0.05)
 
-#10
+#9
 gofstat(list(fendo.ln, fendo.ll, fendo.P, fendo.B),
         fitnames = c("lnorm","llogis","Pareto","Burr"))
 
-#11
+#10
 bendo.B <- bootdist(fendo.B, niter=1001)
 summary(bendo.B)
 plot(bendo.B)
 
-#12
+#11
 quantile(bendo.B, probs = 0.05)
 
-#13
+#12
 fendo.ln.ADL <- fitdist(ATV,"lnorm",method="mge",gof="ADL")
 fendo.ln.AD2L <- fitdist(ATV,"lnorm",method="mge",gof="AD2L")
 cdfcomp(list(fendo.ln, fendo.ln.ADL, fendo.ln.AD2L),
@@ -67,7 +64,7 @@ cdfcomp(list(fendo.ln, fendo.ln.ADL, fendo.ln.AD2L),
         main = "Fitting a lognormal distribution",xlegend = "bottomright",
         legendtext = c("MLE","Left-tail AD", "Left-tail AD 2nd order"))
 
-#14
+#13
 (HC5.estimates <- c(
   empirical = as.numeric(quantile(ATV, probs=0.05)),
   Burr = as.numeric(quantile(fendo.B, probs=0.05)$quantiles),
@@ -75,7 +72,7 @@ cdfcomp(list(fendo.ln, fendo.ln.ADL, fendo.ln.AD2L),
   lognormal_AD2 = as.numeric(quantile(fendo.ln.ADL, probs=0.05)$quantiles),
   lognormal_AD2L = as.numeric(quantile(fendo.ln.AD2L,probs=0.05)$quantiles)))
 
-#15
+#14
 data("danishuni")
 str(danishuni)
 fdanish.ln.MLE <- fitdist(danishuni$Loss, "lnorm")
@@ -85,7 +82,7 @@ cdfcomp(list(fdanish.ln.MLE, fdanish.ln.MME),
         main="Fitting a lognormal distribution",
         xlogscale=TRUE, datapch=20)
 
-#16
+#15
 library("actuar")
 fdanish.P.MLE <- fitdist(danishuni$Loss, "pareto", 
                          start=c(shape=10, scale=10), lower=2+1e-6, upper=Inf)
@@ -101,7 +98,7 @@ cdfcomp(list(fdanish.P.MLE, fdanish.P.MME),
         legend=c("Pareto MLE", "Pareto MME"), main="Fitting a Pareto distribution",
         xlogscale=TRUE, datapch=20)
 
-#17
+#16
 par(mfrow=c(1, 1))
 cdfcomp(list(fdanish.P.MLE, fdanish.P.MME), 
         legend=c("Pareto MLE", "Pareto MME"), 
@@ -110,7 +107,7 @@ gofstat(list(fdanish.ln.MLE, fdanish.P.MLE,
              fdanish.ln.MME, fdanish.P.MME),
         fitnames = c("lnorm.mle","Pareto.mle","lnorm.mme","Pareto.mme"))
 
-#18
+#17
 fdanish.ln.QME1 <- fitdist(danishuni$Loss, "lnorm", method="qme", 
                            probs=c(1/3, 2/3))
 fdanish.ln.QME2 <- fitdist(danishuni$Loss, "lnorm", method="qme", 
@@ -119,12 +116,12 @@ cdfcomp(list(fdanish.ln.MLE, fdanish.ln.QME1, fdanish.ln.QME2),
         legend=c("MLE", "QME(1/3, 2/3)", "QME(8/10, 9/10)"), 
         main="Fitting a lognormal distribution", xlogscale=TRUE, datapch=20)
 
-#19
+#18
 cdfcomp(list(fdanish.ln.MLE, fdanish.ln.QME1, fdanish.ln.QME2), 
         legend=c("MLE", "QME(1/3, 2/3)", "QME(8/10, 9/10)"), main="Fitting a lognormal distribution",
         xlogscale=TRUE, datapch=20)
 
-#20
+#19
 data("groundbeef")
 fNM <- fitdist(groundbeef$serving, "gamma", optim.method="Nelder-Mead")
 fBFGS <- fitdist(groundbeef$serving, "gamma", optim.method="BFGS") 
@@ -134,7 +131,7 @@ fCG <- try(fitdist(groundbeef$serving, "gamma", optim.method="CG",
 if(class(fCG) == "try-error")
   fCG <- list(estimate=NA)
 
-#21
+#20
 mygenoud <- function(fn, par, ...) 
 {
   require(rgenoud)
@@ -143,7 +140,7 @@ mygenoud <- function(fn, par, ...)
   return(standardres)
 }
 
-#22
+#21
 fgenoud <- mledist(groundbeef$serving, "gamma", custom.optim= mygenoud, 
                    nvars=2, max.generations=10, Domains=cbind(c(0,0), c(10,10)), 
                    boundary.enforcement=1, hessian=TRUE, print.level=0, P9=10)
@@ -152,37 +149,37 @@ cbind(NM = fNM$estimate,
       SANN = fSANN$estimate,
       CG = fCG$estimate,
       fgenoud = fgenoud$estimate)
-#23
+#22
 data("salinity")
 str(salinity)
 
-#24
+#23
 plotdistcens(salinity,Turnbull = FALSE)
 
-#25
+#24
 fsal.ln <- fitdistcens(salinity, "lnorm")
 fsal.ll <- fitdistcens(salinity, "llogis", start=list(shape=5, scale=40))
 summary(fsal.ln)
 summary(fsal.ll)
 
-#26
+#25
 cdfcompcens(list(fsal.ln, fsal.ll), 
             legendtext=c("lognormal", "loglogistic "))
 
-#27
+#26
 data("toxocara")
 str(toxocara)
 
-#28
+#27
 (ftoxo.P <- fitdist(toxocara$number, "pois"))
 (ftoxo.nb <- fitdist(toxocara$number, "nbinom"))
 plot(ftoxo.P)
 
-#29
+#28
 cdfcomp(list(ftoxo.P,ftoxo.nb),
         legendtext=c("Poisson", "negative binomial"))
 
-#30
+#29
 gofstat(list(ftoxo.P,ftoxo.nb),
         fitnames = c("Poisson","negative binomial"))
 
