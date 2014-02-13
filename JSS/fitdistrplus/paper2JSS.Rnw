@@ -306,6 +306,7 @@ descdist(groundbeef$serving, boot=1000)
   \label{Cullenplotcont}
 \end{figure}
 
+\newpage
 
 \subsection[Maximum likelihood]{Fit of distributions by maximum likelihood estimation}
 \label{FIT}
