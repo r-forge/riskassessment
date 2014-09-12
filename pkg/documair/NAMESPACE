@@ -1,0 +1,15 @@
+####### EXPORTED OBJECTS ###
+export( documair0,
+        copy8objects,
+        change8names,
+        display8tags,
+        prepare8pkg,
+        compile8pkg,
+        build8pkg,
+        dpert,
+        dpert,
+        ppert,
+        qpert,
+        rpert);
+####### EXPORTED OBJECTS ###
+useDynLib(documair,sumc,sumf);

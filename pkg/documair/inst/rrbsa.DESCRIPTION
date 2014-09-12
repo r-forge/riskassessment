@@ -1,0 +1,9 @@
+Package: rrbsa
+Version: 0.1-2
+Date: 2014-09-08
+Type: Package
+Title: /rbsa/ extraction for /documair/
+Author: Jean-Baptiste Denis <Jean-Baptiste.Denis@jouy.inra.fr>
+Maintainer: Jean-Baptiste Denis <Jean-Baptiste.Denis@jouy.inra.fr>
+Description: Necessary objects of /rbsa/ to be included in /documair/
+License: GPL (>= 2.15)
