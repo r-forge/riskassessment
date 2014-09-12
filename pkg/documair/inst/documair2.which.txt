@@ -1,0 +1,16 @@
+#
+# created       on 14_06_16
+# last modified on 14_06_16
+#
+# To make another use of /documair/
+# with a second example.
+#
+#
+<<HIDDEN.F>> _ALL_
+#
+<<EXPORTED.F>> user.code.r 
+#
+<<ALIASED.F>> exterieur.code.r
+#
+#
+# end of 'documair2.which.txt' file
