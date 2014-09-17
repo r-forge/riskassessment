@@ -1,0 +1,58 @@
+
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+apercevoir <- function(text,tags,
+                       encore=c(1,4),
+                       machin = FALSE)
+#TITLE returns the places of a series of tags
+#DESCRIPTION from a text, 
+# gives back the positions of some tags indicated by
+# the argument \code{tags}, the interval of a text
+# as well as the tags everything in a data frame.
+#
+#{#} << Some constants are established.>>
+#{#} << There are mixed in some way with the proposed arguments.>>
+#
+#{*} << Never forget to be concise,>>
+#{*} << neither to be precise: two complementary qualities.>>
+#DETAILS
+# Tags cannot be upon two successive lines. 
+#
+#{Avoir} << is 
+#            very desirable>>
+#{Etre} << is much better>>
+#{...} << To be exercised!>>
+#KEYWORDS 
+#INPUTS
+#{text}<< A \code{character} vector containing the text
+# (a component, a line).>>
+#{tags}<< \code{character()} the tags to be used.>>
+#[INPUTS]
+#VALUE
+# A five column data frame, a line for each found tag indicated by a factor,
+# and four columns giving respectively the \code{line},
+# the \code{beg}inning and \code{end}ing positions. When they
+# exist \code{names(tags)} are used for the row dimnames.
+#EXAMPLE
+# places4text6tags(documair:::documair0text1,c("1","2","7"));
+# places4text6tags(documair:::documair0text2[1:3],"t");
+# places4text6tags(documair:::documair0text3,"#{");
+#REFERENCE
+#SEE ALSO
+#CALLING
+#COMMENT
+#FUTURE
+#AUTHOR J.-B. Denis
+#CREATED 13_10_04
+#REVISED 13_10_15
+#--------------------------------------------
+{
+  # checking
+  a <- 2;
+  # initializing
+  b <- 3+a;
+  # computing
+  c <- a+b;
+  # returning
+  c;
+}
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

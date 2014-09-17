@@ -1,0 +1,82 @@
+% 
+% created by /documair/ at 14_01_03@15:19 
+% 
+\name{ 
+  apercevoir 
+} 
+% 
+\alias{ 
+  apercevoir 
+} 
+% 
+\title{ 
+  returns the places of a series of tags 
+} 
+% 
+\usage{ 
+  apercevoir(text,tags,encore=c(1,4),machin=FALSE) 
+} 
+% 
+\examples{ 
+  places4text6tags(documair:::documair0text1,c("1","2","7")); 
+  places4text6tags(documair:::documair0text2[1:3],"t"); 
+  places4text6tags(documair:::documair0text3,"#{"); 
+} 
+% 
+\details{ 
+   
+  Tags cannot be upon two successive lines. 
+   
+  \describe{ 
+  \item{Avoir} 
+   is 
+  very desirable 
+  \item{Etre} 
+   is much better 
+  \item{...} 
+   To be exercised! 
+  } 
+   
+} 
+% 
+\description{ 
+   
+  from a text, 
+  gives back the positions of some tags indicated by 
+  the argument \code{tags}, the interval of a text 
+  as well as the tags everything in a data frame. 
+   
+  \enumerate{ 
+  \item 
+   Some constants are established. 
+  \item 
+   There are mixed in some way with the proposed arguments. 
+  } 
+   
+  \itemize{ 
+  \item 
+   Never forget to be concise, 
+  \item 
+   neither to be precise: two complementary qualities. 
+  } 
+   
+} 
+% 
+\value{ 
+   
+  A five column data frame, a line for each found tag indicated by a factor, 
+  and four columns giving respectively the \code{line}, 
+  the \code{beg}inning and \code{end}ing positions. When they 
+  exist \code{names(tags)} are used for the row dimnames. 
+   
+} 
+% 
+ 
+\arguments{ 
+    \item{text} 
+       
+    \item{tags} 
+       
+} 
+ 
+% 

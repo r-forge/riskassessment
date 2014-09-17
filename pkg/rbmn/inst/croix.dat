@@ -1,0 +1,16 @@
+#
+# 12_12_03
+#
+# To make some trials
+#
+# 
+<<A>>
+<<B>>
+<<C>>
+[[parents]]  A B
+<<D>>
+[[parents]]  C
+<<E>>
+[[parents]]  C
+<<F>>
+[[parents]] E

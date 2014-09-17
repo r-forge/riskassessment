@@ -1,0 +1,13 @@
+Package: rbmn
+Version: 0.9-7
+Date: 2014-09-15
+Type: Package
+Title: Handling Linear Gaussian Bayesian Networks
+Author: Jean-Baptiste Denis <Jean-Baptiste.Denis@jouy.inra.fr>
+Maintainer: Jean-Baptiste Denis <Jean-Baptiste.Denis@jouy.inra.fr>
+Description: Creation, manipulation, simulation of linear Gaussian Bayesian
+             networks from text files and more...
+License: GPL (>= 2)
+Depends: MASS
+Suggests: bnlearn, igraph
+Packaged: 2014-09-16 09:38:38 UTC; jbdenis

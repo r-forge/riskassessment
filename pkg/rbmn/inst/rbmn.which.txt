@@ -1,0 +1,65 @@
+#
+# created       on 14_06_06
+# last modified on 14_08_12
+#
+# indicating the description file
+<<DESCRIPTION>> rbmn.DESCRIPTION
+#
+# the Rd file to describe the package
+<<PRESENTATION>> rbmn.package.Rd
+#
+# extension(s) for the code files
+<<C.EXTE>> code.r
+# the same for the test files
+<<T.EXTE>> test.r
+# specifying hidden code files
+<<HIDDEN.F>> auxi.code.r rrbsa.code.r
+# specifying hidden objects
+#<<HIDDEN.O>>
+<<EXPORTED.O>> sssform3title sssform3display ssspause
+# specifying keywords from the components
+# (also '_NO_' means suppress the keyword)
+<<KEYWORDS>>/=/U
+#
+adja=adjacency--matrix
+arcs=arc
+bn=bnlearn--package
+bnfit=bnlearn--package
+condi=distribution
+constrained=_NO_
+cor=correlation
+create=creation
+dag=DAG
+dev=deviance
+diff=discrepancy
+dissim=dissimilarity
+estimate=estimation
+gema=generating--matrix
+generate=generation
+gmn=_NO_
+grid=_NO_
+in=_NO_
+inout=_NO_
+joint=distribution
+marginal=distribution
+misc=miscellaneous
+mn=multinormal
+nbn=normal--Bayesian--network
+nb=_NO_
+nd=node
+normalize=_NO_
+topo=topological--order
+out=_NO_
+pre=precision--matrix
+read=file
+rev=_NO_
+rmatrix=_NO_
+rm=_NO_
+rr=_NO_
+simulate=simulation
+state=_NO_
+string=_NO_
+three=_NO_
+var=variance--matrix
+write=file
+# end of 'documair.which.txt' file
