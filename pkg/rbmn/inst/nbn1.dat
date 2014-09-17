@@ -1,0 +1,32 @@
+#
+# 12_04_26
+#
+# A first attempt for our basic /BN/
+#
+# 
+<<G>>
+[[mu]] 50
+[[sigma]] 10
+<<E>>
+[[mu]] 50
+[[sigma]] 10
+<<V>>
+[[mu]] -10.35534
+[[sigma]] 5
+[[parents]]    G   E
+[[regcoeff]] 0.5 0.70711
+<<S>>
+[[mu]] 45
+[[sigma]] 9.949874
+[[parents]]    V
+[[regcoeff]]   0.1
+<<W>>
+[[mu]] 15
+[[sigma]] 7.141428
+[[parents]]    V
+[[regcoeff]]   0.7
+<<C>>
+[[mu]] 0
+[[sigma]] 6.2500
+[[parents]]    S   W
+[[regcoeff]] 0.3 0.7

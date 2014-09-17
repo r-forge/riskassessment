@@ -1,0 +1,32 @@
+
+ 13_04_29
+
+ I finally decided to split the first version of /rbmn/ into three parts (i) a standalone part, (ii) a set of functions depending on published packages like /bnlearn/, /igraph/,... and (iii) the part depending on /rbsb/ unpublished packages.
+
+ To do so, I have to duplicate into /rbmn/ some very basic function of /rbsb/ like "bc" under another name. To facilitate the evolution, the names prefixed with "r." like "r.bc".
+
+ The code files are consisting with this hierarchy:
+
+ ((level 1))
+
+ rbsb    : duplication of /rbsb/ functions
+ auxi    : private functions of /rbmn/, that is non intended for the final user
+ normal  : specific functions for the multinormal distributions
+ nbneq   : general functions for nbn objects (equivalence)
+ nbnma   : general functions for nbn objects (manipulation)
+ nbnmi   : general functions for nbn objects (miscellaneous)
+ nbnst   : general functions for nbn objects (statistics)
+ chain   : specific functions for chain nbn
+ crossed : specific functions for nbn objects
+ misc    : miscellaneous functions not pertinent for the previous categories
+
+ ((level 2))
+
+ interface : either translating /rbmn/ objects into other packet objects (and vice-versa)
+             or proposing some actions depending on other packages (like a plot)
+
+ ((level 3))
+
+ more : all function depending too strongly on /rbsb/ to be introduced
+        in the above levels.
+

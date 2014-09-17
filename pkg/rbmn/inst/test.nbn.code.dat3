@@ -1,0 +1,12 @@
+<<A>>
+[[parents]] B
+[[regcoef]] 0.12
+[[sigma]] 0.8
+<<B>>
+[[sigma]] 5
+[[mu]] 10
+<<C>>
+[[parents]] B
+[[regcoef]] 0.2
+[[sigma]] 1.7320508076
+[[mu]] 100

@@ -1,0 +1,7 @@
+#
+<<DESCRIPTION>> rrbsa.DESCRIPTION
+#
+<<PRESENTATION>> rrbsa.package.Rd
+#
+<<C.EXTE>> essairrbsa.r 
+#

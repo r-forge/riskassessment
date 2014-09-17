@@ -1,0 +1,1 @@
+r.bc r.bd r.bf r.erreur r.check4tyle r.form3justifie r.form3names r.numero r.expr3present r.form3repeat aux0 aux1 aux2 aux3 aux4 aux5 aux6 aux7 aux8 estimate8arcs

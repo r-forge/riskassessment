@@ -1,0 +1,7 @@
+<<A>>
+<<B>>
+[[parents]] A
+<<C>>
+[[parents]] A
+<<D>>
+[[parents]] B C

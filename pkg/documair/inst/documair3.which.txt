@@ -1,0 +1,17 @@
+#
+# created       on 14_08_26
+# last modified on 14_09_01
+#
+# To make another use of /documair/
+# with a third example without C and Fortran functions
+#
+#
+<<C.EXTE>> code.r alias.r coding.r
+#
+<<HIDDEN.F>> _ALL_
+#
+<<EXPORTED.F>> user.code.r
+#
+<<ALIASED.F>> exterieur.coding.r pert.alias.r
+#
+# end of 'documair3.which.txt' file
