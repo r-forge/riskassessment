@@ -250,7 +250,7 @@ mcstoc <- function(func=runif, type=c("V","U","VU","0"), ..., nsv=ndvar(), nsu=n
           if(!lhs) lesp <- runif(nnfin,min=pinf,max=psup)
           else     lesp <- lhs(distr="runif", nsv=dimf[1], nsu=dimf[2], nvariates=dimf[3], min=pinf, max=psup) 
           #get the q
-          data <- do.call(qfun,c(list(p=lesp),argsd))
+          data <- (do.call(qfun,c(list(p=lesp),argsd)))[1:nnfin]
           data[pinf==0 & data > lsup] <- NaN          #ex: rtrunc("lnorm",10,linf=-2,lsup=-1)
           data[psup==1 & data < linf] <- NaN          #ex: rtrunc("unif",10,linf=2,lsup=4,max=1)
           data[is.na(linf) | is.na(lsup)] <- NaN      #ex: rtrunc("norm",10,sd=-2)
