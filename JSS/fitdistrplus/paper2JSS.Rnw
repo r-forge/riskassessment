@@ -122,8 +122,8 @@ users a set of functions dedicated to help this overall process.
 
 The \code{fitdistr} function estimates distribution parameters by maximizing the likelihood
 function using the \code{optim} function. 
-No distinction between parameters with different roles (e.g. main parameter and nuisance parameter)
-is made, as our talk focuses 
+No distinction between parameters with different roles (e.g., main parameter and nuisance parameter)
+is made, as this paper focuses 
 on parameter estimation from a general point-of-view. 
 In some cases, other estimation methods could be prefered, 
 such as maximum goodness-of-fit estimation (also called minimum distance estimation), as
@@ -158,7 +158,7 @@ which is sufficiently flexible to handle censored data, yet not in a trivial way
 see Example M4 of the \pkg{distrMod} vignette.
 The fitting functions \code{MLEstimator} and \code{MDEstimator} return an S4 class 
 for which a coercion method to class mle is provided so that the respective 
-functionalities (e.g. \code{confint} and \code{logLik}) from package \pkg{stats4} 
+functionalities (e.g., \code{confint} and \code{logLik}) from package \pkg{stats4} 
 are available, too.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 In \pkg{fitdistrplus}, we chose to use the standard S3 class system for its understanding by most \proglang{R} users.
@@ -169,7 +169,7 @@ Finally, various other packages provide functions to estimate the mode, the mome
 This manuscript reviews the various features of version 1.0-2 of \pkg{fitdistrplus}. The package
 is available from the Comprehensive \proglang{R} Archive Network at \url{http://cran.r-project.org/package=fitdistrplus}.
 The development version of the package is located at \proglang{R}-forge as one package of the 
-project ``Risk Assessment with R''
+project ``Risk Assessment with \proglang{R}''
 (\url{http://r-forge.r-project.org/projects/riskassessment/}).
 The paper is organized as follows: Section \ref{fitnoncenscont} presents tools for fitting continuous
 distributions to classic non-censored data. Section \ref{advtopic} deals with other
@@ -189,7 +189,7 @@ children under 5 years old. It was used in a quantitative risk assessment
 published by \cite{Delignette08}.
 %%% R code set default options for all R schunks
 <<par4vignette, echo=FALSE, results=hide>>=
-options(digits=4, prompt="R>", 
+options(digits = 4, prompt="R> ", 
         SweaveHooks=list(fig=function() par(mar=c(5.1, 4.1, 1.1, 2.1))))
 set.seed(1234)
 @
@@ -290,7 +290,7 @@ the fit of three common right-skewed distributions could be considered, Weibull,
 lognormal distributions.
 %%% R code
 <<descgroundbeef.echo, echo=TRUE, fig=FALSE, eval=FALSE>>=
-descdist(groundbeef$serving, boot=1000)
+descdist(groundbeef$serving, boot = 1000)
 @
 
 \setkeys{Gin}{width=0.5\textwidth}
@@ -299,7 +299,7 @@ descdist(groundbeef$serving, boot=1000)
   \centering
  %%% R code
 <<descgroundbeefplot, echo=FALSE, fig=TRUE, width=6, height=6, eps=FALSE>>=
-descdist(groundbeef$serving, boot=1000)
+descdist(groundbeef$serving, boot = 1000)
 @
   \caption{Skewness-kurtosis plot for a continuous variable 
   (serving size from the \code{groundbeef} data set) as provided by the \code{descdist} function.}
@@ -390,13 +390,14 @@ In the following example, we compare the fit of
 a Weibull, a lognormal and a gamma distributions to the \code{groundbeef} data set (Figure~\ref{groundbeef:comp}).
 %%% R code
 <<fitgroundbeef.echo, echo=TRUE, fig=FALSE>>=
-fg <- fitdist(groundbeef$serving,"gamma")
-fln <- fitdist(groundbeef$serving,"lnorm")
-par(mfrow=c(2, 2))
-denscomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
-qqcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
-cdfcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
-ppcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
+fg <- fitdist(groundbeef$serving, "gamma")
+fln <- fitdist(groundbeef$serving, "lnorm")
+par(mfrow = c(2, 2))
+plot.legend <- c("Weibull", "lognormal", "gamma")
+denscomp(list(fw, fln, fg), legendtext = plot.legend)
+qqcomp(list(fw, fln, fg), legendtext = plot.legend)
+cdfcomp(list(fw, fln, fg), legendtext = plot.legend)
+ppcomp(list(fw, fln, fg), legendtext = plot.legend)
 @
 
 
@@ -406,10 +407,10 @@ ppcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
   \centering
 <<fitgroundbeef, echo=FALSE, fig=TRUE, width=7, height=7, eps=FALSE>>=
 par(mfrow=c(2, 2))
-denscomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
-qqcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
-cdfcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
-ppcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
+denscomp(list(fw, fln, fg), legendtext=c("Weibull", "lognormal", "gamma"))
+qqcomp(list(fw, fln, fg), legendtext=c("Weibull", "lognormal", "gamma"))
+cdfcomp(list(fw, fln, fg), legendtext=c("Weibull", "lognormal", "gamma"))
+ppcomp(list(fw, fln, fg), legendtext=c("Weibull", "lognormal", "gamma"))
 @ 
   \caption{Four Goodness-of-fit plots for various distributions fitted to continuous data
   (Weibull, gamma and lognormal
@@ -420,7 +421,7 @@ ppcomp(list(fw,fln,fg), legendtext=c("Weibull", "lognormal", "gamma"))
 
 
 
-The density plot and the CDF plot may be considered as the basic classical goodness-of-fits plots.
+The density plot and the CDF plot may be considered as the basic classical goodness-of-fit plots.
 The two other plots are complementary and can be very informative in some cases.
 The Q-Q plot emphasizes the lack-of-fit at the distribution tails while the P-P plot emphasizes
 the lack-of-fit at the distribution center.
@@ -435,16 +436,7 @@ the \pkg{fitdistrplus} package. This data set contains
 acute toxicity values for the organochlorine pesticide endosulfan
 (geometric mean of LC50 ou EC50 values in $\mu g.L^{-1}$),
 tested on Australian and non-Australian laboratory-species 
-%(arthropods, fish or nonarthropod invertebrates)
 \citep{Hose04}. 
-%<<datendosulfan, echo=TRUE, eval=FALSE>>=
-%data("endosulfan")
-%str(endosulfan)
-%@
-%<<datendosulfan2, echo=FALSE, eval=TRUE>>=
-%data("endosulfan")
-%str(endosulfan, width = 70, strict.width = "cut")
-%@
 In ecotoxicology, a
 lognormal or a loglogistic distribution is often fitted to such a data set in order
 to characterize the species sensitivity distribution (SSD) for a pollutant. A low percentile
@@ -479,12 +471,13 @@ data("endosulfan")
 ATV <-endosulfan$ATV
 fendo.ln <- fitdist(ATV, "lnorm")
 library("actuar")
-fendo.ll <- fitdist(ATV, "llogis", start=list(shape=1, scale=500))
-fendo.P <- fitdist(ATV, "pareto", start=list(shape=1, scale=500))
-fendo.B <- fitdist(ATV, "burr", start=list(shape1=0.3, shape2=1, rate=1))
-cdfcomp(list(fendo.ln, fendo.ll, fendo.P, fendo.B), xlogscale = TRUE,
-      ylogscale = TRUE, legendtext = 
-          c("lognormal", "loglogistic", "Pareto", "Burr"))
+fendo.ll <- fitdist(ATV, "llogis", start = list(shape = 1, scale = 500))
+fendo.P <- fitdist(ATV, "pareto", start = list(shape = 1, scale = 500))
+fendo.B <- fitdist(ATV, "burr", start = list(shape1 = 0.3, shape2 = 1, 
+  rate = 1))
+cdfcomp(list(fendo.ln, fendo.ll, fendo.P, fendo.B), 
+  xlogscale = TRUE, ylogscale = TRUE, 
+  legendtext = c("lognormal", "loglogistic", "Pareto", "Burr"))
 @
 % qqcomp(list(fendo.ln, fendo.ll, fendo.P, fendo.B), xlogscale=TRUE, ylogscale=TRUE,
 %       legendtext = c("lognormal","loglogistic","Pareto","Burr"))
@@ -515,7 +508,6 @@ easily done using the \code{quantile} generic function defined for an object
 of class \code{"fitdist"}. Below is this calculation together with the calculation of the 
 empirical quantile for comparison.
 
-\newpage
 
 %%% R code
 <<quantilefitdist, echo=TRUE, fig=FALSE>>=
@@ -543,16 +535,15 @@ goodness-of-fit statistics.
 They can be computed using the function \code{gofstat}
 as defined by Stephens \citep{Stephens86}.
 
-\clearpage
+
 
 <<fendo.gof.print, echo=TRUE, fig=FALSE>>=
 gofstat(list(fendo.ln, fendo.ll, fendo.P, fendo.B),
-        fitnames = c("lnorm","llogis","Pareto","Burr"))
+  fitnames = c("lnorm", "llogis", "Pareto", "Burr"))
 @
 
 \begin{table}[htb!]
   \begin{center}
-    \caption{Goodness-of-fit statistics as defined by Stephens \citep{Stephens86}.}
     \begin{tabular}{lll}
     \hline
       Statistic  & General formula & Computational formula\\
@@ -574,6 +565,7 @@ gofstat(list(fendo.ln, fendo.ll, fendo.P, fendo.B),
     \hline
      where $F_i\stackrel{\triangle}{=} F(x_i)$
     \end{tabular}
+    \caption{Goodness-of-fit statistics as defined by Stephens \citep{Stephens86}.}
     \label{tabKSCvMAD}
   \end{center}
 \end{table}
@@ -626,7 +618,7 @@ Below is an example of the use of the \code{bootdist} function with the previous
 \code{endosulfan} data set (Figure~\ref{fig:bootstrap}). 
 %%% R code
 <<fitBurr.boot.echo, echo=TRUE, results=hide, fig=FALSE>>=
-bendo.B <- bootdist(fendo.B, niter=1001)
+bendo.B <- bootdist(fendo.B, niter = 1001)
 @
 <<fitBurr.boot.results, echo=TRUE, fig=FALSE>>=
 summary(bendo.B)
@@ -674,7 +666,7 @@ quantile(bendo.B, probs = 0.05)
 @
 \end{small}
 
-\newpage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Advanced topics}\label{advtopic}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -700,7 +692,6 @@ weights by using second order Anderson-Darling Statistics.
 
 \begin{table}[htb!]
   \begin{center}
-    \caption{Modified Anderson-Darling statistics as defined by \cite{Luceno06}.}
     \begin{tabular}{lll}
     \hline
       Statistic  & General formula & Computational formula\\
@@ -727,6 +718,7 @@ weights by using second order Anderson-Darling Statistics.
     \hline
     where $F_i\stackrel{\triangle}{=} F(x_{i})$; & $\overline F_i\stackrel{\triangle}{=}1-F(x_{i})$
     \end{tabular}
+    \caption{Modified Anderson-Darling statistics as defined by \cite{Luceno06}.}
     \label{modifiedAD}
   \end{center}
 \end{table}
@@ -753,12 +745,13 @@ to \code{endosulfan} data set
 
 %%% R code
 <<mge.gofcomp.echo, echo=TRUE, fig=FALSE>>=
-fendo.ln.ADL <- fitdist(ATV,"lnorm",method="mge",gof="ADL")
-fendo.ln.AD2L <- fitdist(ATV,"lnorm",method="mge",gof="AD2L")
-cdfcomp(list(fendo.ln, fendo.ln.ADL, fendo.ln.AD2L),
-xlogscale = TRUE, ylogscale = TRUE,
-main = "Fitting a lognormal distribution",xlegend = "bottomright",
-legendtext = c("MLE","Left-tail AD", "Left-tail AD 2nd order"))
+fendo.ln.ADL <- fitdist(ATV, "lnorm", method = "mge", gof = "ADL")
+fendo.ln.AD2L <- fitdist(ATV, "lnorm", method = "mge", gof = "AD2L")
+cdfcomp(list(fendo.ln, fendo.ln.ADL, fendo.ln.AD2L), 
+  xlogscale = TRUE, ylogscale = TRUE,
+  main = "Fitting a lognormal distribution",
+  xlegend = "bottomright", 
+  legendtext = c("MLE","Left-tail AD", "Left-tail AD 2nd order"))
 @
 
 \setkeys{Gin}{width=0.5\textwidth}
@@ -768,9 +761,9 @@ legendtext = c("MLE","Left-tail AD", "Left-tail AD 2nd order"))
   %%% R code
 <<mgegofcompplot, echo=FALSE, fig=TRUE, width=4, height=4, eps=FALSE>>=
 cdfcomp(list(fendo.ln, fendo.ln.ADL, fendo.ln.AD2L),
-xlogscale = TRUE, ylogscale = TRUE,
-main = "Fitting a lognormal distribution",
-legendtext = c("MLE","Left-tail AD", "Left-tail AD 2nd order"),
+  xlogscale = TRUE, ylogscale = TRUE,
+  main = "Fitting a lognormal distribution",
+  legendtext = c("MLE","Left-tail AD", "Left-tail AD 2nd order"),
 xlegend = "bottomright")
 @
   \caption{Comparison of a lognormal distribution fitted by MLE
@@ -788,11 +781,13 @@ enables to approach the value obtained by fitting the Burr distribution by MLE.
 %%% R code
 <<quantilefitdist, echo=TRUE, fig=FALSE>>=
 (HC5.estimates <- c(
-empirical = as.numeric(quantile(ATV, probs=0.05)),
-Burr = as.numeric(quantile(fendo.B, probs=0.05)$quantiles),
-lognormal_MLE = as.numeric(quantile(fendo.ln, probs=0.05)$quantiles),
-lognormal_AD2 = as.numeric(quantile(fendo.ln.ADL, probs=0.05)$quantiles),
-lognormal_AD2L = as.numeric(quantile(fendo.ln.AD2L,probs=0.05)$quantiles)))
+  empirical = as.numeric(quantile(ATV, probs = 0.05)), 
+  Burr = as.numeric(quantile(fendo.B, probs = 0.05)$quantiles), 
+  lognormal_MLE = as.numeric(quantile(fendo.ln, probs = 0.05)$quantiles), 
+  lognormal_AD2 = as.numeric(quantile(fendo.ln.ADL, 
+    probs = 0.05)$quantiles), 
+  lognormal_AD2L = as.numeric(quantile(fendo.ln.AD2L, 
+    probs = 0.05)$quantiles)))
 @
 
 %\subsubsection{Moment matching estimation}
@@ -854,11 +849,12 @@ the empirical distribution function for large values of claim amounts.
 data("danishuni")
 str(danishuni)
 fdanish.ln.MLE <- fitdist(danishuni$Loss, "lnorm")
-fdanish.ln.MME <- fitdist(danishuni$Loss, "lnorm", method="mme", order=1:2)
+fdanish.ln.MME <- fitdist(danishuni$Loss, "lnorm", method = "mme", 
+  order = 1:2)
 cdfcomp(list(fdanish.ln.MLE, fdanish.ln.MME), 
-        legend=c("lognormal MLE", "lognormal MME"), 
-        main="Fitting a lognormal distribution",
-        xlogscale=TRUE, datapch=20)
+  legend = c("lognormal MLE", "lognormal MME"), 
+  main = "Fitting a lognormal distribution", 
+  xlogscale = TRUE, datapch = 20)
 @
 
 \setkeys{Gin}{width=0.9\textwidth} %default
@@ -868,9 +864,10 @@ cdfcomp(list(fdanish.ln.MLE, fdanish.ln.MME),
 <<danishmmeplot, echo=FALSE, fig=TRUE, width=7, height=3.5, eps=FALSE>>=
 library("actuar")
 fdanish.P.MLE <- fitdist(danishuni$Loss, "pareto", 
-start=c(shape=10, scale=10), lower=2+1e-6, upper=Inf)
+  start=c(shape=10, scale=10), lower = 2+1e-6, upper = Inf)
 memp <- function(x, order) sum(x^order)/length(x)
-fdanish.P.MME <- fitdist(danishuni$Loss, "pareto", method="mme", order=1:2, 
+fdanish.P.MME <- fitdist(danishuni$Loss, "pareto", 
+    method="mme", order=1:2, 
 memp="memp", start=c(shape=10, scale=10), lower=c(2+1e-6,2+1e-6), 
 upper=c(Inf,Inf))
 par(mfrow=c(1, 2))
@@ -912,18 +909,19 @@ Equations~(\ref{moments}) and (\ref{centmoments}) are equivalent.
 
 <<danish.mme.pareto, echo=TRUE, fig=FALSE>>=
 library("actuar")
-fdanish.P.MLE <- fitdist(danishuni$Loss, "pareto", 
-start=c(shape=10, scale=10), lower=2+1e-6, upper=Inf)
+fdanish.P.MLE <- fitdist(danishuni$Loss, "pareto",  
+  start = c(shape = 10, scale = 10), lower = 2+1e-6, upper = Inf)
 memp <- function(x, order) sum(x^order)/length(x)
-fdanish.P.MME <- fitdist(danishuni$Loss, "pareto", method="mme", 
-order=1:2, memp="memp", start=c(shape=10, scale=10), 
-lower=c(2+1e-6,2+1e-6), upper=c(Inf,Inf))
+fdanish.P.MME <- fitdist(danishuni$Loss, "pareto", method = "mme", 
+  order = 1:2, memp = "memp", start = c(shape = 10, scale = 10), 
+  lower = c(2+1e-6, 2+1e-6), upper = c(Inf, Inf))
 cdfcomp(list(fdanish.P.MLE, fdanish.P.MME), 
-legend=c("Pareto MLE", "Pareto MME"), 
-main="Fitting a Pareto distribution", xlogscale=TRUE, datapch=".")
+  legend = c("Pareto MLE", "Pareto MME"), 
+  main = "Fitting a Pareto distribution", 
+  xlogscale = TRUE, datapch = ".")
 gofstat(list(fdanish.ln.MLE, fdanish.P.MLE, 
-fdanish.ln.MME, fdanish.P.MME),
-fitnames = c("lnorm.mle","Pareto.mle","lnorm.mme","Pareto.mme"))
+  fdanish.ln.MME, fdanish.P.MME),
+  fitnames = c("lnorm.mle", "Pareto.mle", "lnorm.mme", "Pareto.mme"))
 @
 
 As shown on Figure~\ref{fig:danish:mme}, MME and MLE fits
@@ -980,13 +978,14 @@ The quantile matching is carried out numerically,
 by minimizing the sum of squared differences between observed and theoretical quantiles.
 %%% R code
 <<danish.qme.echo, echo=TRUE, fig=FALSE>>=
-fdanish.ln.QME1 <- fitdist(danishuni$Loss, "lnorm", method="qme", 
-probs=c(1/3, 2/3))
-fdanish.ln.QME2 <- fitdist(danishuni$Loss, "lnorm", method="qme", 
-probs=c(8/10, 9/10))
+fdanish.ln.QME1 <- fitdist(danishuni$Loss, "lnorm", method = "qme", 
+  probs = c(1/3, 2/3))
+fdanish.ln.QME2 <- fitdist(danishuni$Loss, "lnorm", method = "qme", 
+  probs = c(8/10, 9/10))
 cdfcomp(list(fdanish.ln.MLE, fdanish.ln.QME1, fdanish.ln.QME2), 
-legend=c("MLE", "QME(1/3, 2/3)", "QME(8/10, 9/10)"), 
-main="Fitting a lognormal distribution", xlogscale=TRUE, datapch=20)
+  legend = c("MLE", "QME(1/3, 2/3)", "QME(8/10, 9/10)"), 
+  main = "Fitting a lognormal distribution", 
+  xlogscale = TRUE, datapch = 20)
 @
 Above is an example of fitting of a lognormal distribution to \code{danishuni} data set 
 by matching probabilities $(p_1= 1/3, p_2=2/3)$ and $(p_1= 8/10, p_2=9/10)$.
@@ -1013,6 +1012,8 @@ cdfcomp(list(fdanish.ln.MLE, fdanish.ln.QME1, fdanish.ln.QME2),
 \caption{Comparison between QME and MLE when fitting a lognormal distribution to loss data from the \code{danishuni} data set.}
 \label{fig:danish:qme}
 \end{figure}
+
+\clearpage
 
 \subsection[Customizing optimization]{Customization of the optimization algorithm}
 \label{Customization}
@@ -1045,13 +1046,13 @@ compared to other algorithms (converging in less than 100 iterations).
 %%% R code
 <<optimmethod.gamma, echo=TRUE>>=
 data("groundbeef")
-fNM <- fitdist(groundbeef$serving, "gamma", optim.method="Nelder-Mead")
-fBFGS <- fitdist(groundbeef$serving, "gamma", optim.method="BFGS") 
-fSANN <- fitdist(groundbeef$serving, "gamma", optim.method="SANN")
-fCG <- try(fitdist(groundbeef$serving, "gamma", optim.method="CG", 
-    control=list(maxit=10000)))
+fNM <- fitdist(groundbeef$serving, "gamma", optim.method = "Nelder-Mead")
+fBFGS <- fitdist(groundbeef$serving, "gamma", optim.method = "BFGS") 
+fSANN <- fitdist(groundbeef$serving, "gamma", optim.method = "SANN")
+fCG <- try(fitdist(groundbeef$serving, "gamma", optim.method = "CG", 
+  control = list(maxit = 10000)))
 if(class(fCG) == "try-error")
-  fCG <- list(estimate=NA)
+  fCG <- list(estimate = NA)
 @
 
 
@@ -1071,8 +1072,8 @@ The \pkg{rgenoud} package implements the genetic (stochastic) algorithm.
 mygenoud <- function(fn, par, ...) 
 {
    require(rgenoud)
-   res <- genoud(fn, starting.values=par, ...)        
-   standardres <- c(res, convergence=0)
+   res <- genoud(fn, starting.values = par, ...)        
+   standardres <- c(res, convergence = 0)
    return(standardres)
 }
 @
@@ -1089,14 +1090,14 @@ shape $\alpha$ and rate $\lambda$ parameters are relatively similar on this
 example, roughly 4.00 and 0.05, respectively.
 %%% R code
 <<optimmethod.customgenoud.fitdist, echo=TRUE, eval=TRUE>>=
-fgenoud <- mledist(groundbeef$serving, "gamma", custom.optim= mygenoud, 
-    nvars=2, max.generations=10, Domains=cbind(c(0,0), c(10,10)), 
-    boundary.enforcement=1, hessian=TRUE, print.level=0, P9=10)
+fgenoud <- mledist(groundbeef$serving, "gamma", custom.optim = mygenoud, 
+  nvars = 2, max.generations = 10, Domains = cbind(c(0,0), c(10,10)), 
+  boundary.enforcement = 1, hessian = TRUE, print.level = 0, P9 = 10)
 cbind(NM = fNM$estimate,
-BFGS = fBFGS$estimate,
-SANN = fSANN$estimate,
-CG = fCG$estimate,
-fgenoud = fgenoud$estimate)
+  BFGS = fBFGS$estimate,
+  SANN = fSANN$estimate,
+  CG = fCG$estimate,
+  fgenoud = fgenoud$estimate)
 @
 
 %\newpage
@@ -1233,7 +1234,8 @@ the distribution parameters in non trivial cases, by a manual iterative use if n
 %%% R code
 <<fitsalinity.echo, echo=TRUE, fig=FALSE>>=
 fsal.ln <- fitdistcens(salinity, "lnorm")
-fsal.ll <- fitdistcens(salinity, "llogis", start=list(shape=5, scale=40))
+fsal.ll <- fitdistcens(salinity, "llogis",
+  start = list(shape = 5, scale = 40))
 summary(fsal.ln)
 summary(fsal.ll)
 @
@@ -1250,7 +1252,7 @@ an example of comparison of the two fitted distributions to the \code{salinity} 
 %%% R code
 <<fitsalinity.cdfcomp.echo, echo=TRUE, fig=FALSE, eval=FALSE>>=
 cdfcompcens(list(fsal.ln, fsal.ll), 
-            legendtext=c("lognormal", "loglogistic "))
+  legendtext = c("lognormal", "loglogistic "))
 @
 
 
@@ -1322,14 +1324,14 @@ plot(ftoxo.P)
 plot(ftoxo.P)
 @
   \caption{Plot of the fit of a discrete distribution (Poisson distribution
-  fitted to numbers of \emph{Toxocara cati} parasites from the \code{toxocara} data set.}
+  fitted to numbers of \emph{Toxocara cati} parasites from the \code{toxocara} data set).}
   \label{plotdiscfitP}
 \end{figure}
 
 
 <<fittoxocara.poisnbinom.echo, echo=TRUE, fig=FALSE>>=
-cdfcomp(list(ftoxo.P,ftoxo.nb),
-legendtext=c("Poisson", "negative binomial"))
+cdfcomp(list(ftoxo.P, ftoxo.nb), 
+  legendtext = c("Poisson", "negative binomial"))
 @
 
 \setkeys{Gin}{width=0.5\textwidth} %default
@@ -1337,11 +1339,11 @@ legendtext=c("Poisson", "negative binomial"))
 \begin{figure}[htb]
   \centering
 <<fittoxocarapoisnbinomplot, echo=FALSE, results=hide, fig=TRUE, width=4, height=4, eps=FALSE>>=
-cdfcomp(list(ftoxo.P,ftoxo.nb),
-        legendtext=c("Poisson", "negative binomial"))
+cdfcomp(list(ftoxo.P, ftoxo.nb), 
+        legendtext = c("Poisson", "negative binomial"))
 @
   \caption{Comparison of the fits of a negative binomial and a Poisson distribution
-   to numbers of \emph{Toxocara cati} parasites from the \code{toxocara} data set).}
+   to numbers of \emph{Toxocara cati} parasites from the \code{toxocara} data set.}
   \label{plotdiscfit}
 \end{figure}
 
@@ -1362,8 +1364,8 @@ giving the preference
 to the negative binomial distribution, from both Chi-squared statistics and information criteria:
 %%% R code
 <<fittoxocara.poisnbinom.gof, echo=TRUE, fig=FALSE>>=
-gofstat(list(ftoxo.P,ftoxo.nb),
-        fitnames = c("Poisson","negative binomial"))
+gofstat(list(ftoxo.P, ftoxo.nb), 
+  fitnames = c("Poisson", "negative binomial"))
 @
 
 
@@ -1425,7 +1427,7 @@ comments. The remaining errors, of course, should be attributed to the authors a
 
 
 %\bibliographystyle{plain}
-\bibliography{fitdistrplus,paperscitingfitdistrplus}
+\bibliography{jssfitdistrplus}
 
 
 
