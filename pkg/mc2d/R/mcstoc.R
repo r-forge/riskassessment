@@ -282,8 +282,10 @@ mcstoc <- function(func=runif, type=c("V","U","VU","0"), ..., nsv=ndvar(), nsu=n
     dimf <- c(1,1,1)
     data <- do.call(funcorigin,argsdtest,quote=TRUE)
     l <- length(data)
-      if(l == nvariates) dimf <- c(nsv,nsu,1)      # If it returns a vector 
-        else if(l == 1) dimf <- c(nsv,nsu,nvariates)      # if it returns a number
+    if(l == nvariates) {
+        if(rtrunc | lhs) stop("mcstoc does not handle rtrunc and lhs for multivariate distributions")
+          dimf <- c(nsv,nsu,1)}      # If it returns a vector 
+     else if(l == 1) dimf <- c(nsv,nsu,nvariates)      # if it returns a number
           else stop("the function should return a vector of size 1 or nvariates if",nsample,"=1")
         argsd[[nsample]] <- prod(dimf)
         data <- do.call(func, argsd, quote = TRUE)
