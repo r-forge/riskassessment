@@ -6,23 +6,37 @@
 26. change the affectation and the use of argument discrete in order to be able to consider
     as dicrete other distributions than those defined in R (such as zero-inflated Poisson dist)
 
+
 41. update vignette files and create vignette directory
  
-43. exploration of the error message obtained by Ajay Kumar with gofstat   
-=== long term ===
-44. improvement of the Cullen-Frey graph (problem with the lognormal line) 
+
+43. exploration of the error message obtained by Ajay Kumar with gofstat (to investigate)  
+
+46. descdist has a problem with argument obs.col. see
+data(toxocara)
+descdist(toxocara$number, obs.col="red", discrete=TRUE)
+
+47. descdist could have ... dot argument or obs.pch argument ?
+
+48. descdist use the cat function (directly) no print.descdist. should take care of this printing. 
+
 42. implementation of the likelihood surface
 
-39. offer a function to do prior elicitation from quantiles
+48. writing of generic functions logLik, coeff, vcov
 
+43. for all plot (in particular cdfcomp) adapt the plot to deal with a huge number of data (>=10000) : no plot at all 
+or just a subset of data
+
+32. add weights in optimization method, weighted MLE, weighted MME,? 
+
+45. for discrete data, think about passing observed frequencies rather than observations, to 
+speed up the fit of large data sets
+
+
+=== long term ===
 38. add the Wasserstein distance in mge and gofstat
 
-19. Add other gof graphs and stats for fits on censored data (Turnbull, ...) and gof statistics for censored data
-   computed from Turnbull CDF(partially done : Turnbull plot).
-
-15. Enable to enter complete names of distributions as in fitdistr
-
-32. add weights in optimization method, weighted MLE, weighted MME,?
+39. offer a function to do prior elicitation from quantiles (look before at package expert)
 
 33. test the use of a scaling matrix before the optimization if parameters are close to 0 and very (> 10^6)
 
@@ -45,9 +59,19 @@ or just a subset of data
 data(toxocara)
 descdist(toxocara$number, obs.col="red", discrete=TRUE)
 
-47. descdist could have ... dot argument or obs.pch argument ?
 
-48. descdist use the cat function (directly) no print.descdist. should take care of this printing. 
+42. add an argument analytical (default to FALSE) in order to compute MLE or MME by
+an analytical formula (close-form) rather than by a numeric optimization. Then in MME for base distributions,
+we could fit a two-parameter distribution on E(X) and E(X^2) rather than E(X) and Var(X) through
+the memp argument. One could also consider limited expected values.
+
+44. defensive programing for the function pxxxx, dxxx, qxxx, to check that arguments have the same name as in R base.
+
+19. Add other gof graphs and stats for fits on censored data (Turnbull, ...) and gof statistics for censored data
+   computed from Turnbull CDF(partially done : Turnbull plot).
+
+40. multivariate distribution fitting, in particular copula fitting
+
 
 === "recently" done or not planned for argumented reasons ===
 
@@ -134,11 +158,14 @@ censored data from functions for non-censored data)
 
 36. add an example for SSD and HCx in ecotox (done)
 
+
 35. produce denscomp, ppcomp, qqcomp to produce nice plots in density or qqplot to compare fits
     of various distributions on the same dataset (functions built as cdfcomp and cdfcompcens)
-  
+
+
 28. add an echo argument useful for debugging or when the optimization does not converge. 
 	(when error, print(opttryerror))
+
 
 37. provide test files for all functions based on man page examples.
 
@@ -147,7 +174,13 @@ censored data from functions for non-censored data)
 3. put spaces before and after affectations (x <- 3) to make codes easier to read
     done at least in fitdist and mledist
  
+
 12. Split summary.fitdist in two parts : summary.fitdist and print.summary.fitdist
     done for fitdist and fitdistcens but STILL TO DO for bootdist and bootdistcens
 
+
 30. if fixed arguments are used,  add the fixed argument values in the result.
+
+44. improvement of the Cullen-Frey graph (problem with the lognormal line : impossible but a comment was added) 
+
+15. Enable to enter complete names of distributions as in fitdistr (abandoned)
