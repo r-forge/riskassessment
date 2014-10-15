@@ -4,33 +4,32 @@
 
 === short term ===
 26. change the affectation and the use of argument discrete in order to be able to consider
-    as dicrete other distributions than those defined in R (such as zero-inflated Poisson dist)
-
+    as dicrete other distributions than those defined in R (such as zero-inflated Poisson dist)(MLDM)
 
 41. update vignette files and create vignette directory
- 
+ (CD)
 
-43. exploration of the error message obtained by Ajay Kumar with gofstat (to investigate)  
+43. exploration of the error message obtained by Ajay Kumar with gofstat (to investigate)  (MLDM)
 
-46. descdist has a problem with argument obs.col. see
+46. descdist has a problem with argument obs.col. see (MLDM)
 data(toxocara)
 descdist(toxocara$number, obs.col="red", discrete=TRUE)
 
-47. descdist could have ... dot argument or obs.pch argument ?
+47. descdist could have ... dot argument or obs.pch argument ? (MLDM)
 
-48. descdist use the cat function (directly) no print.descdist. should take care of this printing. 
+48. descdist use the cat function (directly) no print.descdist. should take care of this printing. (MLDM)
 
-42. implementation of the likelihood surface
+42. implementation of the likelihood surface (MLDM)
 
-48. writing of generic functions logLik, coeff, vcov
+48. writing of generic functions logLik, coeff, vcov (CD)
 
 43. for all plot (in particular cdfcomp) adapt the plot to deal with a huge number of data (>=10000) : no plot at all 
-or just a subset of data
+or just a subset of data (CD)
 
-32. add weights in optimization method, weighted MLE, weighted MME,? 
+32. add weights in optimization method, weighted MLE, weighted MME,? (CD)
 
 45. for discrete data, think about passing observed frequencies rather than observations, to 
-speed up the fit of large data sets
+speed up the fit of large data sets (CD)
 
 
 === long term ===
@@ -39,6 +38,7 @@ speed up the fit of large data sets
 39. offer a function to do prior elicitation from quantiles (look before at package expert)
 
 33. test the use of a scaling matrix before the optimization if parameters are close to 0 and very (> 10^6)
+
 
 40. multivariate distribution fitting, in particular copula fitting
 
