@@ -180,13 +180,18 @@ a[href] {
 
 <p>This R-Forge project was first developed to help the administrators <a
 href="mailto:ml.delignette@vetagro-sup.fr">Marie-Laure Delignette Muller</a>, <a
-href="mailto:Jean-Baptiste.Denis@jouy.inra.fr">Jean-Baptiste Denis</a> and <a
-href="mailto:rpouillot@yahoo.fr">Regis Pouillot</a> to share elements from the
-R packages they are building.</p>
+href="mailto:Jean-Baptiste.Denis@jouy.inra.fr">Jean-Baptiste Denis</a>, <a
+href="mailto:rpouillot@yahoo.fr">Regis Pouillot</a> and
+ <a href="mailto:christophe.dutang@ensimag.fr">Christophe Dutang</a> 
+ to share elements from the
+R packages they are building.
+Now, the R-forge project aims to provide beta versions of forthcoming
+functionalities that will be later on CRAN.
+</p>
 
 <h2><span
 style="font-family: Courier New,Courier,monospace;">fitdistrplus</span>:
-Specification of a Parametric Distribution from Data </h2>
+Fitting a Parametric Distribution from Data </h2>
 
 <p>&ldquo;<span
 style="font-family: Courier New,Courier,monospace;">fitdistrplus</span>&rdquo;
@@ -194,16 +199,20 @@ is a set of functions specifically written: </p>
 <ul>
   <li>to help to choose the best parametric distribution that fits a given
     dataset;</li>
-  <li>for a given distribution, to estimate the parameters using the maximum
-    likelihood method or the method of matching moments and provide graphs and
-    statistics to assess the fit. Specific functions were written for censored
+  <li>for a given distribution, to estimate the parameters one of the
+    four available methods (maximum likelihoo estimation, moment matching
+    estimation, maximum goodness-of-fit estimation and quantile matching
+    estimation) and provide generic graphs and statistics to assess the fit. 
+    Specific functions were written for censored
     data (right- left- and interval-censored);</li>
   <li>for a fitted distribution, to simulate the uncertainty in the estimated
     parameters by parametric or nonparametric bootstrap resampling.</li>
 </ul>
 
 <p>A stable version is available on <strong>CRAN</strong> <a
-href="http://cran.at.r-project.org/web/packages/fitdistrplus/index.html">here</a>!
+href="http://cran.at.r-project.org/web/packages/fitdistrplus/index.html">here</a>.
+A paper on this package has been published in the JSS 
+<a href="http://www.jstatsoft.org/v64/i04/">here</a>.
 </p>
 
 <h2><span style="font-family: Courier New,Courier,monospace;">mc2d</span>:
