@@ -6,6 +6,10 @@ Date: 2016-02-07
 Authors@R: c(person("Regis", "Pouillot", role = c("aut", "cre"), email = "rpouillot@yahoo.fr"),
 			person("Marie-Laure", "Delignette-Muller", role = "ctb", email= "ml.delignette@vetagro-sup.fr"),
 			person("Jean-Baptiste", "Denis", role = "ctb", email = "jbdenis@jouy.inra.fr"))
+Author: Regis Pouillot [aut, cre],
+		Marie-Laure Delignette-Muller [ctb],
+		Jean-Baptiste Denis [ctb]
+Maintainer:  Regis Pouillot <rpouillot@yahoo.fr> 
 Suggests: fitdistrplus, survival
 Depends: R (>= 2.10.0), mvtnorm
 Description: Various distributions and utilities to ease the use of R to build and study Two-Dimensional Monte-Carlo simulations
