@@ -1,6 +1,11 @@
 ### Import
 import(mvtnorm, stats)
 
+importFrom("grDevices", "grey")
+importFrom("graphics", "abline", "axis", "hist", "lines", "par",
+              "plot", "points", "polygon", "segments", "text")
+importFrom("utils", "flush.console")
+
 ### Exports
 export(tornadounc, tornadounc.mc, tornadounc.default, tornadounc.mccut)
 S3method(tornadounc, mc)
