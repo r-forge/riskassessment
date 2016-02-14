@@ -1,10 +1,5 @@
 ### Import
-import(mvtnorm, stats)
-
-importFrom("grDevices", "grey")
-importFrom("graphics", "abline", "axis", "hist", "lines", "par",
-              "plot", "points", "polygon", "segments", "text")
-importFrom("utils", "flush.console")
+import(stats, grDevices, graphics, utils, mvtnorm)
 
 ### Exports
 export(tornadounc, tornadounc.mc, tornadounc.default, tornadounc.mccut)
