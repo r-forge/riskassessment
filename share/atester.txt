@@ -1,0 +1,10 @@
+
+
+#parametre incoherent
+dexp(1:20, rate=-1)
+#vecteur vide
+dexp(numeric(0), rate=1)
+#noms des arguments
+formals(dexp)
+
+
