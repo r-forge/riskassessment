@@ -1,0 +1,111 @@
+---
+title: "On the estimation of cdf/sf for censored data"
+author: "Christophe Dutang"
+date: "26/07/2017"
+header-includes:
+   - \usepackage{amsmath,amsfonts}
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Non-censored data
+Consider observations $x_1,\dots,x_n$ as realizations of random variables $X_1,\dots,X_n$.
+The empirical cdf is defined as
+$$
+F_n(x) = \frac{1}{n}\sum_{i=1}^n 1_{X_i\leq x}
+$$
+In particular $F_n(x_j)=R_j/n$ where $R_j$ is the rank of the $j$th observation.
+The empirical survival function  is defined as
+$$
+S_n(x) = \frac{1}{n}\sum_{i=1}^n 1_{X_i> x}
+$$
+```{r}
+xorig <- rexp(25)
+plot(ecdf(xorig))
+```
+
+# Right-censored data
+Consider observations $t_1,\dots,t_n$ and censoring dummies $d_1,\dots,d_n$ such that
+$$
+d_i=0\Rightarrow t_i = x_i\leq c_i,
+d_i=1\Rightarrow t_i = c_i < x_i
+$$
+where $c_i$'s are censored values. In other words, when $d_i=1$, we know that $x_i>c_i$.
+This can be represented as interval values
+$$
+d_i=0\Rightarrow [t_i,t_i],
+d_i=1\Rightarrow (t_i, +\infty).
+$$
+The survival function is estimated (generally) by Kaplan-Meier estimator
+$$
+S_n(x) = \prod_{i, t_i < x} \frac{n_i-d_i}{n_i},
+$$
+where $n_i$ is the number of at-risk individuals at time $t_i$ and $d_i$ 
+the number of non-censored deaths at $t_i$.
+We get back to usual estimation of previous section if there is no censoring.
+
+Consider a distribution function $F$ with density/mass proba function $f$.
+The likelihood function to observe $(t_i,d_i)_i$ is
+$$
+L(F,f) = \prod_{i=1}^nf(t_i)^{1-d_i} (1-F(t_i))^{d_i}.
+$$
+Kaplan-Meier is known to maximize this likelihood function and is called
+sometimes NPMLE, non parametric ML Estimator.
+In R, we can do this via `Surv` in `survival` package.
+
+# Left-censored data
+Consider observations $t_1,\dots,t_n$ and censoring dummies $d_1,\dots,d_n$ such that
+$$
+d_i=0\Rightarrow t_i = x_i\geq c_i,
+d_i=1\Rightarrow t_i = c_i > x_i
+$$
+where $c_i$'s are censored values. In other words, when $d_i=1$, we know that $x_i<c_i$.
+This can be represented as interval values
+$$
+d_i=0\Rightarrow [t_i,t_i],
+d_i=1\Rightarrow (0,t_i).
+$$
+
+
+# Interval-censored data
+
+Source: https://www.r-project.org/conferences/useR-2010/tutorials/Fay_1.pdf
+
+Consider observations $(l_i,r_i]$  such that the true observation $x_i$ lies 
+within this interval.
+If there is no censoring, we observe $[l_i,l_i]$.
+Right-censoring is obtained with $u_i=\infty$ and left-censoring with $l_i=0$.
+The likelihood function for cdf $F$ is
+$$
+L(F) = \prod_{i=1}^n(F(r_i)-F(l_i)).
+$$
+Consider $t_0=0<t_1<\dots<t_m<t_{m+1}=\infty$ with $t_1,\dots,t_m$ unique 
+observations times among $l_i,r_i$'s values.
+We want to estimate $F(t_i)-F(t_{i-1})=p(t_i)$ with observations.
+
+The NPMLE is the Turnbull EM algorithm given below
+1. Initialize probability vector estimating $p(t_i)$
+$$
+\widehat{p} =(\widehat{p}_0,\dots,\widehat{p}_{m+1}) 
+= (\frac{1}{m+1},\dots,\frac{1}{m+1})
+$$
+2. Expectation step: Iterate for all $i$, we 
+estimate $P(t_{j-1}<X_i\leq t_j \vert l_i<X_i\leq r_i)$ by 
+$$
+\widehat{p}_{i}(t_j) \leftarrow \frac{\widehat{p}_j 1_{t_j \in (l_i,r_i]}}{\sum_{k, t_k \in (l_i,r_i]}\widehat{p}_k}, j=0,\dots,m+1
+$$
+We obtain a vector $\widehat{p}_i$ for all individuals.  
+3. Maximization step: average over individuals
+$$
+\widehat{p} \leftarrow 1/n \sum_{i=1}^n\widehat{p}_i.
+$$
+4. If not converge, go to step 2.
+
+The estimator of the cdf is the cumsum of $\widehat p$.
+If there is no censoring, the binary dummy $1_{t_j \in (l_i,r_i]$ equals
+one only once, and $\widehat{p}_i$ has a single one component leading to 
+$\widehat{p}=(1/n,\dots,1/n)$.
+In R, we can do this via `Surv` in `survival` package.
