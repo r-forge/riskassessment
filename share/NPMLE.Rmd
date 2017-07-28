@@ -1,0 +1,501 @@
+---
+title: A point on the nonparametric maximum likelihood estimation (NPMLE) of the empirical
+  cumulative distribution function (ECDF) for censored data
+author: "Marie Laure Delignette-Muller"
+date: "21 juillet 2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(digits = 3)
+require(fitdistrplus)
+require(Icens)
+require(interval)
+require(npsurv)
+```
+
+# NPMLE : a difficult problem
+
+In the current version of our package, the empirical cumulative distribution function (ECDF) is estimated
+using the Turnbull algorithm as implemented in the survival package. This estimation was shown to
+be problematic (see Gentleman and Geyer 1994,
+Fay 2010, ...) and indeed is not directly usable to build PP plots or QQ plots.
+In nonparametric maximum likelihood estimation (NPMLE) algorithms, the firts step is the definition of the set of disjoint intervals (some with null width)
+under which the ECDF may change : this set is called the **maximal intersection intervals** (Wang 2008) or the 
+maximal cliques of the data (Liu 2011) or the equivalence classes (Guolin 2008) or the Turnbull
+intervals or the innermost intervals (Fay 2010). These maximal intersection intervals are defined by each left bounds immediately
+followed by a right bounds once the bounds are ordered. Interval of null width correspond to values of non 
+censored data or to a left bound exactly at the same value of a rigth bound. 
+
+To understand this definition let us take a simple example with left, right, interval censored data and non censored data. In the following we can visualize the bounds as a black plain line for left bound and a green dotted line for right bound 
+(non censored data coded with the same value for left and right bound were plotted in pink plain lines) added at the Turnbull
+plot provided in the survival package.
+
+```{r}
+d1 <- data.frame(left = c(1, 2, 3, 4, 3, 7), right = c(2, 5, 3, 7, 8, 9))
+d <- d1
+(survdata <- Surv(time = d$left, time2 = d$right, type="interval2"))
+survfitted <- survfit(Surv(left, right, type="interval2") ~ 1, data = d)
+plot(survfitted$time, 1- survfitted$surv, type = "s", col = "red", xlim = c(min(d$left), max(d$right)))
+points(survfitted$time, 1 - survfitted$surv, col = "red", pch = 16)
+abline(v = d$left, col = "black")
+abline(v = d$right, col = "green", lty = 2)
+noncensored <- d$left[d$left == d$right]
+abline(v = noncensored, col = "pink")
+```
+
+The second step of an NPMLE algorithm aims at estimating the **mass of each maximal intersection interval**. 
+Many algorithms were proposed for this purpose and it seems to be a tricky problem. The result of the algorithm 
+is thus a list of **maximal intersection intervals with their corresponding mass** from which it i easy to compute an ECDF.
+The Turnbull algorithm implemented in the survival package does not provide the intervals but only the survival function
+at each mid-point of an interval. Latest algorithms provided in R packages Icens, interval and npsurv provide the intervals
+and propose to represent by rectangles the areas where the function (survival or ECDF) is not unique. This type of
+representation (representational non-uniqueness) was
+introduced by Gentleman and Vandal (2002). Let us compare the representation provided by the survival package (red line)
+and the one provided by the Icens package for the Turnbull algorithm on the previous example.
+
+```{r}
+fit <- EM(d)
+plot(fit)
+lines(survfitted$time, 1- survfitted$surv, type = "s", col = "red", xlim = c(min(d$left), max(d$right)))
+points(survfitted$time, 1 - survfitted$surv, col = "red", pch = 16)
+abline(v = d$left, col = "black")
+abline(v = d$right, col = "green", lty = 2)
+noncensored <- d$left[d$left == d$right]
+abline(v = noncensored, col = "pink")
+```
+
+
+The package interval gives the same type of representation with a linear interpolation within each
+rectangle but only as a survival curve (it is not possible to plot it directly in ECDF).
+
+```{r}
+fit <- icfit(Surv(left, right, type ="interval2") ~ 1, data = d)
+plot(fit)
+abline(v = d$left, col = "lightgrey", lty = 2)
+abline(v = d$right, col = "lightgrey", lty = 2)
+
+```
+
+The package npsurv also gives the same type of representation in survival plot with different options of plot.
+
+```{r}
+par(mfrow = c(2, 2))
+par(mar = c(4,4,0.5,0.5))
+f <- npsurv(d, verb = 0)$f
+plot(f, style = "box")
+abline(v = d$left, col = "lightgrey", lty = 2)
+abline(v = d$right, col = "lightgrey", lty = 2)
+plot(f, style = "uniform")
+abline(v = d$left, col = "lightgrey", lty = 2)
+abline(v = d$right, col = "lightgrey", lty = 2)
+plot(f, style = "midpoint")
+abline(v = d$left, col = "lightgrey", lty = 2)
+abline(v = d$right, col = "lightgrey", lty = 2)
+
+```
+
+The different algorithms differ in their estimation of the mass corresponding to each maximal intersection interval. To visualize that we will use the following function on different data sets.
+
+```{r}
+compareNPMLE <- function(d)
+{
+  # d is a data set with censored values coded by NA as in fitdistrplus
+  ## transformation of NA in -Inf or Inf necessary for other packages than survival
+  db <- d 
+  db$left[is.na(db$left)] <- -Inf
+  db$right[is.na(db$right)] <- Inf
+  
+  e1 <- VEM(db) # A Vertex-exchange-method in $D$-optimal Design Theory , D. Bohning, Metrika, 1986.
+  e1$numiter
+  # trial to analyse the difference with d1
+  e1bis <- VEM(db, tol = 1e-10, tolbis = 1e-10) # A Vertex-exchange-method in $D$-optimal Design Theory , D. Bohning, Metrika, 1986.
+  e1bis$numiter
+  
+  # plot(e1)
+  e2 <- EM(db) # Turnbull 1976
+  # plot(e2)
+  e3 <- PGM(db) # Some Algorithmic Aspects of the Theory of Optimal Designs, C.-F. Wu, 1978, Annals.
+  # plot(e3)
+  e4 <- EMICM(db) # A hybrid algorithm for computation of the nonparametric maximum likelihood 
+  # estimator from censored data, J. A. Wellner and Y. Zhan, 1997, JASA.
+  # plot(e4)
+  #e5 <- ISDM(db) # An Algorithm for Computing the Nonparametric MLE of a Mixing Distribution, 
+  # Lesperance, Mary L. and Kalbfleisch, John D., JASA, 1992
+  # plot(e5)
+  # Methode trop lente sur les gros jeux de donnes !!!!!!!!!!!!!!!!!!!!
+  
+  mass.Icens.VEM <- e1$pf
+  mass.Icens.EM <- e2$pf
+  mass.Icens.PGM <- e3$pf
+  mass.Icens.EMICM <- e4$pf
+  #mass.Icens.ISDM <- e5$pf
+  
+  # pour avoir les bornes des intervalles d'equivalence
+  # e1$intmap
+  
+  # comparatif avec algo de npsurv
+  f <- npsurv(db, verb = 0)$f
+  mass.npsurv <- f$p
+  # pour avoir les bornes des intervalles d'equivalence
+  # rbind(f$left, f$right)
+  
+  # npsurv(db, verb = 0, tol = 1e-10)$numiter
+  # npsurv(db, verb = 0, tol = 1e-12)$f
+  
+  # comparatif avec Turnbull de survival
+  survdata <- Surv(time = d$left, time2 = d$right, type="interval2")
+  survfitted <- survfit(Surv(left, right, type="interval2") ~ 1, data = d)
+  s <- survfitted$surv
+  ns <- length(s)
+  savant <- c(1, s[-ns])
+  mass.survival <- savant - s
+  
+  # comparatif avec icfit
+  fit <- icfit(Surv(left, right, type ="interval2") ~ 1, data = db)
+  mass.interval <- fit$pf
+  names(mass.interval) <- NULL
+  
+  
+  print("mass.Icens.VEM")
+  print(mass.Icens.VEM)
+  print("mass.Icens.EM")
+  print(mass.Icens.EM)
+  print("mass.Icens.PGM")
+  print(mass.Icens.PGM)
+  print("mass.Icens.EMICM")
+  print(mass.Icens.EMICM)
+#  mass.Icens.ISDM
+  print("mass.survival")
+  print(mass.survival)
+  print("mass.interval")
+  print(mass.interval)
+  print("message of icfit concerning Kuhn-Tucker conditions")
+  print(fit$message)
+  print("mass.npsurv")
+  print(mass.npsurv)
+  
+  par(mfrow = c(2,2))
+  par(mar = c(4,4,0.5,0.5))
+  plot(e1, surv = TRUE, main = "")
+#  points(survfitted$time, survfitted$surv, col = "red", pch = 16)
+  lines(survfitted$time, survfitted$surv, type = "s", col = "red", lty = 2)
+  legend("bottomleft", legend = "VEM(Icens) in green and survival in red", bty = "n")
+  
+  plot(f)
+#  points(survfitted$time, survfitted$surv, col = "red", pch = 16)
+  lines(survfitted$time, survfitted$surv, type = "s", col = "red", lty = 2)
+  legend("bottomleft", legend = "npsurv in blue and survival in red", bty = "n")
+  
+  plot(fit)
+#  points(survfitted$time, survfitted$surv, col = "red", pch = 16)
+  lines(survfitted$time, survfitted$surv, type = "s", col = "red", lty = 2)
+  legend("bottomleft", legend = "interval in grey and survival in red", bty = "n")
+}
+```
+
+Let us use this function on the previous example :
+
+```{r, fig.width = 8, fig.height = 5}
+compareNPMLE(d)
+```
+ 
+ We can see that the constrained Newton method (CNM) implemented in the npsurv package
+ gives a different mass estimation than the other methods. Now let us look at the differences 
+ between algorithms on various data sets.
+ 
+ 
+```{r, fig.width = 8, fig.height = 5}
+d3 <- data.frame(left = c(-1.4, 1.18, -1.4, 2, -1.4, 0),
+                 right = c(1, 1.18, 2, NA, 0, 2))
+compareNPMLE(d3)
+```
+
+In this example we can see differences between the algorithms by the way they polish the ECDF
+function, by putting some masses to zero. 
+ 
+```{r, fig.width = 8, fig.height = 5}
+data(bcos)
+d6 <- subset(bcos, treatment == "Rad")[,1:2]
+d6$right[is.infinite(d6$right)] <- NA
+compareNPMLE(d6)
+```
+
+In this example,  
+differences are small and not visible on the plots.
+
+```{r, fig.width = 8, fig.height = 5}
+data(salinity)
+d7 <- log10(salinity)
+compareNPMLE(d7)
+```
+
+In this example, differences are stronger, and appear also between packages interval and Icens.
+
+**I did not understand all about the check of the Kuhn-Tucker conditions (see Gentleman and Geyer) but
+I would like to ask Wang if this condition is checked in npsurv and if not if it is a problem.**
+
+Using the npsurv package, I have implemented functions to plot the ECDF with rectangles. I could not use 
+the plot function proposed in npsurv as it plots only positive values, considering the variable is a survival time, and dose not offer the possibility to plot an ECDF function instead of a survival function.
+Below is the new plot fucntion that could be included in the plotdistcens function of fitdistrplus.
+
+```{r}
+CDFplotcens <- function(d, plot = TRUE, add.Turnbull = TRUE)
+# if add.Turnbull == TRUE add of the plot provided by survival
+# output : vectors with Q and corresponding P values  for GOF stat
+{
+  db <- d
+  db$left[is.na(db$left)] <- -Inf
+  db$right[is.na(db$right)] <- Inf
+  f <- npsurv(db)$f
+  bounds <- c(f$right, f$left)
+  finitebounds <- bounds[is.finite(bounds)]
+  upper <- max(finitebounds)
+  lower <- min(finitebounds)
+  width <- upper - lower
+  xlimup <- upper + width * 0.2 
+  xlimlow <- lower - width * 0.2
+  xlimupinf <- upper + width * 100 
+  xlimlowinf <- lower - width * 100
+  ## mettre la possibilité de rentrer des xlim et ylim par l'utilisateur bien sûr
+  k <- length(f$left)
+  Fnpsurv <- cumsum(f$p) # DONNER UN AUTRE NOM CAR RACCOURCI DE FALSE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  
+  ## calul des points points pour Q et P dnas les GOF stat et graph
+  Fbefore <- c(0, Fnpsurv[-k])
+  Fmid <- (Fbefore + Fnpsurv)/2
+  df <- data.frame(left = f$left, right = f$right, Fmid = Fmid)
+  # restriction to equivalence intervals without Inf
+  dfb <- subset(df, (left != - Inf) & (right != Inf) ) 
+  dfb$xmid <- (dfb$left + dfb$right) / 2
+  
+  if (plot)
+  {
+    ### tracé de la ligne à droite des zones indéterminées
+    dright <- c(f$left[1], rep(f$right, rep(2,k)), f$right[k]) 
+    Fright <- rep(c(0,Fnpsurv), rep(2,k+1))
+    plot(dright, Fright, type = "l", xlim = c(xlimlow, xlimup), xlab = "x", ylab = "F")
+    ### tracé de la ligne à gauche des zones indéterminées
+    dleft = rep(c(f$left,f$right[k]), rep(2,k+1))
+    Fleft = c(0,rep(Fnpsurv, rep(2,k)),1)
+    lines(dleft, Fleft)
+    ### Ajout des rectangles
+    Fc <- c(0, Fnpsurv, 1)
+    for(i in 1:k) {
+      if(f$right[i] - f$left[i] > 0) 
+        rect(f$left[i], Fc[i], f$right[i], Fc[i+1], border = "black",
+             col = "lightgrey")
+    }
+    abline(h = 0, lty = 2, col = "grey")
+    abline(h = 1, lty = 2, col = "grey")
+    # ajout des rectangles à droite et à gauche si besoin
+    if(f$right[k] == Inf) rect(f$left[k], Fnpsurv[k - 1], xlimupinf, 1, border = "black",
+                               col = "lightgrey")
+    if(f$left[1] == - Inf) rect(xlimlowinf, Fnpsurv[1], f$right[1], 0, border = "black",
+                                col = "lightgrey")
+    
+    #### Ajout des points qu'on prendrait en compte pour les GOF graph et stat
+    points(dfb$xmid, dfb$Fmid, pch = 16, col = "blue")
+    
+    #### Ajout de l'ancienne présentation pour voir
+    if (add.Turnbull)
+    {
+      (survdata <- Surv(time = d$left, time2 = d$right, type="interval2"))
+      survfitted <- survfit(Surv(left, right, type="interval2") ~ 1, data = d)
+      lines(survfitted$time, 1- survfitted$surv, type = "s", col = "red")
+    }
+  }
+  return(list(Qi = dfb$xmid, Pi = dfb$Fmid))
+}
+
+```
+
+Let us use test it on different data set  including one (d2) with left censored values
+with which it was not possible to use icfit (icfit dosen not admit values at  -Inf).
+The Turnbull plot provided by survival as added just compare it to the new representation.
+
+```{r}
+data(smokedfish)
+d2 <- as.data.frame(log10(smokedfish))
+data(fluazinam)
+d4 <- as.data.frame(log10(fluazinam))
+par(mfrow = c(2,2))
+par(mar = c(4, 4, 0.5, 0.5))
+listd <- list(d1= d1, d2 = d2, d4 = d4, d7 = d7)
+for (i in 1:length(listd))
+{
+  CDFplotcens(listd[[i]], add.Turnbull = TRUE)  
+}
+```
+
+At last, I have implemented, for the moment in a unique function, 
+code that could be used in fitdistrplus in cdfcompcens and in new functions
+qqcompcens and ppcompcens.
+
+```{r}
+#### Function to plot GOF graphs from a fit on censored data ########################
+#### It will certainly be difficult to plot more than one fit on the same plot ######
+#### as it is proposed for non censored data ########################################
+plotfitcens <- function(fti, CDFplot = TRUE, PPplot = TRUE, QQplot = TRUE, add.midpoints = TRUE)
+  # output : vectors with Q and corresponding P values  for GOF stat
+{
+  d <- fti$censdata
+  db <- d
+  db$left[is.na(db$left)] <- -Inf
+  db$right[is.na(db$right)] <- Inf
+  f <- npsurv(db)$f
+  bounds <- c(f$right, f$left)
+  finitebounds <- bounds[is.finite(bounds)]
+  upper <- max(finitebounds)
+  lower <- min(finitebounds)
+  width <- upper - lower
+  xlimup <- upper + width * 0.2 
+  xlimlow <- lower - width * 0.2
+  xmax <- xlimup # pour le plots ensuite
+  xmin <- xlimlow
+  xlimupinf <- upper + width * 100 
+  xlimlowinf <- lower - width * 100
+  ## mettre la possibilité de rentrer des xlim et ylim par l'utilisateur bien sûr
+  k <- length(f$left)
+  Fnpsurv <- cumsum(f$p) 
+  
+  ## calul des points points pour Q et P dans les GOF stat et graph
+  Fbefore <- c(0, Fnpsurv[-k])
+  Fmid <- (Fbefore + Fnpsurv)/2
+  df <- data.frame(left = f$left, right = f$right, Fmid = Fmid)
+  dfb <- subset(df, (left != - Inf) & (right != Inf) ) # without Inf
+  dfb$xmid <- (dfb$left + dfb$right) / 2
+  
+  Qi <- dfb$xmid # dim k if no Inf, k-1 or k-2
+  Pi <-  dfb$Fmid
+
+  # Definition of vertices of each rectangle
+  Qi.left <- df$left # dim k
+  Qi.left4plot <- Qi.left
+  if (Qi.left4plot[1] == - Inf) Qi.left4plot[1] <- xlimlowinf
+  Qi.right <- df$right
+  Qi.right4plot <- Qi.right
+  if (Qi.right4plot[k] == Inf) Qi.right4plot[k] <- xlimupinf
+  Pi.low <- Fbefore
+  Pi.up <- Fnpsurv
+  
+  # recuperation des parametres ajustees et du nom de la distribution ajustee
+  para <- c(as.list(fti$estimate), as.list(fti$fix.arg))
+  distname <- fti$distname
+  pdistname <- paste("p", distname, sep="")
+  qdistname <- paste("q", distname, sep="")
+  
+  if (CDFplot)
+  {
+    plot(0, 0, type = "n", xlim = c(xlimlow, xlimup), ylim = c(0,1), xlab = "x", ylab = "F")
+    for(i in 1:k) {
+        rect(xleft = Qi.left4plot, ybottom = Pi.low, xright = Qi.right4plot, ytop = Pi.up, 
+             border = "black", col = "lightgrey")
+    }
+    abline(h = 0, lty = 2, col = "grey")
+    abline(h = 1, lty = 2, col = "grey")
+
+    ### Add of the two lines (only one is need if the rectangles are plotted)
+    # the one at right
+    dright <- c(f$left[1], rep(f$right, rep(2,k)), f$right[k]) 
+    Fright <- rep(c(0,Fnpsurv), rep(2,k+1))
+    lines(dright, Fright, type = "l", xlim = c(xlimlow, xlimup), xlab = "x", ylab = "F")
+    ### the one at left
+    dleft = rep(c(f$left,f$right[k]), rep(2,k+1))
+    Fleft = c(0,rep(Fnpsurv, rep(2,k)),1)
+    lines(dleft, Fleft)
+    
+    #### Add of the mid points
+    if (add.midpoints) points(Qi, Pi, pch = 16, col = "black")
+    
+    ### Ajout de la courbe théo ajustée
+    sfin <- seq(xmin, xmax, by=(xmax-xmin)/100)
+    theopfin <- do.call(pdistname, c(list(q=sfin), as.list(para)))
+    lines(sfin, theopfin, col = "red")
+  } ############################# END CDFplot
+  
+  if (PPplot)
+  {
+    plot(0, 0, type = "n", main = "PPplot", xlim = c(0,1), ylim = c(0, 1))
+    
+    # plot of rectangles
+    Pitheo.low <- do.call(pdistname, c(list(q=Qi.left), as.list(para)))
+    Pitheo.up <- do.call(pdistname, c(list(q=Qi.right), as.list(para)))
+    rect(xleft = Pitheo.low, ybottom = Pi.low, xright = Pitheo.up, ytop = Pi.up, 
+           border = "black", col = "lightgrey")
+    abline(0,1)
+    
+    # add of mid moints
+    if (add.midpoints)
+    {
+      Pitheo <- do.call(pdistname, c(list(q = Qi), as.list(para)))
+      points(Pitheo, Pi, pch = 16, col = "black")
+    }
+  } ############# END of PPplot
+  
+  if (QQplot)
+  {
+    plot(0, 0, type = "n", main = "QQplot", xlim = c(xmin, xmax), ylim = c(xmin, xmax))
+
+    # plot of rectangles
+    Qitheo.left <- do.call(qdistname, c(list(p = Pi.low), as.list(para)))
+    Qitheo.right <- do.call(qdistname, c(list(p = Pi.up), as.list(para)))
+    Qitheo.left4plot <- Qitheo.left
+    if (Qitheo.left4plot[1] == - Inf) Qitheo.left4plot[1] <- xlimlowinf
+    Qitheo.right4plot <- Qitheo.right
+    if (Qitheo.right4plot[k] == Inf) Qitheo.right4plot[k] <- xlimupinf
+    rect(xleft = Qitheo.left4plot, ybottom = Qi.left4plot, xright = Qitheo.right4plot, ytop = Qi.right4plot, 
+           border = "black", col = "lightgrey")
+    abline(0,1)
+
+    
+    # add of mid moints
+    if (add.midpoints)
+    {
+      Qitheo <- do.call(qdistname, c(list(p = Pi), as.list(para)))
+      points(Qitheo, Qi, pch = 16, col = "black")
+    }
+  }
+}
+```
+
+Look at those new plots on fits of a normal distribution on different data sets.
+
+```{r, fig.width = 8, fig.height = 5}
+d <- d2
+f <- fitdistcens(d, "norm") 
+par(mfrow = c(2,2))
+par(mar = c(4,4,2, 0.5))
+plotfitcens(f)
+
+d <- d4
+f <- fitdistcens(d, "norm")
+plotfitcens(f)
+
+d <- d7
+f <- fitdistcens(d, "norm")
+plotfitcens(f)
+
+```
+
+
+The last tested data set is a non censored data set on which we can compare plots to those provided using cdfcomp, ppcomp and qqcomp
+
+```{r, fig.width = 8, fig.height = 5}
+set.seed(1234) 
+r <- rnorm(20)
+d5 <- data.frame(left = r, right = r)
+d <- d5
+par(mfrow = c(2, 3))
+par(mar = c(4,4,2, 0.5))
+f <- fitdistcens(d, "norm")
+plotfitcens(f)
+
+fbis <- fitdist(d$left, "norm")
+cdfcomp(fbis)
+ppcomp(fbis)
+qqcomp(fbis)
+
+```
+
