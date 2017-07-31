@@ -1,10 +1,18 @@
 
 
-#parametre incoherent
+#parametre/valeur incoherent
 dexp(1:20, rate=-1)
+dexp(0:3, Inf)
+
+#missing value
+dexp(c(1, NA), 1)
+
 #vecteur vide
 dexp(numeric(0), rate=1)
+
 #noms des arguments
 formals(dexp)
 
-
+#valeur discrete (out of support values) 
+#trop difficile
+dbinom(1:3-.3, size=5, p=1/2)
