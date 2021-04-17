@@ -9,9 +9,13 @@ Authors@R: c(person("Regis", "Pouillot", role = c("aut", "cre"), email = "rpouil
 Author: Regis Pouillot [aut, cre],
 		Marie-Laure Delignette-Muller [ctb],
 		Jean-Baptiste Denis [ctb]
-Maintainer:  Regis Pouillot <rpouillot@yahoo.fr> 
-Suggests: fitdistrplus, survival
+Maintainer: Regis Pouillot <rpouillot@yahoo.fr> 
+Suggests: 
+    fitdistrplus,
+    survival,
+    testthat (>= 3.0.0)
 Depends: R (>= 2.10.0), mvtnorm
 Imports: stats, grDevices, graphics, utils
 Description: A complete framework to build and study Two-Dimensional Monte-Carlo simulations, aka Second-Order Monte-Carlo simulations. Also includes various distributions (pert, triangular, Bernoulli, empirical discrete and continuous).
 License: GPL (>= 2)
+
